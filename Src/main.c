@@ -4,48 +4,7 @@
 * @file           : main.c
 * @brief          : Main program body
 ******************************************************************************
-* This notice applies to any and all portions of this file
-* that are not between comment pairs USER CODE BEGIN and
-* USER CODE END. Other portions of this file, whether 
-* inserted by the user or by software development tools
-* are owned by their respective copyright owners.
-*
-* Copyright (c) 2018 STMicroelectronics International N.V. 
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without 
-* modification, are permitted, provided that the following conditions are met:
-*
-* 1. Redistribution of source code must retain the above copyright notice, 
-*    this list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of STMicroelectronics nor the names of other 
-*    contributors to this software may be used to endorse or promote products 
-*    derived from this software without specific written permission.
-* 4. This software, including modifications and/or derivative works of this 
-*    software, must execute solely and exclusively on microcontroller or
-*    microprocessor devices manufactured by or for STMicroelectronics.
-* 5. Redistribution and use of this software other than as permitted under 
-*    this license is void and will automatically terminate your rights under 
-*    this license. 
-*
-* THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
-* AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
-* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
-* PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
-* RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
-* SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-* LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
-* OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
-* LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
-* NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-* EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-******************************************************************************
-*/
+
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f1xx_hal.h"
@@ -78,6 +37,9 @@ osThreadId MeasureHandle;
 osThreadId LedHandle;
 osThreadId RTCHandle;
 
+char *ErrorMsg;
+uint16_t ErrorLine;
+
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
@@ -106,33 +68,43 @@ static void Setup()
     MX_DMA_Init();
     MX_ADC1_Init();
     MX_I2C1_Init();
-    MX_ADC2_Init();
-    //    OledInit();
-    SetInitialGlobalTimeDate();
+    
 }
 
 static void CreateTask()
 {
     /* Create the thread(s) */
+    
+#ifdef ENABLE_OLED
     /* definition and creation of Oled */
     osThreadDef(Oled, TaskOled, osPriorityNormal, 0, 256);
     OledHandle = osThreadCreate(osThread(Oled), NULL);
-    
+#endif
+ 
+#ifdef ENABLE_KEYBOARD    
     /* definition and creation of Keyboard */
     osThreadDef(Keyboard, TaskKeyboard, osPriorityBelowNormal, 0, 64);
     KeyboardHandle = osThreadCreate(osThread(Keyboard), NULL);
-    
+#endif 
+ 
+#ifdef ENABLE_MEASURE
     /* definition and creation of Measure */
     osThreadDef(Measure, TaskMeasure, osPriorityHigh, 0, 128);
     MeasureHandle = osThreadCreate(osThread(Measure), NULL);
-    
+#endif 
+
+#ifdef ENABLE_LED    
     /* definition and creation of Led */
     osThreadDef(Led, TaskLed, osPriorityLow, 0, 64);
     LedHandle = osThreadCreate(osThread(Led), NULL);
+#endif
     
+#ifdef ENABLE_RTC
     /* definition and creation of RTC */
     osThreadDef(RTC, TaskRTC, osPriorityNormal, 0, 64);
     RTCHandle = osThreadCreate(osThread(RTC), NULL);
+#endif   
+ 
     return;
 }
 
@@ -181,7 +153,9 @@ int main(void)
 * @retval None
 */
 void _Error_Handler(char *file, int line)
-{
+{  
+    ErrorMsg = file;
+    ErrorLine = (uint16_t)line;
     /* USER CODE BEGIN Error_Handler_Debug */
     /* User can add his own implementation to report the HAL error return state */
     while(1)

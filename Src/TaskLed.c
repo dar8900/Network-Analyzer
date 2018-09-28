@@ -2,6 +2,8 @@
 #include "TaskLed.h"
 #include "GPIO.h"
 
+#ifdef ENABLE_LED
+
 uint8_t LedConf = ALL_LED_OFF;
 
 LED_FLAG LedFlag[NLED];
@@ -137,3 +139,6 @@ void TaskLed(void const * argument)
     }
     /* USER CODE END TaskLed */
 }
+
+
+#endif // ENABLE_LED

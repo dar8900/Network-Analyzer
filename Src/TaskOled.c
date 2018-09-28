@@ -5,6 +5,8 @@
 #include "Oled.h"
 #include "Menus.h"
 
+#ifdef ENABLE_OLED
+
 extern uint8_t LedConf;
 extern uint8_t LastButtonPressed;
 
@@ -34,3 +36,6 @@ void TaskOled(void const * argument)
     }
     /* USER CODE END 5 */ 
 }
+
+
+#endif // ENABLE_OLED

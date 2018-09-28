@@ -2,6 +2,8 @@
 #include "TaskKeyboard.h"
 #include "GPIO.h"
 
+#ifdef ENABLE_KEYBOARD
+
 FLAG_KEYBOARD FlagButtons;
 uint8_t ButtonPress = NO_PRESS;
 uint8_t LastButtonPressed = NO_PRESS;
@@ -101,7 +103,10 @@ void TaskKeyboard(void const * argument)
     /* Infinite loop */
     for(;;)
     {
-        osDelay(1);
+        CheckButtons();
+        osDelay(10);
     }
     /* USER CODE END TaskKeyboard */
 }
+
+#endif // ENABLE_KEYBOARD

@@ -3,8 +3,12 @@
 #include "ADC.h"
 #include "SysTime.h"
 
+#ifdef ENABLE_MEASURE
+
 extern bool ConversionEnd;
 extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
+
+bool EnableMeasure = false;
 
 /* TaskMeasure function */
 void TaskMeasure(void const * argument)
@@ -13,17 +17,22 @@ void TaskMeasure(void const * argument)
     /* Infinite loop */
     for(;;)
     {
-        while(!ConversionEnd)
+        if(EnableMeasure)
         {
-            ADCConvToDMA();
-            DelayMs(1);
+            while(!ConversionEnd)
+            {
+                ADCConvToDMA();
+                DelayMs(1);
+            }
+            if(ConversionEnd)
+            {
+                StopADC_DMA_Conv();
+                ConversionEnd = false;
+            }
         }
-        if(ConversionEnd)
-        {
-            StopADC_DMA_Conv();
-            ConversionEnd = false;
-        }
-        
+        osDelay(1);
     }
     /* USER CODE END TaskMeasure */
 }
+
+#endif // ENABLE_MEASURE

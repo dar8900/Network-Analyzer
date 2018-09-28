@@ -16,6 +16,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "stm32f1xx_hal.h"
+#include "TaskSelection.h"
 
 /* Private define ------------------------------------------------------------*/
 
