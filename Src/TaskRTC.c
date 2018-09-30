@@ -625,10 +625,16 @@ static void GetTimeDate()
 
 void SetInitialGlobalTimeDate()
 {
-    ds1307_set_time_24(0, 0 ,0);
-    ds1307_set_day(1);
-    ds1307_set_month(1);
-    ds1307_set_year(18);
+    //    ds1307_set_time_24(0, 0 ,0);
+    //    ds1307_set_day(1);
+    //    ds1307_set_month(1);
+    //    ds1307_set_year(18);
+    GlobalTime.Hour = 19;
+    GlobalTime.Minute = 01;
+    GlobalTime.Second = 0;
+    GlobalDate.Day = 30;
+    GlobalDate.Month = 9;
+    GlobalDate.Year = 18;
 }
 
 void SetChangedTime(uint8_t Hour, uint8_t Minute)
@@ -641,6 +647,7 @@ void SetChangedDate(uint8_t Day, uint8_t Month, uint8_t Year)
     ds1307_set_day(Day);
     ds1307_set_month(Month);
     ds1307_set_year(Year);
+
 }
 
 
@@ -654,9 +661,23 @@ void TaskRTC(void const * argument)
     for(;;)
     {
         GetSecondTick();
-        if(SecondTick)
+        if(SecondTick && HalfSecondTick)
         {
-              GetGlobalDate();
+              GlobalTime.Second++;
+              if(GlobalTime.Second == 60)
+              {
+                GlobalTime.Second = 0;
+                GlobalTime.Minute++;
+                if(GlobalTime.Minute == 60)
+                {
+                    GlobalTime.Minute = 0;
+                    GlobalTime.Hour++;
+                    if(GlobalTime.Hour == 24)
+                    {
+                        GlobalTime.Hour = 0;
+                    }
+                }
+              }
         }
         osDelay(500);
     }

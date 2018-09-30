@@ -9,21 +9,22 @@
 #define LOGO_HIGH       8
 
 #define TOP_INFO_BAR_Y_POS      (0 + (u8g2_GetAscent(&u8g)))
-#define BOTTOM_INFO_BAR_Y_POS   (64 - (u8g2_GetAscent(&u8g)))
-#define UP_STR_X_POS            32
-#define DOWN_STR_X_POS          96
+#define BOTTOM_INFO_BAR_Y_POS   (64 - (u8g2_GetAscent(&u8g)) + 4)
+#define UP_STR_X_POS            44
+#define DOWN_STR_X_POS          72
+#define OK_STR_X_POS           118
 
 #define LEFT_ARROW_X_POS        18
-#define RIGHT_ARROW_X_POS      118
-#define UP_ARROW_X_POS          42
+#define RIGHT_ARROW_X_POS      109
+#define UP_ARROW_X_POS          38
 #define DOWN_ARROW_X_POS        88
 
 #define LEFT_RIGHT_ARROW_Y_POS  60
 #define UP_DOWN_ARROW_Y_POS     57
 
  
-#define MENU_TITLE_Y_POS         8
-#define FIRST_MENU_LINES_Y_POS  22
+#define MENU_TITLE_Y_POS        16
+#define FIRST_MENU_LINES_Y_POS  26
 #define MENU_LINES_DELTA_Y       2
 
 #define TIME_DATE_SETUP_Y_POS   20

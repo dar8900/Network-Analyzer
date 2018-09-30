@@ -152,6 +152,8 @@ void DrawMainScreenLoop()
 {
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();
+    u8g2_SetFont(&u8g, u8g2_font_9x18B_tf);
+    u8g2_DrawStr(&u8g, X_CENTER_POS("Welcome"), 32, "Welcome");
     DrawBottomBarInfo(MAIN_SCREEN_PAGE);
     u8g2_SendBuffer(&u8g);
     
@@ -161,10 +163,10 @@ void DrawMainScreenLoop()
 void DrawTopInfoBar()
 {
     uint8_t FontH = 0;
-    char Time[8];
-    char Date[8];
-    snprintf(Time, 8, "%02d:%02d:%02d", GlobalTime.Hour, GlobalTime.Minute, GlobalTime.Second);
-    snprintf(Date, 8, "%02d/%02d/%02d", GlobalDate.Day, GlobalDate.Month, GlobalDate.Year);
+    char Time[9];
+    char Date[9];
+    snprintf(Time, 9, "%02d:%02d:%02d", GlobalTime.Hour, GlobalTime.Minute, GlobalTime.Second);
+    snprintf(Date, 9, "%02d/%02d/%02d", GlobalDate.Day, GlobalDate.Month, GlobalDate.Year);
     u8g2_SetFontMode(&u8g, 1);
     u8g2_SetFont(&u8g, u8g_font_4x6);
     FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
@@ -190,21 +192,21 @@ void DrawBottomBarInfo(uint8_t WichPage)
       case SETUP_PAGE:
         u8g2_SetFont(&u8g, u8g_font_4x6);
         FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
-        u8g2_DrawBox(&u8g, X_LEFT_POS, FontH+1, SCREEN_MAX_WIDTH, FontH); 
+//        u8g2_DrawBox(&u8g, X_LEFT_POS, FontH+1, SCREEN_MAX_WIDTH, FontH); 
         u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
-        u8g2_DrawStr(&u8g, X_RIGHT_POS(BarItem[OK_STR]), BOTTOM_INFO_BAR_Y_POS, BarItem[OK_STR]); 
+        u8g2_DrawStr(&u8g, OK_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[OK_STR]); 
         u8g2_DrawStr(&u8g, UP_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[SU_STR]);
         u8g2_DrawStr(&u8g, DOWN_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[GIU_STR]);
-        DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
+        DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
         DrawArrow(UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, UP_DIRECTION);
         DrawArrow(DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
-        DrawArrow(RIGHT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
+        DrawArrow(RIGHT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
         break;
       case TIME_DATE_PAGE:
         u8g2_SetFont(&u8g, u8g_font_4x6);
         FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
-        u8g2_DrawBox(&u8g, X_LEFT_POS, FontH+1, SCREEN_MAX_WIDTH, FontH); 
+//        u8g2_DrawBox(&u8g, X_LEFT_POS, FontH+1, SCREEN_MAX_WIDTH, FontH); 
         u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
         u8g2_DrawStr(&u8g, X_RIGHT_POS(BarItem[POS_STR]), BOTTOM_INFO_BAR_Y_POS, BarItem[POS_STR]); 
@@ -250,7 +252,7 @@ void DrawTimeDateChangeLoop(uint8_t BoxPos, uint8_t TypeSetting,uint8_t BoxOneNu
 
 void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxMenuItemNum, uint8_t MaxMenuLines)
 {
-    uint8_t FontH = 0, ScreenWidth = 0;
+    uint8_t FontH = 0;
     uint8_t ItemIndx = 0;
     
     u8g2_ClearBuffer(&u8g);
@@ -258,24 +260,22 @@ void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_
     // Disegna titolo menu
     u8g2_SetFont(&u8g, u8g_font_6x13B);
     FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
-    ScreenWidth = u8g2_GetDisplayWidth(&u8g);
     u8g2_SetDrawColor(&u8g, 2);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(PageTitle), MENU_TITLE_Y_POS + (ItemIndx * FontH), PageTitle);  
+    u8g2_DrawStr(&u8g, X_CENTER_POS(PageTitle), MENU_TITLE_Y_POS, PageTitle);  
     
     // Disegna voci menu
     u8g2_SetFont(&u8g, u8g_font_6x10);
     FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
+    u8g2_SetDrawColor(&u8g, 2);
     for(ItemIndx = 0; ItemIndx < MaxMenuLines; ItemIndx++)
     {
         uint8_t ListBuildPos = HighPosItem + ItemIndx;
         if(ListBuildPos >= MaxMenuItemNum)
             break;
-        u8g2_SetDrawColor(&u8g, 2);
         if (ItemPos == ListBuildPos) 
         {
             // Voce menu selezionata
-            u8g2_DrawBox(&u8g, 0, ItemIndx*FontH+1, ScreenWidth, FontH);    
-            u8g2_SetDrawColor(&u8g, 2);
+            u8g2_DrawBox(&u8g, 0, (FIRST_MENU_LINES_Y_POS - (FontH - 1) + (ItemIndx * (FontH - 1)) + ((MENU_LINES_DELTA_Y + 1) * ItemIndx) ), SCREEN_MAX_WIDTH, FontH + 1);    
         }
         u8g2_DrawStr(&u8g, X_CENTER_POS(MenuItem[ListBuildPos].ItemTitle), FIRST_MENU_LINES_Y_POS + (ItemIndx * FontH) + (MENU_LINES_DELTA_Y * ItemIndx), MenuItem[ListBuildPos].ItemTitle);          
     }

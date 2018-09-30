@@ -14,6 +14,7 @@ typedef enum
     LED_GEST = 0,
     PARAMETER_SEUP,
     TIME_SET,
+    VOID_FUNC,
     
     MAX_SETUP_ITEM
 }SETUP_ITEM_VALUE;
@@ -32,5 +33,7 @@ bool ParameterSetup(void);
 bool ChangeDateTimeMenu(void);
 bool ChangeTime(void);
 bool ChangeDate(void);
+
+bool Inutile(void);
 
 #endif

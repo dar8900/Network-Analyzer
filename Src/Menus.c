@@ -17,6 +17,7 @@ MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] =
     {"Gestione Led"       , LedCtrl           },
     {"Gestione parametri" , ParameterSetup    },
     {"Setta l'orario"     , ChangeDateTimeMenu},
+    {"Funz inutile"       , Inutile           },
 };
 
 MENU_ITEM TimeSetting[MAX_TIME_DATE_ITEM] = 
@@ -24,6 +25,12 @@ MENU_ITEM TimeSetting[MAX_TIME_DATE_ITEM] =
     {"Cambia orario", ChangeTime},
     {"Cambia data"  , ChangeDate},
 };
+
+bool Inutile()
+{
+    
+    return true;
+}
 
 bool LedCtrl()
 {
