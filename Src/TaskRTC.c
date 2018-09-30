@@ -654,6 +654,10 @@ void TaskRTC(void const * argument)
     for(;;)
     {
         GetSecondTick();
+        if(SecondTick)
+        {
+              GetGlobalDate();
+        }
         osDelay(500);
     }
     /* USER CODE END TaskRTC */

@@ -13,10 +13,10 @@ WatchCond=_ 0
 Watch0=_ 0 "" 0 "" 0 "" 0 "" 0 0 0 0
 Watch1=_ 0 "" 0 "" 0 "" 0 "" 0 0 0 0
 CStepIntDis=_ 0
-stlinkserialNo=2798FD0D
+stlinkserialNo=1B07F58E
 stlinkfoundProbes=
 [DebugChecksum]
-Checksum=1207981585
+Checksum=905954968
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -43,6 +43,13 @@ ITMportsEnable=0
 ITMportsTermIO=0
 ITMportsLogFile=0
 ITMlogFile=$PROJ_DIR$\ITM.log
+[struct_types]
+Fmt0=DATE_VAR-Day	3	0
+Fmt1=DATE_VAR-Month	3	0
+Fmt2=DATE_VAR-Year	3	0
+Fmt3=TIME_VAR-Hour	3	0
+Fmt4=TIME_VAR-Minute	3	0
+Fmt5=TIME_VAR-Second	3	0
 [watch_formats]
 Fmt0={W}42:ButtonPress	3	0
 Fmt1={W}42:LastButtonPressed	3	0
@@ -107,7 +114,8 @@ ShowTiming=1
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Count=0
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\TaskRTC.c}.629.5" 0 0 1 "" 0 "" 0
+Count=1
 [Aliases]
 Count=0
 SuppressDialog=0
