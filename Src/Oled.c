@@ -165,11 +165,12 @@ void DrawTopInfoBar()
     char Date[8];
     snprintf(Time, 8, "%02d:%02d:%02d", GlobalTime.Hour, GlobalTime.Minute, GlobalTime.Second);
     snprintf(Date, 8, "%02d/%02d/%02d", GlobalDate.Day, GlobalDate.Month, GlobalDate.Year);
+    u8g2_SetFontMode(&u8g, 1);
     u8g2_SetFont(&u8g, u8g_font_4x6);
     FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
-    //    u8g2_SetDrawColor(&u8g);
+    u8g2_SetDrawColor(&u8g, 2);
     u8g2_DrawStr(&u8g, X_LEFT_POS, TOP_INFO_BAR_Y_POS, Time);  
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Date), TOP_INFO_BAR_Y_POS, Date);
+    u8g2_DrawStr(&u8g, X_RIGHT_POS(Date), TOP_INFO_BAR_Y_POS, Date);
 }
 
 
@@ -182,15 +183,15 @@ void DrawBottomBarInfo(uint8_t WichPage)
       case MAIN_SCREEN_PAGE:
         u8g2_SetFont(&u8g, u8g_font_4x6);
         FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
-        u8g2_DrawBox(&u8g, 0, FontH+1, SCREEN_MAX_WIDTH, FontH); 
-        //        u8g2_SetDrawColor(&u8g);
+//        u8g2_DrawBox(&u8g, 0, FontH+1, SCREEN_MAX_WIDTH, FontH); 
+        u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_CENTER_POS(BarItem[MENU_STR]), BOTTOM_INFO_BAR_Y_POS, BarItem[MENU_STR]);        
         break;
       case SETUP_PAGE:
         u8g2_SetFont(&u8g, u8g_font_4x6);
         FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
         u8g2_DrawBox(&u8g, X_LEFT_POS, FontH+1, SCREEN_MAX_WIDTH, FontH); 
-        //        u8g2_SetDrawColor(&u8g);
+        u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
         u8g2_DrawStr(&u8g, X_RIGHT_POS(BarItem[OK_STR]), BOTTOM_INFO_BAR_Y_POS, BarItem[OK_STR]); 
         u8g2_DrawStr(&u8g, UP_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[SU_STR]);
@@ -204,7 +205,7 @@ void DrawBottomBarInfo(uint8_t WichPage)
         u8g2_SetFont(&u8g, u8g_font_4x6);
         FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
         u8g2_DrawBox(&u8g, X_LEFT_POS, FontH+1, SCREEN_MAX_WIDTH, FontH); 
-        //        u8g2_SetDrawColor(&u8g);
+        u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
         u8g2_DrawStr(&u8g, X_RIGHT_POS(BarItem[POS_STR]), BOTTOM_INFO_BAR_Y_POS, BarItem[POS_STR]); 
         u8g2_DrawStr(&u8g, UP_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[SU_STR]);
@@ -233,7 +234,7 @@ void DrawTimeDateChangeLoop(uint8_t BoxPos, uint8_t TypeSetting,uint8_t BoxOneNu
     DrawTopInfoBar();
     FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
     u8g2_SetFont(&u8g, u8g_font_6x13);
-    //        u8g2_SetDrawColor(&u8g);
+    u8g2_SetDrawColor(&u8g, 2);
     u8g2_DrawStr(&u8g, X_CENTER_POS(TimeDateStr), TIME_DATE_SETUP_Y_POS, TimeDateStr);
     
     u8g2_DrawFrame(&u8g, (X_CENTER_POS(TimeDateStr) - 1 + (BoxPos * TIME_DATE_FONT_WIDTH)), TIME_DATE_SETUP_Y_POS - 2, 
@@ -258,7 +259,7 @@ void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_
     u8g2_SetFont(&u8g, u8g_font_6x13B);
     FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
     ScreenWidth = u8g2_GetDisplayWidth(&u8g);
-    //        u8g2_SetDrawColor(&u8g);
+    u8g2_SetDrawColor(&u8g, 2);
     u8g2_DrawStr(&u8g, X_CENTER_POS(PageTitle), MENU_TITLE_Y_POS + (ItemIndx * FontH), PageTitle);  
     
     // Disegna voci menu
@@ -269,12 +270,12 @@ void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_
         uint8_t ListBuildPos = HighPosItem + ItemIndx;
         if(ListBuildPos >= MaxMenuItemNum)
             break;
-        //            u8g2_SetDrawColor(&u8g);
+        u8g2_SetDrawColor(&u8g, 2);
         if (ItemPos == ListBuildPos) 
         {
             // Voce menu selezionata
             u8g2_DrawBox(&u8g, 0, ItemIndx*FontH+1, ScreenWidth, FontH);    
-            //                u8g2_SetDrawColor(&u8g);
+            u8g2_SetDrawColor(&u8g, 2);
         }
         u8g2_DrawStr(&u8g, X_CENTER_POS(MenuItem[ListBuildPos].ItemTitle), FIRST_MENU_LINES_Y_POS + (ItemIndx * FontH) + (MENU_LINES_DELTA_Y * ItemIndx), MenuItem[ListBuildPos].ItemTitle);          
     }

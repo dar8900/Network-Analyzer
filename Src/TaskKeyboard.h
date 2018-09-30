@@ -1,7 +1,9 @@
 #ifndef TASK_KEYBOARD_H
 #define TASK_KEYBOARD_H
 
-#define LONG_PRESS_TIME     300
+#define TASK_KEYBOARD_DELAY  20
+#define LONG_PRESS_TIME     (3000/TASK_KEYBOARD_DELAY)
+
 
 typedef enum
 {

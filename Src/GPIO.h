@@ -3,8 +3,8 @@
 
 typedef enum
 {
-    HIGH = 0,
-    LOW
+    LOW = 0,
+    HIGH
 }DIGITAL_STATE;
 
 void MX_GPIO_Init(void);

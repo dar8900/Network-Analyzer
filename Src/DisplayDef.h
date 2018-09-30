@@ -8,8 +8,8 @@
 #define LOGO_LEN        8
 #define LOGO_HIGH       8
 
-#define TOP_INFO_BAR_Y_POS       0
-#define BOTTOM_INFO_BAR_Y_POS   57
+#define TOP_INFO_BAR_Y_POS      (0 + (u8g2_GetAscent(&u8g)))
+#define BOTTOM_INFO_BAR_Y_POS   (64 - (u8g2_GetAscent(&u8g)))
 #define UP_STR_X_POS            32
 #define DOWN_STR_X_POS          96
 

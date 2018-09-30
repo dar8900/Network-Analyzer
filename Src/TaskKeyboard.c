@@ -1,6 +1,7 @@
 #include "main.h"
 #include "TaskKeyboard.h"
 #include "GPIO.h"
+#include "TaskLed.h"
 
 #ifdef ENABLE_KEYBOARD
 
@@ -8,6 +9,8 @@ FLAG_KEYBOARD FlagButtons;
 uint8_t ButtonPress = NO_PRESS;
 uint8_t LastButtonPressed = NO_PRESS;
 uint16_t ButtonPressCnt = LONG_PRESS_TIME;
+
+extern uint8_t LedConf;
 
 static void CheckButtons()
 {
@@ -104,7 +107,28 @@ void TaskKeyboard(void const * argument)
     for(;;)
     {
         CheckButtons();
-        osDelay(10);
+//        switch(ButtonPress)
+//        {
+//          case BUTTON_UP:
+//            LedConf = RED;
+//            break;
+//          case BUTTON_DOWN:
+//            LedConf = GREEN;
+//            break;
+//          case BUTTON_LEFT:
+//            LedConf = BLUE;
+//            break;
+//          case BUTTON_RIGHT:
+//            LedConf = RGB;
+//            break;
+//          case BUTTON_OK:
+//            LedConf = ALL_LED_OFF;
+//            break;
+//          default:
+//            break;
+//        }
+//        LastButtonPressed = NO_PRESS;
+        osDelay(TASK_KEYBOARD_DELAY);
     }
     /* USER CODE END TaskKeyboard */
 }

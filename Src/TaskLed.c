@@ -22,18 +22,18 @@ static bool TurnOffLed(uint8_t WichLed)
         SwitchSuccess = true;
         break;
       case GREEN_LED:
-        if(LedFlag[RED_LED].IsOn)
+        if(LedFlag[GREEN_LED].IsOn)
         {
             HAL_GPIO_WritePin(Green_GPIO_Port, Green_Pin, LOW);
-            LedFlag[RED_LED].IsOn = false;
+            LedFlag[GREEN_LED].IsOn = false;
         }
         SwitchSuccess = true;
         break;
       case BLUE_LED:
-        if(LedFlag[RED_LED].IsOn)
+        if(LedFlag[BLUE_LED].IsOn)
         {
             HAL_GPIO_WritePin(Blue_GPIO_Port, Blue_Pin, LOW);
-            LedFlag[RED_LED].IsOn = false;
+            LedFlag[BLUE_LED].IsOn = false;
         }
         SwitchSuccess = true;
         break;

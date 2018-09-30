@@ -85,6 +85,7 @@ bool ChangeDateTimeMenu()
             TimeSetting[ItemPos].MenuFunc();
             ChangeTimeParam = false;
         }
+        osDelay(100);
     }  
     return true;
 }
@@ -173,6 +174,7 @@ bool ChangeTime()
         LastButtonPressed = NO_PRESS;
         if(ChangeTimeParam)
             SetChangedTime(Hour, Minute);
+        osDelay(100);
     }  
     SettingTimeDate = false;
     return true;
@@ -276,8 +278,7 @@ void MainMenu()
     while(!ExitMainMenu)
     {
         CheckOperation();
-        if(HalfSecondTick)
-            DrawMenuLoop("Setup", MainSetupMenu, ItemPos, FirstListItem, MAX_SETUP_ITEM, MAX_SETUP_MENU_LINES);
+        DrawMenuLoop("Setup", MainSetupMenu, ItemPos, FirstListItem, MAX_SETUP_ITEM, MAX_SETUP_MENU_LINES);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -317,6 +318,7 @@ void MainMenu()
             MainSetupMenu[ItemPos].MenuFunc();
             EnterMenu = false;
         }
+        osDelay(100);
     }
 }
 
@@ -324,6 +326,7 @@ void MainMenu()
 void MainScreen()
 {
     bool EnterMenu = false;
+    LastButtonPressed = NO_PRESS;
     while(1)
     {
         CheckOperation();     
@@ -341,7 +344,7 @@ void MainScreen()
             break;
         }
         LastButtonPressed = NO_PRESS;   
-        osDelay(500);
+        osDelay(100);
         if(EnterMenu)
         {
             EnterMenu = false;

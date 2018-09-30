@@ -22,30 +22,36 @@
 
 #define GeneralSensor_Pin GPIO_PIN_0
 #define GeneralSensor_GPIO_Port GPIOA
+
 #define CurrentSensor_Pin GPIO_PIN_1
 #define CurrentSensor_GPIO_Port GPIOA
+
 #define Red_Pin GPIO_PIN_3
 #define Red_GPIO_Port GPIOA
 #define Blue_Pin GPIO_PIN_4
 #define Blue_GPIO_Port GPIOA
 #define Green_Pin GPIO_PIN_5
 #define Green_GPIO_Port GPIOA
-#define Up_Pin GPIO_PIN_6
+
+#define Up_Pin GPIO_PIN_8
 #define Up_GPIO_Port GPIOA
-#define Down_Pin GPIO_PIN_7
+#define Down_Pin GPIO_PIN_9
 #define Down_GPIO_Port GPIOA
-#define Left_Pin GPIO_PIN_0
+#define Left_Pin GPIO_PIN_12
 #define Left_GPIO_Port GPIOB
-#define Right_Pin GPIO_PIN_1
+#define Right_Pin GPIO_PIN_14
 #define Right_GPIO_Port GPIOB
-#define Ok_Pin GPIO_PIN_2
+#define Ok_Pin GPIO_PIN_15
 #define Ok_GPIO_Port GPIOB
+
 #define EnergyLed_Pin GPIO_PIN_10
 #define EnergyLed_GPIO_Port GPIOA
+
 #define SWDIO_Pin GPIO_PIN_13
 #define SWDIO_GPIO_Port GPIOA
 #define SWCLK_Pin GPIO_PIN_14
 #define SWCLK_GPIO_Port GPIOA
+
 #define SCL_Pin GPIO_PIN_6
 #define SCL_GPIO_Port GPIOB
 #define SDA_Pin GPIO_PIN_7
