@@ -319,7 +319,8 @@ void MainMenu()
         }
         else
         {
-            FirstListItem = (MAX_SETUP_MENU_LINES * (ItemPos / MAX_SETUP_MENU_LINES));
+            FirstListItem = ItemPos - MAX_SETUP_MENU_LINES;
+//            FirstListItem = (MAX_SETUP_MENU_LINES * (ItemPos / MAX_SETUP_MENU_LINES));
         }
         if(EnterMenu)
         {
