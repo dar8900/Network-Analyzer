@@ -2,12 +2,12 @@
 #include "Menus.h"
 #include "Oled.h"
 #include "TaskOled.h"
-#include "TaskRTC.h"
+#include "TaskRTC2.h"
 #include "TaskKeyboard.h"
 
 extern bool HalfSecondTick;
-extern TIME_VAR GlobalTime;
-extern DATE_VAR GlobalDate;
+extern DATE_TIME_S GlobalTime;
+
 extern uint8_t DaysPerMonth[];
 extern bool SettingTimeDate;
 
@@ -100,9 +100,9 @@ bool ChangeDateTimeMenu()
 bool ChangeTime()
 {   
     uint8_t BoxPos = 0;
-    uint8_t Hour = GlobalTime.Hour;
-    uint8_t Minute = GlobalTime.Minute;
-    uint8_t Second = GlobalTime.Second;
+    uint8_t Hour = GlobalTime.hours;
+    uint8_t Minute = GlobalTime.minutes;
+    uint8_t Second = GlobalTime.seconds;
     bool ChangeTimeParam = false, ExitChangeTime = false;   
     SettingTimeDate = true;
     while(!ExitChangeTime)
@@ -180,7 +180,7 @@ bool ChangeTime()
         }
         LastButtonPressed = NO_PRESS;
         if(ChangeTimeParam)
-            SetChangedTime(Hour, Minute);
+        {}
         osDelay(100);
     }  
     SettingTimeDate = false;
@@ -190,9 +190,9 @@ bool ChangeTime()
 bool ChangeDate()
 {   
     uint8_t BoxPos = 0;
-    uint8_t Day = GlobalDate.Day;
-    uint8_t Month = GlobalDate.Month;
-    uint8_t Year = GlobalDate.Year;
+    uint8_t Day = GlobalTime.day;
+    uint8_t Month = GlobalTime.month;
+    uint8_t Year = GlobalTime.year;
     bool ChangeDateParam = false, ExitChangeDate = false;   
     SettingTimeDate = true;
     while(!ExitChangeDate)
@@ -270,7 +270,8 @@ bool ChangeDate()
         }
         LastButtonPressed = NO_PRESS;
         if(ChangeDateParam)
-            SetChangedDate(Day, Month, Year);
+        {}
+        osDelay(100);
     }  
     SettingTimeDate = false;
     return true;

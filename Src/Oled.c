@@ -1,14 +1,14 @@
 #include "main.h"
 #include "Oled.h"
 #include "DisplayDef.h"
-#include "TaskRTC.h"
+#include "TaskRTC2.h"
 #include "Menus.h"
 
 #define	STM32_HAL_I2C_TIMEOUT	2000
 
 extern I2C_HandleTypeDef hi2c1;
-extern TIME_VAR GlobalTime;
-extern DATE_VAR GlobalDate;
+extern DATE_TIME_S GlobalTime;
+
 
 uint8_t control = 0;
 
@@ -165,8 +165,8 @@ void DrawTopInfoBar()
     uint8_t FontH = 0;
     char Time[9];
     char Date[9];
-    snprintf(Time, 9, "%02d:%02d:%02d", GlobalTime.Hour, GlobalTime.Minute, GlobalTime.Second);
-    snprintf(Date, 9, "%02d/%02d/%02d", GlobalDate.Day, GlobalDate.Month, GlobalDate.Year);
+    snprintf(Time, 9, "%02d:%02d:%02d", GlobalTime.hours, GlobalTime.minutes, GlobalTime.seconds);
+    snprintf(Date, 9, "%02d/%02d/%02d", GlobalTime.day, GlobalTime.month, GlobalTime.year);
     u8g2_SetFontMode(&u8g, 1);
     u8g2_SetFont(&u8g, u8g_font_4x6);
     FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
