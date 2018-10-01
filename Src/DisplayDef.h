@@ -13,6 +13,7 @@
 #define UP_STR_X_POS            44
 #define DOWN_STR_X_POS          72
 #define OK_STR_X_POS           118
+#define BOXPOS_STR_X_POS       114
 
 #define LEFT_ARROW_X_POS        18
 #define RIGHT_ARROW_X_POS      109

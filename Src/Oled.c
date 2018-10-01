@@ -1,14 +1,15 @@
 #include "main.h"
 #include "Oled.h"
 #include "DisplayDef.h"
-#include "TaskRTC2.h"
+#include "TaskRTC.h"
 #include "Menus.h"
 
 #define	STM32_HAL_I2C_TIMEOUT	2000
 
 extern I2C_HandleTypeDef hi2c1;
-extern DATE_TIME_S GlobalTime;
 
+extern TIME_VAR GlobalTime;
+extern DATE_VAR GlobalDate;
 
 uint8_t control = 0;
 
@@ -165,8 +166,8 @@ void DrawTopInfoBar()
     uint8_t FontH = 0;
     char Time[9];
     char Date[9];
-    snprintf(Time, 9, "%02d:%02d:%02d", GlobalTime.hours, GlobalTime.minutes, GlobalTime.seconds);
-    snprintf(Date, 9, "%02d/%02d/%02d", GlobalTime.day, GlobalTime.month, GlobalTime.year);
+    snprintf(Time, 7, "%02d:%02d", GlobalTime.hours, GlobalTime.minutes);
+    snprintf(Date, 9, "%02d/%02d/%02d", GlobalDate.day, GlobalDate.month, GlobalDate.year);
     u8g2_SetFontMode(&u8g, 1);
     u8g2_SetFont(&u8g, u8g_font_4x6);
     FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
@@ -205,17 +206,16 @@ void DrawBottomBarInfo(uint8_t WichPage)
         break;
       case TIME_DATE_PAGE:
         u8g2_SetFont(&u8g, u8g_font_4x6);
-        FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
-//        u8g2_DrawBox(&u8g, X_LEFT_POS, FontH+1, SCREEN_MAX_WIDTH, FontH); 
+        FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g); 
         u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
-        u8g2_DrawStr(&u8g, X_RIGHT_POS(BarItem[POS_STR]), BOTTOM_INFO_BAR_Y_POS, BarItem[POS_STR]); 
+        u8g2_DrawStr(&u8g, BOXPOS_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[POS_STR]); 
         u8g2_DrawStr(&u8g, UP_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[SU_STR]);
         u8g2_DrawStr(&u8g, DOWN_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[GIU_STR]);
-        DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
+        DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
         DrawArrow(UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, UP_DIRECTION);
         DrawArrow(DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
-        DrawArrow(RIGHT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
+        DrawArrow(RIGHT_ARROW_X_POS - 4, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 4, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
         break;
       default:
         break;           
@@ -226,24 +226,26 @@ void DrawTimeDateChangeLoop(uint8_t BoxPos, uint8_t TypeSetting,uint8_t BoxOneNu
 {
     uint8_t FontH = 0;
     uint8_t ItemIndx = 0;
-    char *TimeDateStr;
-    if(TIME_TYPE)
-        snprintf(TimeDateStr, 8, "%02d:%02d:%02d", BoxOneNum, BoxTwoNum, BoxThreeNum);
+    char TimeDateStr[9];
+    if(TypeSetting == TIME_TYPE)
+        snprintf(TimeDateStr, 6, "%02d:%02d", BoxOneNum, BoxTwoNum);
     else
-        snprintf(TimeDateStr, 8, "%02d/%02d/%02d", BoxOneNum, BoxTwoNum, BoxThreeNum);
+        snprintf(TimeDateStr, 9, "%02d/%02d/%02d", BoxOneNum, BoxTwoNum, BoxThreeNum);
     
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();
     FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
     u8g2_SetFont(&u8g, u8g_font_6x13);
     u8g2_SetDrawColor(&u8g, 2);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(TimeDateStr), TIME_DATE_SETUP_Y_POS, TimeDateStr);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(TimeDateStr), TIME_DATE_SETUP_Y_POS + FontH, TimeDateStr);
     
-    u8g2_DrawFrame(&u8g, (X_CENTER_POS(TimeDateStr) - 1 + (BoxPos * TIME_DATE_FONT_WIDTH)), TIME_DATE_SETUP_Y_POS - 2, 
-                   (TIME_DATE_BOX_WIDTH + 1 + (BoxPos * TIME_DATE_FONT_WIDTH)), FontH + 2);
+    FontH = u8g2_GetFontAscent(&u8g);
+    
+    u8g2_DrawFrame(&u8g, (X_CENTER_POS(TimeDateStr) - 2 + (BoxPos * (TIME_DATE_BOX_WIDTH + 6))), TIME_DATE_SETUP_Y_POS - 5, 
+                   (TIME_DATE_BOX_WIDTH + 2 ), FontH + 5);
     
     u8g2_SetFont(&u8g, u8g_font_4x6);
-    u8g2_DrawStr(&u8g, X_CENTER_POS("Premere ok per confermare"), 40, "Premere ok per confermare");
+    u8g2_DrawStr(&u8g, X_CENTER_POS("Premere ok per confermare"), 45, "Premere ok per confermare");
     
     DrawBottomBarInfo(TIME_DATE_PAGE);
     u8g2_SendBuffer(&u8g);   

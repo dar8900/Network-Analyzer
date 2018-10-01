@@ -2,11 +2,13 @@
 #include "Menus.h"
 #include "Oled.h"
 #include "TaskOled.h"
-#include "TaskRTC2.h"
+#include "TaskRTC.h"
 #include "TaskKeyboard.h"
 
 extern bool HalfSecondTick;
-extern DATE_TIME_S GlobalTime;
+
+extern TIME_VAR GlobalTime;
+extern DATE_VAR GlobalDate;
 
 extern uint8_t DaysPerMonth[];
 extern bool SettingTimeDate;
@@ -75,8 +77,8 @@ bool ChangeDateTimeMenu()
             break;
           case BUTTON_OK:
             break;
-          default:
-            break;
+            default:
+              break;
         }
         LastButtonPressed = NO_PRESS;
         if(ItemPos < MAX_SETUP_MENU_LINES)
@@ -108,8 +110,7 @@ bool ChangeTime()
     while(!ExitChangeTime)
     {
         CheckOperation();
-        if(HalfSecondTick)
-            DrawTimeDateChangeLoop(BoxPos, TIME_TYPE, Hour, Minute, Second);
+        DrawTimeDateChangeLoop(BoxPos, TIME_TYPE, Hour, Minute, Second);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -126,12 +127,6 @@ bool ChangeTime()
                     Minute--;
                 else
                     Minute = 59;
-                break;
-              case 2:
-                if(Second > 0)
-                    Second--;
-                else
-                    Second = 59;
                 break;
               default:
                 break;
@@ -152,12 +147,6 @@ bool ChangeTime()
                 else
                     Minute = 0;
                 break;
-              case 2:
-                if(Second < 59)
-                    Second++;
-                else
-                    Second = 0;
-                break;
               default:
                 break;
             }          
@@ -166,7 +155,7 @@ bool ChangeTime()
             ExitChangeTime = true;
             break;
           case BUTTON_RIGHT:
-            if(BoxPos < 2)
+            if(BoxPos < 1)
                 BoxPos++;
             else
                 BoxPos = 0;
@@ -175,12 +164,14 @@ bool ChangeTime()
             ChangeTimeParam = true;
             ExitChangeTime = true;
             break;
-            default:
-              break;
+          default:
+            break;
         }
         LastButtonPressed = NO_PRESS;
         if(ChangeTimeParam)
-        {}
+        {
+            SetChangedTime(Hour, Minute);
+        }
         osDelay(100);
     }  
     SettingTimeDate = false;
@@ -190,16 +181,15 @@ bool ChangeTime()
 bool ChangeDate()
 {   
     uint8_t BoxPos = 0;
-    uint8_t Day = GlobalTime.day;
-    uint8_t Month = GlobalTime.month;
-    uint8_t Year = GlobalTime.year;
+    uint8_t Day = GlobalDate.day;
+    uint8_t Month = GlobalDate.month;
+    uint8_t Year = GlobalDate.year;
     bool ChangeDateParam = false, ExitChangeDate = false;   
     SettingTimeDate = true;
     while(!ExitChangeDate)
     {
         CheckOperation();
-        if(HalfSecondTick)
-            DrawTimeDateChangeLoop(BoxPos, DATE_TYPE, Day, Month, Year);    
+        DrawTimeDateChangeLoop(BoxPos, DATE_TYPE, Day, Month, Year);    
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -270,7 +260,9 @@ bool ChangeDate()
         }
         LastButtonPressed = NO_PRESS;
         if(ChangeDateParam)
-        {}
+        {
+            SetChangedDate(Day, Month, Year);
+        }
         osDelay(100);
     }  
     SettingTimeDate = false;
@@ -313,14 +305,13 @@ void MainMenu()
             break;
         }
         LastButtonPressed = NO_PRESS;
-        if(ItemPos < MAX_SETUP_MENU_LINES)
+        if(ItemPos <= (MAX_SETUP_MENU_LINES - 1))
         {
             FirstListItem = 0;  
         }
         else
         {
-            FirstListItem = ItemPos - MAX_SETUP_MENU_LINES;
-//            FirstListItem = (MAX_SETUP_MENU_LINES * (ItemPos / MAX_SETUP_MENU_LINES));
+            FirstListItem = ItemPos - (MAX_SETUP_MENU_LINES - 1);
         }
         if(EnterMenu)
         {

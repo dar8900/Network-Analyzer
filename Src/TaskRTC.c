@@ -3,7 +3,7 @@
 
 #ifdef ENABLE_RTC
 
-#define	RTC_I2C_TIMEOUT	2000
+#define	RTC_I2C_TIMEOUT	5000
 
 extern I2C_HandleTypeDef hi2c1;
 
@@ -33,7 +33,7 @@ uint8_t DaysPerMonth[] =
 
 static void i2c_write_no_reg(uint8_t address, uint8_t data)
 {
-    HAL_I2C_Master_Transmit(&hi2c1, address, &data, 1, 1);
+    HAL_I2C_Master_Transmit(&hi2c1, address << 1, &data, 1, 1);
 }
 
 /**
@@ -47,7 +47,7 @@ static void i2c_write_no_reg(uint8_t address, uint8_t data)
 */
 static void i2c_write_with_reg(uint8_t address, uint8_t reg, uint8_t data)
 {
-    HAL_I2C_Mem_Write(&hi2c1, address, reg, 1, &data, 1, RTC_I2C_TIMEOUT);
+    HAL_I2C_Mem_Write(&hi2c1, address << 1, reg, 1, &data, 1, RTC_I2C_TIMEOUT);
 }
 
 /**
@@ -62,7 +62,7 @@ static void i2c_write_with_reg(uint8_t address, uint8_t reg, uint8_t data)
 */
 static void i2c_write_multi_no_reg(uint8_t address, uint8_t* data, uint8_t len)
 {
-    HAL_I2C_Master_Transmit(&hi2c1, address, data, len, RTC_I2C_TIMEOUT);
+    HAL_I2C_Master_Transmit(&hi2c1, address << 1, data, len, RTC_I2C_TIMEOUT);
 }
 
 /**
@@ -78,7 +78,7 @@ static void i2c_write_multi_no_reg(uint8_t address, uint8_t* data, uint8_t len)
 */
 static void i2c_write_multi_with_reg(uint8_t address, uint8_t reg, uint8_t* data, uint8_t len)
 {
-    HAL_I2C_Mem_Write(&hi2c1, address, reg, 1, data, len, RTC_I2C_TIMEOUT);
+    HAL_I2C_Mem_Write(&hi2c1, address << 1, reg, 1, data, len, RTC_I2C_TIMEOUT);
 }
 
 /**
@@ -91,7 +91,7 @@ static void i2c_write_multi_with_reg(uint8_t address, uint8_t reg, uint8_t* data
 */
 static void i2c_read_no_reg(uint8_t address, uint8_t* data)
 {
-    HAL_I2C_Master_Receive(&hi2c1, address, data, 1, RTC_I2C_TIMEOUT);
+    HAL_I2C_Master_Receive(&hi2c1, address << 1, data, 1, RTC_I2C_TIMEOUT);
 }
 
 /**
@@ -105,7 +105,7 @@ static void i2c_read_no_reg(uint8_t address, uint8_t* data)
 */
 static void i2c_read_with_reg(uint8_t address, uint8_t reg, uint8_t* data)
 {
-    HAL_I2C_Mem_Read(&hi2c1, address, reg, 1, data, 1, RTC_I2C_TIMEOUT);
+    HAL_I2C_Mem_Read(&hi2c1, address << 1, reg, 1, data, 1, RTC_I2C_TIMEOUT);
 }
 
 /**
@@ -119,7 +119,7 @@ static void i2c_read_with_reg(uint8_t address, uint8_t reg, uint8_t* data)
 */
 static void i2c_read_multi_no_reg(uint8_t address, uint8_t len, uint8_t* data)
 {
-    HAL_I2C_Master_Receive(&hi2c1, address, data, len, RTC_I2C_TIMEOUT);
+    HAL_I2C_Master_Receive(&hi2c1, address << 1, data, len, RTC_I2C_TIMEOUT);
 }
 
 /**
@@ -134,7 +134,7 @@ static void i2c_read_multi_no_reg(uint8_t address, uint8_t len, uint8_t* data)
 */
 static void i2c_read_multi_with_reg(uint8_t address, uint8_t reg, uint8_t len, uint8_t* data)
 {
-    HAL_I2C_Mem_Read(&hi2c1, address, reg, 1, data, len, RTC_I2C_TIMEOUT);
+    HAL_I2C_Mem_Read(&hi2c1, address << 1, reg, 1, data, len, RTC_I2C_TIMEOUT);
 }
 
 /** Private function prototypes --------------------------------------------- */
@@ -607,14 +607,14 @@ static void GetSecondTick()
 
 static void GetGlobalTime()
 {
-    ds1307_get_time_24(&GlobalTime.Hour, &GlobalTime.Minute, &GlobalTime.Second);
+    ds1307_get_time_24(&GlobalTime.hours, &GlobalTime.minutes, &GlobalTime.seconds);
 }
 
 static void GetGlobalDate()
 {
-    GlobalDate.Day = ds1307_get_day();
-    GlobalDate.Month = ds1307_get_month();
-    GlobalDate.Year = ds1307_get_year();
+    GlobalDate.day = ds1307_get_day();
+    GlobalDate.month = ds1307_get_month();
+    GlobalDate.year = ds1307_get_year();
 }
 
 static void GetTimeDate()
@@ -623,18 +623,34 @@ static void GetTimeDate()
     GetGlobalDate();
 }
 
+static TIME_VAR GetLocalTime()
+{
+    TIME_VAR LocalTimeTmp;
+    ds1307_get_time_24(&LocalTimeTmp.hours, &LocalTimeTmp.minutes, &LocalTimeTmp.seconds);
+    return LocalTimeTmp;
+}
+
+static DATE_VAR GetLocalDate()
+{
+    DATE_VAR LocalDateTmp;
+    LocalDateTmp.day = ds1307_get_day();
+    LocalDateTmp.month = ds1307_get_month();
+    LocalDateTmp.year = ds1307_get_year();
+    return LocalDateTmp;
+}
+
+
+
 void SetInitialGlobalTimeDate()
 {
-    //    ds1307_set_time_24(0, 0 ,0);
-    //    ds1307_set_day(1);
-    //    ds1307_set_month(1);
-    //    ds1307_set_year(18);
-    GlobalTime.Hour = 19;
-    GlobalTime.Minute = 01;
-    GlobalTime.Second = 0;
-    GlobalDate.Day = 30;
-    GlobalDate.Month = 9;
-    GlobalDate.Year = 18;
+    ds1307_set_time_24(20, 34 ,0);
+    ds1307_set_day(1);
+    ds1307_set_month(10);
+    ds1307_set_year(18);
+    
+//    GlobalDate.day = 30;
+//    GlobalDate.month = 9;
+//    GlobalDate.year = 18;
 }
 
 void SetChangedTime(uint8_t Hour, uint8_t Minute)
@@ -654,30 +670,30 @@ void SetChangedDate(uint8_t Day, uint8_t Month, uint8_t Year)
 /* TaskRTC function */
 void TaskRTC(void const * argument)
 {
-    /* USER CODE BEGIN TaskRTC */
-    SetInitialGlobalTimeDate();
+    I2C_HandleTypeDef *I2CState = &hi2c1;
     
+    TIME_VAR LocalTime;
+    DATE_VAR LocalDate;
+    /* USER CODE BEGIN TaskRTC */
+//    SetInitialGlobalTimeDate();
+    GetTimeDate(); 
     /* Infinite loop */
     for(;;)
     {
         GetSecondTick();
-        if(SecondTick && HalfSecondTick)
+        if(I2CState->State != HAL_I2C_STATE_BUSY)
         {
-              GlobalTime.Second++;
-              if(GlobalTime.Second == 60)
-              {
-                GlobalTime.Second = 0;
-                GlobalTime.Minute++;
-                if(GlobalTime.Minute == 60)
-                {
-                    GlobalTime.Minute = 0;
-                    GlobalTime.Hour++;
-                    if(GlobalTime.Hour == 24)
-                    {
-                        GlobalTime.Hour = 0;
-                    }
-                }
-              }
+            LocalTime = GetLocalTime();
+            LocalDate = GetLocalDate();
+            if(LocalDate.year == GlobalDate.year)
+            {
+                GlobalTime = LocalTime;
+                GlobalDate = LocalDate;
+            }
+            else if(LocalDate.year != GlobalDate.year && LocalDate.year != 0)
+            {
+                GlobalDate.year++;
+            }
         }
         osDelay(500);
     }
