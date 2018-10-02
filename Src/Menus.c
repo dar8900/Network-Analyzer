@@ -4,6 +4,7 @@
 #include "TaskOled.h"
 #include "TaskRTC.h"
 #include "TaskKeyboard.h"
+#include "Graphix.h"
 
 extern bool HalfSecondTick;
 
@@ -19,7 +20,7 @@ MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] =
     {"Gestione Led"       , LedCtrl           },
     {"Gestione parametri" , ParameterSetup    },
     {"Setta l'orario"     , ChangeDateTimeMenu},
-    {"Funz inutile"       , Inutile           },
+    {"Grafici"            , ChooseGraphics    },
 };
 
 MENU_ITEM TimeSetting[MAX_TIME_DATE_ITEM] = 
@@ -28,9 +29,63 @@ MENU_ITEM TimeSetting[MAX_TIME_DATE_ITEM] =
     {"Cambia data"  , ChangeDate},
 };
 
-bool Inutile()
+MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] = 
 {
+    {"Forma d'onda I"     , DrawCurrentWave},
+    {"Andamento potenza"  , DrawCurrentWave},
+    {"Andamento energia"  , DrawCurrentWave},
+};
+
+bool ChooseGraphics()
+{
+    uint8_t ItemPos = 0, FirstListItem = 0;
+    bool EnterGraphic = false, ExitChooseGraphic = false;
     
+    while(!ExitChooseGraphic)
+    {
+        CheckOperation();
+        DrawMenuLoop("Grafici", GraphicsMenu, ItemPos, FirstListItem, MAX_GRAPHIC_ITEM, MAX_SETUP_MENU_LINES);
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+            if(ItemPos > 0)
+                ItemPos--;
+            else
+                ItemPos = MAX_GRAPHIC_ITEM - 1;
+            break;
+          case BUTTON_DOWN:
+            if(ItemPos < MAX_GRAPHIC_ITEM - 1)
+                ItemPos++;
+            else
+                ItemPos = 0;            
+            break;
+          case BUTTON_LEFT:
+            ExitChooseGraphic = true;
+            break;
+          case BUTTON_RIGHT:
+            EnterGraphic = true;
+            break;
+          case BUTTON_OK:
+            break;
+          default:
+            break;
+        }
+        LastButtonPressed = NO_PRESS;
+        if(ItemPos <= (MAX_SETUP_MENU_LINES - 1))
+        {
+            FirstListItem = 0;  
+        }
+        else
+        {
+            FirstListItem = ItemPos - (MAX_SETUP_MENU_LINES - 1);
+        }
+        if(EnterGraphic)
+        {
+            GraphicsMenu[ItemPos].MenuFunc();
+            EnterGraphic = false;
+        }
+        osDelay(100);
+    }
     return true;
 }
 

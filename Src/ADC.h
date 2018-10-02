@@ -1,7 +1,7 @@
 #ifndef ADC_H
 #define ADC_H
 
-#define NUM_SAMPLE  20
+#define NUM_SAMPLE  126
 
 void ADCConvToDMA(void);
 uint32_t GetSensorValue(void);

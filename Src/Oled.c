@@ -149,6 +149,23 @@ void DrawLogo(const uint8_t *Bitmap)
     u8g2_SendBuffer(&u8g); 
 }
 
+void MessageScreen(char *Message)
+{
+    u8g2_ClearBuffer(&u8g);
+    u8g2_SetFont(&u8g, u8g2_font_7x13_tf);
+    if(u8g2_GetStrWidth(&u8g,Message) > SCREEN_MAX_WIDTH)
+    {
+       u8g2_DrawStr(&u8g, X_CENTER_POS("Stringa non valida"), 32, "Stringa non valida"); 
+    }
+    else
+    {
+        u8g2_DrawStr(&u8g, X_CENTER_POS(Message), 32, Message);
+    }
+    u8g2_SendBuffer(&u8g);
+    osDelay(POPUP_DELAY);
+}
+
+
 void DrawMainScreenLoop()
 {
     u8g2_ClearBuffer(&u8g);

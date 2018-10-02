@@ -26,6 +26,14 @@ typedef enum
     MAX_TIME_DATE_ITEM
 }TIME_SETTING_ITEM;
 
+typedef enum
+{
+    CURRENT_WAVEFORM = 0,
+    POWER,
+    ENERGY,
+    MAX_GRAPHIC_ITEM
+}GRAPHIC_ITEMS;
+
 
 bool LedCtrl(void);
 void MainScreen(void);
@@ -34,6 +42,6 @@ bool ChangeDateTimeMenu(void);
 bool ChangeTime(void);
 bool ChangeDate(void);
 
-bool Inutile(void);
+bool ChooseGraphics(void);
 
 #endif

@@ -8,6 +8,8 @@
 #define LOGO_LEN        8
 #define LOGO_HIGH       8
 
+#define POPUP_DELAY  1500
+
 #define TOP_INFO_BAR_Y_POS      (0 + (u8g2_GetAscent(&u8g)))
 #define BOTTOM_INFO_BAR_Y_POS   (64 - (u8g2_GetAscent(&u8g)) + 4)
 #define UP_STR_X_POS            44

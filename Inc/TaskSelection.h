@@ -5,7 +5,7 @@
 
 #ifndef UNSELECT_ALL
 
-#undef ENABLE_MEASURE    // Abilita il TaskMeasure
+#define ENABLE_MEASURE    // Abilita il TaskMeasure
 
 #define ENABLE_KEYBOARD   // Abilita il TaskKeyboard
 

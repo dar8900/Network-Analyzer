@@ -623,35 +623,15 @@ static void GetTimeDate()
     GetGlobalDate();
 }
 
-static TIME_VAR GetLocalTime()
-{
-    TIME_VAR LocalTimeTmp;
-    ds1307_get_time_24(&LocalTimeTmp.hours, &LocalTimeTmp.minutes, &LocalTimeTmp.seconds);
-    return LocalTimeTmp;
-}
 
-static DATE_VAR GetLocalDate()
-{
-    DATE_VAR LocalDateTmp;
-    LocalDateTmp.day = ds1307_get_day();
-    LocalDateTmp.month = ds1307_get_month();
-    LocalDateTmp.year = ds1307_get_year();
-    return LocalDateTmp;
-}
-
-
-
-void SetInitialGlobalTimeDate()
-{
-    ds1307_set_time_24(20, 34 ,0);
-    ds1307_set_day(1);
-    ds1307_set_month(10);
-    ds1307_set_year(18);
-    
-//    GlobalDate.day = 30;
-//    GlobalDate.month = 9;
-//    GlobalDate.year = 18;
-}
+//void SetInitialGlobalTimeDate()
+//{
+//    ds1307_set_time_24(20, 34 ,0);
+//    ds1307_set_day(1);
+//    ds1307_set_month(10);
+//    ds1307_set_year(18);
+//    
+//}
 
 void SetChangedTime(uint8_t Hour, uint8_t Minute)
 {
@@ -674,26 +654,27 @@ void TaskRTC(void const * argument)
     
     TIME_VAR LocalTime;
     DATE_VAR LocalDate;
-    /* USER CODE BEGIN TaskRTC */
-//    SetInitialGlobalTimeDate();
+
     GetTimeDate(); 
+    
     /* Infinite loop */
     for(;;)
     {
         GetSecondTick();
-        if(I2CState->State != HAL_I2C_STATE_BUSY)
+        
+        ds1307_get_time_24(&LocalTime.hours, &LocalTime.minutes, &LocalTime.seconds);
+        LocalDate.day   = ds1307_get_day();
+        LocalDate.month = ds1307_get_month();
+        LocalDate.year  = ds1307_get_year();
+        
+        if(LocalDate.year == GlobalDate.year)
         {
-            LocalTime = GetLocalTime();
-            LocalDate = GetLocalDate();
-            if(LocalDate.year == GlobalDate.year)
-            {
-                GlobalTime = LocalTime;
-                GlobalDate = LocalDate;
-            }
-            else if(LocalDate.year != GlobalDate.year && LocalDate.year != 0)
-            {
-                GlobalDate.year++;
-            }
+            GlobalTime = LocalTime;
+            GlobalDate = LocalDate;
+        }
+        else if(LocalDate.year != GlobalDate.year && LocalDate.year != 0)
+        {
+            GlobalDate.year++;
         }
         osDelay(500);
     }
