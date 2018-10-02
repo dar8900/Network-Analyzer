@@ -74,9 +74,19 @@ void MX_ADC2_Init(void)
     
 }
 
+static void TransferToAdcBuff()
+{
+    for(uint8_t i = 0; i < NUM_SAMPLE; i++)
+    {
+        ADCReadedValue[i] = DMABuff[i];
+    }
+    return;
+}
+
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
-    memcpy (ADCReadedValue, DMABuff,  NUM_SAMPLE);
+//    memcpy (ADCReadedValue, DMABuff,  NUM_SAMPLE);
+    TransferToAdcBuff();
     ConversionEnd = true;
 }
 
