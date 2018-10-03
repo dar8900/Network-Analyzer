@@ -20,6 +20,8 @@ void CheckOperation()
             LedConf = RGB;
         LastButtonPressed = NO_PRESS;
     }
+    else
+        LastButtonPressed = NO_PRESS;
 }
 
 

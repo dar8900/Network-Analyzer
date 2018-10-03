@@ -10,6 +10,8 @@
 
 #define POPUP_DELAY  1500
 
+#define GENERAL_STR_Y_POS(Pos)  (Pos + (u8g2_GetAscent(&u8g)))    
+
 #define TOP_INFO_BAR_Y_POS      (0 + (u8g2_GetAscent(&u8g)))
 #define BOTTOM_INFO_BAR_Y_POS   (64 - (u8g2_GetAscent(&u8g)) + 4)
 #define UP_STR_X_POS            44
@@ -33,6 +35,12 @@
 #define TIME_DATE_SETUP_Y_POS   20
 #define TIME_DATE_FONT_WIDTH     6
 #define TIME_DATE_BOX_WIDTH     12
+
+#define MEASURE_NAME_X_POS       0
+#define MEASURE_UNIT_X_POS      69
+#define MEASURE_X_POS           10
+
+#define TOP_MEASURE_Y_POS       (0 + (u8g2_GetAscent(&u8g)))
 
 // Posizione x centrale dello schermo
 #define X_LEFT_POS               0

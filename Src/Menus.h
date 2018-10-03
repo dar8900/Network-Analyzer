@@ -11,11 +11,11 @@ typedef struct
 
 typedef enum
 {
-    LED_GEST = 0,
+    GRAPHICS_ITEM = 0,
+    MEASURE_ITEM,
+    LED_GEST,
     PARAMETER_SEUP,
-    TIME_SET,
-    VOID_FUNC,
-    
+    TIME_SET,    
     MAX_SETUP_ITEM
 }SETUP_ITEM_VALUE;
 
@@ -29,10 +29,18 @@ typedef enum
 typedef enum
 {
     CURRENT_WAVEFORM = 0,
-    POWER,
-    ENERGY,
+//    POWER,
+//    ENERGY,
     MAX_GRAPHIC_ITEM
 }GRAPHIC_ITEMS;
+
+typedef enum
+{
+    CURRENT_PAGE = 0,
+    POWER_PAGE,
+    ENERGY_PAGE,
+    MAX_MEASURE_PAGE
+}MEASURE_PAGES;
 
 
 bool LedCtrl(void);
@@ -42,6 +50,7 @@ bool ChangeDateTimeMenu(void);
 bool ChangeTime(void);
 bool ChangeDate(void);
 
+bool ShowMeasure(void);
 bool ChooseGraphics(void);
 
 #endif

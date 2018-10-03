@@ -293,6 +293,9 @@ typedef enum
   * @{
   */
 /* Initialization and de-initialization functions  ******************************/
+
+extern uint32_t TickForSecond;
+
 HAL_StatusTypeDef HAL_Init(void);
 HAL_StatusTypeDef HAL_DeInit(void);
 void HAL_MspInit(void);

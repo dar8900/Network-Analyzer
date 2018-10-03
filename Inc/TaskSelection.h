@@ -17,4 +17,6 @@
 
 #endif // UNSELECT_ALL
 
+#define SIM_SIN_WAVE
+
 #endif

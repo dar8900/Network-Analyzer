@@ -17,10 +17,11 @@ extern bool SettingTimeDate;
 
 MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] = 
 {
+    {"Grafici"            , ChooseGraphics    },
+    {"Misure"             , ShowMeasure       },
     {"Gestione Led"       , LedCtrl           },
     {"Gestione parametri" , ParameterSetup    },
     {"Setta l'orario"     , ChangeDateTimeMenu},
-    {"Grafici"            , ChooseGraphics    },
 };
 
 MENU_ITEM TimeSetting[MAX_TIME_DATE_ITEM] = 
@@ -32,9 +33,45 @@ MENU_ITEM TimeSetting[MAX_TIME_DATE_ITEM] =
 MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] = 
 {
     {"Forma d'onda I"     , DrawCurrentWave},
-    {"Andamento potenza"  , DrawCurrentWave},
-    {"Andamento energia"  , DrawCurrentWave},
 };
+
+
+bool ShowMeasure()
+{
+    uint8_t MeasurePage = CURRENT_PAGE;
+    bool ExitShowMeasure = false;
+    while(!ExitShowMeasure)
+    {
+        CheckOperation();
+        DrawMeasure(MeasurePage);
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+            break;
+          case BUTTON_DOWN:
+            break;
+          case BUTTON_LEFT:
+            if(MeasurePage < MAX_MEASURE_PAGE - 1)
+                MeasurePage++;
+            else
+                MeasurePage = MAX_MEASURE_PAGE - 1;
+            break;
+          case BUTTON_RIGHT:
+            ExitShowMeasure = true;
+            break;
+          case BUTTON_OK:
+            break;
+          default:
+            break;
+        }
+        
+        osDelay(200);
+    }
+    
+    return true;
+}
+
+
 
 bool ChooseGraphics()
 {
@@ -70,7 +107,6 @@ bool ChooseGraphics()
           default:
             break;
         }
-        LastButtonPressed = NO_PRESS;
         if(ItemPos <= (MAX_SETUP_MENU_LINES - 1))
         {
             FirstListItem = 0;  
@@ -81,6 +117,7 @@ bool ChooseGraphics()
         }
         if(EnterGraphic)
         {
+            LastButtonPressed = NO_PRESS;
             GraphicsMenu[ItemPos].MenuFunc();
             EnterGraphic = false;
         }
@@ -135,7 +172,7 @@ bool ChangeDateTimeMenu()
             default:
               break;
         }
-        LastButtonPressed = NO_PRESS;
+        
         if(ItemPos < MAX_SETUP_MENU_LINES)
         {
             FirstListItem = 0;  
@@ -146,6 +183,7 @@ bool ChangeDateTimeMenu()
         }
         if(ChangeTimeParam)
         {
+            LastButtonPressed = NO_PRESS;
             TimeSetting[ItemPos].MenuFunc();
             ChangeTimeParam = false;
         }
@@ -359,7 +397,7 @@ void MainMenu()
           default:
             break;
         }
-        LastButtonPressed = NO_PRESS;
+        
         if(ItemPos <= (MAX_SETUP_MENU_LINES - 1))
         {
             FirstListItem = 0;  
@@ -370,6 +408,7 @@ void MainMenu()
         }
         if(EnterMenu)
         {
+            LastButtonPressed = NO_PRESS;
             MainSetupMenu[ItemPos].MenuFunc();
             EnterMenu = false;
         }

@@ -1,42 +1,42 @@
-"C:\Users\Deo\Documents\Network-Analyzer\Src\OLEDLIB2\u8x8_d_st7588.c"
+"C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\Src\OLEDLIB2\u8x8_d_st7588.c"
 -std=c99
 -ferror-limit=100
 -I
-C:\Users\Deo\Documents\Network-Analyzer\EWARM/../Inc
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM/../Inc
 -I
-C:\Users\Deo\Documents\Network-Analyzer\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc
 -I
-C:\Users\Deo\Documents\Network-Analyzer\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
 -I
-C:\Users\Deo\Documents\Network-Analyzer\EWARM/../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM3
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM/../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM3
 -I
-C:\Users\Deo\Documents\Network-Analyzer\EWARM/../Drivers/CMSIS/Device/ST/STM32F1xx/Include
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM/../Drivers/CMSIS/Device/ST/STM32F1xx/Include
 -I
-C:\Users\Deo\Documents\Network-Analyzer\EWARM/../Middlewares/Third_Party/FreeRTOS/Source/include
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM/../Middlewares/Third_Party/FreeRTOS/Source/include
 -I
-C:\Users\Deo\Documents\Network-Analyzer\EWARM/../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM/../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 -I
-C:\Users\Deo\Documents\Network-Analyzer\EWARM/../Drivers/CMSIS/Include
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM/../Drivers/CMSIS/Include
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\arm\inc\c
 -I
-C:\Users\Deo\Documents\Network-Analyzer\Inc
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\Inc
 -I
-C:\Users\Deo\Documents\Network-Analyzer\Drivers\STM32F1xx_HAL_Driver\Inc
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\Drivers\STM32F1xx_HAL_Driver\Inc
 -I
-C:\Users\Deo\Documents\Network-Analyzer\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy
 -I
-C:\Users\Deo\Documents\Network-Analyzer\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM3
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM3
 -I
-C:\Users\Deo\Documents\Network-Analyzer\Drivers\CMSIS\Device\ST\STM32F1xx\Include
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\Drivers\CMSIS\Device\ST\STM32F1xx\Include
 -I
-C:\Users\Deo\Documents\Network-Analyzer\Middlewares\Third_Party\FreeRTOS\Source\include
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\Middlewares\Third_Party\FreeRTOS\Source\include
 -I
-C:\Users\Deo\Documents\Network-Analyzer\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS
 -I
-C:\Users\Deo\Documents\Network-Analyzer\Drivers\CMSIS\Include
+C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\Drivers\CMSIS\Include
 -DUSE_HAL_DRIVER=1
 -DSTM32F103xB=1
 -D__CHAR_BITS__=8

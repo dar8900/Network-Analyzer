@@ -93,6 +93,9 @@
   * @{
   */
 __IO uint32_t uwTick;
+
+uint32_t TickForSecond;
+
 uint32_t uwTickPrio   = (1UL << __NVIC_PRIO_BITS); /* Invalid PRIO */
 HAL_TickFreqTypeDef uwTickFreq = HAL_TICK_FREQ_DEFAULT;  /* 1KHz */
 /**
@@ -309,6 +312,7 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 __weak void HAL_IncTick(void)
 {
   uwTick += uwTickFreq;
+  TickForSecond += uwTickFreq;
 }
 
 /**

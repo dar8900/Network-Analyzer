@@ -1,4 +1,5 @@
 #include "main.h"
+#include "SysTime.h"
 #include "TaskRTC.h"
 
 #ifdef ENABLE_RTC
@@ -646,7 +647,6 @@ void SetChangedDate(uint8_t Day, uint8_t Month, uint8_t Year)
 
 }
 
-
 /* TaskRTC function */
 void TaskRTC(void const * argument)
 {
@@ -656,10 +656,16 @@ void TaskRTC(void const * argument)
     DATE_VAR LocalDate;
 
     GetTimeDate(); 
+    TickForSecond = 0;
     
     /* Infinite loop */
     for(;;)
     {
+        if(TickForSecond == 1000)
+        {
+            TickForSecond = 0;
+        }
+        
         GetSecondTick();
         
         ds1307_get_time_24(&LocalTime.hours, &LocalTime.minutes, &LocalTime.seconds);
@@ -676,7 +682,8 @@ void TaskRTC(void const * argument)
         {
             GlobalDate.year++;
         }
-        osDelay(500);
+//        osDelay(500);
+        DelayMs(500);
     }
     /* USER CODE END TaskRTC */
 }

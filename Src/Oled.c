@@ -1,4 +1,5 @@
 #include "main.h"
+#include "SysTime.h"
 #include "Oled.h"
 #include "DisplayDef.h"
 #include "TaskRTC.h"
@@ -23,6 +24,7 @@ typedef enum
     BACK_STR,
     OK_STR,
     POS_STR,
+    PAGE_STR,
     MAX_BOTTOM_BAR_ITEM    
 }BOTTOM_BAR_ITEMS;
 
@@ -33,7 +35,8 @@ const char *BarItem[] =
     "Giu",
     "Back",
     "Ok",   
-    "Pos."
+    "Pos.",
+    "Page",
 };
 
 static uint8_t u8x8_gpio_and_delay_STM32F103(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
@@ -162,7 +165,7 @@ void MessageScreen(char *Message)
         u8g2_DrawStr(&u8g, X_CENTER_POS(Message), 32, Message);
     }
     u8g2_SendBuffer(&u8g);
-    osDelay(POPUP_DELAY);
+    DelayMs(POPUP_DELAY);
 }
 
 
@@ -233,6 +236,15 @@ void DrawBottomBarInfo(uint8_t WichPage)
         DrawArrow(UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, UP_DIRECTION);
         DrawArrow(DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
         DrawArrow(RIGHT_ARROW_X_POS - 4, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 4, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
+        break;
+      case MEASURE_PAGE:
+        u8g2_SetFont(&u8g, u8g_font_4x6);
+        FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g); 
+        u8g2_SetDrawColor(&u8g, 2);
+        u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
+        u8g2_DrawStr(&u8g, BOXPOS_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[PAGE_STR]); 
+        DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
+        DrawArrow(RIGHT_ARROW_X_POS - 8, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 8, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
         break;
       default:
         break;           

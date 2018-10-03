@@ -12,7 +12,10 @@ extern bool SecondTick;
 extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
 
 bool EnableMeasure = false;
+
+#ifdef SIM_SIN_WAVE
 int16_t SinTestGraphic[NUM_TEST_SAMPLE];
+#endif
 
 uint64_t CubeRawValue;
 float CurrentRMS;
@@ -41,6 +44,7 @@ static float CalcCurrent(uint64_t QuadraticValue, uint8_t NSampling)
     return SquareQuadratic;
 }
 
+uint32_t TimeCtrl;
 
 /* TaskMeasure function */
 void TaskMeasure(void const * argument)
@@ -48,8 +52,10 @@ void TaskMeasure(void const * argument)
         
     uint8_t NumberOfCurrentSampling = 0;
     uint32_t NumberOfEnergySampling = 0;  
-    
+
+#ifdef SIM_SIN_WAVE    
     FillTestArray();
+#endif
     
     /* Infinite loop */
     for(;;)
@@ -57,11 +63,13 @@ void TaskMeasure(void const * argument)
         
         if(EnableMeasure)
         {
+            TimeCtrl = HAL_GetTick();
             while(!ConversionEnd)
             {
-                ADCConvToDMA();
-                DelayMs(1);
+                ADCConvToDMA();                
             }
+            TimeCtrl -= HAL_GetTick();
+            
             if(ConversionEnd)
             {
                 StopADC_DMA_Conv();
@@ -88,7 +96,6 @@ void TaskMeasure(void const * argument)
                 EnergyAcc = 0;
             }
         }     
-        osDelay(10);
     }
     /* USER CODE END TaskMeasure */
 }

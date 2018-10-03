@@ -9,5 +9,9 @@
 
 #define INT16_SCALE           32766 
 
+#define ADC_MAX_VALUE               4095
+#define ADC_HALF_MAX_VALUE          2048
+
 bool DrawCurrentWave(void);
+void DrawMeasure(uint8_t Page);
 #endif
