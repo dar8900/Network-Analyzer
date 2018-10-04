@@ -7,6 +7,8 @@
 
 #ifdef ENABLE_MEASURE
 
+#define CURRENT_SAMPLE  60
+
 extern bool ConversionEnd;
 extern bool SecondTick;
 extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
@@ -18,11 +20,12 @@ int16_t SinTestGraphic[NUM_TEST_SAMPLE];
 #endif
 
 uint64_t CubeRawValue;
-float CurrentRMS;
+float CurrentRMS[CURRENT_SAMPLE], MeanCurrentRMS;
 float Power;
 float MeanEnergy, EnergyAcc;
+uint16_t ADCOffset = ADC_HALF_MAX_VALUE;
 
-
+#ifdef SIM_SIN_WAVE
 void FillTestArray()
 {
     uint8_t NCamp = 0;
@@ -35,16 +38,45 @@ void FillTestArray()
         SinTestGraphic[NCamp] = (int16_t)(SinCalc * INT16_SCALE);
     }   
 }
+#endif
 
-static float CalcCurrent(uint64_t QuadraticValue, uint8_t NSampling)
+static void ClearFLArray(float Array[], uint8_t Size)
+{
+    for(uint8_t i = 0; i < Size; i++)
+    {
+        Array[i] = 0.0;
+    }
+}
+
+
+static float CalcCurrent(uint64_t QuadraticValue)
 {
     float SquareQuadratic;
-    QuadraticValue = (QuadraticValue / (NUM_SAMPLE * NSampling)); 
+    QuadraticValue = (QuadraticValue / NUM_SAMPLE); 
+    
+    // Estraggo il valore quadratico facendolo diventare RMS e trasformandolo in mV 
     SquareQuadratic = (float)sqrt((double)QuadraticValue);
+    
+    SquareQuadratic =  (TOVOLT(SquareQuadratic)) * 1000;
+    
+    // Divido i V ottenuti per la sensibilita del sensore per ottere gli A 
+    SquareQuadratic /= CURR_SENSOR_SENSITIVITY;
+    
     return SquareQuadratic;
 }
 
-uint32_t TimeCtrl;
+
+static float CalcMeanCurrent(float CurrentRMS[])
+{
+    uint8_t CurrentIndx = 0;
+    float SumCurr = 0.0;
+    for(CurrentIndx = 0; CurrentIndx < CURRENT_SAMPLE; CurrentIndx++)
+    {
+        SumCurr += CurrentRMS[CurrentIndx];
+    }
+    SumCurr /= CURRENT_SAMPLE;
+    return SumCurr;
+}
 
 /* TaskMeasure function */
 void TaskMeasure(void const * argument)
@@ -57,33 +89,42 @@ void TaskMeasure(void const * argument)
     FillTestArray();
 #endif
     
+    
     /* Infinite loop */
     for(;;)
     {
         
         if(EnableMeasure)
         {
-            TimeCtrl = HAL_GetTick();
+
             while(!ConversionEnd)
             {
                 ADCConvToDMA();                
             }
-            TimeCtrl -= HAL_GetTick();
+
             
             if(ConversionEnd)
             {
                 StopADC_DMA_Conv();
                 ConversionEnd = false;
-                NumberOfCurrentSampling++;
                 for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
                 {
-                    CubeRawValue += (ADCReadedValue[ValueIndx] * ADCReadedValue[ValueIndx]);
+                    CubeRawValue += ((ADCReadedValue[ValueIndx] - ADCOffset) * (ADCReadedValue[ValueIndx] - ADCOffset));
                 }
+                CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
+                NumberOfCurrentSampling++;
+                CubeRawValue = 0;
             }
-            if(NumberOfCurrentSampling == 4)
+            if(NumberOfCurrentSampling == CURRENT_SAMPLE)
             {
-                CurrentRMS = CalcCurrent(CubeRawValue, NumberOfCurrentSampling);
-                Power = CurrentRMS * VOLTAGE_VALUE;
+                MeanCurrentRMS = CalcMeanCurrent(CurrentRMS);            
+                if(MeanCurrentRMS > 0.1)
+                    Power = MeanCurrentRMS * VOLTAGE_VALUE;
+                else
+                {
+                    MeanCurrentRMS = 0.0;
+                    Power = 0.0;
+                }
                 EnergyAcc += Power;
                 NumberOfEnergySampling++;
                 NumberOfCurrentSampling = 0;                
@@ -91,11 +132,20 @@ void TaskMeasure(void const * argument)
             if(SecondTick)
             {
                 if(NumberOfEnergySampling > 0)
-                    MeanEnergy += (EnergyAcc / NumberOfEnergySampling);
+                    MeanEnergy += ((EnergyAcc / NumberOfEnergySampling)/3600.0);
                 NumberOfEnergySampling = 0;
                 EnergyAcc = 0;
             }
-        }     
+        } 
+        else
+        {
+            ClearFLArray(CurrentRMS, CURRENT_SAMPLE);
+            MeanCurrentRMS = 0.0;
+            Power      = 0.0;
+            MeanEnergy = 0.0;
+            EnergyAcc  = 0.0;
+        }
+        osDelay(20);
     }
     /* USER CODE END TaskMeasure */
 }

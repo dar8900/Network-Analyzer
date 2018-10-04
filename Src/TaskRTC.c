@@ -13,6 +13,8 @@ DATE_VAR GlobalDate;
 
 uint8_t SecondCnt;
 bool SecondTick = false;
+
+
 bool HalfSecondTick = false;
 bool SettingTimeDate = false;
 
@@ -660,14 +662,9 @@ void TaskRTC(void const * argument)
     
     /* Infinite loop */
     for(;;)
-    {
-        if(TickForSecond == 1000)
-        {
-            TickForSecond = 0;
-        }
-        
-        GetSecondTick();
-        
+    {       
+//        GetSecondTick();
+        HalfSecondTick = !HalfSecondTick;
         ds1307_get_time_24(&LocalTime.hours, &LocalTime.minutes, &LocalTime.seconds);
         LocalDate.day   = ds1307_get_day();
         LocalDate.month = ds1307_get_month();
@@ -682,8 +679,8 @@ void TaskRTC(void const * argument)
         {
             GlobalDate.year++;
         }
-//        osDelay(500);
-        DelayMs(500);
+        osDelay(500);
+       
     }
     /* USER CODE END TaskRTC */
 }

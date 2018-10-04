@@ -38,7 +38,7 @@
 
 #define MEASURE_NAME_X_POS       0
 #define MEASURE_UNIT_X_POS      69
-#define MEASURE_X_POS           10
+#define MEASURE_X_POS           12
 
 #define TOP_MEASURE_Y_POS       (0 + (u8g2_GetAscent(&u8g)))
 

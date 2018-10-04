@@ -101,7 +101,7 @@ static void CreateTask()
     
 #ifdef ENABLE_RTC
     /* definition and creation of RTC */
-    osThreadDef(RTC, TaskRTC, osPriorityHigh, 0, 64);
+    osThreadDef(RTC, TaskRTC, osPriorityBelowNormal, 0, 64);
     RTCHandle = osThreadCreate(osThread(RTC), NULL);
 #endif   
  

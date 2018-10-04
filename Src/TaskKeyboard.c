@@ -107,27 +107,6 @@ void TaskKeyboard(void const * argument)
     for(;;)
     {
         CheckButtons();
-//        switch(ButtonPress)
-//        {
-//          case BUTTON_UP:
-//            LedConf = RED;
-//            break;
-//          case BUTTON_DOWN:
-//            LedConf = GREEN;
-//            break;
-//          case BUTTON_LEFT:
-//            LedConf = BLUE;
-//            break;
-//          case BUTTON_RIGHT:
-//            LedConf = RGB;
-//            break;
-//          case BUTTON_OK:
-//            LedConf = ALL_LED_OFF;
-//            break;
-//          default:
-//            break;
-//        }
-//        LastButtonPressed = NO_PRESS;
         osDelay(TASK_KEYBOARD_DELAY);
     }
     /* USER CODE END TaskKeyboard */

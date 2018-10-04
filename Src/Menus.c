@@ -3,6 +3,7 @@
 #include "Oled.h"
 #include "TaskOled.h"
 #include "TaskRTC.h"
+#include "TaskLed.h"
 #include "TaskKeyboard.h"
 #include "Graphix.h"
 
@@ -14,6 +15,7 @@ extern DATE_VAR GlobalDate;
 extern uint8_t DaysPerMonth[];
 extern bool SettingTimeDate;
 
+extern uint8_t LedConf;
 
 MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] = 
 {
@@ -35,6 +37,74 @@ MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] =
     {"Forma d'onda I"     , DrawCurrentWave},
 };
 
+PARAMETER_ITEM ParametersSetup[MAX_PARAMETER_ITEM] = 
+{
+    {"Abilitare misura"  , CONFIRM_TYPE},
+};
+
+
+const char *LedCombStr[MAX_LED_COMBINATIONS] = 
+{
+    "RGB",
+    "Rosso",
+    "Verde",
+    "Blu",
+    "Rosso e verde",
+    "Rosso e blu",
+    "Blu e verde",
+    "Tutti spenti",
+};
+
+bool ChooseYesNo(char *TitleChoice)
+{
+    char *ChoiceStr[2] = {"Si", "No"};
+    uint8_t ChoiceNum = 0, FirstListItem = 0;
+    bool ExitChoice = false, Choice = false;
+    while(!ExitChoice)
+    {
+        CheckOperation();
+        DrawListLoop(TitleChoice, ChoiceStr, ChoiceNum, FirstListItem, 2, MAX_SETUP_MENU_LINES);
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+            if(ChoiceNum > 0)
+                ChoiceNum--;
+            else
+                ChoiceNum = 1;
+            break;
+          case BUTTON_DOWN:
+            if(ChoiceNum < 1)
+                ChoiceNum++;
+            else
+                ChoiceNum = 0;
+            break;
+          case BUTTON_LEFT:
+            ExitChoice = true;
+            break;
+          case BUTTON_RIGHT:           
+            ExitChoice = true;
+            if(ChoiceNum == 0)
+                Choice = true;
+            else
+               Choice = false; 
+            break;
+          case BUTTON_OK:
+            break;
+          default:
+            break;
+        }        
+        if(ChoiceNum <= (MAX_SETUP_MENU_LINES - 1))
+        {
+            FirstListItem = 0;  
+        }
+        else
+        {
+            FirstListItem = ChoiceNum - (MAX_SETUP_MENU_LINES - 1);
+        }    
+    }
+    return Choice;
+}
+
 
 bool ShowMeasure()
 {
@@ -51,13 +121,13 @@ bool ShowMeasure()
           case BUTTON_DOWN:
             break;
           case BUTTON_LEFT:
+            ExitShowMeasure = true;
+            break;
+          case BUTTON_RIGHT:           
             if(MeasurePage < MAX_MEASURE_PAGE - 1)
                 MeasurePage++;
             else
-                MeasurePage = MAX_MEASURE_PAGE - 1;
-            break;
-          case BUTTON_RIGHT:
-            ExitShowMeasure = true;
+                MeasurePage = 0;
             break;
           case BUTTON_OK:
             break;
@@ -128,7 +198,55 @@ bool ChooseGraphics()
 
 bool LedCtrl()
 {
-    
+    uint8_t LedComb = 0, FirstListItem = 0;
+    bool ExitLedConf = false, ChoosedLedComb = false;
+    while(!ExitLedConf)
+    {
+        CheckOperation();
+        DrawListLoop("Controllo Led", LedCombStr, LedComb, FirstListItem, MAX_LED_COMBINATIONS, MAX_SETUP_MENU_LINES);
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+            if(LedComb > 0)
+                LedComb--;
+            else
+                LedComb = MAX_LED_COMBINATIONS - 1;
+            break;
+          case BUTTON_DOWN:
+            if(LedComb < MAX_LED_COMBINATIONS - 1)
+                LedComb++;
+            else
+                LedComb = 0;            
+            break;
+          case BUTTON_LEFT:
+            ExitLedConf = true;
+            break;
+          case BUTTON_RIGHT:
+            ChoosedLedComb = true;
+            ExitLedConf = true;
+            break;
+          case BUTTON_OK:
+            break;
+          default:
+            break;           
+        }
+        
+        if(LedComb <= (MAX_SETUP_MENU_LINES - 1))
+        {
+            FirstListItem = 0;  
+        }
+        else
+        {
+            FirstListItem = LedComb - (MAX_SETUP_MENU_LINES - 1);
+        }
+        osDelay(100);
+    }
+    if(ChoosedLedComb)
+    {
+        LastButtonPressed = NO_PRESS;
+        LedConf = LedComb;
+        ChoosedLedComb = false;
+    }
     return true;
 }
 
@@ -145,8 +263,7 @@ bool ChangeDateTimeMenu()
     while(!ExitChangeTimeDate)
     {
         CheckOperation();
-        if(HalfSecondTick)
-            DrawMenuLoop("Setta ora/data", TimeSetting, ItemPos, FirstListItem, MAX_TIME_DATE_ITEM, MAX_SETUP_MENU_LINES);
+        DrawMenuLoop("Setta ora/data", TimeSetting, ItemPos, FirstListItem, MAX_TIME_DATE_ITEM, MAX_SETUP_MENU_LINES);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:

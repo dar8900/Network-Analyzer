@@ -16,7 +16,7 @@ CStepIntDis=_ 0
 stlinkserialNo=2798FD0D
 stlinkfoundProbes=
 [DebugChecksum]
-Checksum=595579564
+Checksum=2013432012
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -47,12 +47,12 @@ ITMlogFile=$PROJ_DIR$\ITM.log
 FilePath=_ ""
 UseFilter=_ 0
 [struct_types]
-Fmt0=DATE_VAR-Day	3	0
-Fmt1=DATE_VAR-Month	3	0
-Fmt2=DATE_VAR-Year	3	0
-Fmt3=TIME_VAR-Hour	3	0
-Fmt4=TIME_VAR-Minute	3	0
-Fmt5=TIME_VAR-Second	3	0
+Fmt0=DATE_VAR-day	3	0
+Fmt1=DATE_VAR-month	3	0
+Fmt2=DATE_VAR-year	3	0
+Fmt3=TIME_VAR-hours	3	0
+Fmt4=TIME_VAR-minutes	3	0
+Fmt5=TIME_VAR-seconds	3	0
 [watch_formats]
 Fmt0={W}42:ButtonPress	3	0
 Fmt1={W}42:LastButtonPressed	3	0
@@ -97,6 +97,11 @@ ShowTimeLog=1
 SumEnabled=0
 ShowTimeSum=1
 SumSortOrder=0
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Bp0=_ 0 "EMUL_DATA" "MEASURE_X_POS" 0 0 0 0 4294967295
+Count=1
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -104,6 +109,9 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
+[Aliases]
+Count=0
+SuppressDialog=0
 [DriverProfiling]
 Enabled=0
 Mode=3
@@ -114,10 +122,3 @@ Exclusions=
 Enabled=0
 [CallStackStripe]
 ShowTiming=1
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Count=0
-[Aliases]
-Count=0
-SuppressDialog=0

@@ -1,6 +1,8 @@
 #ifndef MENUS_H
 #define MENUS_H
 
+#include <stdint.h>
+
 #define MAX_SETUP_MENU_LINES    3
 
 typedef struct 
@@ -8,6 +10,19 @@ typedef struct
      char *ItemTitle;
      bool (*MenuFunc)(void);
 }MENU_ITEM;
+
+typedef struct 
+{
+     char *ItemTitle;
+     uint8_t Type;
+}PARAMETER_ITEM;
+
+typedef enum
+{
+    CONFIRM_TYPE = 0,
+    VALUE_TYPE,
+    MAX_TYPE
+}PARAMETER_TYPES;
 
 typedef enum
 {
@@ -43,6 +58,13 @@ typedef enum
 }MEASURE_PAGES;
 
 
+typedef enum
+{
+    MEASURE_ENABLE = 0,
+    MAX_PARAMETER_ITEM
+}PARAMETER_ITEMS;
+
+bool ChooseYesNo(char *TitleChoice);
 bool LedCtrl(void);
 void MainScreen(void);
 bool ParameterSetup(void);

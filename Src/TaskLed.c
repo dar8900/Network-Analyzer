@@ -132,6 +132,11 @@ void GesLed()
 void TaskLed(void const * argument)
 {
     /* USER CODE BEGIN TaskLed */
+    
+    LedConf = RGB;
+    GesLed();
+    LedConf = ALL_LED_OFF;
+    
     /* Infinite loop */
     for(;;)
     {

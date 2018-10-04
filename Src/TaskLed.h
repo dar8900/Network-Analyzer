@@ -19,7 +19,8 @@ typedef enum
     RED_GREEN,
     RED_BLUE,
     GREEN_BLUE,
-    ALL_LED_OFF
+    ALL_LED_OFF,
+    MAX_LED_COMBINATIONS
 }LED_COMBINATIONS;
 
 typedef struct

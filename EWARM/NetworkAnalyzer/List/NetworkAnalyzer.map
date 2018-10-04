@@ -1,289 +1,153 @@
 ###############################################################################
 #
-# IAR ELF Linker V7.50.2.10312/W32 for ARM                03/Oct/2018  17:00:26
+# IAR ELF Linker V7.50.2.10312/W32 for ARM                04/Oct/2018  13:47:44
 # Copyright 2007-2015 IAR Systems AB.
 #
 #    Output file  =  
-#        C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Exe\NetworkAnalyzer.out
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Exe\NetworkAnalyzer.out
 #    Map file     =  
-#        C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\List\NetworkAnalyzer.map
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\List\NetworkAnalyzer.map
 #    Command line =  
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\ADC.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\cmsis_os.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\croutine.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\DMA.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\event_groups.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\freertos.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\GPIO.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\Graphix.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\heap_4.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\I2C.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\list.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\main.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\Menus.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\Oled.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\port.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\portasm.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\queue.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\startup_stm32f103xb.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_adc.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_adc_ex.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_cortex.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_dma.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_flash.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_flash_ex.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_gpio.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_gpio_ex.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_i2c.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_msp.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_pwr.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_rcc.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_rcc_ex.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_tim.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_tim_ex.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_timebase_TIM.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_it.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\system_stm32f1xx.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\SysTime.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\TaskKeyboard.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\TaskLed.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\TaskMeasure.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\TaskOled.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\TaskRTC.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\tasks.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\timers.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_bitmap.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_box.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_buffer.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_circle.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_cleardisplay.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_d_memory.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_d_setup.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_font.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_fonts.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_hvline.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_input_value.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_intersection.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_kerning.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_line.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_ll_hvline.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_message.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_polygon.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_selection_list.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_setup.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8log.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8log_u8g2.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8log_u8x8.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_8x8.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_byte.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_cad.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_a2printer.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_il3820_296x128.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ist3020.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ks0108.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_lc7981.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ld7032_60x32.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ls013b7dh03.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_max7219.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_pcd8544_84x48.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_pcf8812.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_pcf8814_hx1230.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sbn1661.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sed1330.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sh1106_64x32.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sh1106_72x40.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sh1107.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sh1108.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sh1122.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1305.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_128x32.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_128x64_noname.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_48x64.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_64x32.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_64x48.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_96x16.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1309.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1317.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1322.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1325.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1326.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1327.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1329.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1606_172x72.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1607_200x200.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st75256.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7565.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7567.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7586s_erc240160.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7586s_s028hn118a.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7588.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7920.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_stdio.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_t6963.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1601.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1604.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1608.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1610.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1611.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1617.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1638.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1701_dogs102.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1701_mini12864.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_debounce.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_display.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_fonts.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_gpio.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_input_value.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_message.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_selection_list.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_setup.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_string.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_u16toa.o"
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_u8toa.o"
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\ADC.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\cmsis_os.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\croutine.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\DMA.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\event_groups.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\freertos.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\GPIO.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\Graphix.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\heap_4.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\I2C.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\list.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\main.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\Menus.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\Oled.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\port.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\portasm.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\queue.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\startup_stm32f103xb.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_adc.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_adc_ex.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_cortex.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_dma.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_flash.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_flash_ex.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_gpio.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_gpio_ex.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_i2c.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_msp.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_pwr.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_rcc.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_rcc_ex.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_tim.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_tim_ex.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_hal_timebase_TIM.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\stm32f1xx_it.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\system_stm32f1xx.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\SysTime.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\TaskKeyboard.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\TaskLed.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\TaskMeasure.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\TaskOled.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\TaskRTC.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\tasks.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\timers.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_bitmap.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_box.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_buffer.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_circle.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_cleardisplay.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_d_memory.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_d_setup.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_font.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_fonts.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_hvline.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_input_value.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_intersection.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_kerning.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_line.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_ll_hvline.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_message.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_polygon.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_selection_list.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8g2_setup.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8log.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8log_u8g2.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8log_u8x8.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_8x8.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_byte.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_cad.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_a2printer.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_il3820_296x128.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ist3020.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ks0108.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_lc7981.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ld7032_60x32.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ls013b7dh03.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_max7219.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_pcd8544_84x48.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_pcf8812.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_pcf8814_hx1230.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sbn1661.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sed1330.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sh1106_64x32.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sh1106_72x40.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sh1107.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sh1108.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_sh1122.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1305.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_128x32.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_128x64_noname.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_48x64.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_64x32.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_64x48.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1306_96x16.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1309.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1317.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1322.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1325.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1326.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1327.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1329.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1606_172x72.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_ssd1607_200x200.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st75256.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7565.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7567.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7586s_erc240160.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7586s_s028hn118a.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7588.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_st7920.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_stdio.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_t6963.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1601.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1604.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1608.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1610.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1611.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1617.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1638.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1701_dogs102.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_d_uc1701_mini12864.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_debounce.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_display.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_fonts.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_gpio.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_input_value.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_message.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_selection_list.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_setup.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_string.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_u16toa.o
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj\u8x8_u8toa.o
 #        --redirect _Printf=_PrintfFull --redirect _Scanf=_ScanfFull -o
-#        "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Exe\NetworkAnalyzer.out"
-#        --map "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\List\NetworkAnalyzer.map"
-#        --config "C:\Users\Deo\Documents\GIT
-#        PROJECTS\Network-Analyzer\EWARM/stm32f103xb_flash.icf" --semihosting
-#        --entry __iar_program_start --vfe
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Exe\NetworkAnalyzer.out
+#        --map
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\List\NetworkAnalyzer.map
+#        --config
+#        C:\Users\Deo\Documents\Network-Analyzer\EWARM/stm32f103xb_flash.icf
+#        --semihosting --entry __iar_program_start --vfe
 #
 ###############################################################################
 
@@ -311,312 +175,314 @@ __dlib_dynamic_initialization = normal
   .intvec             ro code  0x08000000    0xec  startup_stm32f103xb.o [1]
                              - 0x080000ec    0xec
 
-"P1":                                      0xdda5
-  .text               ro code  0x080000ec  0x1166  xprintffull.o [3]
-  .text               ro code  0x08001252    0x20  xmbtowc.o [3]
-  .text               ro code  0x08001272    0x76  lz77_init_single.o [5]
-  .text               ro code  0x080012e8    0x16  strchr.o [5]
-  .text               ro code  0x080012fe    0x1a  xsnprout.o [3]
-  .text               ro code  0x08001318    0x36  strlen.o [5]
-  .rodata             const    0x0800134e     0x2  Graphix.o [1]
-  .text               ro code  0x08001350    0x58  memchr.o [5]
-  .text               ro code  0x080013a8     0xa  xmbcurmax.o [3]
-  .rodata             const    0x080013b2     0x2  Graphix.o [1]
-  .text               ro code  0x080013b4    0xb0  xxmemxmalloc.o [3]
-  .text               ro code  0x08001464    0x1a  xwctomb.o [3]
-  .rodata             const    0x0800147e     0x2  stm32f1xx_hal_rcc.o [1]
-  .text               ro code  0x08001480    0x76  ABImemcpy_unaligned.o [5]
-  .rodata             const    0x080014f6     0x2  stm32f1xx_hal_rcc_ex.o [1]
-  .text               ro code  0x080014f8    0x80  xxmemxfree.o [3]
-  .text               ro code  0x08001578    0xee  I64DivMod.o [5]
-  .text               ro code  0x08001666    0x42  xdnorm.o [4]
-  .text               ro code  0x080016a8    0x2e  DblCmpLe.o [4]
-  .text               ro code  0x080016d8    0x2e  DblCmpGe.o [4]
-  .text               ro code  0x08001708   0x10c  xdscale.o [4]
-  .text               ro code  0x08001814    0x58  DblToI32.o [4]
-  .text               ro code  0x0800186c    0x30  I32ToDbl.o [4]
-  .text               ro code  0x0800189c   0x180  DblSub.o [4]
-  .text               ro code  0x08001a1c   0x1a2  DblMul.o [4]
-  .text               ro code  0x08001bc0   0x256  DblDiv.o [4]
-  .text               ro code  0x08001e18    0x6c  localeconv.o [3]
-  .text               ro code  0x08001e84     0xe  div.o [3]
-  .text               ro code  0x08001e94    0x14  setlocale.o [3]
-  .text               ro code  0x08001ea8    0x60  xencoding_sb.o [3]
-  .text               ro code  0x08001f08    0x2c  xgetmemchunk.o [3]
-  .text               ro code  0x08001f34     0x2  I64DivZer.o [5]
-  .text               ro code  0x08001f38    0xe8  DblAdd.o [4]
-  .text               ro code  0x08002020     0x2  xtls.o [3]
-  .text               ro code  0x08002024   0xd94  stm32f1xx_hal_i2c.o [1]
-  .text               ro code  0x08002db8   0x1c8  stm32f1xx_hal_msp.o [1]
-  .text               ro code  0x08002f80   0x728  stm32f1xx_hal_rcc.o [1]
-  .text               ro code  0x080036a8    0x58  stm32f1xx_hal.o [1]
-  .text               ro code  0x08003700   0x184  stm32f1xx_hal_cortex.o [1]
-  .text               ro code  0x08003884   0x328  stm32f1xx_hal_gpio.o [1]
-  .text               ro code  0x08003bac   0x300  stm32f1xx_hal_dma.o [1]
-  .text               ro code  0x08003eac    0xdc  main.o [1]
-  .text               ro code  0x08003f88    0x90  stm32f1xx_hal_timebase_TIM.o [1]
-  .text               ro code  0x08004018    0xe6  SysTime.o [1]
-  .text               ro code  0x08004100    0x98  GPIO.o [1]
-  .text               ro code  0x08004198    0x30  DMA.o [1]
-  .text               ro code  0x080041c8    0xc8  ADC.o [1]
-  .text               ro code  0x08004290    0x60  I2C.o [1]
-  .text               ro code  0x080042f0    0x76  cmsis_os.o [1]
-  .text               ro code  0x08004368   0x24c  stm32f1xx_hal_tim.o [1]
-  .text               ro code  0x080045b4   0x244  stm32f1xx_hal_rcc_ex.o [1]
-  .text               ro code  0x080047f8   0x6ce  stm32f1xx_hal_adc.o [1]
-  .text               ro code  0x08004ec8    0xf4  stm32f1xx_hal_adc_ex.o [1]
-  .text               ro code  0x08004fbc   0x7c8  tasks.o [1]
-  .text               ro code  0x08005784   0x1a4  port.o [1]
-  .text               ro code  0x08005928     0x6  stm32f1xx_hal_tim_ex.o [1]
-  .text               ro code  0x08005930   0x280  heap_4.o [1]
-  .text               ro code  0x08005bb0    0x9e  list.o [1]
-  CODE                ro code  0x08005c50    0x88  portasm.o [1]
-  .rodata             const    0x08005cd8   0xa40  u8g2_fonts.o [1]
-  .text               ro code  0x08006718   0xa1c  Oled.o [1]
-  .text               ro code  0x08007134    0x48  u8g2_d_setup.o [1]
-  .text               ro code  0x0800717c    0xe8  u8x8_display.o [1]
-  .text               ro code  0x08007264   0x11c  u8g2_line.o [1]
-  .text               ro code  0x08007380    0xbe  u8g2_buffer.o [1]
-  .text               ro code  0x08007440   0x7a4  u8g2_font.o [1]
-  .text               ro code  0x08007be4    0x44  snprintf.o [3]
-  .text               ro code  0x08007c28   0x220  u8g2_hvline.o [1]
-  .text               ro code  0x08007e48    0xe8  u8g2_box.o [1]
-  .text               ro code  0x08007f30    0x6a  u8x8_setup.o [1]
-  .text               ro code  0x08007f9c    0x10  u8g2_d_memory.o [1]
-  .text               ro code  0x08007fac   0x140  u8g2_setup.o [1]
-  .text               ro code  0x080080ec    0x1a  u8x8_gpio.o [1]
-  .text               ro code  0x08008108    0x66  ABImemset.o [5]
-  .text               ro code  0x0800816e    0x88  u8g2_intersection.o [1]
-  .text               ro code  0x080081f8    0x24  u8x8_8x8.o [1]
-  .rodata             const    0x0800821c   0x95c  u8g2_fonts.o [1]
-  .rodata             const    0x08008b78   0x924  u8g2_fonts.o [1]
-  .rodata             const    0x0800949c   0x8d4  u8g2_fonts.o [1]
-  .rodata             const    0x08009d70   0x884  u8g2_fonts.o [1]
-  .rodata             const    0x0800a5f4   0x7e4  u8g2_fonts.o [1]
-  .rodata             const    0x0800add8   0x5c8  u8g2_fonts.o [1]
-  .text               ro code  0x0800b3a0   0x538  Menus.o [1]
-  .text               ro code  0x0800b8d8    0x4e  TaskOled.o [1]
-  .text               ro code  0x0800b928   0x2c4  Graphix.o [1]
-  .text               ro code  0x0800bbec   0x3b8  TaskRTC.o [1]
-  .text               ro code  0x0800bfa4    0x24  FltCmpLe.o [4]
-  .text               ro code  0x0800bfc8    0xd8  FltMul.o [4]
-  .text               ro code  0x0800c0a0    0x4e  FltToDbl.o [4]
-  .text               ro code  0x0800c0f0   0x426  xsin.o [4]
-  .text               ro code  0x0800c518     0xc  errno.o [3]
-  .text               ro code  0x0800c524   0x160  xquad.o [4]
-  .text               ro code  0x0800c684    0x7a  xdint.o [4]
-  .text               ro code  0x0800c700    0x20  DblCmpEq.o [4]
-  .text               ro code  0x0800c720   0x1a8  fmod.o [4]
-  .text               ro code  0x0800c8c8     0xc  iarEdom.o [5]
-  .text               ro code  0x0800c8d4   0x224  TaskKeyboard.o [1]
-  .text               ro code  0x0800caf8   0x1fe  TaskLed.o [1]
-  .text               ro code  0x0800ccf8   0x1b4  TaskMeasure.o [1]
-  .text               ro code  0x0800ceac     0x6  sin.o [4]
-  .text               ro code  0x0800ceb4    0x90  DblToFlt.o [4]
-  .text               ro code  0x0800cf44    0x44  FltToS32.o [4]
-  .text               ro code  0x0800cf88    0x40  I64ToDbl.o [4]
-  .text               ro code  0x0800cfc8    0xf0  sqrt.o [4]
-  .text               ro code  0x0800d0b8    0x84  FltAdd.o [4]
-  .text               ro code  0x0800d13c    0x1e  I32ToFlt.o [4]
-  .text               ro code  0x0800d15c    0xfc  FltDiv.o [4]
-  .text               ro code  0x0800d258    0xd6  FltSub.o [4]
-  .text               ro code  0x0800d330   0x1ac  u8x8_cad.o [1]
-  .text               ro code  0x0800d4dc    0x4c  u8x8_byte.o [1]
-  .text               ro code  0x0800d528   0x164  u8x8_d_ssd1306_128x64_noname.o [1]
-  .text               ro code  0x0800d68c    0xf0  u8g2_ll_hvline.o [1]
-  .text               ro code  0x0800d77c    0x68  system_stm32f1xx.o [1]
-  .text               ro code  0x0800d7e4    0x54  stm32f1xx_it.o [1]
-  .rodata             const    0x0800d838    0x50  stm32f1xx_hal_msp.o [1]
-  .rodata             const    0x0800d888    0x44  SysTime.o [1]
-  .rodata             const    0x0800d8cc    0x40  ADC.o [1]
-  .rodata             const    0x0800d90c    0x40  I2C.o [1]
-  .text               ro code  0x0800d94c    0x40  zero_init3.o [5]
-  .rodata             const    0x0800d98c    0x38  u8x8_d_ssd1306_128x64_noname.o [1]
-  .text               ro code  0x0800d9c4    0x30  iarttio.o [6]
-  .text               ro code  0x0800d9f4     0x8  XShttio.o [3]
-  .text               ro code  0x0800d9fc    0x28  data_init.o [5]
-  .iar.init_table     const    0x0800da24    0x20  - Linker created -
-  .rodata             const    0x0800da44    0x1c  Oled.o [1]
-  .text               ro code  0x0800da60    0x1a  cmain.o [5]
-  .text               ro code  0x0800da7a     0x4  low_level_init.o [3]
-  .text               ro code  0x0800da7e     0x4  exit.o [3]
-  .text               ro code  0x0800da84     0xa  cexit.o [5]
-  .text               ro code  0x0800da90    0x14  exit.o [6]
-  .rodata             const    0x0800daa4    0x18  u8x8_d_ssd1306_128x64_noname.o [1]
-  .rodata             const    0x0800dabc    0x14  main.o [1]
-  .rodata             const    0x0800dad0    0x14  main.o [1]
-  .rodata             const    0x0800dae4    0x14  main.o [1]
-  .rodata             const    0x0800daf8    0x14  main.o [1]
-  .rodata             const    0x0800db0c    0x14  main.o [1]
-  .rodata             const    0x0800db20    0x14  Menus.o [1]
-  .rodata             const    0x0800db34    0x14  Oled.o [1]
-  .rodata             const    0x0800db48    0x10  Graphix.o [1]
-  .rodata             const    0x0800db58    0x10  Menus.o [1]
-  .rodata             const    0x0800db68    0x10  Menus.o [1]
-  .rodata             const    0x0800db78    0x10  Menus.o [1]
-  .rodata             const    0x0800db88    0x10  Menus.o [1]
-  .rodata             const    0x0800db98    0x10  Menus.o [1]
-  .rodata             const    0x0800dba8    0x10  Oled.o [1]
-  .rodata             const    0x0800dbb8    0x10  stm32f1xx_hal_rcc.o [1]
-  .rodata             const    0x0800dbc8    0x10  stm32f1xx_hal_rcc_ex.o [1]
-  .rodata             const    0x0800dbd8    0x10  system_stm32f1xx.o [1]
-  .text               ro code  0x0800dbe8    0x10  startup_stm32f103xb.o [1]
-  .rodata             const    0x0800dbf8     0xc  Graphix.o [1]
-  .rodata             const    0x0800dc04     0xc  main.o [1]
-  .rodata             const    0x0800dc10     0xc  Menus.o [1]
-  .rodata             const    0x0800dc1c     0xc  Oled.o [1]
-  .text               ro code  0x0800dc28     0xc  cstartup_M.o [5]
-  .rodata             const    0x0800dc34     0x8  Graphix.o [1]
-  .rodata             const    0x0800dc3c     0x8  Graphix.o [1]
-  .rodata             const    0x0800dc44     0x8  Graphix.o [1]
-  .rodata             const    0x0800dc4c     0x8  main.o [1]
-  .rodata             const    0x0800dc54     0x8  main.o [1]
-  .rodata             const    0x0800dc5c     0x8  Menus.o [1]
-  .rodata             const    0x0800dc64     0x8  Menus.o [1]
-  .rodata             const    0x0800dc6c     0x8  Menus.o [1]
-  .rodata             const    0x0800dc74     0x8  Oled.o [1]
-  .rodata             const    0x0800dc7c     0x8  Oled.o [1]
-  .rodata             const    0x0800dc84     0x8  Oled.o [1]
-  .rodata             const    0x0800dc8c     0x8  Oled.o [1]
-  .rodata             const    0x0800dc94     0x8  Oled.o [1]
-  .rodata             const    0x0800dc9c     0x8  system_stm32f1xx.o [1]
-  .rodata             const    0x0800dca4     0x8  tasks.o [1]
-  .rodata             const    0x0800dcac     0x8  u8g2_setup.o [1]
-  .rodata             const    0x0800dcb4     0x8  u8x8_d_ssd1306_128x64_noname.o [1]
-  .rodata             const    0x0800dcbc     0x8  u8x8_d_ssd1306_128x64_noname.o [1]
-  .rodata             const    0x0800dcc4     0x8  u8x8_d_ssd1306_128x64_noname.o [1]
-  .rodata             const    0x0800dccc     0x8  u8x8_d_ssd1306_128x64_noname.o [1]
-  .rodata             const    0x0800dcd4     0x4  Graphix.o [1]
-  .rodata             const    0x0800dcd8     0x4  heap_4.o [1]
-  .rodata             const    0x0800dcdc     0x4  main.o [1]
-  .rodata             const    0x0800dce0     0x4  main.o [1]
-  .rodata             const    0x0800dce4     0x4  Oled.o [1]
-  .rodata             const    0x0800dce8     0x4  Oled.o [1]
-  .rodata             const    0x0800dcec     0x4  Oled.o [1]
-  .text               ro code  0x0800dcf0     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dcf4     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dcf8     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dcfc     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd00     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd04     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd08     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd0c     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd10     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd14     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd18     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd1c     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd20     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd24     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd28     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd2c     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd30     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd34     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd38     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd3c     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd40     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd44     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd48     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd4c     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd50     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd54     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd58     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd5c     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd60     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd64     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd68     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd6c     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd70     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd74     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd78     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd7c     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd80     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd84     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd88     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd8c     0x4  startup_stm32f103xb.o [1]
-  .text               ro code  0x0800dd90     0x4  startup_stm32f103xb.o [1]
-  .rodata             const    0x0800dd94     0x0  zero_init3.o [5]
-  .rodata             const    0x0800dd94     0x0  lz77_init_single.o [5]
-  Initializer bytes   const    0x0800dd94    0xfd  <for P2-1>
-                             - 0x0800de91  0xdda5
+"P1":                                      0xeaa7
+  .rodata             const    0x080000ec  0x11c8  u8g2_fonts.o [1]
+  .text               ro code  0x080012b4  0x1166  xprintffull.o [3]
+  .text               ro code  0x0800241a    0x20  xmbtowc.o [3]
+  .text               ro code  0x0800243a    0x76  lz77_init_single.o [5]
+  .text               ro code  0x080024b0    0x16  strchr.o [5]
+  .text               ro code  0x080024c6    0x1a  xsnprout.o [3]
+  .text               ro code  0x080024e0    0x36  strlen.o [5]
+  .rodata             const    0x08002516     0x2  Graphix.o [1]
+  .text               ro code  0x08002518    0x58  memchr.o [5]
+  .text               ro code  0x08002570     0xa  xmbcurmax.o [3]
+  .rodata             const    0x0800257a     0x2  Graphix.o [1]
+  .text               ro code  0x0800257c    0xb0  xxmemxmalloc.o [3]
+  .text               ro code  0x0800262c    0x1a  xwctomb.o [3]
+  .rodata             const    0x08002646     0x2  stm32f1xx_hal_rcc.o [1]
+  .text               ro code  0x08002648    0x76  ABImemcpy_unaligned.o [5]
+  .rodata             const    0x080026be     0x2  stm32f1xx_hal_rcc_ex.o [1]
+  .text               ro code  0x080026c0    0x80  xxmemxfree.o [3]
+  .text               ro code  0x08002740    0xee  I64DivMod.o [5]
+  .text               ro code  0x0800282e    0x42  xdnorm.o [4]
+  .text               ro code  0x08002870    0x2e  DblCmpLe.o [4]
+  .text               ro code  0x080028a0    0x2e  DblCmpGe.o [4]
+  .text               ro code  0x080028d0   0x10c  xdscale.o [4]
+  .text               ro code  0x080029dc    0x58  DblToI32.o [4]
+  .text               ro code  0x08002a34    0x30  I32ToDbl.o [4]
+  .text               ro code  0x08002a64   0x180  DblSub.o [4]
+  .text               ro code  0x08002be4   0x1a2  DblMul.o [4]
+  .text               ro code  0x08002d88   0x256  DblDiv.o [4]
+  .text               ro code  0x08002fe0    0x6c  localeconv.o [3]
+  .text               ro code  0x0800304c     0xe  div.o [3]
+  .text               ro code  0x0800305c    0x14  setlocale.o [3]
+  .text               ro code  0x08003070    0x60  xencoding_sb.o [3]
+  .text               ro code  0x080030d0    0x2c  xgetmemchunk.o [3]
+  .text               ro code  0x080030fc     0x2  I64DivZer.o [5]
+  .text               ro code  0x08003100    0xe8  DblAdd.o [4]
+  .text               ro code  0x080031e8     0x2  xtls.o [3]
+  .text               ro code  0x080031ec   0xd94  stm32f1xx_hal_i2c.o [1]
+  .text               ro code  0x08003f80   0x1c8  stm32f1xx_hal_msp.o [1]
+  .text               ro code  0x08004148   0x728  stm32f1xx_hal_rcc.o [1]
+  .text               ro code  0x08004870    0x30  stm32f1xx_hal.o [1]
+  .text               ro code  0x080048a0   0x184  stm32f1xx_hal_cortex.o [1]
+  .text               ro code  0x08004a24   0x328  stm32f1xx_hal_gpio.o [1]
+  .text               ro code  0x08004d4c   0x300  stm32f1xx_hal_dma.o [1]
+  .text               ro code  0x0800504c    0xdc  main.o [1]
+  .text               ro code  0x08005128    0x90  stm32f1xx_hal_timebase_TIM.o [1]
+  .text               ro code  0x080051b8   0x152  SysTime.o [1]
+  .text               ro code  0x0800530c    0x98  GPIO.o [1]
+  .text               ro code  0x080053a4    0x30  DMA.o [1]
+  .text               ro code  0x080053d4    0xc8  ADC.o [1]
+  .text               ro code  0x0800549c    0x60  I2C.o [1]
+  .text               ro code  0x080054fc    0x76  cmsis_os.o [1]
+  .text               ro code  0x08005574   0x24c  stm32f1xx_hal_tim.o [1]
+  .text               ro code  0x080057c0   0x244  stm32f1xx_hal_rcc_ex.o [1]
+  .text               ro code  0x08005a04   0x6ce  stm32f1xx_hal_adc.o [1]
+  .text               ro code  0x080060d4    0xf4  stm32f1xx_hal_adc_ex.o [1]
+  .text               ro code  0x080061c8   0x7c8  tasks.o [1]
+  .text               ro code  0x08006990   0x1a4  port.o [1]
+  .text               ro code  0x08006b34     0x6  stm32f1xx_hal_tim_ex.o [1]
+  .text               ro code  0x08006b3c   0x280  heap_4.o [1]
+  .text               ro code  0x08006dbc    0x9e  list.o [1]
+  CODE                ro code  0x08006e5c    0x88  portasm.o [1]
+  .text               ro code  0x08006ee4   0xb88  Oled.o [1]
+  .text               ro code  0x08007a6c    0x48  u8g2_d_setup.o [1]
+  .text               ro code  0x08007ab4    0xe8  u8x8_display.o [1]
+  .text               ro code  0x08007b9c   0x11c  u8g2_line.o [1]
+  .text               ro code  0x08007cb8    0xbe  u8g2_buffer.o [1]
+  .text               ro code  0x08007d78   0x7a4  u8g2_font.o [1]
+  .text               ro code  0x0800851c    0x44  snprintf.o [3]
+  .text               ro code  0x08008560   0x220  u8g2_hvline.o [1]
+  .text               ro code  0x08008780    0xe8  u8g2_box.o [1]
+  .text               ro code  0x08008868    0x6a  u8x8_setup.o [1]
+  .text               ro code  0x080088d4    0x10  u8g2_d_memory.o [1]
+  .text               ro code  0x080088e4   0x140  u8g2_setup.o [1]
+  .text               ro code  0x08008a24    0x1a  u8x8_gpio.o [1]
+  .text               ro code  0x08008a40    0x66  ABImemset.o [5]
+  .text               ro code  0x08008aa6    0x88  u8g2_intersection.o [1]
+  .text               ro code  0x08008b30    0x24  u8x8_8x8.o [1]
+  .rodata             const    0x08008b54   0xa40  u8g2_fonts.o [1]
+  .rodata             const    0x08009594   0x95c  u8g2_fonts.o [1]
+  .rodata             const    0x08009ef0   0x924  u8g2_fonts.o [1]
+  .rodata             const    0x0800a814   0x8d4  u8g2_fonts.o [1]
+  .rodata             const    0x0800b0e8   0x884  u8g2_fonts.o [1]
+  .rodata             const    0x0800b96c   0x7e4  u8g2_fonts.o [1]
+  .text               ro code  0x0800c150   0x5e4  Menus.o [1]
+  .text               ro code  0x0800c734    0x4e  TaskOled.o [1]
+  .text               ro code  0x0800c784   0x308  Graphix.o [1]
+  .text               ro code  0x0800ca8c   0x364  TaskRTC.o [1]
+  .text               ro code  0x0800cdf0    0x24  FltCmpLe.o [4]
+  .text               ro code  0x0800ce14    0xd8  FltMul.o [4]
+  .text               ro code  0x0800ceec    0x4e  FltToDbl.o [4]
+  .rodata             const    0x0800cf3c   0x5c8  u8g2_fonts.o [1]
+  .text               ro code  0x0800d504   0x244  TaskMeasure.o [1]
+  .text               ro code  0x0800d748    0x40  I64ToDbl.o [4]
+  .text               ro code  0x0800d788    0xf0  sqrt.o [4]
+  .text               ro code  0x0800d878    0x90  DblToFlt.o [4]
+  .text               ro code  0x0800d908    0x84  FltAdd.o [4]
+  .text               ro code  0x0800d98c    0xfc  FltDiv.o [4]
+  .text               ro code  0x0800da88    0x24  FltCmpGe.o [4]
+  .text               ro code  0x0800daac    0x1e  I32ToFlt.o [4]
+  .text               ro code  0x0800dacc     0xc  iarEdom.o [5]
+  .text               ro code  0x0800dad8    0xd6  FltSub.o [4]
+  .text               ro code  0x0800dbb0     0xc  errno.o [3]
+  .text               ro code  0x0800dbbc   0x224  TaskKeyboard.o [1]
+  .text               ro code  0x0800dde0   0x210  TaskLed.o [1]
+  .text               ro code  0x0800dff0   0x1ac  u8x8_cad.o [1]
+  .text               ro code  0x0800e19c    0x4c  u8x8_byte.o [1]
+  .text               ro code  0x0800e1e8   0x164  u8x8_d_ssd1306_128x64_noname.o [1]
+  .text               ro code  0x0800e34c    0xf0  u8g2_ll_hvline.o [1]
+  .text               ro code  0x0800e43c    0x68  system_stm32f1xx.o [1]
+  .text               ro code  0x0800e4a4    0x54  stm32f1xx_it.o [1]
+  .rodata             const    0x0800e4f8    0x40  stm32f1xx_hal_msp.o [1]
+  .text               ro code  0x0800e538    0x40  zero_init3.o [5]
+  .rodata             const    0x0800e578    0x38  SysTime.o [1]
+  .rodata             const    0x0800e5b0    0x38  u8x8_d_ssd1306_128x64_noname.o [1]
+  .rodata             const    0x0800e5e8    0x34  ADC.o [1]
+  .rodata             const    0x0800e61c    0x34  I2C.o [1]
+  .text               ro code  0x0800e650    0x30  iarttio.o [6]
+  .text               ro code  0x0800e680     0x8  XShttio.o [3]
+  .text               ro code  0x0800e688    0x28  data_init.o [5]
+  .iar.init_table     const    0x0800e6b0    0x20  - Linker created -
+  .rodata             const    0x0800e6d0    0x1c  Oled.o [1]
+  .text               ro code  0x0800e6ec    0x1a  cmain.o [5]
+  .text               ro code  0x0800e706     0x4  low_level_init.o [3]
+  .text               ro code  0x0800e70a     0x4  exit.o [3]
+  .text               ro code  0x0800e710     0xa  cexit.o [5]
+  .text               ro code  0x0800e71c    0x14  exit.o [6]
+  .rodata             const    0x0800e730    0x18  u8x8_d_ssd1306_128x64_noname.o [1]
+  .rodata             const    0x0800e748    0x14  main.o [1]
+  .rodata             const    0x0800e75c    0x14  main.o [1]
+  .rodata             const    0x0800e770    0x14  main.o [1]
+  .rodata             const    0x0800e784    0x14  main.o [1]
+  .rodata             const    0x0800e798    0x14  main.o [1]
+  .rodata             const    0x0800e7ac    0x14  Menus.o [1]
+  .rodata             const    0x0800e7c0    0x14  Oled.o [1]
+  .rodata             const    0x0800e7d4    0x10  Graphix.o [1]
+  .rodata             const    0x0800e7e4    0x10  Menus.o [1]
+  .rodata             const    0x0800e7f4    0x10  Menus.o [1]
+  .rodata             const    0x0800e804    0x10  Menus.o [1]
+  .rodata             const    0x0800e814    0x10  Menus.o [1]
+  .rodata             const    0x0800e824    0x10  Menus.o [1]
+  .rodata             const    0x0800e834    0x10  Menus.o [1]
+  .rodata             const    0x0800e844    0x10  Menus.o [1]
+  .rodata             const    0x0800e854    0x10  Menus.o [1]
+  .rodata             const    0x0800e864    0x10  Oled.o [1]
+  .rodata             const    0x0800e874    0x10  stm32f1xx_hal_rcc.o [1]
+  .rodata             const    0x0800e884    0x10  stm32f1xx_hal_rcc_ex.o [1]
+  .rodata             const    0x0800e894    0x10  system_stm32f1xx.o [1]
+  .text               ro code  0x0800e8a4    0x10  startup_stm32f103xb.o [1]
+  .rodata             const    0x0800e8b4     0xc  Graphix.o [1]
+  .rodata             const    0x0800e8c0     0xc  main.o [1]
+  .rodata             const    0x0800e8cc     0xc  Menus.o [1]
+  .rodata             const    0x0800e8d8     0xc  Menus.o [1]
+  .rodata             const    0x0800e8e4     0xc  Menus.o [1]
+  .rodata             const    0x0800e8f0     0xc  Oled.o [1]
+  .text               ro code  0x0800e8fc     0xc  cstartup_M.o [5]
+  .rodata             const    0x0800e908     0x8  Graphix.o [1]
+  .rodata             const    0x0800e910     0x8  Graphix.o [1]
+  .rodata             const    0x0800e918     0x8  Graphix.o [1]
+  .rodata             const    0x0800e920     0x8  main.o [1]
+  .rodata             const    0x0800e928     0x8  main.o [1]
+  .rodata             const    0x0800e930     0x8  Menus.o [1]
+  .rodata             const    0x0800e938     0x8  Menus.o [1]
+  .rodata             const    0x0800e940     0x8  Menus.o [1]
+  .rodata             const    0x0800e948     0x8  Menus.o [1]
+  .rodata             const    0x0800e950     0x8  Menus.o [1]
+  .rodata             const    0x0800e958     0x8  Oled.o [1]
+  .rodata             const    0x0800e960     0x8  Oled.o [1]
+  .rodata             const    0x0800e968     0x8  Oled.o [1]
+  .rodata             const    0x0800e970     0x8  Oled.o [1]
+  .rodata             const    0x0800e978     0x8  Oled.o [1]
+  .rodata             const    0x0800e980     0x8  system_stm32f1xx.o [1]
+  .rodata             const    0x0800e988     0x8  tasks.o [1]
+  .rodata             const    0x0800e990     0x8  u8g2_setup.o [1]
+  .rodata             const    0x0800e998     0x8  u8x8_d_ssd1306_128x64_noname.o [1]
+  .rodata             const    0x0800e9a0     0x8  u8x8_d_ssd1306_128x64_noname.o [1]
+  .rodata             const    0x0800e9a8     0x8  u8x8_d_ssd1306_128x64_noname.o [1]
+  .rodata             const    0x0800e9b0     0x8  u8x8_d_ssd1306_128x64_noname.o [1]
+  .rodata             const    0x0800e9b8     0x4  Graphix.o [1]
+  .rodata             const    0x0800e9bc     0x4  Graphix.o [1]
+  .rodata             const    0x0800e9c0     0x4  heap_4.o [1]
+  .rodata             const    0x0800e9c4     0x4  main.o [1]
+  .rodata             const    0x0800e9c8     0x4  main.o [1]
+  .rodata             const    0x0800e9cc     0x4  Menus.o [1]
+  .rodata             const    0x0800e9d0     0x4  Menus.o [1]
+  .rodata             const    0x0800e9d4     0x4  Oled.o [1]
+  .rodata             const    0x0800e9d8     0x4  Oled.o [1]
+  .rodata             const    0x0800e9dc     0x4  Oled.o [1]
+  .text               ro code  0x0800e9e0     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800e9e4     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800e9e8     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800e9ec     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800e9f0     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800e9f4     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800e9f8     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800e9fc     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea00     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea04     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea08     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea0c     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea10     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea14     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea18     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea1c     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea20     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea24     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea28     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea2c     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea30     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea34     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea38     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea3c     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea40     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea44     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea48     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea4c     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea50     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea54     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea58     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea5c     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea60     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea64     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea68     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea6c     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea70     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea74     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea78     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea7c     0x4  startup_stm32f103xb.o [1]
+  .text               ro code  0x0800ea80     0x4  startup_stm32f103xb.o [1]
+  .rodata             const    0x0800ea84     0x0  zero_init3.o [5]
+  .rodata             const    0x0800ea84     0x0  lz77_init_single.o [5]
+  Initializer bytes   const    0x0800ea84   0x10f  <for P2-1>
+                             - 0x0800eb93  0xeaa7
 
-"P2", part 1 of 3:                          0x23e
-  P2-1                         0x20000000   0x23e  <Init block>
+"P2", part 1 of 3:                          0x260
+  P2-1                         0x20000000   0x260  <Init block>
     .data             inited   0x20000000    0xb4  Graphix.o [1]
     .data             inited   0x200000b4     0xc  Graphix.o [1]
     .data             inited   0x200000c0    0x28  Menus.o [1]
     .data             inited   0x200000e8    0x10  Menus.o [1]
     .data             inited   0x200000f8     0x8  Menus.o [1]
-    .data             inited   0x20000100    0x1c  Oled.o [1]
-    .data             inited   0x2000011c     0x4  port.o [1]
-    .data             inited   0x20000120     0x4  system_stm32f1xx.o [1]
-    .data             inited   0x20000124     0xc  TaskRTC.o [1]
-    .data             inited   0x20000130     0x8  XShttio.o [3]
-    __DLIB_PERTHREAD  inited   0x20000138    0x88  localeconv.o [3]
-    __DLIB_PERTHREAD  inited   0x200001c0     0x4  errno.o [3]
-    __DLIB_PERTHREAD  inited   0x200001c4    0x74  setlocale.o [3]
-    .data             inited   0x20000238     0x2  TaskKeyboard.o [1]
-    .data             inited   0x2000023a     0x1  stm32f1xx_hal.o [1]
-    .data             inited   0x2000023b     0x1  TaskKeyboard.o [1]
-    .data             inited   0x2000023c     0x1  TaskKeyboard.o [1]
-    .data             inited   0x2000023d     0x1  TaskLed.o [1]
-                             - 0x2000023e   0x23e
+    .data             inited   0x20000100    0x20  Menus.o [1]
+    .data             inited   0x20000120    0x1c  Oled.o [1]
+    .data             inited   0x2000013c     0x4  port.o [1]
+    .data             inited   0x20000140     0x4  system_stm32f1xx.o [1]
+    .data             inited   0x20000144     0xc  TaskRTC.o [1]
+    .data             inited   0x20000150     0x8  XShttio.o [3]
+    __DLIB_PERTHREAD  inited   0x20000158    0x88  localeconv.o [3]
+    __DLIB_PERTHREAD  inited   0x200001e0     0x4  errno.o [3]
+    __DLIB_PERTHREAD  inited   0x200001e4    0x74  setlocale.o [3]
+    .data             inited   0x20000258     0x2  TaskKeyboard.o [1]
+    .data             inited   0x2000025a     0x2  TaskMeasure.o [1]
+    .data             inited   0x2000025c     0x1  stm32f1xx_hal.o [1]
+    .data             inited   0x2000025d     0x1  TaskKeyboard.o [1]
+    .data             inited   0x2000025e     0x1  TaskKeyboard.o [1]
+    .data             inited   0x2000025f     0x1  TaskLed.o [1]
+                             - 0x20000260   0x260
 
 "P2", part 2 of 3:                          0x600
-  CSTACK                       0x20000240   0x400  <Block>
-    CSTACK            uninit   0x20000240   0x400  <Block tail>
-  HEAP                         0x20000640   0x200  <Block>
-    HEAP              uninit   0x20000640   0x200  <Block tail>
-                             - 0x20000840   0x600
+  CSTACK                       0x20000260   0x400  <Block>
+    CSTACK            uninit   0x20000260   0x400  <Block tail>
+  HEAP                         0x20000660   0x200  <Block>
+    HEAP              uninit   0x20000660   0x200  <Block tail>
+                             - 0x20000860   0x600
 
-"P2", part 3 of 3:                         0x1c50
-  .bss                zero     0x20000840  0x1000  heap_4.o [1]
-  .bss                zero     0x20001840   0x400  u8g2_d_memory.o [1]
-  .bss                zero     0x20001c40   0x1f8  ADC.o [1]
-  .bss                zero     0x20001e38   0x1f8  ADC.o [1]
-  .bss                zero     0x20002030    0xfc  TaskMeasure.o [1]
-  .bss                zero     0x2000212c    0x8c  tasks.o [1]
-  .bss                zero     0x200021b8    0x80  Oled.o [1]
-  .bss                zero     0x20002238    0x54  I2C.o [1]
-  .bss                zero     0x2000228c    0x44  DMA.o [1]
-  .bss                zero     0x200022d0    0x40  stm32f1xx_hal_timebase_TIM.o [1]
-  .bss                zero     0x20002310    0x30  ADC.o [1]
-  .bss                zero     0x20002340    0x20  Oled.o [1]
-  .bss                zero     0x20002360    0x14  tasks.o [1]
+"P2", part 3 of 3:                         0x1c40
+  .bss                zero     0x20000860  0x1000  heap_4.o [1]
+  .bss                zero     0x20001860   0x400  u8g2_d_memory.o [1]
+  .bss                zero     0x20001c60   0x1f8  ADC.o [1]
+  .bss                zero     0x20001e58   0x1f8  ADC.o [1]
+  .bss                zero     0x20002050    0xf0  TaskMeasure.o [1]
+  .bss                zero     0x20002140    0x8c  tasks.o [1]
+  .bss                zero     0x200021cc    0x80  Oled.o [1]
+  .bss                zero     0x2000224c    0x54  I2C.o [1]
+  .bss                zero     0x200022a0    0x44  DMA.o [1]
+  .bss                zero     0x200022e4    0x40  stm32f1xx_hal_timebase_TIM.o [1]
+  .bss                zero     0x20002324    0x30  ADC.o [1]
+  .bss                zero     0x20002354    0x20  Oled.o [1]
   .bss                zero     0x20002374    0x14  tasks.o [1]
   .bss                zero     0x20002388    0x14  tasks.o [1]
   .bss                zero     0x2000239c    0x14  tasks.o [1]
   .bss                zero     0x200023b0    0x14  tasks.o [1]
-  .bss                zero     0x200023c4     0x8  Graphix.o [1]
-  .bss                zero     0x200023cc     0x8  Graphix.o [1]
-  .bss                zero     0x200023d4     0x8  heap_4.o [1]
-  .bss                zero     0x200023dc     0x4  heap_4.o [1]
-  .bss                zero     0x200023e0     0x8  TaskMeasure.o [1]
-  .bss                zero     0x200023e8     0x8  xxmemxmalloc.o [3]
-  .bss                zero     0x200023f0     0x4  heap_4.o [1]
-  .bss                zero     0x200023f4     0x4  heap_4.o [1]
-  .bss                zero     0x200023f8     0x4  heap_4.o [1]
-  .bss                zero     0x200023fc     0x4  main.o [1]
-  .bss                zero     0x20002400     0x4  main.o [1]
-  .bss                zero     0x20002404     0x4  main.o [1]
-  .bss                zero     0x20002408     0x4  main.o [1]
-  .bss                zero     0x2000240c     0x4  main.o [1]
+  .bss                zero     0x200023c4    0x14  tasks.o [1]
+  .bss                zero     0x200023d8     0x8  Graphix.o [1]
+  .bss                zero     0x200023e0     0x8  Graphix.o [1]
+  .bss                zero     0x200023e8     0x8  heap_4.o [1]
+  .bss                zero     0x200023f0     0x8  TaskMeasure.o [1]
+  .bss                zero     0x200023f8     0x8  xxmemxmalloc.o [3]
+  .bss                zero     0x20002400     0x4  heap_4.o [1]
+  .bss                zero     0x20002404     0x4  heap_4.o [1]
+  .bss                zero     0x20002408     0x4  heap_4.o [1]
+  .bss                zero     0x2000240c     0x4  heap_4.o [1]
   .bss                zero     0x20002410     0x4  main.o [1]
-  .bss                zero     0x20002414     0x4  port.o [1]
-  .bss                zero     0x20002418     0x4  stm32f1xx_hal.o [1]
-  .bss                zero     0x2000241c     0x4  stm32f1xx_hal.o [1]
-  .bss                zero     0x20002420     0x4  TaskKeyboard.o [1]
-  .bss                zero     0x20002424     0x4  TaskLed.o [1]
-  .bss                zero     0x20002428     0x4  TaskMeasure.o [1]
-  .bss                zero     0x2000242c     0x4  TaskMeasure.o [1]
-  .bss                zero     0x20002430     0x4  TaskMeasure.o [1]
-  .bss                zero     0x20002434     0x4  TaskMeasure.o [1]
-  .bss                zero     0x20002438     0x4  TaskMeasure.o [1]
-  .bss                zero     0x2000243c     0x4  TaskRTC.o [1]
-  .bss                zero     0x20002440     0x4  TaskRTC.o [1]
-  .bss                zero     0x20002444     0x4  tasks.o [1]
-  .bss                zero     0x20002448     0x4  tasks.o [1]
-  .bss                zero     0x2000244c     0x4  tasks.o [1]
-  .bss                zero     0x20002450     0x4  tasks.o [1]
+  .bss                zero     0x20002414     0x4  main.o [1]
+  .bss                zero     0x20002418     0x4  main.o [1]
+  .bss                zero     0x2000241c     0x4  main.o [1]
+  .bss                zero     0x20002420     0x4  main.o [1]
+  .bss                zero     0x20002424     0x4  main.o [1]
+  .bss                zero     0x20002428     0x4  port.o [1]
+  .bss                zero     0x2000242c     0x4  stm32f1xx_hal.o [1]
+  .bss                zero     0x20002430     0x4  stm32f1xx_hal.o [1]
+  .bss                zero     0x20002434     0x4  TaskKeyboard.o [1]
+  .bss                zero     0x20002438     0x4  TaskLed.o [1]
+  .bss                zero     0x2000243c     0x4  TaskMeasure.o [1]
+  .bss                zero     0x20002440     0x4  TaskMeasure.o [1]
+  .bss                zero     0x20002444     0x4  TaskMeasure.o [1]
+  .bss                zero     0x20002448     0x4  TaskMeasure.o [1]
+  .bss                zero     0x2000244c     0x4  TaskRTC.o [1]
+  .bss                zero     0x20002450     0x4  TaskRTC.o [1]
   .bss                zero     0x20002454     0x4  tasks.o [1]
   .bss                zero     0x20002458     0x4  tasks.o [1]
   .bss                zero     0x2000245c     0x4  tasks.o [1]
@@ -628,18 +494,21 @@ __dlib_dynamic_initialization = normal
   .bss                zero     0x20002474     0x4  tasks.o [1]
   .bss                zero     0x20002478     0x4  tasks.o [1]
   .bss                zero     0x2000247c     0x4  tasks.o [1]
-  .bss                zero     0x20002480     0x4  xgetmemchunk.o [3]
-  .bss                zero     0x20002484     0x2  Graphix.o [1]
-  .bss                zero     0x20002486     0x2  main.o [1]
-  .bss                zero     0x20002488     0x1  ADC.o [1]
-  .bss                zero     0x20002489     0x1  Oled.o [1]
-  .bss                zero     0x2000248a     0x1  port.o [1]
-  .bss                zero     0x2000248b     0x1  TaskMeasure.o [1]
-  .bss                zero     0x2000248c     0x1  TaskRTC.o [1]
-  .bss                zero     0x2000248d     0x1  TaskRTC.o [1]
-  .bss                zero     0x2000248e     0x1  TaskRTC.o [1]
-  .bss                zero     0x2000248f     0x1  TaskRTC.o [1]
-                             - 0x20002490  0x1c50
+  .bss                zero     0x20002480     0x4  tasks.o [1]
+  .bss                zero     0x20002484     0x4  tasks.o [1]
+  .bss                zero     0x20002488     0x4  tasks.o [1]
+  .bss                zero     0x2000248c     0x4  tasks.o [1]
+  .bss                zero     0x20002490     0x4  xgetmemchunk.o [3]
+  .bss                zero     0x20002494     0x2  Graphix.o [1]
+  .bss                zero     0x20002496     0x2  main.o [1]
+  .bss                zero     0x20002498     0x1  ADC.o [1]
+  .bss                zero     0x20002499     0x1  Oled.o [1]
+  .bss                zero     0x2000249a     0x1  port.o [1]
+  .bss                zero     0x2000249b     0x1  TaskMeasure.o [1]
+  .bss                zero     0x2000249c     0x1  TaskRTC.o [1]
+  .bss                zero     0x2000249d     0x1  TaskRTC.o [1]
+  .bss                zero     0x2000249e     0x1  TaskRTC.o [1]
+                             - 0x2000249f  0x1c3f
 
 
 *******************************************************************************
@@ -649,14 +518,14 @@ __dlib_dynamic_initialization = normal
           Address     Size
           -------     ----
 Zero (__iar_zero_init3)
-    1 destination range, total size 0x1c50:
-          0x20000840  0x1c50
+    1 destination range, total size 0x1c3f:
+          0x20000860  0x1c3f
 
 Copy/lz77 (__iar_lz77_init_single3)
-    1 source range, total size 0xfd (44% of destination):
-          0x0800dd94    0xfd
-    1 destination range, total size 0x23e:
-          0x20000000   0x23e
+    1 source range, total size 0x10f (44% of destination):
+          0x0800ea84   0x10f
+    1 destination range, total size 0x260:
+          0x20000000   0x260
 
 
 
@@ -666,35 +535,35 @@ Copy/lz77 (__iar_lz77_init_single3)
 
     Module                          ro code  ro data  rw data
     ------                          -------  -------  -------
-C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj: [1]
-    ADC.o                               200       64    1 057
+C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj: [1]
+    ADC.o                               200       52    1 057
     DMA.o                                48                68
     GPIO.o                              152
-    Graphix.o                           708      144      210
-    I2C.o                                96       64       84
-    Menus.o                           1 336      164       64
-    Oled.o                            2 588      141      189
-    SysTime.o                           230       68
+    Graphix.o                           776      149      210
+    I2C.o                                96       52       84
+    Menus.o                           1 508      275       96
+    Oled.o                            2 952      140      189
+    SysTime.o                           338       56
     TaskKeyboard.o                      548        2        8
-    TaskLed.o                           510        1        5
-    TaskMeasure.o                       436               281
+    TaskLed.o                           528        1        5
+    TaskMeasure.o                       580        1      267
     TaskOled.o                           78
-    TaskRTC.o                           952        5       24
+    TaskRTC.o                           868        5       23
     cmsis_os.o                          118
     heap_4.o                            640        4    4 120
     list.o                              158
     main.o                              220      136       26
-    port.o                              420        1        9
+    port.o                              420        2        9
     portasm.o                           136
     startup_stm32f103xb.o               416
-    stm32f1xx_hal.o                      88                 9
+    stm32f1xx_hal.o                      48                 9
     stm32f1xx_hal_adc.o               1 742
     stm32f1xx_hal_adc_ex.o              244
     stm32f1xx_hal_cortex.o              388
     stm32f1xx_hal_dma.o                 768
     stm32f1xx_hal_gpio.o                808
     stm32f1xx_hal_i2c.o               3 476
-    stm32f1xx_hal_msp.o                 456       80
+    stm32f1xx_hal_msp.o                 456       64
     stm32f1xx_hal_rcc.o               1 832       18
     stm32f1xx_hal_rcc_ex.o              580       18
     stm32f1xx_hal_tim.o                 588
@@ -708,7 +577,7 @@ C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj: 
     u8g2_d_memory.o                      16             1 024
     u8g2_d_setup.o                       72
     u8g2_font.o                       1 956
-    u8g2_fonts.o                              15 300
+    u8g2_fonts.o                              19 852
     u8g2_hvline.o                       544
     u8g2_intersection.o                 136
     u8g2_line.o                         284
@@ -722,7 +591,7 @@ C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj: 
     u8x8_gpio.o                          26
     u8x8_setup.o                        106
     ---------------------------------------------------------
-    Total:                           28 540   16 364    7 546
+    Total:                           29 290   20 981    7 563
 
 command line: [2]
     ---------------------------------------------------------
@@ -735,7 +604,7 @@ dl7M_tlf.a: [3]
     exit.o                                4
     localeconv.o                        108       60      136
     low_level_init.o                      4
-    setlocale.o                          20       51      116
+    setlocale.o                          20       52      116
     snprintf.o                           68
     xencoding_sb.o                       96
     xgetmemchunk.o                       44                 4
@@ -748,11 +617,10 @@ dl7M_tlf.a: [3]
     xxmemxfree.o                        128
     xxmemxmalloc.o                      176                 8
     ---------------------------------------------------------
-    Total:                            5 232      117      276
+    Total:                            5 232      118      276
 
 m7M_tl.a: [4]
     DblAdd.o                            232
-    DblCmpEq.o                           32
     DblCmpGe.o                           46
     DblCmpLe.o                           46
     DblDiv.o                            598
@@ -761,25 +629,20 @@ m7M_tl.a: [4]
     DblToFlt.o                          144
     DblToI32.o                           88
     FltAdd.o                            132
+    FltCmpGe.o                           36
     FltCmpLe.o                           36
     FltDiv.o                            252
     FltMul.o                            216
     FltSub.o                            214
     FltToDbl.o                           78
-    FltToS32.o                           68
     I32ToDbl.o                           48
     I32ToFlt.o                           30
     I64ToDbl.o                           64
-    fmod.o                              424
-    sin.o                                 6
     sqrt.o                              240
-    xdint.o                             122
     xdnorm.o                             66
     xdscale.o                           268
-    xquad.o                             352
-    xsin.o                            1 062
     ---------------------------------------------------------
-    Total:                            5 666
+    Total:                            3 636
 
 rt7M_tl.a: [5]
     ABImemcpy_unaligned.o               118
@@ -805,10 +668,10 @@ shb_l.a: [6]
     ---------------------------------------------------------
     Total:                               68
 
-    Gaps                                 52
+    Gaps                                 42        2
     Linker created                                32    1 536
 -------------------------------------------------------------
-    Grand Total:                     40 464   16 513    9 358
+    Grand Total:                     39 174   21 133    9 375
 
 
 *******************************************************************************
@@ -817,568 +680,562 @@ shb_l.a: [6]
 
 Entry                      Address    Size  Type      Object
 -----                      -------    ----  ----      ------
-.iar.init_table$$Base   0x0800da24           --   Gb  - Linker created -
-.iar.init_table$$Limit  0x0800da44           --   Gb  - Linker created -
-?main                   0x0800da61          Code  Gb  cmain.o [5]
-ADCConvToDMA            0x0800425f     0xe  Code  Gb  ADC.o [1]
-ADCReadedValue          0x20001c40   0x1f8  Data  Gb  ADC.o [1]
+.iar.init_table$$Base   0x0800e6b0           --   Gb  - Linker created -
+.iar.init_table$$Limit  0x0800e6d0           --   Gb  - Linker created -
+?main                   0x0800e6ed          Code  Gb  cmain.o [5]
+ADCConvToDMA            0x0800546b     0xe  Code  Gb  ADC.o [1]
+ADCOffset               0x2000025a     0x2  Data  Gb  TaskMeasure.o [1]
+ADCReadedValue          0x20001c60   0x1f8  Data  Gb  ADC.o [1]
 ADC_ConversionStop_Disable
-                        0x08004df9    0x4a  Code  Gb  stm32f1xx_hal_adc.o [1]
-ADC_DMAConvCplt         0x08004e45    0x52  Code  Gb  stm32f1xx_hal_adc.o [1]
-ADC_DMAError            0x08004ea9    0x1e  Code  Gb  stm32f1xx_hal_adc.o [1]
-ADC_DMAHalfConvCplt     0x08004e99     0xe  Code  Gb  stm32f1xx_hal_adc.o [1]
-ADC_Enable              0x08004d69    0x6e  Code  Gb  stm32f1xx_hal_adc.o [1]
-AHBPrescTable           0x0800dbd8    0x10  Data  Gb  system_stm32f1xx.o [1]
-APBPrescTable           0x0800dc9c     0x8  Data  Gb  system_stm32f1xx.o [1]
-BarItem                 0x20000100    0x1c  Data  Gb  Oled.o [1]
-BusFault_Handler        0x0800d7f7     0x8  Code  Gb  stm32f1xx_it.o [1]
-ButtonPress             0x2000023b     0x1  Data  Gb  TaskKeyboard.o [1]
-ButtonPressCnt          0x20000238     0x2  Data  Gb  TaskKeyboard.o [1]
-CSTACK$$Base            0x20000240           --   Gb  - Linker created -
-CSTACK$$Limit           0x20000640           --   Gb  - Linker created -
-CalcCurrent             0x0800cd47    0x34  Code  Lc  TaskMeasure.o [1]
-ChangeDate              0x0800b67f   0x144  Code  Gb  Menus.o [1]
-ChangeDateTimeMenu      0x0800b4ab    0xc8  Code  Gb  Menus.o [1]
-ChangeTime              0x0800b573   0x10c  Code  Gb  Menus.o [1]
-CheckButtons            0x0800c8d5   0x1fa  Code  Lc  TaskKeyboard.o [1]
-CheckOperation          0x0800b8d9    0x36  Code  Gb  TaskOled.o [1]
-ChooseGraphics          0x0800b3f9    0xaa  Code  Gb  Menus.o [1]
-ConversionEnd           0x20002488     0x1  Data  Gb  ADC.o [1]
-CreateTask              0x08003ec9    0x76  Code  Lc  main.o [1]
-CubeRawValue            0x200023e0     0x8  Data  Gb  TaskMeasure.o [1]
-CurrentRMS              0x20002428     0x4  Data  Gb  TaskMeasure.o [1]
+                        0x08006005    0x4a  Code  Gb  stm32f1xx_hal_adc.o [1]
+ADC_DMAConvCplt         0x08006051    0x52  Code  Gb  stm32f1xx_hal_adc.o [1]
+ADC_DMAError            0x080060b5    0x1e  Code  Gb  stm32f1xx_hal_adc.o [1]
+ADC_DMAHalfConvCplt     0x080060a5     0xe  Code  Gb  stm32f1xx_hal_adc.o [1]
+ADC_Enable              0x08005f75    0x6e  Code  Gb  stm32f1xx_hal_adc.o [1]
+AHBPrescTable           0x0800e894    0x10  Data  Gb  system_stm32f1xx.o [1]
+APBPrescTable           0x0800e980     0x8  Data  Gb  system_stm32f1xx.o [1]
+BarItem                 0x20000120    0x1c  Data  Gb  Oled.o [1]
+BusFault_Handler        0x0800e4b7     0x8  Code  Gb  stm32f1xx_it.o [1]
+ButtonPress             0x2000025d     0x1  Data  Gb  TaskKeyboard.o [1]
+ButtonPressCnt          0x20000258     0x2  Data  Gb  TaskKeyboard.o [1]
+CSTACK$$Base            0x20000260           --   Gb  - Linker created -
+CSTACK$$Limit           0x20000660           --   Gb  - Linker created -
+CalcCurrent             0x0800d51d    0x5e  Code  Lc  TaskMeasure.o [1]
+CalcMeanCurrent         0x0800d57b    0x28  Code  Lc  TaskMeasure.o [1]
+ChangeDate              0x0800c4d1   0x144  Code  Gb  Menus.o [1]
+ChangeDateTimeMenu      0x0800c307    0xbe  Code  Gb  Menus.o [1]
+ChangeTime              0x0800c3c5   0x10c  Code  Gb  Menus.o [1]
+CheckButtons            0x0800dbbd   0x1fa  Code  Lc  TaskKeyboard.o [1]
+CheckOperation          0x0800c735    0x36  Code  Gb  TaskOled.o [1]
+ChooseGraphics          0x0800c1a9    0xaa  Code  Gb  Menus.o [1]
+ClearFLArray            0x0800d505    0x18  Code  Lc  TaskMeasure.o [1]
+ConversionEnd           0x20002498     0x1  Data  Gb  ADC.o [1]
+CreateTask              0x08005069    0x76  Code  Lc  main.o [1]
+CubeRawValue            0x200023f0     0x8  Data  Gb  TaskMeasure.o [1]
+CurrentRMS              0x20002050    0xf0  Data  Gb  TaskMeasure.o [1]
 DMA1_Channel1_IRQHandler
-                        0x0800d811    0x10  Code  Gb  stm32f1xx_it.o [1]
-DMABuff                 0x20001e38   0x1f8  Data  Lc  ADC.o [1]
-DMA_SetConfig           0x08003e81    0x2c  Code  Lc  stm32f1xx_hal_dma.o [1]
-DaysPerMonth            0x20000124     0xc  Data  Gb  TaskRTC.o [1]
-DebugMon_Handler        0x0800d807     0x2  Code  Gb  stm32f1xx_it.o [1]
-DelayMs                 0x080040e1    0x1e  Code  Gb  SysTime.o [1]
-DelayUs                 0x080040b9    0x1c  Code  Gb  SysTime.o [1]
-DrawArrow               0x08006837   0x1d0  Code  Gb  Oled.o [1]
-DrawBottomBarInfo       0x08006bbf   0x2bc  Code  Gb  Oled.o [1]
-DrawCurrentWave         0x0800ba47    0x7a  Code  Gb  Graphix.o [1]
-DrawGraphicSkeleton     0x0800ba13    0x34  Code  Lc  Graphix.o [1]
-DrawMainScreenLoop      0x08006aa7    0x5a  Code  Gb  Oled.o [1]
-DrawMeasure             0x0800bac1    0xdc  Code  Gb  Graphix.o [1]
-DrawMenuLoop            0x08006f9b   0x144  Code  Gb  Oled.o [1]
-DrawTimeDateChangeLoop  0x08006e7b   0x120  Code  Gb  Oled.o [1]
-DrawTopInfoBar          0x08006b01    0xbe  Code  Gb  Oled.o [1]
-EnableMeasure           0x2000248b     0x1  Data  Gb  TaskMeasure.o [1]
-EnergyAcc               0x20002434     0x4  Data  Gb  TaskMeasure.o [1]
-ErrorLine               0x20002486     0x2  Data  Gb  main.o [1]
-ErrorMsg                0x20002410     0x4  Data  Gb  main.o [1]
-FillTestArray           0x0800ccf9    0x4e  Code  Gb  TaskMeasure.o [1]
-FlagButtons             0x20002420     0x4  Data  Gb  TaskKeyboard.o [1]
-FormatMeasure           0x0800b961    0xb2  Code  Lc  Graphix.o [1]
+                        0x0800e4d1    0x10  Code  Gb  stm32f1xx_it.o [1]
+DMABuff                 0x20001e58   0x1f8  Data  Lc  ADC.o [1]
+DMA_SetConfig           0x08005021    0x2c  Code  Lc  stm32f1xx_hal_dma.o [1]
+DaysPerMonth            0x20000144     0xc  Data  Gb  TaskRTC.o [1]
+DebugMon_Handler        0x0800e4c7     0x2  Code  Gb  stm32f1xx_it.o [1]
+DelayMs                 0x080052ed    0x1e  Code  Gb  SysTime.o [1]
+DelayUs                 0x080052b3    0x1c  Code  Gb  SysTime.o [1]
+DrawArrow               0x08007003   0x1d0  Code  Gb  Oled.o [1]
+DrawBottomBarInfo       0x0800738b   0x2da  Code  Gb  Oled.o [1]
+DrawCurrentWave         0x0800c8a3    0x7a  Code  Gb  Graphix.o [1]
+DrawGraphicSkeleton     0x0800c86f    0x34  Code  Lc  Graphix.o [1]
+DrawListLoop            0x080078d3   0x144  Code  Gb  Oled.o [1]
+DrawMainScreenLoop      0x08007273    0x5a  Code  Gb  Oled.o [1]
+DrawMeasure             0x0800c91d   0x114  Code  Gb  Graphix.o [1]
+DrawMenuLoop            0x0800778f   0x144  Code  Gb  Oled.o [1]
+DrawTimeDateChangeLoop  0x08007665   0x12a  Code  Gb  Oled.o [1]
+DrawTopInfoBar          0x080072cd    0xbe  Code  Gb  Oled.o [1]
+EnableMeasure           0x2000249b     0x1  Data  Gb  TaskMeasure.o [1]
+EnergyAcc               0x20002448     0x4  Data  Gb  TaskMeasure.o [1]
+ErrorLine               0x20002496     0x2  Data  Gb  main.o [1]
+ErrorMsg                0x20002424     0x4  Data  Gb  main.o [1]
+FlagButtons             0x20002434     0x4  Data  Gb  TaskKeyboard.o [1]
+FormatMeasure           0x0800c7bd    0xb2  Code  Lc  Graphix.o [1]
 FormatTable             0x20000000    0xb4  Data  Gb  Graphix.o [1]
-GesLed                  0x0800cc1d    0xc4  Code  Gb  TaskLed.o [1]
-GetGlobalDate           0x0800be93    0x1c  Code  Lc  TaskRTC.o [1]
-GetGlobalTime           0x0800be85     0xe  Code  Lc  TaskRTC.o [1]
-GetSecondTick           0x0800be3f    0x46  Code  Lc  TaskRTC.o [1]
-GetTimeDate             0x0800beaf     0xc  Code  Lc  TaskRTC.o [1]
-GlobalDate              0x20002440     0x4  Data  Gb  TaskRTC.o [1]
-GlobalTime              0x2000243c     0x4  Data  Gb  TaskRTC.o [1]
+GesLed                  0x0800df05    0xc4  Code  Gb  TaskLed.o [1]
+GetGlobalDate           0x0800cced    0x1c  Code  Lc  TaskRTC.o [1]
+GetGlobalTime           0x0800ccdf     0xe  Code  Lc  TaskRTC.o [1]
+GetTimeDate             0x0800cd09     0xc  Code  Lc  TaskRTC.o [1]
+GlobalDate              0x20002450     0x4  Data  Gb  TaskRTC.o [1]
+GlobalTime              0x2000244c     0x4  Data  Gb  TaskRTC.o [1]
 GraphicsMenu            0x200000f8     0x8  Data  Gb  Menus.o [1]
 HAL_ADCEx_Calibration_Start
-                        0x08004ec9    0xec  Code  Gb  stm32f1xx_hal_adc_ex.o [1]
+                        0x080060d5    0xec  Code  Gb  stm32f1xx_hal_adc_ex.o [1]
 HAL_ADCEx_InjectedConvCpltCallback
-                        0x08004fb5     0x2  Code  Wk  stm32f1xx_hal_adc_ex.o [1]
-HAL_ADC_ConfigChannel   0x08004c1f   0x14a  Code  Gb  stm32f1xx_hal_adc.o [1]
+                        0x080061c1     0x2  Code  Wk  stm32f1xx_hal_adc_ex.o [1]
+HAL_ADC_ConfigChannel   0x08005e2b   0x14a  Code  Gb  stm32f1xx_hal_adc.o [1]
 HAL_ADC_ConvCpltCallback
-                        0x0800424f    0x10  Code  Gb  ADC.o [1]
+                        0x0800545b    0x10  Code  Gb  ADC.o [1]
 HAL_ADC_ConvHalfCpltCallback
-                        0x08004c19     0x2  Code  Wk  stm32f1xx_hal_adc.o [1]
-HAL_ADC_ErrorCallback   0x08004c1d     0x2  Code  Wk  stm32f1xx_hal_adc.o [1]
-HAL_ADC_IRQHandler      0x08004b13   0x106  Code  Gb  stm32f1xx_hal_adc.o [1]
-HAL_ADC_Init            0x080047f9   0x148  Code  Gb  stm32f1xx_hal_adc.o [1]
+                        0x08005e25     0x2  Code  Wk  stm32f1xx_hal_adc.o [1]
+HAL_ADC_ErrorCallback   0x08005e29     0x2  Code  Wk  stm32f1xx_hal_adc.o [1]
+HAL_ADC_IRQHandler      0x08005d1f   0x106  Code  Gb  stm32f1xx_hal_adc.o [1]
+HAL_ADC_Init            0x08005a05   0x148  Code  Gb  stm32f1xx_hal_adc.o [1]
 HAL_ADC_LevelOutOfWindowCallback
-                        0x08004c1b     0x2  Code  Wk  stm32f1xx_hal_adc.o [1]
-HAL_ADC_MspInit         0x08002e59    0xbc  Code  Gb  stm32f1xx_hal_msp.o [1]
-HAL_ADC_Start_DMA       0x08004941   0x170  Code  Gb  stm32f1xx_hal_adc.o [1]
-HAL_ADC_Stop_DMA        0x08004ab1    0x62  Code  Gb  stm32f1xx_hal_adc.o [1]
-HAL_DMA_Abort           0x08003cbd    0x36  Code  Gb  stm32f1xx_hal_dma.o [1]
-HAL_DMA_IRQHandler      0x08003cf3   0x16a  Code  Gb  stm32f1xx_hal_dma.o [1]
-HAL_DMA_Init            0x08003bad    0x78  Code  Gb  stm32f1xx_hal_dma.o [1]
-HAL_DMA_Start_IT        0x08003c25    0x98  Code  Gb  stm32f1xx_hal_dma.o [1]
-HAL_GPIO_Init           0x08003885   0x2ba  Code  Gb  stm32f1xx_hal_gpio.o [1]
-HAL_GPIO_ReadPin        0x08003b3f    0x18  Code  Gb  stm32f1xx_hal_gpio.o [1]
-HAL_GPIO_WritePin       0x08003b57    0x14  Code  Gb  stm32f1xx_hal_gpio.o [1]
-HAL_GetTick             0x080036e9     0x6  Code  Wk  stm32f1xx_hal.o [1]
-HAL_I2C_Init            0x08002025   0x188  Code  Gb  stm32f1xx_hal_i2c.o [1]
+                        0x08005e27     0x2  Code  Wk  stm32f1xx_hal_adc.o [1]
+HAL_ADC_MspInit         0x08004021    0xbc  Code  Gb  stm32f1xx_hal_msp.o [1]
+HAL_ADC_Start_DMA       0x08005b4d   0x170  Code  Gb  stm32f1xx_hal_adc.o [1]
+HAL_ADC_Stop_DMA        0x08005cbd    0x62  Code  Gb  stm32f1xx_hal_adc.o [1]
+HAL_DMA_Abort           0x08004e5d    0x36  Code  Gb  stm32f1xx_hal_dma.o [1]
+HAL_DMA_IRQHandler      0x08004e93   0x16a  Code  Gb  stm32f1xx_hal_dma.o [1]
+HAL_DMA_Init            0x08004d4d    0x78  Code  Gb  stm32f1xx_hal_dma.o [1]
+HAL_DMA_Start_IT        0x08004dc5    0x98  Code  Gb  stm32f1xx_hal_dma.o [1]
+HAL_GPIO_Init           0x08004a25   0x2ba  Code  Gb  stm32f1xx_hal_gpio.o [1]
+HAL_GPIO_ReadPin        0x08004cdf    0x18  Code  Gb  stm32f1xx_hal_gpio.o [1]
+HAL_GPIO_WritePin       0x08004cf7    0x14  Code  Gb  stm32f1xx_hal_gpio.o [1]
+HAL_GetTick             0x08004893     0x6  Code  Wk  stm32f1xx_hal.o [1]
+HAL_I2C_Init            0x080031ed   0x188  Code  Gb  stm32f1xx_hal_i2c.o [1]
 HAL_I2C_Master_Transmit
-                        0x080021ad   0x188  Code  Gb  stm32f1xx_hal_i2c.o [1]
-HAL_I2C_Mem_Read        0x080024db   0x33c  Code  Gb  stm32f1xx_hal_i2c.o [1]
-HAL_I2C_Mem_Write       0x0800234d   0x18e  Code  Gb  stm32f1xx_hal_i2c.o [1]
-HAL_I2C_MspInit         0x08002f15    0x3e  Code  Gb  stm32f1xx_hal_msp.o [1]
-HAL_IncTick             0x080036cb    0x1e  Code  Wk  stm32f1xx_hal.o [1]
-HAL_Init                0x080036a9    0x22  Code  Gb  stm32f1xx_hal.o [1]
-HAL_InitTick            0x08003f89    0x80  Code  Gb  stm32f1xx_hal_timebase_TIM.o [1]
-HAL_MspInit             0x08002db9    0xa0  Code  Gb  stm32f1xx_hal_msp.o [1]
-HAL_NVIC_EnableIRQ      0x0800381f     0xe  Code  Gb  stm32f1xx_hal_cortex.o [1]
-HAL_NVIC_SetPriority    0x080037f9    0x26  Code  Gb  stm32f1xx_hal_cortex.o [1]
+                        0x08003375   0x188  Code  Gb  stm32f1xx_hal_i2c.o [1]
+HAL_I2C_Mem_Read        0x080036a3   0x33c  Code  Gb  stm32f1xx_hal_i2c.o [1]
+HAL_I2C_Mem_Write       0x08003515   0x18e  Code  Gb  stm32f1xx_hal_i2c.o [1]
+HAL_I2C_MspInit         0x080040dd    0x3e  Code  Gb  stm32f1xx_hal_msp.o [1]
+HAL_IncTick             0x08005247    0x5a  Code  Gb  SysTime.o [1]
+HAL_Init                0x08004871    0x22  Code  Gb  stm32f1xx_hal.o [1]
+HAL_InitTick            0x08005129    0x80  Code  Gb  stm32f1xx_hal_timebase_TIM.o [1]
+HAL_MspInit             0x08003f81    0xa0  Code  Gb  stm32f1xx_hal_msp.o [1]
+HAL_NVIC_EnableIRQ      0x080049bf     0xe  Code  Gb  stm32f1xx_hal_cortex.o [1]
+HAL_NVIC_SetPriority    0x08004999    0x26  Code  Gb  stm32f1xx_hal_cortex.o [1]
 HAL_NVIC_SetPriorityGrouping
-                        0x080037ed     0xc  Code  Gb  stm32f1xx_hal_cortex.o [1]
-HAL_NVIC_SystemReset    0x0800382d     0x8  Code  Gb  stm32f1xx_hal_cortex.o [1]
+                        0x0800498d     0xc  Code  Gb  stm32f1xx_hal_cortex.o [1]
+HAL_NVIC_SystemReset    0x080049cd     0x8  Code  Gb  stm32f1xx_hal_cortex.o [1]
 HAL_RCCEx_GetPeriphCLKFreq
-                        0x080046c1   0x10a  Code  Gb  stm32f1xx_hal_rcc_ex.o [1]
+                        0x080058cd   0x10a  Code  Gb  stm32f1xx_hal_rcc_ex.o [1]
 HAL_RCCEx_PeriphCLKConfig
-                        0x080045b5   0x10c  Code  Gb  stm32f1xx_hal_rcc_ex.o [1]
-HAL_RCC_ClockConfig     0x080033d7   0x184  Code  Gb  stm32f1xx_hal_rcc.o [1]
-HAL_RCC_GetClockConfig  0x08003605    0x3a  Code  Gb  stm32f1xx_hal_rcc.o [1]
-HAL_RCC_GetHCLKFreq     0x080035d3     0x6  Code  Gb  stm32f1xx_hal_rcc.o [1]
-HAL_RCC_GetPCLK1Freq    0x080035d9    0x16  Code  Gb  stm32f1xx_hal_rcc.o [1]
-HAL_RCC_GetPCLK2Freq    0x080035ef    0x16  Code  Gb  stm32f1xx_hal_rcc.o [1]
+                        0x080057c1   0x10c  Code  Gb  stm32f1xx_hal_rcc_ex.o [1]
+HAL_RCC_ClockConfig     0x0800459f   0x184  Code  Gb  stm32f1xx_hal_rcc.o [1]
+HAL_RCC_GetClockConfig  0x080047cd    0x3a  Code  Gb  stm32f1xx_hal_rcc.o [1]
+HAL_RCC_GetHCLKFreq     0x0800479b     0x6  Code  Gb  stm32f1xx_hal_rcc.o [1]
+HAL_RCC_GetPCLK1Freq    0x080047a1    0x16  Code  Gb  stm32f1xx_hal_rcc.o [1]
+HAL_RCC_GetPCLK2Freq    0x080047b7    0x16  Code  Gb  stm32f1xx_hal_rcc.o [1]
 HAL_RCC_GetSysClockFreq
-                        0x0800355b    0x78  Code  Gb  stm32f1xx_hal_rcc.o [1]
-HAL_RCC_OscConfig       0x08002f81   0x456  Code  Gb  stm32f1xx_hal_rcc.o [1]
+                        0x08004723    0x78  Code  Gb  stm32f1xx_hal_rcc.o [1]
+HAL_RCC_OscConfig       0x08004149   0x456  Code  Gb  stm32f1xx_hal_rcc.o [1]
 HAL_SYSTICK_CLKSourceConfig
-                        0x08003841    0x20  Code  Gb  stm32f1xx_hal_cortex.o [1]
-HAL_SYSTICK_Config      0x08003835     0xc  Code  Gb  stm32f1xx_hal_cortex.o [1]
+                        0x080049e1    0x20  Code  Gb  stm32f1xx_hal_cortex.o [1]
+HAL_SYSTICK_Config      0x080049d5     0xc  Code  Gb  stm32f1xx_hal_cortex.o [1]
 HAL_TIMEx_BreakCallback
-                        0x0800592b     0x2  Code  Wk  stm32f1xx_hal_tim_ex.o [1]
+                        0x08006b37     0x2  Code  Wk  stm32f1xx_hal_tim_ex.o [1]
 HAL_TIMEx_CommutationCallback
-                        0x08005929     0x2  Code  Wk  stm32f1xx_hal_tim_ex.o [1]
-HAL_TIM_Base_Init       0x08004369    0x38  Code  Gb  stm32f1xx_hal_tim.o [1]
-HAL_TIM_Base_MspInit    0x080043a1     0x2  Code  Wk  stm32f1xx_hal_tim.o [1]
-HAL_TIM_Base_Start_IT   0x080043a3    0x1e  Code  Gb  stm32f1xx_hal_tim.o [1]
+                        0x08006b35     0x2  Code  Wk  stm32f1xx_hal_tim_ex.o [1]
+HAL_TIM_Base_Init       0x08005575    0x38  Code  Gb  stm32f1xx_hal_tim.o [1]
+HAL_TIM_Base_MspInit    0x080055ad     0x2  Code  Wk  stm32f1xx_hal_tim.o [1]
+HAL_TIM_Base_Start_IT   0x080055af    0x1e  Code  Gb  stm32f1xx_hal_tim.o [1]
 HAL_TIM_IC_CaptureCallback
-                        0x08004539     0x2  Code  Wk  stm32f1xx_hal_tim.o [1]
-HAL_TIM_IRQHandler      0x080043c1   0x176  Code  Gb  stm32f1xx_hal_tim.o [1]
+                        0x08005745     0x2  Code  Wk  stm32f1xx_hal_tim.o [1]
+HAL_TIM_IRQHandler      0x080055cd   0x176  Code  Gb  stm32f1xx_hal_tim.o [1]
 HAL_TIM_OC_DelayElapsedCallback
-                        0x08004537     0x2  Code  Wk  stm32f1xx_hal_tim.o [1]
+                        0x08005743     0x2  Code  Wk  stm32f1xx_hal_tim.o [1]
 HAL_TIM_PWM_PulseFinishedCallback
-                        0x0800453b     0x2  Code  Wk  stm32f1xx_hal_tim.o [1]
+                        0x08005747     0x2  Code  Wk  stm32f1xx_hal_tim.o [1]
 HAL_TIM_PeriodElapsedCallback
-                        0x080040a7    0x12  Code  Gb  SysTime.o [1]
+                        0x080052a1    0x12  Code  Gb  SysTime.o [1]
 HAL_TIM_TriggerCallback
-                        0x0800453d     0x2  Code  Wk  stm32f1xx_hal_tim.o [1]
-HEAP$$Base              0x20000640           --   Gb  - Linker created -
-HEAP$$Limit             0x20000840           --   Gb  - Linker created -
-HalfSecondTick          0x2000248e     0x1  Data  Gb  TaskRTC.o [1]
-HardFault_Handler       0x0800d7e7     0x8  Code  Gb  stm32f1xx_it.o [1]
+                        0x08005749     0x2  Code  Wk  stm32f1xx_hal_tim.o [1]
+HEAP$$Base              0x20000660           --   Gb  - Linker created -
+HEAP$$Limit             0x20000860           --   Gb  - Linker created -
+HalfSecondTick          0x2000249d     0x1  Data  Gb  TaskRTC.o [1]
+HardFault_Handler       0x0800e4a7     0x8  Code  Gb  stm32f1xx_it.o [1]
 I2C_IsAcknowledgeFailed
-                        0x08002d8b    0x2e  Code  Lc  stm32f1xx_hal_i2c.o [1]
-I2C_MasterRequestWrite  0x08002825    0xd0  Code  Lc  stm32f1xx_hal_i2c.o [1]
-I2C_RequestMemoryRead   0x080029e1   0x16e  Code  Lc  stm32f1xx_hal_i2c.o [1]
-I2C_RequestMemoryWrite  0x080028f5    0xec  Code  Lc  stm32f1xx_hal_i2c.o [1]
+                        0x08003f53    0x2e  Code  Lc  stm32f1xx_hal_i2c.o [1]
+I2C_MasterRequestWrite  0x080039ed    0xd0  Code  Lc  stm32f1xx_hal_i2c.o [1]
+I2C_RequestMemoryRead   0x08003ba9   0x16e  Code  Lc  stm32f1xx_hal_i2c.o [1]
+I2C_RequestMemoryWrite  0x08003abd    0xec  Code  Lc  stm32f1xx_hal_i2c.o [1]
 I2C_WaitOnBTFFlagUntilTimeout
-                        0x08002cd7    0x52  Code  Lc  stm32f1xx_hal_i2c.o [1]
+                        0x08003e9f    0x52  Code  Lc  stm32f1xx_hal_i2c.o [1]
 I2C_WaitOnFlagUntilTimeout
-                        0x08002b5d    0x88  Code  Lc  stm32f1xx_hal_i2c.o [1]
+                        0x08003d25    0x88  Code  Lc  stm32f1xx_hal_i2c.o [1]
 I2C_WaitOnMasterAddressFlagUntilTimeout
-                        0x08002be5    0xa0  Code  Lc  stm32f1xx_hal_i2c.o [1]
+                        0x08003dad    0xa0  Code  Lc  stm32f1xx_hal_i2c.o [1]
 I2C_WaitOnRXNEFlagUntilTimeout
-                        0x08002d29    0x62  Code  Lc  stm32f1xx_hal_i2c.o [1]
+                        0x08003ef1    0x62  Code  Lc  stm32f1xx_hal_i2c.o [1]
 I2C_WaitOnTXEFlagUntilTimeout
-                        0x08002c85    0x52  Code  Lc  stm32f1xx_hal_i2c.o [1]
-KeyboardHandle          0x20002400     0x4  Data  Gb  main.o [1]
-LastButtonPressed       0x2000023c     0x1  Data  Gb  TaskKeyboard.o [1]
-LedConf                 0x2000023d     0x1  Data  Gb  TaskLed.o [1]
-LedCtrl                 0x0800b4a3     0x4  Code  Gb  Menus.o [1]
-LedFlag                 0x20002424     0x4  Data  Gb  TaskLed.o [1]
-LedHandle               0x20002408     0x4  Data  Gb  main.o [1]
-LoadInt                 0x0800073b    0x6e  Code  Lc  xprintffull.o [3]
-MX_ADC1_Init            0x080041c9    0x68  Code  Gb  ADC.o [1]
-MX_DMA_Init             0x08004199    0x30  Code  Gb  DMA.o [1]
-MX_GPIO_Init            0x08004101    0x98  Code  Gb  GPIO.o [1]
-MX_I2C1_Init            0x08004291    0x60  Code  Gb  I2C.o [1]
-MainMenu                0x0800b7c3    0xa8  Code  Gb  Menus.o [1]
-MainScreen              0x0800b86b    0x3c  Code  Gb  Menus.o [1]
+                        0x08003e4d    0x52  Code  Lc  stm32f1xx_hal_i2c.o [1]
+KeyboardHandle          0x20002414     0x4  Data  Gb  main.o [1]
+LastButtonPressed       0x2000025e     0x1  Data  Gb  TaskKeyboard.o [1]
+LedCombStr              0x20000100    0x20  Data  Gb  Menus.o [1]
+LedConf                 0x2000025f     0x1  Data  Gb  TaskLed.o [1]
+LedCtrl                 0x0800c253    0xb0  Code  Gb  Menus.o [1]
+LedFlag                 0x20002438     0x4  Data  Gb  TaskLed.o [1]
+LedHandle               0x2000241c     0x4  Data  Gb  main.o [1]
+LoadInt                 0x08001903    0x6e  Code  Lc  xprintffull.o [3]
+MX_ADC1_Init            0x080053d5    0x68  Code  Gb  ADC.o [1]
+MX_DMA_Init             0x080053a5    0x30  Code  Gb  DMA.o [1]
+MX_GPIO_Init            0x0800530d    0x98  Code  Gb  GPIO.o [1]
+MX_I2C1_Init            0x0800549d    0x60  Code  Gb  I2C.o [1]
+MainMenu                0x0800c615    0xa8  Code  Gb  Menus.o [1]
+MainScreen              0x0800c6bd    0x3c  Code  Gb  Menus.o [1]
 MainSetupMenu           0x200000c0    0x28  Data  Gb  Menus.o [1]
-MeanEnergy              0x20002430     0x4  Data  Gb  TaskMeasure.o [1]
-MeasureHandle           0x20002404     0x4  Data  Gb  main.o [1]
-MeasureName             0x20002484     0x2  Data  Gb  Graphix.o [1]
-MeasureStr              0x200023c4     0x8  Data  Gb  Graphix.o [1]
+MeanCurrentRMS          0x2000243c     0x4  Data  Gb  TaskMeasure.o [1]
+MeanEnergy              0x20002444     0x4  Data  Gb  TaskMeasure.o [1]
+MeasureHandle           0x20002418     0x4  Data  Gb  main.o [1]
+MeasureIniz             0x0800e9bc     0x4  Data  Gb  Graphix.o [1]
+MeasureName             0x20002494     0x2  Data  Gb  Graphix.o [1]
+MeasureStr              0x200023d8     0x8  Data  Gb  Graphix.o [1]
 MeasureUnit             0x200000b4     0xc  Data  Gb  Graphix.o [1]
-MemManage_Handler       0x0800d7ef     0x8  Code  Gb  stm32f1xx_it.o [1]
-MessageScreen           0x08006a07    0xa0  Code  Gb  Oled.o [1]
-NMI_Handler             0x0800d7e5     0x2  Code  Gb  stm32f1xx_it.o [1]
-NVIC_EnableIRQ          0x08003729    0x14  Code  Lc  stm32f1xx_hal_cortex.o [1]
-NVIC_EncodePriority     0x08003763    0x3e  Code  Lc  stm32f1xx_hal_cortex.o [1]
+MemManage_Handler       0x0800e4af     0x8  Code  Gb  stm32f1xx_it.o [1]
+MessageScreen           0x080071d3    0xa0  Code  Gb  Oled.o [1]
+NMI_Handler             0x0800e4a5     0x2  Code  Gb  stm32f1xx_it.o [1]
+NVIC_EnableIRQ          0x080048c9    0x14  Code  Lc  stm32f1xx_hal_cortex.o [1]
+NVIC_EncodePriority     0x08004903    0x3e  Code  Lc  stm32f1xx_hal_cortex.o [1]
 NVIC_GetPriorityGrouping
-                        0x0800371f     0xa  Code  Lc  stm32f1xx_hal_cortex.o [1]
-NVIC_SetPriority        0x0800373d    0x26  Code  Lc  stm32f1xx_hal_cortex.o [1]
+                        0x080048bf     0xa  Code  Lc  stm32f1xx_hal_cortex.o [1]
+NVIC_SetPriority        0x080048dd    0x26  Code  Lc  stm32f1xx_hal_cortex.o [1]
 NVIC_SetPriorityGrouping
-                        0x08003701    0x1e  Code  Lc  stm32f1xx_hal_cortex.o [1]
-NVIC_SystemReset        0x080037a1    0x1c  Code  Lc  stm32f1xx_hal_cortex.o [1]
-OledHandle              0x200023fc     0x4  Data  Gb  main.o [1]
-OledInit                0x0800680d    0x2a  Code  Gb  Oled.o [1]
-ParameterSetup          0x0800b4a7     0x4  Code  Gb  Menus.o [1]
-PendSV_Handler          0x08005c51          Code  Gb  portasm.o [1]
-Power                   0x2000242c     0x4  Data  Gb  TaskMeasure.o [1]
-PrefixMeasureUnit       0x200023cc     0x8  Data  Gb  Graphix.o [1]
-RCC_Delay               0x0800363f    0x26  Code  Lc  stm32f1xx_hal_rcc.o [1]
-RTCHandle               0x2000240c     0x4  Data  Gb  main.o [1]
-Region$$Table$$Base     0x0800da24           --   Gb  - Linker created -
-Region$$Table$$Limit    0x0800da44           --   Gb  - Linker created -
-SVC_Handler             0x08005c97          Code  Gb  portasm.o [1]
-SearchRange             0x0800b929    0x38  Code  Lc  Graphix.o [1]
-SecondCnt               0x2000248c     0x1  Data  Gb  TaskRTC.o [1]
-SecondTick              0x2000248d     0x1  Data  Gb  TaskRTC.o [1]
-SetChangedDate          0x0800bed1    0x22  Code  Gb  TaskRTC.o [1]
-SetChangedTime          0x0800bebb    0x16  Code  Gb  TaskRTC.o [1]
-SettingTimeDate         0x2000248f     0x1  Data  Gb  TaskRTC.o [1]
-Setup                   0x08003ead    0x1c  Code  Lc  main.o [1]
-ShowMeasure             0x0800b3a1    0x58  Code  Gb  Menus.o [1]
-SinTestGraphic          0x20002030    0xfc  Data  Gb  TaskMeasure.o [1]
-StopADC_DMA_Conv        0x0800426d     0xa  Code  Gb  ADC.o [1]
-SysTick_Config          0x080037bd    0x30  Code  Lc  stm32f1xx_hal_cortex.o [1]
-SysTick_Handler         0x0800d809     0x8  Code  Gb  stm32f1xx_it.o [1]
-SystemClock_Config      0x08004019    0x8e  Code  Gb  SysTime.o [1]
-SystemCoreClock         0x20000120     0x4  Data  Gb  system_stm32f1xx.o [1]
-SystemInit              0x0800d77d    0x4e  Code  Gb  system_stm32f1xx.o [1]
-TIM1_UP_IRQHandler      0x0800d821     0xa  Code  Gb  stm32f1xx_it.o [1]
-TIM_Base_SetConfig      0x0800453f    0x68  Code  Gb  stm32f1xx_hal_tim.o [1]
-TaskKeyboard            0x0800cae9    0x10  Code  Gb  TaskKeyboard.o [1]
-TaskLed                 0x0800cced     0xa  Code  Gb  TaskLed.o [1]
-TaskMeasure             0x0800cd7b    0xf6  Code  Gb  TaskMeasure.o [1]
-TaskOled                0x0800b919     0xe  Code  Gb  TaskOled.o [1]
-TaskRTC                 0x0800bef3    0x8e  Code  Gb  TaskRTC.o [1]
-TickForSecond           0x2000241c     0x4  Data  Gb  stm32f1xx_hal.o [1]
-TimeCtrl                0x20002438     0x4  Data  Gb  TaskMeasure.o [1]
+                        0x080048a1    0x1e  Code  Lc  stm32f1xx_hal_cortex.o [1]
+NVIC_SystemReset        0x08004941    0x1c  Code  Lc  stm32f1xx_hal_cortex.o [1]
+OledHandle              0x20002410     0x4  Data  Gb  main.o [1]
+OledInit                0x08006fd9    0x2a  Code  Gb  Oled.o [1]
+ParameterSetup          0x0800c303     0x4  Code  Gb  Menus.o [1]
+PendSV_Handler          0x08006e5d          Code  Gb  portasm.o [1]
+Power                   0x20002440     0x4  Data  Gb  TaskMeasure.o [1]
+PrefixMeasureUnit       0x200023e0     0x8  Data  Gb  Graphix.o [1]
+RCC_Delay               0x08004807    0x26  Code  Lc  stm32f1xx_hal_rcc.o [1]
+RTCHandle               0x20002420     0x4  Data  Gb  main.o [1]
+Region$$Table$$Base     0x0800e6b0           --   Gb  - Linker created -
+Region$$Table$$Limit    0x0800e6d0           --   Gb  - Linker created -
+SVC_Handler             0x08006ea3          Code  Gb  portasm.o [1]
+SearchRange             0x0800c785    0x38  Code  Lc  Graphix.o [1]
+SecondTick              0x2000249c     0x1  Data  Gb  TaskRTC.o [1]
+SetChangedDate          0x0800cd2b    0x22  Code  Gb  TaskRTC.o [1]
+SetChangedTime          0x0800cd15    0x16  Code  Gb  TaskRTC.o [1]
+SettingTimeDate         0x2000249e     0x1  Data  Gb  TaskRTC.o [1]
+Setup                   0x0800504d    0x1c  Code  Lc  main.o [1]
+ShowMeasure             0x0800c151    0x58  Code  Gb  Menus.o [1]
+StopADC_DMA_Conv        0x08005479     0xa  Code  Gb  ADC.o [1]
+SysTick_Config          0x0800495d    0x30  Code  Lc  stm32f1xx_hal_cortex.o [1]
+SysTick_Handler         0x0800e4c9     0x8  Code  Gb  stm32f1xx_it.o [1]
+SystemClock_Config      0x080051b9    0x8e  Code  Gb  SysTime.o [1]
+SystemCoreClock         0x20000140     0x4  Data  Gb  system_stm32f1xx.o [1]
+SystemInit              0x0800e43d    0x4e  Code  Gb  system_stm32f1xx.o [1]
+TIM1_UP_IRQHandler      0x0800e4e1     0xa  Code  Gb  stm32f1xx_it.o [1]
+TIM_Base_SetConfig      0x0800574b    0x68  Code  Gb  stm32f1xx_hal_tim.o [1]
+TaskKeyboard            0x0800ddd1    0x10  Code  Gb  TaskKeyboard.o [1]
+TaskLed                 0x0800dfc9    0x1a  Code  Gb  TaskLed.o [1]
+TaskMeasure             0x0800d5a3   0x15e  Code  Gb  TaskMeasure.o [1]
+TaskOled                0x0800c775     0xe  Code  Gb  TaskOled.o [1]
+TaskRTC                 0x0800cd4d    0x86  Code  Gb  TaskRTC.o [1]
+TickForSecond           0x20002430     0x4  Data  Gb  stm32f1xx_hal.o [1]
 TimeSetting             0x200000e8    0x10  Data  Gb  Menus.o [1]
-TransferToAdcBuff       0x08004231    0x1e  Code  Lc  ADC.o [1]
-TurnOffLed              0x0800caf9    0x92  Code  Lc  TaskLed.o [1]
-TurnOnLed               0x0800cb8b    0x92  Code  Lc  TaskLed.o [1]
-UsageFault_Handler      0x0800d7ff     0x8  Code  Gb  stm32f1xx_it.o [1]
-_EncodingSb_Mbtowc      0x08001ec3    0x30  Code  Gb  xencoding_sb.o [3]
-_EncodingSb_Wctomb      0x08001ea9    0x1a  Code  Gb  xencoding_sb.o [3]
-_Error_Handler          0x08003f4f     0xa  Code  Gb  main.o [1]
-_GenldFull              0x08000fbf   0x24c  Code  Lc  xprintffull.o [3]
-_IsdstStr               0x200001c8     0x4  Data  Gb  setlocale.o [3]
-_LdtobFull              0x08000bbd   0x3fc  Code  Lc  xprintffull.o [3]
-_LitobFull              0x08000ab5   0x106  Code  Lc  xprintffull.o [3]
-_LocaleEncoding         0x08001e95     0xe  Code  Gb  setlocale.o [3]
-_LocaleReturnString     0x200001e8    0x50  Data  Lc  setlocale.o [3]
-_Locale_Profile         0x200001cc    0x1c  Data  Gb  setlocale.o [3]
-_Locale_aeabi_lconv     0x20000188    0x38  Data  Gb  localeconv.o [3]
-_Locale_lconv           0x20000138    0x50  Data  Gb  localeconv.o [3]
-_Mbtowc                 0x08001253    0x20  Code  Gb  xmbtowc.o [3]
-_PrintfFull             0x080000ed   0x638  Code  Gb  xprintffull.o [3]
-_PutcharsFull           0x0800120b    0x2e  Code  Lc  xprintffull.o [3]
-_PutstrFull             0x080007a9   0x306  Code  Lc  xprintffull.o [3]
-_SNProut                0x080012ff    0x1a  Code  Gb  xsnprout.o [3]
-_TzoneStr               0x200001c4     0x4  Data  Gb  setlocale.o [3]
-_Wctomb                 0x08001465    0x1a  Code  Gb  xwctomb.o [3]
-__aeabi_cdcmpeq         0x0800c701          Code  Gb  DblCmpEq.o [4]
-__aeabi_cdcmple         0x080016a9          Code  Gb  DblCmpLe.o [4]
-__aeabi_cdrcmple        0x080016d9          Code  Gb  DblCmpGe.o [4]
-__aeabi_cfcmple         0x0800bfa5          Code  Gb  FltCmpLe.o [4]
-__aeabi_d2f             0x0800ceb5          Code  Gb  DblToFlt.o [4]
-__aeabi_d2iz            0x08001815          Code  Gb  DblToI32.o [4]
-__aeabi_d2uiz           0x08001841          Code  Gb  DblToI32.o [4]
-__aeabi_dadd            0x08001f39          Code  Gb  DblAdd.o [4]
-__aeabi_ddiv            0x08001bc1          Code  Gb  DblDiv.o [4]
-__aeabi_dmul            0x08001a1d          Code  Gb  DblMul.o [4]
-__aeabi_dsub            0x0800189d          Code  Gb  DblSub.o [4]
-__aeabi_errno_addr      0x0800c519     0x6  Code  Gb  errno.o [3]
-__aeabi_f2d             0x0800c0a1          Code  Gb  FltToDbl.o [4]
-__aeabi_f2iz            0x0800cf45          Code  Gb  FltToS32.o [4]
-__aeabi_fadd            0x0800d0b9          Code  Gb  FltAdd.o [4]
-__aeabi_fdiv            0x0800d15d          Code  Gb  FltDiv.o [4]
-__aeabi_fmul            0x0800bfc9          Code  Gb  FltMul.o [4]
-__aeabi_i2d             0x0800186d          Code  Gb  I32ToDbl.o [4]
-__aeabi_ldiv0           0x08001f35          Code  Gb  I64DivZer.o [5]
-__aeabi_memset          0x08008109          Code  Gb  ABImemset.o [5]
-__aeabi_ui2d            0x08001881          Code  Gb  I32ToDbl.o [4]
-__aeabi_ui2f            0x0800d13d          Code  Gb  I32ToFlt.o [4]
-__aeabi_ul2d            0x0800cf89          Code  Gb  I64ToDbl.o [4]
-__aeabi_uldivmod        0x08001579          Code  Gb  I64DivMod.o [5]
-__cmain                 0x0800da61          Code  Gb  cmain.o [5]
-__data_Aldata           0x200023e8     0x8  Data  Gb  xxmemxmalloc.o [3]
-__data_GetMemChunk      0x08001f09    0x2c  Code  Gb  xgetmemchunk.o [3]
-__exit                  0x0800da91    0x14  Code  Gb  exit.o [6]
-__iar_Dint              0x0800c685    0x7a  Code  Gb  xdint.o [4]
-__iar_Dnorm             0x08001667    0x42  Code  Gb  xdnorm.o [4]
-__iar_Dscale            0x08001709   0x10c  Code  Gb  xdscale.o [4]
-__iar_Errno             0x200001c0     0x4  Data  Gb  errno.o [3]
+TransferToAdcBuff       0x0800543d    0x1e  Code  Lc  ADC.o [1]
+TurnOffLed              0x0800dde1    0x92  Code  Lc  TaskLed.o [1]
+TurnOnLed               0x0800de73    0x92  Code  Lc  TaskLed.o [1]
+UsageFault_Handler      0x0800e4bf     0x8  Code  Gb  stm32f1xx_it.o [1]
+_EncodingSb_Mbtowc      0x0800308b    0x30  Code  Gb  xencoding_sb.o [3]
+_EncodingSb_Wctomb      0x08003071    0x1a  Code  Gb  xencoding_sb.o [3]
+_Error_Handler          0x080050ef     0xa  Code  Gb  main.o [1]
+_GenldFull              0x08002187   0x24c  Code  Lc  xprintffull.o [3]
+_IsdstStr               0x200001e8     0x4  Data  Gb  setlocale.o [3]
+_LdtobFull              0x08001d85   0x3fc  Code  Lc  xprintffull.o [3]
+_LitobFull              0x08001c7d   0x106  Code  Lc  xprintffull.o [3]
+_LocaleEncoding         0x0800305d     0xe  Code  Gb  setlocale.o [3]
+_LocaleReturnString     0x20000208    0x50  Data  Lc  setlocale.o [3]
+_Locale_Profile         0x200001ec    0x1c  Data  Gb  setlocale.o [3]
+_Locale_aeabi_lconv     0x200001a8    0x38  Data  Gb  localeconv.o [3]
+_Locale_lconv           0x20000158    0x50  Data  Gb  localeconv.o [3]
+_Mbtowc                 0x0800241b    0x20  Code  Gb  xmbtowc.o [3]
+_PrintfFull             0x080012b5   0x638  Code  Gb  xprintffull.o [3]
+_PutcharsFull           0x080023d3    0x2e  Code  Lc  xprintffull.o [3]
+_PutstrFull             0x08001971   0x306  Code  Lc  xprintffull.o [3]
+_SNProut                0x080024c7    0x1a  Code  Gb  xsnprout.o [3]
+_TzoneStr               0x200001e4     0x4  Data  Gb  setlocale.o [3]
+_Wctomb                 0x0800262d    0x1a  Code  Gb  xwctomb.o [3]
+__aeabi_cdcmple         0x08002871          Code  Gb  DblCmpLe.o [4]
+__aeabi_cdrcmple        0x080028a1          Code  Gb  DblCmpGe.o [4]
+__aeabi_cfcmple         0x0800cdf1          Code  Gb  FltCmpLe.o [4]
+__aeabi_cfrcmple        0x0800da89          Code  Gb  FltCmpGe.o [4]
+__aeabi_d2f             0x0800d879          Code  Gb  DblToFlt.o [4]
+__aeabi_d2iz            0x080029dd          Code  Gb  DblToI32.o [4]
+__aeabi_d2uiz           0x08002a09          Code  Gb  DblToI32.o [4]
+__aeabi_dadd            0x08003101          Code  Gb  DblAdd.o [4]
+__aeabi_ddiv            0x08002d89          Code  Gb  DblDiv.o [4]
+__aeabi_dmul            0x08002be5          Code  Gb  DblMul.o [4]
+__aeabi_dsub            0x08002a65          Code  Gb  DblSub.o [4]
+__aeabi_errno_addr      0x0800dbb1     0x6  Code  Gb  errno.o [3]
+__aeabi_f2d             0x0800ceed          Code  Gb  FltToDbl.o [4]
+__aeabi_fadd            0x0800d909          Code  Gb  FltAdd.o [4]
+__aeabi_fdiv            0x0800d98d          Code  Gb  FltDiv.o [4]
+__aeabi_fmul            0x0800ce15          Code  Gb  FltMul.o [4]
+__aeabi_i2d             0x08002a35          Code  Gb  I32ToDbl.o [4]
+__aeabi_ldiv0           0x080030fd          Code  Gb  I64DivZer.o [5]
+__aeabi_memset          0x08008a41          Code  Gb  ABImemset.o [5]
+__aeabi_ui2d            0x08002a49          Code  Gb  I32ToDbl.o [4]
+__aeabi_ui2f            0x0800daad          Code  Gb  I32ToFlt.o [4]
+__aeabi_ul2d            0x0800d749          Code  Gb  I64ToDbl.o [4]
+__aeabi_uldivmod        0x08002741          Code  Gb  I64DivMod.o [5]
+__cmain                 0x0800e6ed          Code  Gb  cmain.o [5]
+__data_Aldata           0x200023f8     0x8  Data  Gb  xxmemxmalloc.o [3]
+__data_GetMemChunk      0x080030d1    0x2c  Code  Gb  xgetmemchunk.o [3]
+__exit                  0x0800e71d    0x14  Code  Gb  exit.o [6]
+__iar_Dnorm             0x0800282f    0x42  Code  Gb  xdnorm.o [4]
+__iar_Dscale            0x080028d1   0x10c  Code  Gb  xdscale.o [4]
+__iar_Errno             0x200001e0     0x4  Data  Gb  errno.o [3]
 __iar_Locale_lconv_init
-                        0x08001e19    0x3a  Code  Gb  localeconv.o [3]
-__iar_Mbcurmax          0x080013a9     0xa  Code  Gb  xmbcurmax.o [3]
-__iar_Memchr            0x08001351          Code  Gb  memchr.o [5]
-__iar_Memset            0x08008109          Code  Gb  ABImemset.o [5]
-__iar_Memset_word       0x08008111          Code  Gb  ABImemset.o [5]
-__iar_Quad              0x0800c525   0x160  Code  Gb  xquad.o [4]
-__iar_Sin               0x0800c0f1   0x420  Code  Gb  xsin.o [4]
-__iar_Strchr            0x080012e9          Code  Gb  strchr.o [5]
-__iar_close_ttio        0x0800d9c5    0x2e  Code  Gb  iarttio.o [6]
-__iar_d2uiz             0x0800184d          Code  Gb  DblToI32.o [4]
-__iar_dadd              0x08001f4d          Code  Gb  DblAdd.o [4]
-__iar_data_init3        0x0800d9fd    0x28  Code  Gb  data_init.o [5]
+                        0x08002fe1    0x3a  Code  Gb  localeconv.o [3]
+__iar_Mbcurmax          0x08002571     0xa  Code  Gb  xmbcurmax.o [3]
+__iar_Memchr            0x08002519          Code  Gb  memchr.o [5]
+__iar_Memset            0x08008a41          Code  Gb  ABImemset.o [5]
+__iar_Memset_word       0x08008a49          Code  Gb  ABImemset.o [5]
+__iar_Strchr            0x080024b1          Code  Gb  strchr.o [5]
+__iar_close_ttio        0x0800e651    0x2e  Code  Gb  iarttio.o [6]
+__iar_d2uiz             0x08002a15          Code  Gb  DblToI32.o [4]
+__iar_dadd              0x08003115          Code  Gb  DblAdd.o [4]
+__iar_data_init3        0x0800e689    0x28  Code  Gb  data_init.o [5]
 __iar_dlib_perthread_access
-                        0x08002021     0x2  Code  Gb  xtls.o [3]
-__iar_dsub              0x080018b1          Code  Gb  DblSub.o [4]
-__iar_dsubStart         0x080018c3          Code  Gb  DblSub.o [4]
-__iar_edom              0x0800c8c9          Code  Gb  iarEdom.o [5]
-__iar_fadd              0x0800d0c9          Code  Gb  FltAdd.o [4]
-__iar_fmod              0x0800c721          Code  Gb  fmod.o [4]
-__iar_fmodl             0x0800c721          Code  Gb  fmod.o [4]
-__iar_fsub              0x0800d259          Code  Gb  FltSub.o [4]
-__iar_fsubStart         0x0800d269          Code  Gb  FltSub.o [4]
-__iar_lookup_ttioh      0x0800d9f5     0x8  Code  Gb  XShttio.o [3]
+                        0x080031e9     0x2  Code  Gb  xtls.o [3]
+__iar_dsub              0x08002a79          Code  Gb  DblSub.o [4]
+__iar_dsubStart         0x08002a8b          Code  Gb  DblSub.o [4]
+__iar_edom              0x0800dacd          Code  Gb  iarEdom.o [5]
+__iar_fadd              0x0800d919          Code  Gb  FltAdd.o [4]
+__iar_fsub              0x0800dad9          Code  Gb  FltSub.o [4]
+__iar_fsubStart         0x0800dae9          Code  Gb  FltSub.o [4]
+__iar_lookup_ttioh      0x0800e681     0x8  Code  Gb  XShttio.o [3]
 __iar_lz77_init_single3
-                        0x08001273    0x76  Code  Gb  lz77_init_single.o [5]
-__iar_program_start     0x0800dc29          Code  Gb  cstartup_M.o [5]
-__iar_sqrt              0x0800cfc9          Code  Gb  sqrt.o [4]
-__iar_ttio_handles      0x20000130     0x8  Data  Lc  XShttio.o [3]
-__iar_ui2d              0x08001885          Code  Gb  I32ToDbl.o [4]
-__iar_ui2f              0x0800d141          Code  Gb  I32ToFlt.o [4]
-__iar_ul2d              0x0800cf8d          Code  Gb  I64ToDbl.o [4]
+                        0x0800243b    0x76  Code  Gb  lz77_init_single.o [5]
+__iar_program_start     0x0800e8fd          Code  Gb  cstartup_M.o [5]
+__iar_sqrt              0x0800d789          Code  Gb  sqrt.o [4]
+__iar_ttio_handles      0x20000150     0x8  Data  Lc  XShttio.o [3]
+__iar_ui2d              0x08002a4d          Code  Gb  I32ToDbl.o [4]
+__iar_ui2f              0x0800dab1          Code  Gb  I32ToFlt.o [4]
+__iar_ul2d              0x0800d74d          Code  Gb  I64ToDbl.o [4]
 __iar_unaligned___aeabi_memcpy
-                        0x08001481          Code  Gb  ABImemcpy_unaligned.o [5]
+                        0x08002649          Code  Gb  ABImemcpy_unaligned.o [5]
 __iar_unaligned___aeabi_memcpy4
-                        0x080014a1          Code  Gb  ABImemcpy_unaligned.o [5]
+                        0x08002669          Code  Gb  ABImemcpy_unaligned.o [5]
 __iar_unaligned___aeabi_memcpy8
-                        0x080014a1          Code  Gb  ABImemcpy_unaligned.o [5]
-__iar_zero_init3        0x0800d94d    0x40  Code  Gb  zero_init3.o [5]
-__low_level_init        0x0800da7b     0x4  Code  Gb  low_level_init.o [3]
+                        0x08002669          Code  Gb  ABImemcpy_unaligned.o [5]
+__iar_zero_init3        0x0800e539    0x40  Code  Gb  zero_init3.o [5]
+__low_level_init        0x0800e707     0x4  Code  Gb  low_level_init.o [3]
 __vector_table          0x08000000          Data  Gb  startup_stm32f103xb.o [1]
-_call_main              0x0800da6d          Code  Gb  cmain.o [5]
-_exit                   0x0800da85          Code  Gb  cexit.o [5]
-_main                   0x0800da77          Code  Gb  cmain.o [5]
-bcd2bin                 0x0800bde9    0x16  Code  Gb  TaskRTC.o [1]
-bin2bcd                 0x0800bdff    0x1c  Code  Gb  TaskRTC.o [1]
-check_min_max           0x0800be1b    0x24  Code  Gb  TaskRTC.o [1]
-div                     0x08001e85     0xe  Code  Gb  div.o [3]
-ds1307_get_day          0x0800bcfd    0x16  Code  Gb  TaskRTC.o [1]
-ds1307_get_hours_24     0x0800bcbf    0x1a  Code  Gb  TaskRTC.o [1]
-ds1307_get_minutes      0x0800bc85    0x16  Code  Gb  TaskRTC.o [1]
-ds1307_get_month        0x0800bd37    0x16  Code  Gb  TaskRTC.o [1]
-ds1307_get_seconds      0x0800bc4b    0x16  Code  Gb  TaskRTC.o [1]
-ds1307_get_time_24      0x0800bdab    0x1c  Code  Gb  TaskRTC.o [1]
-ds1307_get_year         0x0800bd71    0x16  Code  Gb  TaskRTC.o [1]
-ds1307_set_day          0x0800bd13    0x24  Code  Gb  TaskRTC.o [1]
-ds1307_set_hours_24     0x0800bcd9    0x24  Code  Gb  TaskRTC.o [1]
-ds1307_set_minutes      0x0800bc9b    0x24  Code  Gb  TaskRTC.o [1]
-ds1307_set_month        0x0800bd4d    0x24  Code  Gb  TaskRTC.o [1]
-ds1307_set_seconds      0x0800bc61    0x24  Code  Gb  TaskRTC.o [1]
-ds1307_set_time_24      0x0800bdc7    0x22  Code  Gb  TaskRTC.o [1]
-ds1307_set_year         0x0800bd87    0x24  Code  Gb  TaskRTC.o [1]
-exit                    0x0800da7f     0x4  Code  Gb  exit.o [3]
-fmod                    0x0800c721          Code  Gb  fmod.o [4]
-fmodl                   0x0800c721          Code  Gb  fmod.o [4]
-free                    0x080014f9    0x7a  Code  Gb  xxmemxfree.o [3]
-hadc1                   0x20002310    0x30  Data  Gb  ADC.o [1]
-hdma_adc1               0x2000228c    0x44  Data  Gb  DMA.o [1]
-hi2c1                   0x20002238    0x54  Data  Gb  I2C.o [1]
-htim1                   0x200022d0    0x40  Data  Gb  stm32f1xx_hal_timebase_TIM.o [1]
-i2c_STM32F103_HAL       0x08006781    0x8c  Code  Lc  Oled.o [1]
-i2c_read_with_reg       0x0800bc1d    0x2e  Code  Lc  TaskRTC.o [1]
-i2c_write_with_reg      0x0800bbed    0x30  Code  Lc  TaskRTC.o [1]
-localeconv              0x08001e53    0x16  Code  Gb  localeconv.o [3]
-main                    0x08003f3f    0x10  Code  Gb  main.o [1]
-makeFreeRtosPriority    0x080042f1    0x12  Code  Lc  cmsis_os.o [1]
-malloc                  0x080013b5    0xac  Code  Gb  xxmemxmalloc.o [3]
-memchr                  0x08001351          Code  Gb  memchr.o [5]
-osDelay                 0x0800433b    0x1c  Code  Gb  cmsis_os.o [1]
-osKernelStart           0x08004303     0xa  Code  Gb  cmsis_os.o [1]
-osSystickHandler        0x08004357    0x10  Code  Gb  cmsis_os.o [1]
-osThreadCreate          0x0800430d    0x2e  Code  Gb  cmsis_os.o [1]
+_call_main              0x0800e6f9          Code  Gb  cmain.o [5]
+_exit                   0x0800e711          Code  Gb  cexit.o [5]
+_main                   0x0800e703          Code  Gb  cmain.o [5]
+bcd2bin                 0x0800cc89    0x16  Code  Gb  TaskRTC.o [1]
+bin2bcd                 0x0800cc9f    0x1c  Code  Gb  TaskRTC.o [1]
+check_min_max           0x0800ccbb    0x24  Code  Gb  TaskRTC.o [1]
+div                     0x0800304d     0xe  Code  Gb  div.o [3]
+ds1307_get_day          0x0800cb9d    0x16  Code  Gb  TaskRTC.o [1]
+ds1307_get_hours_24     0x0800cb5f    0x1a  Code  Gb  TaskRTC.o [1]
+ds1307_get_minutes      0x0800cb25    0x16  Code  Gb  TaskRTC.o [1]
+ds1307_get_month        0x0800cbd7    0x16  Code  Gb  TaskRTC.o [1]
+ds1307_get_seconds      0x0800caeb    0x16  Code  Gb  TaskRTC.o [1]
+ds1307_get_time_24      0x0800cc4b    0x1c  Code  Gb  TaskRTC.o [1]
+ds1307_get_year         0x0800cc11    0x16  Code  Gb  TaskRTC.o [1]
+ds1307_set_day          0x0800cbb3    0x24  Code  Gb  TaskRTC.o [1]
+ds1307_set_hours_24     0x0800cb79    0x24  Code  Gb  TaskRTC.o [1]
+ds1307_set_minutes      0x0800cb3b    0x24  Code  Gb  TaskRTC.o [1]
+ds1307_set_month        0x0800cbed    0x24  Code  Gb  TaskRTC.o [1]
+ds1307_set_seconds      0x0800cb01    0x24  Code  Gb  TaskRTC.o [1]
+ds1307_set_time_24      0x0800cc67    0x22  Code  Gb  TaskRTC.o [1]
+ds1307_set_year         0x0800cc27    0x24  Code  Gb  TaskRTC.o [1]
+exit                    0x0800e70b     0x4  Code  Gb  exit.o [3]
+free                    0x080026c1    0x7a  Code  Gb  xxmemxfree.o [3]
+hadc1                   0x20002324    0x30  Data  Gb  ADC.o [1]
+hdma_adc1               0x200022a0    0x44  Data  Gb  DMA.o [1]
+hi2c1                   0x2000224c    0x54  Data  Gb  I2C.o [1]
+htim1                   0x200022e4    0x40  Data  Gb  stm32f1xx_hal_timebase_TIM.o [1]
+i2c_STM32F103_HAL       0x08006f4d    0x8c  Code  Lc  Oled.o [1]
+i2c_read_with_reg       0x0800cabd    0x2e  Code  Lc  TaskRTC.o [1]
+i2c_write_with_reg      0x0800ca8d    0x30  Code  Lc  TaskRTC.o [1]
+localeconv              0x0800301b    0x16  Code  Gb  localeconv.o [3]
+main                    0x080050df    0x10  Code  Gb  main.o [1]
+makeFreeRtosPriority    0x080054fd    0x12  Code  Lc  cmsis_os.o [1]
+malloc                  0x0800257d    0xac  Code  Gb  xxmemxmalloc.o [3]
+memchr                  0x08002519          Code  Gb  memchr.o [5]
+osDelay                 0x08005547    0x1c  Code  Gb  cmsis_os.o [1]
+osKernelStart           0x0800550f     0xa  Code  Gb  cmsis_os.o [1]
+osSystickHandler        0x08005563    0x10  Code  Gb  cmsis_os.o [1]
+osThreadCreate          0x08005519    0x2e  Code  Gb  cmsis_os.o [1]
 prvAddCurrentTaskToDelayedList
-                        0x080056c1    0x82  Code  Lc  tasks.o [1]
+                        0x080068cd    0x82  Code  Lc  tasks.o [1]
 prvAddNewTaskToReadyList
-                        0x08005109    0xb8  Code  Lc  tasks.o [1]
+                        0x08006315    0xb8  Code  Lc  tasks.o [1]
 prvCheckTasksWaitingTermination
-                        0x080055c1    0x66  Code  Lc  tasks.o [1]
-prvDeleteTCB            0x08005627    0x12  Code  Lc  tasks.o [1]
-prvHeapInit             0x08005ac1    0x6e  Code  Lc  heap_4.o [1]
-prvIdleTask             0x0800553d    0x24  Code  Lc  tasks.o [1]
-prvInitialiseNewTask    0x08005041    0xc8  Code  Lc  tasks.o [1]
-prvInitialiseTaskLists  0x08005565    0x54  Code  Lc  tasks.o [1]
+                        0x080067cd    0x66  Code  Lc  tasks.o [1]
+prvDeleteTCB            0x08006833    0x12  Code  Lc  tasks.o [1]
+prvHeapInit             0x08006ccd    0x6e  Code  Lc  heap_4.o [1]
+prvIdleTask             0x08006749    0x24  Code  Lc  tasks.o [1]
+prvInitialiseNewTask    0x0800624d    0xc8  Code  Lc  tasks.o [1]
+prvInitialiseTaskLists  0x08006771    0x54  Code  Lc  tasks.o [1]
 prvInsertBlockIntoFreeList
-                        0x08005b2f    0x62  Code  Lc  heap_4.o [1]
+                        0x08006d3b    0x62  Code  Lc  heap_4.o [1]
 prvResetNextTaskUnblockTime
-                        0x08005639    0x2e  Code  Lc  tasks.o [1]
-prvTaskExitError        0x080057a5    0x2a  Code  Lc  port.o [1]
-pvPortMalloc            0x08005931   0x118  Code  Gb  heap_4.o [1]
-pxCurrentTCB            0x20002444     0x4  Data  Gb  tasks.o [1]
-pxDelayedTaskList       0x20002448     0x4  Data  Lc  tasks.o [1]
-pxEnd                   0x200023dc     0x4  Data  Lc  heap_4.o [1]
+                        0x08006845    0x2e  Code  Lc  tasks.o [1]
+prvTaskExitError        0x080069b1    0x2a  Code  Lc  port.o [1]
+pvPortMalloc            0x08006b3d   0x118  Code  Gb  heap_4.o [1]
+pxCurrentTCB            0x20002454     0x4  Data  Gb  tasks.o [1]
+pxDelayedTaskList       0x20002458     0x4  Data  Lc  tasks.o [1]
+pxEnd                   0x20002400     0x4  Data  Lc  heap_4.o [1]
 pxOverflowDelayedTaskList
-                        0x2000244c     0x4  Data  Lc  tasks.o [1]
-pxPortInitialiseStack   0x08005785    0x20  Code  Gb  port.o [1]
-pxReadyTasksLists       0x2000212c    0x8c  Data  Lc  tasks.o [1]
-sin                     0x0800cead     0x6  Code  Gb  sin.o [4]
-snprintf                0x08007be5    0x44  Code  Gb  snprintf.o [3]
-sqrt                    0x0800cfc9          Code  Gb  sqrt.o [4]
-sqrtl                   0x0800cfc9          Code  Gb  sqrt.o [4]
-strchr                  0x080012e9          Code  Gb  strchr.o [5]
-strlen                  0x08001319          Code  Gb  strlen.o [5]
-u8g                     0x200021b8    0x80  Data  Gb  Oled.o [1]
-u8g2_ClearBuffer        0x08007381    0x22  Code  Gb  u8g2_buffer.o [1]
-u8g2_DrawBox            0x08007e49    0x54  Code  Gb  u8g2_box.o [1]
-u8g2_DrawFrame          0x08007e9d    0x94  Code  Gb  u8g2_box.o [1]
-u8g2_DrawGlyph          0x0800799d    0x60  Code  Gb  u8g2_font.o [1]
-u8g2_DrawHVLine         0x08007db3    0x3c  Code  Gb  u8g2_hvline.o [1]
-u8g2_DrawLine           0x08007265   0x11c  Code  Gb  u8g2_line.o [1]
-u8g2_DrawPixel          0x08007def    0x48  Code  Gb  u8g2_hvline.o [1]
-u8g2_DrawStr            0x08007a85    0x22  Code  Gb  u8g2_font.o [1]
-u8g2_GetGlyphWidth      0x0800794b    0x4c  Code  Gb  u8g2_font.o [1]
-u8g2_GetStrWidth        0x08007bc9    0x14  Code  Gb  u8g2_font.o [1]
-u8g2_IsIntersection     0x080081b5    0x42  Code  Gb  u8g2_intersection.o [1]
-u8g2_SendBuffer         0x0800742d    0x12  Code  Gb  u8g2_buffer.o [1]
-u8g2_SetDrawColor       0x08007e37    0x12  Code  Gb  u8g2_hvline.o [1]
-u8g2_SetFont            0x08007b39    0x20  Code  Gb  u8g2_font.o [1]
-u8g2_SetFontMode        0x08007997     0x6  Code  Gb  u8g2_font.o [1]
+                        0x2000245c     0x4  Data  Lc  tasks.o [1]
+pxPortInitialiseStack   0x08006991    0x20  Code  Gb  port.o [1]
+pxReadyTasksLists       0x20002140    0x8c  Data  Lc  tasks.o [1]
+snprintf                0x0800851d    0x44  Code  Gb  snprintf.o [3]
+sqrt                    0x0800d789          Code  Gb  sqrt.o [4]
+sqrtl                   0x0800d789          Code  Gb  sqrt.o [4]
+strchr                  0x080024b1          Code  Gb  strchr.o [5]
+strlen                  0x080024e1          Code  Gb  strlen.o [5]
+u8g                     0x200021cc    0x80  Data  Gb  Oled.o [1]
+u8g2_ClearBuffer        0x08007cb9    0x22  Code  Gb  u8g2_buffer.o [1]
+u8g2_DrawBox            0x08008781    0x54  Code  Gb  u8g2_box.o [1]
+u8g2_DrawFrame          0x080087d5    0x94  Code  Gb  u8g2_box.o [1]
+u8g2_DrawGlyph          0x080082d5    0x60  Code  Gb  u8g2_font.o [1]
+u8g2_DrawHVLine         0x080086eb    0x3c  Code  Gb  u8g2_hvline.o [1]
+u8g2_DrawLine           0x08007b9d   0x11c  Code  Gb  u8g2_line.o [1]
+u8g2_DrawPixel          0x08008727    0x48  Code  Gb  u8g2_hvline.o [1]
+u8g2_DrawStr            0x080083bd    0x22  Code  Gb  u8g2_font.o [1]
+u8g2_GetGlyphWidth      0x08008283    0x4c  Code  Gb  u8g2_font.o [1]
+u8g2_GetStrWidth        0x08008501    0x14  Code  Gb  u8g2_font.o [1]
+u8g2_IsIntersection     0x08008aed    0x42  Code  Gb  u8g2_intersection.o [1]
+u8g2_SendBuffer         0x08007d65    0x12  Code  Gb  u8g2_buffer.o [1]
+u8g2_SetDrawColor       0x0800876f    0x12  Code  Gb  u8g2_hvline.o [1]
+u8g2_SetFont            0x08008471    0x20  Code  Gb  u8g2_font.o [1]
+u8g2_SetFontMode        0x080082cf     0x6  Code  Gb  u8g2_font.o [1]
 u8g2_SetFontPosBaseline
-                        0x08007b33     0x6  Code  Gb  u8g2_font.o [1]
-u8g2_SetupBuffer        0x08007fad    0x56  Code  Gb  u8g2_setup.o [1]
+                        0x0800846b     0x6  Code  Gb  u8g2_font.o [1]
+u8g2_SetupBuffer        0x080088e5    0x56  Code  Gb  u8g2_setup.o [1]
 u8g2_Setup_ssd1306_i2c_128x64_noname_f
-                        0x08007135    0x3c  Code  Gb  u8g2_d_setup.o [1]
-u8g2_UpdateRefHeight    0x08007aa7    0x86  Code  Gb  u8g2_font.o [1]
-u8g2_add_vector_x       0x080075af    0x20  Code  Lc  u8g2_font.o [1]
-u8g2_add_vector_y       0x0800758f    0x20  Code  Lc  u8g2_font.o [1]
-u8g2_cb_r0              0x0800dcac     0x8  Data  Gb  u8g2_setup.o [1]
-u8g2_clip_intersection  0x08007c29    0x4c  Code  Lc  u8g2_hvline.o [1]
-u8g2_draw_hv_line_2dir  0x08007c75    0xb0  Code  Lc  u8g2_hvline.o [1]
-u8g2_draw_hv_line_4dir  0x08007d25    0x8e  Code  Gb  u8g2_hvline.o [1]
-u8g2_draw_l90_r0        0x080080c1    0x2c  Code  Gb  u8g2_setup.o [1]
-u8g2_draw_string        0x080079fd    0x88  Code  Lc  u8g2_font.o [1]
-u8g2_font_4x6_tf        0x0800add8   0x5c8  Data  Gb  u8g2_fonts.o [1]
-u8g2_font_6x10_tf       0x0800a5f4   0x7e4  Data  Gb  u8g2_fonts.o [1]
-u8g2_font_6x13B_tf      0x0800949c   0x8d4  Data  Gb  u8g2_fonts.o [1]
-u8g2_font_6x13_tf       0x08009d70   0x884  Data  Gb  u8g2_fonts.o [1]
-u8g2_font_7x13_tf       0x08008b78   0x924  Data  Gb  u8g2_fonts.o [1]
-u8g2_font_8x13_tf       0x0800821c   0x95c  Data  Gb  u8g2_fonts.o [1]
-u8g2_font_9x18B_tf      0x08005cd8   0xa40  Data  Gb  u8g2_fonts.o [1]
+                        0x08007a6d    0x3c  Code  Gb  u8g2_d_setup.o [1]
+u8g2_UpdateRefHeight    0x080083df    0x86  Code  Gb  u8g2_font.o [1]
+u8g2_add_vector_x       0x08007ee7    0x20  Code  Lc  u8g2_font.o [1]
+u8g2_add_vector_y       0x08007ec7    0x20  Code  Lc  u8g2_font.o [1]
+u8g2_cb_r0              0x0800e990     0x8  Data  Gb  u8g2_setup.o [1]
+u8g2_clip_intersection  0x08008561    0x4c  Code  Lc  u8g2_hvline.o [1]
+u8g2_draw_hv_line_2dir  0x080085ad    0xb0  Code  Lc  u8g2_hvline.o [1]
+u8g2_draw_hv_line_4dir  0x0800865d    0x8e  Code  Gb  u8g2_hvline.o [1]
+u8g2_draw_l90_r0        0x080089f9    0x2c  Code  Gb  u8g2_setup.o [1]
+u8g2_draw_string        0x08008335    0x88  Code  Lc  u8g2_font.o [1]
+u8g2_font_4x6_tf        0x0800cf3c   0x5c8  Data  Gb  u8g2_fonts.o [1]
+u8g2_font_6x10_tf       0x0800b96c   0x7e4  Data  Gb  u8g2_fonts.o [1]
+u8g2_font_6x13B_tf      0x0800a814   0x8d4  Data  Gb  u8g2_fonts.o [1]
+u8g2_font_6x13_tf       0x0800b0e8   0x884  Data  Gb  u8g2_fonts.o [1]
+u8g2_font_7x13_tf       0x08009ef0   0x924  Data  Gb  u8g2_fonts.o [1]
+u8g2_font_8x13_tf       0x08009594   0x95c  Data  Gb  u8g2_fonts.o [1]
+u8g2_font_9x18B_tf      0x08008b54   0xa40  Data  Gb  u8g2_fonts.o [1]
 u8g2_font_calc_vref_font
-                        0x08007b2d     0x6  Code  Gb  u8g2_font.o [1]
+                        0x08008465     0x6  Code  Gb  u8g2_font.o [1]
+u8g2_font_courR18_tf    0x080000ec  0x11c8  Data  Gb  u8g2_fonts.o [1]
 u8g2_font_decode_get_signed_bits
-                        0x0800756d    0x22  Code  Gb  u8g2_font.o [1]
+                        0x08007ea5    0x22  Code  Gb  u8g2_font.o [1]
 u8g2_font_decode_get_unsigned_bits
-                        0x0800752f    0x3e  Code  Gb  u8g2_font.o [1]
-u8g2_font_decode_glyph  0x080076f9   0x176  Code  Gb  u8g2_font.o [1]
-u8g2_font_decode_len    0x080075cf    0xec  Code  Gb  u8g2_font.o [1]
-u8g2_font_draw_glyph    0x0800790f    0x3c  Code  Lc  u8g2_font.o [1]
-u8g2_font_get_byte      0x08007441     0x8  Code  Lc  u8g2_font.o [1]
+                        0x08007e67    0x3e  Code  Gb  u8g2_font.o [1]
+u8g2_font_decode_glyph  0x08008031   0x176  Code  Gb  u8g2_font.o [1]
+u8g2_font_decode_len    0x08007f07    0xec  Code  Gb  u8g2_font.o [1]
+u8g2_font_draw_glyph    0x08008247    0x3c  Code  Lc  u8g2_font.o [1]
+u8g2_font_get_byte      0x08007d79     0x8  Code  Lc  u8g2_font.o [1]
 u8g2_font_get_glyph_data
-                        0x0800786f    0xa0  Code  Gb  u8g2_font.o [1]
-u8g2_font_get_word      0x08007449    0x16  Code  Lc  u8g2_font.o [1]
-u8g2_font_setup_decode  0x080076bb    0x3e  Code  Lc  u8g2_font.o [1]
+                        0x080081a7    0xa0  Code  Gb  u8g2_font.o [1]
+u8g2_font_get_word      0x08007d81    0x16  Code  Lc  u8g2_font.o [1]
+u8g2_font_setup_decode  0x08007ff3    0x3e  Code  Lc  u8g2_font.o [1]
 u8g2_is_intersection_decision_tree
-                        0x0800816f    0x46  Code  Gb  u8g2_intersection.o [1]
+                        0x08008aa7    0x46  Code  Gb  u8g2_intersection.o [1]
 u8g2_ll_hvline_vertical_top_lsb
-                        0x0800d68d    0xf0  Code  Gb  u8g2_ll_hvline.o [1]
-u8g2_m_16_8_f           0x08007f9d     0xc  Code  Gb  u8g2_d_memory.o [1]
-u8g2_read_font_info     0x0800745f    0xd0  Code  Gb  u8g2_font.o [1]
-u8g2_send_buffer        0x080073e9    0x44  Code  Lc  u8g2_buffer.o [1]
-u8g2_send_tile_row      0x080073a3    0x46  Code  Lc  u8g2_buffer.o [1]
-u8g2_string_width       0x08007b59    0x70  Code  Lc  u8g2_font.o [1]
+                        0x0800e34d    0xf0  Code  Gb  u8g2_ll_hvline.o [1]
+u8g2_m_16_8_f           0x080088d5     0xc  Code  Gb  u8g2_d_memory.o [1]
+u8g2_read_font_info     0x08007d97    0xd0  Code  Gb  u8g2_font.o [1]
+u8g2_send_buffer        0x08007d21    0x44  Code  Lc  u8g2_buffer.o [1]
+u8g2_send_tile_row      0x08007cdb    0x46  Code  Lc  u8g2_buffer.o [1]
+u8g2_string_width       0x08008491    0x70  Code  Lc  u8g2_font.o [1]
 u8g2_update_dimension_common
-                        0x08008003    0x94  Code  Lc  u8g2_setup.o [1]
+                        0x0800893b    0x94  Code  Lc  u8g2_setup.o [1]
 u8g2_update_dimension_r0
-                        0x08008097    0x2a  Code  Gb  u8g2_setup.o [1]
-u8x8_DrawTile           0x080071e7    0x32  Code  Gb  u8x8_display.o [1]
-u8x8_InitDisplay        0x0800722b    0x12  Code  Gb  u8x8_display.o [1]
-u8x8_RefreshDisplay     0x08007253    0x12  Code  Gb  u8x8_display.o [1]
-u8x8_SetPowerSave       0x0800723d    0x16  Code  Gb  u8x8_display.o [1]
-u8x8_Setup              0x08007f71    0x2a  Code  Gb  u8x8_setup.o [1]
-u8x8_SetupDefaults      0x08007f3b    0x32  Code  Gb  u8x8_setup.o [1]
-u8x8_SetupMemory        0x08007219    0x12  Code  Gb  u8x8_display.o [1]
-u8x8_ascii_next         0x08008201    0x1c  Code  Gb  u8x8_8x8.o [1]
-u8x8_byte_EndTransfer   0x0800d517    0x12  Code  Gb  u8x8_byte.o [1]
-u8x8_byte_SendByte      0x0800d4f5    0x10  Code  Gb  u8x8_byte.o [1]
-u8x8_byte_SendBytes     0x0800d4dd    0x18  Code  Gb  u8x8_byte.o [1]
+                        0x080089cf    0x2a  Code  Gb  u8g2_setup.o [1]
+u8x8_DrawTile           0x08007b1f    0x32  Code  Gb  u8x8_display.o [1]
+u8x8_InitDisplay        0x08007b63    0x12  Code  Gb  u8x8_display.o [1]
+u8x8_RefreshDisplay     0x08007b8b    0x12  Code  Gb  u8x8_display.o [1]
+u8x8_SetPowerSave       0x08007b75    0x16  Code  Gb  u8x8_display.o [1]
+u8x8_Setup              0x080088a9    0x2a  Code  Gb  u8x8_setup.o [1]
+u8x8_SetupDefaults      0x08008873    0x32  Code  Gb  u8x8_setup.o [1]
+u8x8_SetupMemory        0x08007b51    0x12  Code  Gb  u8x8_display.o [1]
+u8x8_ascii_next         0x08008b39    0x1c  Code  Gb  u8x8_8x8.o [1]
+u8x8_byte_EndTransfer   0x0800e1d7    0x12  Code  Gb  u8x8_byte.o [1]
+u8x8_byte_SendByte      0x0800e1b5    0x10  Code  Gb  u8x8_byte.o [1]
+u8x8_byte_SendBytes     0x0800e19d    0x18  Code  Gb  u8x8_byte.o [1]
 u8x8_byte_StartTransfer
-                        0x0800d505    0x12  Code  Gb  u8x8_byte.o [1]
-u8x8_cad_EndTransfer    0x0800d387    0x12  Code  Gb  u8x8_cad.o [1]
-u8x8_cad_SendArg        0x0800d347    0x16  Code  Gb  u8x8_cad.o [1]
-u8x8_cad_SendCmd        0x0800d331    0x16  Code  Gb  u8x8_cad.o [1]
-u8x8_cad_SendData       0x0800d35d    0x18  Code  Gb  u8x8_cad.o [1]
-u8x8_cad_SendSequence   0x0800d399    0x7c  Code  Gb  u8x8_cad.o [1]
-u8x8_cad_StartTransfer  0x0800d375    0x12  Code  Gb  u8x8_cad.o [1]
-u8x8_cad_ssd13xx_i2c    0x0800d441    0x9c  Code  Gb  u8x8_cad.o [1]
+                        0x0800e1c5    0x12  Code  Gb  u8x8_byte.o [1]
+u8x8_cad_EndTransfer    0x0800e047    0x12  Code  Gb  u8x8_cad.o [1]
+u8x8_cad_SendArg        0x0800e007    0x16  Code  Gb  u8x8_cad.o [1]
+u8x8_cad_SendCmd        0x0800dff1    0x16  Code  Gb  u8x8_cad.o [1]
+u8x8_cad_SendData       0x0800e01d    0x18  Code  Gb  u8x8_cad.o [1]
+u8x8_cad_SendSequence   0x0800e059    0x7c  Code  Gb  u8x8_cad.o [1]
+u8x8_cad_StartTransfer  0x0800e035    0x12  Code  Gb  u8x8_cad.o [1]
+u8x8_cad_ssd13xx_i2c    0x0800e101    0x9c  Code  Gb  u8x8_cad.o [1]
 u8x8_d_helper_display_init
-                        0x08007187    0x60  Code  Gb  u8x8_display.o [1]
+                        0x08007abf    0x60  Code  Gb  u8x8_display.o [1]
 u8x8_d_helper_display_setup_memory
-                        0x0800717d     0xa  Code  Gb  u8x8_display.o [1]
+                        0x08007ab5     0xa  Code  Gb  u8x8_display.o [1]
 u8x8_d_ssd1306_128x64_noname
-                        0x0800d625    0x50  Code  Gb  u8x8_d_ssd1306_128x64_noname.o [1]
+                        0x0800e2e5    0x50  Code  Gb  u8x8_d_ssd1306_128x64_noname.o [1]
 u8x8_d_ssd1306_128x64_noname_flip0_seq
-                        0x0800dcc4     0x8  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
+                        0x0800e9a8     0x8  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
 u8x8_d_ssd1306_128x64_noname_flip1_seq
-                        0x0800dccc     0x8  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
+                        0x0800e9b0     0x8  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
 u8x8_d_ssd1306_128x64_noname_init_seq
-                        0x0800d98c    0x38  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
+                        0x0800e5b0    0x38  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
 u8x8_d_ssd1306_128x64_noname_powersave0_seq
-                        0x0800dcb4     0x8  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
+                        0x0800e998     0x8  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
 u8x8_d_ssd1306_128x64_noname_powersave1_seq
-                        0x0800dcbc     0x8  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
+                        0x0800e9a0     0x8  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
 u8x8_d_ssd1306_sh1106_generic
-                        0x0800d529    0xfc  Code  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
-u8x8_dummy_cb           0x08007f31     0xa  Code  Gb  u8x8_setup.o [1]
+                        0x0800e1e9    0xfc  Code  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
+u8x8_dummy_cb           0x08008869     0xa  Code  Gb  u8x8_setup.o [1]
 u8x8_gpio_and_delay_STM32F103
-                        0x08006719    0x68  Code  Lc  Oled.o [1]
-u8x8_gpio_call          0x080080ed    0x1a  Code  Gb  u8x8_gpio.o [1]
-u8x8_i2c_data_transfer  0x0800d415    0x2c  Code  Lc  u8x8_cad.o [1]
+                        0x08006ee5    0x68  Code  Lc  Oled.o [1]
+u8x8_gpio_call          0x08008a25    0x1a  Code  Gb  u8x8_gpio.o [1]
+u8x8_i2c_data_transfer  0x0800e0d5    0x2c  Code  Lc  u8x8_cad.o [1]
 u8x8_ssd1306_128x64_noname_display_info
-                        0x0800daa4    0x18  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
-u8x8_utf8_init          0x080081f9     0x8  Code  Gb  u8x8_8x8.o [1]
-ucHeap                  0x20000840  0x1000  Data  Lc  heap_4.o [1]
-ucMaxSysCallPriority    0x2000248a     0x1  Data  Lc  port.o [1]
-ulMaxPRIGROUPValue      0x20002414     0x4  Data  Lc  port.o [1]
-uwTick                  0x20002418     0x4  Data  Gb  stm32f1xx_hal.o [1]
-uwTickFreq              0x2000023a     0x1  Data  Gb  stm32f1xx_hal.o [1]
-uxCriticalNesting       0x2000011c     0x4  Data  Lc  port.o [1]
-uxCurrentNumberOfTasks  0x20002454     0x4  Data  Lc  tasks.o [1]
+                        0x0800e730    0x18  Data  Lc  u8x8_d_ssd1306_128x64_noname.o [1]
+u8x8_utf8_init          0x08008b31     0x8  Code  Gb  u8x8_8x8.o [1]
+ucHeap                  0x20000860  0x1000  Data  Lc  heap_4.o [1]
+ucMaxSysCallPriority    0x2000249a     0x1  Data  Lc  port.o [1]
+ulMaxPRIGROUPValue      0x20002428     0x4  Data  Lc  port.o [1]
+uwTick                  0x2000242c     0x4  Data  Gb  stm32f1xx_hal.o [1]
+uwTickFreq              0x2000025c     0x1  Data  Gb  stm32f1xx_hal.o [1]
+uxCriticalNesting       0x2000013c     0x4  Data  Lc  port.o [1]
+uxCurrentNumberOfTasks  0x20002464     0x4  Data  Lc  tasks.o [1]
 uxDeletedTasksWaitingCleanUp
-                        0x20002450     0x4  Data  Lc  tasks.o [1]
-uxListRemove            0x08005c27    0x28  Code  Gb  list.o [1]
-uxPendedTicks           0x20002464     0x4  Data  Lc  tasks.o [1]
-uxSchedulerSuspended    0x2000247c     0x4  Data  Lc  tasks.o [1]
-uxTaskNumber            0x20002470     0x4  Data  Lc  tasks.o [1]
-uxTopReadyPriority      0x2000245c     0x4  Data  Lc  tasks.o [1]
-vListInitialise         0x08005bb1    0x1e  Code  Gb  list.o [1]
-vListInitialiseItem     0x08005bcf     0x6  Code  Gb  list.o [1]
-vListInsert             0x08005bed    0x3a  Code  Gb  list.o [1]
-vListInsertEnd          0x08005bd5    0x18  Code  Gb  list.o [1]
-vPortEnterCritical      0x08005857    0x3a  Code  Gb  port.o [1]
-vPortExitCritical       0x08005891    0x32  Code  Gb  port.o [1]
-vPortFree               0x08005a49    0x78  Code  Gb  heap_4.o [1]
+                        0x20002460     0x4  Data  Lc  tasks.o [1]
+uxListRemove            0x08006e33    0x28  Code  Gb  list.o [1]
+uxPendedTicks           0x20002474     0x4  Data  Lc  tasks.o [1]
+uxSchedulerSuspended    0x2000248c     0x4  Data  Lc  tasks.o [1]
+uxTaskNumber            0x20002480     0x4  Data  Lc  tasks.o [1]
+uxTopReadyPriority      0x2000246c     0x4  Data  Lc  tasks.o [1]
+vListInitialise         0x08006dbd    0x1e  Code  Gb  list.o [1]
+vListInitialiseItem     0x08006ddb     0x6  Code  Gb  list.o [1]
+vListInsert             0x08006df9    0x3a  Code  Gb  list.o [1]
+vListInsertEnd          0x08006de1    0x18  Code  Gb  list.o [1]
+vPortEnterCritical      0x08006a63    0x3a  Code  Gb  port.o [1]
+vPortExitCritical       0x08006a9d    0x32  Code  Gb  port.o [1]
+vPortFree               0x08006c55    0x78  Code  Gb  heap_4.o [1]
 vPortSetupTimerInterrupt
-                        0x080058eb    0x1a  Code  Wk  port.o [1]
-vPortStartFirstTask     0x08005cb7          Code  Gb  portasm.o [1]
-vTaskDelay              0x080051c1    0x4e  Code  Gb  tasks.o [1]
-vTaskStartScheduler     0x0800520f    0x68  Code  Gb  tasks.o [1]
-vTaskSuspendAll         0x08005277    0x10  Code  Gb  tasks.o [1]
-vTaskSwitchContext      0x080054b9    0x72  Code  Gb  tasks.o [1]
-xBlockAllocatedBit      0x200023f8     0x4  Data  Lc  heap_4.o [1]
-xDelayedTaskList1       0x20002360    0x14  Data  Lc  tasks.o [1]
-xDelayedTaskList2       0x20002374    0x14  Data  Lc  tasks.o [1]
-xFreeBytesRemaining     0x200023f0     0x4  Data  Lc  heap_4.o [1]
-xHeapStructSize         0x0800dcd8     0x4  Data  Lc  heap_4.o [1]
-xIdleTaskHandle         0x20002478     0x4  Data  Lc  tasks.o [1]
+                        0x08006af7    0x1a  Code  Wk  port.o [1]
+vPortStartFirstTask     0x08006ec3          Code  Gb  portasm.o [1]
+vTaskDelay              0x080063cd    0x4e  Code  Gb  tasks.o [1]
+vTaskStartScheduler     0x0800641b    0x68  Code  Gb  tasks.o [1]
+vTaskSuspendAll         0x08006483    0x10  Code  Gb  tasks.o [1]
+vTaskSwitchContext      0x080066c5    0x72  Code  Gb  tasks.o [1]
+xBlockAllocatedBit      0x2000240c     0x4  Data  Lc  heap_4.o [1]
+xDelayedTaskList1       0x20002374    0x14  Data  Lc  tasks.o [1]
+xDelayedTaskList2       0x20002388    0x14  Data  Lc  tasks.o [1]
+xFreeBytesRemaining     0x20002404     0x4  Data  Lc  heap_4.o [1]
+xHeapStructSize         0x0800e9c0     0x4  Data  Lc  heap_4.o [1]
+xIdleTaskHandle         0x20002488     0x4  Data  Lc  tasks.o [1]
 xMinimumEverFreeBytesRemaining
-                        0x200023f4     0x4  Data  Lc  heap_4.o [1]
-xNextTaskUnblockTime    0x20002474     0x4  Data  Lc  tasks.o [1]
-xNumOfOverflows         0x2000246c     0x4  Data  Lc  tasks.o [1]
-xPendingReadyList       0x20002388    0x14  Data  Lc  tasks.o [1]
-xPortStartScheduler     0x080057cf    0x88  Code  Gb  port.o [1]
-xPortSysTickHandler     0x080058c3    0x28  Code  Gb  port.o [1]
-xSchedulerRunning       0x20002460     0x4  Data  Lc  tasks.o [1]
-xStart                  0x200023d4     0x8  Data  Lc  heap_4.o [1]
-xSuspendedTaskList      0x200023b0    0x14  Data  Lc  tasks.o [1]
-xTaskCreate             0x08004fbd    0x84  Code  Gb  tasks.o [1]
-xTaskGetSchedulerState  0x0800566d    0x26  Code  Gb  tasks.o [1]
-xTaskIncrementTick      0x08005385   0x134  Code  Gb  tasks.o [1]
-xTaskResumeAll          0x08005287    0xfe  Code  Gb  tasks.o [1]
+                        0x20002408     0x4  Data  Lc  heap_4.o [1]
+xNextTaskUnblockTime    0x20002484     0x4  Data  Lc  tasks.o [1]
+xNumOfOverflows         0x2000247c     0x4  Data  Lc  tasks.o [1]
+xPendingReadyList       0x2000239c    0x14  Data  Lc  tasks.o [1]
+xPortStartScheduler     0x080069db    0x88  Code  Gb  port.o [1]
+xPortSysTickHandler     0x08006acf    0x28  Code  Gb  port.o [1]
+xSchedulerRunning       0x20002470     0x4  Data  Lc  tasks.o [1]
+xStart                  0x200023e8     0x8  Data  Lc  heap_4.o [1]
+xSuspendedTaskList      0x200023c4    0x14  Data  Lc  tasks.o [1]
+xTaskCreate             0x080061c9    0x84  Code  Gb  tasks.o [1]
+xTaskGetSchedulerState  0x08006879    0x26  Code  Gb  tasks.o [1]
+xTaskIncrementTick      0x08006591   0x134  Code  Gb  tasks.o [1]
+xTaskResumeAll          0x08006493    0xfe  Code  Gb  tasks.o [1]
 xTasksWaitingTermination
-                        0x2000239c    0x14  Data  Lc  tasks.o [1]
-xTickCount              0x20002458     0x4  Data  Lc  tasks.o [1]
-xYieldPending           0x20002468     0x4  Data  Lc  tasks.o [1]
+                        0x200023b0    0x14  Data  Lc  tasks.o [1]
+xTickCount              0x20002468     0x4  Data  Lc  tasks.o [1]
+xYieldPending           0x20002478     0x4  Data  Lc  tasks.o [1]
 
 
-[1] = C:\Users\Deo\Documents\GIT PROJECTS\Network-Analyzer\EWARM\NetworkAnalyzer\Obj
+[1] = C:\Users\Deo\Documents\Network-Analyzer\EWARM\NetworkAnalyzer\Obj
 [2] = command line
 [3] = dl7M_tlf.a
 [4] = m7M_tl.a
 [5] = rt7M_tl.a
 [6] = shb_l.a
 
-  40 464 bytes of readonly  code memory
-  16 513 bytes of readonly  data memory
-   9 358 bytes of readwrite data memory
+  39 174 bytes of readonly  code memory
+  21 133 bytes of readonly  data memory
+   9 375 bytes of readwrite data memory
 
 Errors: none
 Warnings: none

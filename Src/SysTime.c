@@ -1,7 +1,9 @@
 #include "main.h"
 #include "SysTime.h"
 
-
+extern __IO uint32_t uwTick;
+extern HAL_TickFreqTypeDef uwTickFreq;
+extern bool SecondTick;
 
 void SystemClock_Config(void)
 {
@@ -55,6 +57,21 @@ void SystemClock_Config(void)
 //    HAL_NVIC_EnableIRQ(SysTick_IRQn);
 }
 
+void HAL_IncTick(void)
+{
+  uwTick += uwTickFreq;
+  TickForSecond += uwTickFreq;
+  if(TickForSecond >= 1000 && TickForSecond < 2000)
+  {
+    TickForSecond = 2000;
+    SecondTick = true;  
+  }
+  else if(TickForSecond >= 3000)
+  {
+    TickForSecond = 0;
+    SecondTick = false;     
+  }
+}
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {

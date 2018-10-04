@@ -17,7 +17,7 @@ extern int16_t SinTestGraphic[];
 extern float CurrentRMS;
 extern float Power;
 extern float MeanEnergy;
-
+extern uint16_t ADCOffset;
 
 typedef struct
 {
@@ -28,9 +28,7 @@ typedef struct
 
 FORMAT_INFO FormatTable[TAB_RANGE_LEN] = 
 {
-    {0.00001          , 'm',      1000.0},
-    {0.0001           , 'm',      1000.0},
-    {0.001            , 'm',      1000.0},
+    {0.1              , 'm',      1000.0},
     {1                , ' ',         1.0},
     {10               , ' ',         1.0},
     {100              , ' ',         1.0},
@@ -133,7 +131,7 @@ static void FormatMeasure(uint8_t Page)
     ActualMeasure *= FormatTable[Range].RefactorValue;
     snprintf(MeasureStr, 7, "%3.3f", ActualMeasure); 
     snprintf(PrefixMeasureUnit, 6, "%c%s", FormatTable[Range].Prefix, MeasureUnit[UnitMeas]);
-    snprintf(MeasureName, 2, "%c", MeasureName[NameMeas]);
+    snprintf(MeasureName, 2, "%c", MeasureIniz[NameMeas]);
 }
 
 
@@ -166,10 +164,7 @@ bool DrawCurrentWave()
 #ifdef SIM_SIN_WAVE
             YPos = 32 - ((HALF_GRAPHIC_AMPLITUDE * SinTestGraphic[XPos]) / INT16_SCALE);
 #else
-            if(ADCReadedValue[XPos] > ADC_HALF_MAX_VALUE)
-                YPos = 32 - ((HALF_GRAPHIC_AMPLITUDE * ADCReadedValue[XPos]) / ADC_MAX_VALUE);
-            else
-                YPos = 32 + ((HALF_GRAPHIC_AMPLITUDE * ADCReadedValue[XPos]) / ADC_MAX_VALUE);
+            YPos = 30 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValue[XPos] - ADCOffset)) / ADC_HALF_MAX_VALUE);
 #endif            
             u8g2_DrawPixel(&u8g, XPos, YPos);      
         }
@@ -188,23 +183,32 @@ void DrawMeasure(uint8_t Page)
     char PageNumber[4];
     
     snprintf(PageNumber, 4, "%d/%d", (Page + 1), MAX_MEASURE_PAGE);
-    
-    MessageScreen("Premere Left");
-    MessageScreen("per tornare");
-       
+          
     FormatMeasure(Page);
     
     u8g2_ClearBuffer(&u8g);
     
-    u8g2_SetFont(&u8g, u8g_font_9x18B);        
-    u8g2_DrawStr(&u8g, MEASURE_X_POS, TOP_MEASURE_Y_POS, MeasureStr);
+    // Scrittura misura
+//    u8g2_SetFont(&u8g, u8g_font_9x18B);  
+    u8g2_SetFont(&u8g, u8g_font_courR18);  
+    u8g2_DrawStr(&u8g, MEASURE_X_POS, GENERAL_STR_Y_POS(20), MeasureStr);
     
+    // Scrittura udm e nome
     u8g2_SetFont(&u8g, u8g_font_8x13);  
-    u8g2_DrawStr(&u8g, X_RIGHT_POS(PrefixMeasureUnit), GENERAL_STR_Y_POS(14), PrefixMeasureUnit);
-    u8g2_DrawStr(&u8g, X_LEFT_POS, GENERAL_STR_Y_POS(14), MeasureName);
+    if(Page == ENERGY_PAGE)
+    {
+        u8g2_SetFont(&u8g, u8g_font_6x13);
+        u8g2_DrawStr(&u8g, X_RIGHT_POS(PrefixMeasureUnit), GENERAL_STR_Y_POS(20), PrefixMeasureUnit);
+    }
+    else
+        u8g2_DrawStr(&u8g, X_RIGHT_POS(PrefixMeasureUnit), GENERAL_STR_Y_POS(20), PrefixMeasureUnit);
+    
+    u8g2_SetFont(&u8g, u8g_font_8x13);    
+    u8g2_DrawStr(&u8g, X_LEFT_POS, GENERAL_STR_Y_POS(20), MeasureName);
     
     u8g2_SetFont(&u8g, u8g_font_4x6);
     u8g2_DrawStr(&u8g, X_CENTER_POS(PageNumber), BOTTOM_INFO_BAR_Y_POS, PageNumber);
+    DrawTopInfoBar();
     DrawBottomBarInfo(MEASURE_PAGE);
     
     u8g2_SendBuffer(&u8g);
