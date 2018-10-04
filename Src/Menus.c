@@ -7,6 +7,10 @@
 #include "TaskKeyboard.h"
 #include "Graphix.h"
 
+#include <math.h>
+
+#define WHILE_LOOP_DELAY    200
+
 extern bool HalfSecondTick;
 
 extern TIME_VAR GlobalTime;
@@ -14,6 +18,10 @@ extern DATE_VAR GlobalDate;
 
 extern uint8_t DaysPerMonth[];
 extern bool SettingTimeDate;
+
+// Parametri 
+extern bool EnableMeasure;
+extern uint16_t ADCOffset;
 
 extern uint8_t LedConf;
 
@@ -37,9 +45,10 @@ MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] =
     {"Forma d'onda I"     , DrawCurrentWave},
 };
 
-PARAMETER_ITEM ParametersSetup[MAX_PARAMETER_ITEM] = 
+PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
 {
-    {"Abilitare misura"  , CONFIRM_TYPE},
+    {"Abilitare misura"  , CONFIRM_TYPE,  &EnableMeasure},
+    {"ADC Offset"        , VALUE_TYPE  ,  &ADCOffset    },
 };
 
 
@@ -100,11 +109,74 @@ bool ChooseYesNo(char *TitleChoice)
         else
         {
             FirstListItem = ChoiceNum - (MAX_SETUP_MENU_LINES - 1);
-        }    
+        } 
+        osDelay(WHILE_LOOP_DELAY);
     }
     return Choice;
 }
 
+static void SingleNumbers(uint16_t Value, uint8_t StoreArray[])
+{
+    uint16_t ValueCopy = Value;
+    for(uint8_t j = 0; j < 5; j++)
+    {
+        StoreArray[j] = ValueCopy/pow(10,(5-j));
+        ValueCopy %= (uint16_t)pow(10,(5-j));         
+    }
+    return;
+}
+
+uint16_t ChangeValue(uint16_t ParamValue)
+{
+    uint8_t ValueArray[5] = {0}, BoxPos = 0;
+    uint16_t FinalValue = ParamValue;
+    bool ExitChangeValue = false, ChangedValue = false;
+    SingleNumbers(FinalValue, ValueArray);
+    while(!ExitChangeValue)
+    {
+        CheckOperation();
+        DrawChangeValueLoop(BoxPos, ValueArray);
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+            if(ValueArray[BoxPos] > 0)
+                ValueArray[BoxPos]--;
+            else
+                ValueArray[BoxPos] = 9;    
+            break;
+          case BUTTON_DOWN:
+            if(ValueArray[BoxPos] < 9)
+                ValueArray[BoxPos]++;
+            else
+                ValueArray[BoxPos] = 0;   
+            break;
+          case BUTTON_LEFT:
+            ExitChangeValue = true;
+            break;
+          case BUTTON_RIGHT:           
+            if(BoxPos < 4)
+                BoxPos++;
+            else
+                BoxPos = 0;
+            break;
+          case BUTTON_OK:
+            ChangedValue = true;
+            ExitChangeValue = true;
+            break;
+          default:
+            break;
+        }
+        
+        osDelay(WHILE_LOOP_DELAY);
+    }
+    if(ChangedValue)
+    {
+        FinalValue = (ValueArray[0] * 10000) + (ValueArray[1] * 1000) + (ValueArray[2] * 100) + (ValueArray[3] * 10) + ValueArray[4];
+        if(FinalValue > 65534)
+            FinalValue = 65534;
+    }
+    return FinalValue;
+}
 
 bool ShowMeasure()
 {
@@ -135,7 +207,7 @@ bool ShowMeasure()
             break;
         }
         
-        osDelay(200);
+        osDelay(WHILE_LOOP_DELAY);
     }
     
     return true;
@@ -191,7 +263,7 @@ bool ChooseGraphics()
             GraphicsMenu[ItemPos].MenuFunc();
             EnterGraphic = false;
         }
-        osDelay(100);
+        osDelay(WHILE_LOOP_DELAY);
     }
     return true;
 }
@@ -239,7 +311,7 @@ bool LedCtrl()
         {
             FirstListItem = LedComb - (MAX_SETUP_MENU_LINES - 1);
         }
-        osDelay(100);
+        osDelay(WHILE_LOOP_DELAY);
     }
     if(ChoosedLedComb)
     {
@@ -252,7 +324,62 @@ bool LedCtrl()
 
 bool ParameterSetup()
 {
-    
+    uint8_t ParamItem = 0, FirstListItem = 0;
+    bool ExitParamSetup = false, ChooseParam = false;
+    while(!ExitParamSetup)
+    {
+        CheckOperation();
+        DrawParamLoop("Ges.Parametri", ParametersMenu, ParamItem, FirstListItem, MAX_PARAMETER_ITEM, MAX_SETUP_MENU_LINES);     
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+            if(ParamItem > 0)
+                ParamItem--;
+            else
+                ParamItem = MAX_PARAMETER_ITEM - 1;
+            break;
+          case BUTTON_DOWN:
+            if(ParamItem < MAX_PARAMETER_ITEM - 1)
+                ParamItem++;
+            else
+                ParamItem = 0;            
+            break;
+          case BUTTON_LEFT:
+            ExitParamSetup = true;
+            break;
+          case BUTTON_RIGHT:
+            ChooseParam = true;
+            break;
+          case BUTTON_OK:
+            break;
+            default:
+              break;
+        } 
+        if(ParamItem <= (MAX_SETUP_MENU_LINES - 1))
+        {
+            FirstListItem = 0;  
+        }
+        else
+        {
+            FirstListItem = ParamItem - (MAX_SETUP_MENU_LINES - 1);
+        }    
+        if(ChooseParam)
+        {
+            switch(ParametersMenu[ParamItem].Type)
+            {
+              case CONFIRM_TYPE:
+                *(bool *)ParametersMenu[ParamItem].ParamValue = ChooseYesNo(ParametersMenu[ParamItem].ItemTitle);
+                break;
+              case VALUE_TYPE:
+                *(uint16_t*)ParametersMenu[ParamItem].ParamValue = ChangeValue(*(uint16_t*)ParametersMenu[ParamItem].ParamValue);
+                break;
+              default:
+                break;       
+            }
+        }
+        osDelay(WHILE_LOOP_DELAY);
+    }
+     
     return true;
 }
 
@@ -304,7 +431,7 @@ bool ChangeDateTimeMenu()
             TimeSetting[ItemPos].MenuFunc();
             ChangeTimeParam = false;
         }
-        osDelay(100);
+        osDelay(WHILE_LOOP_DELAY);
     }  
     return true;
 }
@@ -382,7 +509,7 @@ bool ChangeTime()
         {
             SetChangedTime(Hour, Minute);
         }
-        osDelay(100);
+        osDelay(WHILE_LOOP_DELAY);
     }  
     SettingTimeDate = false;
     return true;
@@ -473,7 +600,7 @@ bool ChangeDate()
         {
             SetChangedDate(Day, Month, Year);
         }
-        osDelay(100);
+        osDelay(WHILE_LOOP_DELAY);
     }  
     SettingTimeDate = false;
     return true;
@@ -529,7 +656,7 @@ void MainMenu()
             MainSetupMenu[ItemPos].MenuFunc();
             EnterMenu = false;
         }
-        osDelay(100);
+        osDelay(WHILE_LOOP_DELAY);
     }
 }
 
@@ -555,7 +682,7 @@ void MainScreen()
             break;
         }
         LastButtonPressed = NO_PRESS;   
-        osDelay(100);
+        osDelay(WHILE_LOOP_DELAY);
         if(EnterMenu)
         {
             EnterMenu = false;

@@ -245,6 +245,19 @@ void DrawBottomBarInfo(uint8_t WichPage)
         u8g2_DrawStr(&u8g, BOXPOS_STR_X_POS - 2, BOTTOM_INFO_BAR_Y_POS, BarItem[PAGE_STR]); 
         DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
         DrawArrow(RIGHT_ARROW_X_POS - 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 2, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
+        break;        
+      case CHANGE_VALUE_PAGE:
+        u8g2_SetFont(&u8g, u8g_font_4x6);
+        FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g); 
+        u8g2_SetDrawColor(&u8g, 2);
+        u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
+        u8g2_DrawStr(&u8g, BOXPOS_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[POS_STR]); 
+        u8g2_DrawStr(&u8g, UP_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[SU_STR]);
+        u8g2_DrawStr(&u8g, DOWN_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[GIU_STR]);
+        DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
+        DrawArrow(UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, UP_DIRECTION);
+        DrawArrow(DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
+        DrawArrow(RIGHT_ARROW_X_POS - 4, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 2, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
         break;
       default:
         break;           
@@ -280,8 +293,68 @@ void DrawTimeDateChangeLoop(uint8_t BoxPos, uint8_t TypeSetting,uint8_t BoxOneNu
     u8g2_SendBuffer(&u8g);   
 }
 
+void DrawChangeValueLoop(uint8_t BoxPos , uint8_t BoxValues[])
+{
+    uint8_t FontH = 0;
+    uint8_t ItemIndx = 0;
+    char ValueStr[6];    
+    snprintf(ValueStr, 6, "%d%d%d%d%d", BoxValues[0], BoxValues[1], BoxValues[2], BoxValues[3], BoxValues[4]);
+    
+    
+    u8g2_ClearBuffer(&u8g);
+    DrawTopInfoBar();
+    FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
+    u8g2_SetFont(&u8g, u8g_font_6x13);
+    u8g2_SetDrawColor(&u8g, 2);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(ValueStr), VALUE_BOX_Y_POS + FontH, ValueStr);
+    
+    FontH = u8g2_GetFontAscent(&u8g);
+    
+    u8g2_DrawFrame(&u8g, (X_CENTER_POS(ValueStr) - 2 + (BoxPos * VALUE_BOX_WIDTH)), VALUE_BOX_Y_POS - 5, 
+                   (VALUE_BOX_WIDTH + 2 ), FontH + 5);
+    
+    u8g2_SetFont(&u8g, u8g_font_4x6);
+    u8g2_DrawStr(&u8g, X_CENTER_POS("Premere ok per confermare"), 45, "Premere ok per confermare");
+    
+    DrawBottomBarInfo(CHANGE_VALUE_PAGE);
+    u8g2_SendBuffer(&u8g);   
+}
+
 
 void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxMenuItemNum, uint8_t MaxMenuLines)
+{
+    uint8_t FontH = 0;
+    uint8_t ItemIndx = 0;
+    
+    u8g2_ClearBuffer(&u8g);
+    DrawTopInfoBar();
+    // Disegna titolo menu
+    u8g2_SetFont(&u8g, u8g_font_6x13B);
+    FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
+    u8g2_SetDrawColor(&u8g, 2);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(PageTitle), MENU_TITLE_Y_POS, PageTitle);  
+    
+    // Disegna voci menu
+    u8g2_SetFont(&u8g, u8g_font_6x10);
+    FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
+    u8g2_SetDrawColor(&u8g, 2);
+    for(ItemIndx = 0; ItemIndx < MaxMenuLines; ItemIndx++)
+    {
+        uint8_t ListBuildPos = HighPosItem + ItemIndx;
+        if(ListBuildPos >= MaxMenuItemNum)
+            break;
+        if (ItemPos == ListBuildPos) 
+        {
+            // Voce menu selezionata
+            u8g2_DrawBox(&u8g, 0, (FIRST_MENU_LINES_Y_POS - (FontH - 1) + (ItemIndx * (FontH - 1)) + ((MENU_LINES_DELTA_Y + 1) * ItemIndx) ), SCREEN_MAX_WIDTH, FontH + 1);    
+        }
+        u8g2_DrawStr(&u8g, X_CENTER_POS(MenuItem[ListBuildPos].ItemTitle), FIRST_MENU_LINES_Y_POS + (ItemIndx * FontH) + (MENU_LINES_DELTA_Y * ItemIndx), MenuItem[ListBuildPos].ItemTitle);          
+    }
+    DrawBottomBarInfo(SETUP_PAGE);
+    u8g2_SendBuffer(&u8g);
+}
+
+void DrawParamLoop(char *PageTitle, PARAMETER_ITEM MenuItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxMenuItemNum, uint8_t MaxMenuLines)
 {
     uint8_t FontH = 0;
     uint8_t ItemIndx = 0;

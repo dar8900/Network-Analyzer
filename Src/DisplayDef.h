@@ -36,6 +36,9 @@
 #define TIME_DATE_FONT_WIDTH     6
 #define TIME_DATE_BOX_WIDTH     12
 
+#define VALUE_BOX_Y_POS         20
+#define VALUE_BOX_WIDTH          6
+
 #define MEASURE_NAME_X_POS       0
 #define MEASURE_UNIT_X_POS      69
 #define MEASURE_X_POS           12
