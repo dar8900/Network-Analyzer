@@ -18,5 +18,12 @@
 #define TOVOLT(Value)        (Value*(3.3/4096.0))
 #define CURR_SENSOR_SENSITIVITY  185.0
 
+typedef struct
+{
+    float MeanCurrentRMS;
+    float Power;
+    float MeanEnergy;
+}MEASURES;
+
 void TaskMeasure(void const * argument);
 #endif

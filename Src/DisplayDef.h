@@ -3,10 +3,10 @@
 
 #define SCREEN_MAX_WIDTH    u8g2_GetDisplayWidth(&u8g)
 
-#define LOGO_X_POS      0
+#define LOGO_X_POS      42
 #define LOGO_Y_POS      0
-#define LOGO_LEN        8
-#define LOGO_HIGH       8
+#define LOGO_LEN        42
+#define LOGO_HIGH       42
 
 #define POPUP_DELAY  1500
 

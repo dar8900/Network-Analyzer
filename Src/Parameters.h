@@ -3,6 +3,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+typedef struct 
+{
+    bool EnableMeasure;
+    uint16_t ADCOffset;
+}PARAMETERS_S;
+
 
 typedef struct 
 {
@@ -17,6 +23,8 @@ typedef enum
     ADC_OFFSET,
     MAX_PARAMETER_ITEM
 }PARAMETER_ITEMS;
+
+
 
 bool ChooseYesNo(char *TitleChoice);
 uint16_t ChangeValue(uint16_t ParamValue);

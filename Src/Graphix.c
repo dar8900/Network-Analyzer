@@ -14,10 +14,10 @@ extern u8g2_t u8g;
 extern uint32_t ADCReadedValue[NUM_SAMPLE];
 extern int16_t SinTestGraphic[];
 
-extern float CurrentRMS;
-extern float Power;
-extern float MeanEnergy;
-extern uint16_t ADCOffset;
+extern MEASURES GeneralMeasures;
+extern PARAMETERS_S GeneralParams; 
+
+//extern uint16_t ACDOffset;
 
 typedef struct
 {
@@ -110,17 +110,17 @@ static void FormatMeasure(uint8_t Page)
     switch(Page)
     {
       case CURRENT_PAGE:
-        ActualMeasure = CurrentRMS;
+        ActualMeasure = GeneralMeasures.MeanCurrentRMS;
         NameMeas = CURRENT_NAME;
         UnitMeas = CURRENT_UNIT;
         break;
       case POWER_PAGE:
-        ActualMeasure = Power;
+        ActualMeasure = GeneralMeasures.Power;
         NameMeas = CURRENT_NAME;
         UnitMeas = POWER_UNIT;
         break;
       case ENERGY_PAGE:
-        ActualMeasure = MeanEnergy;
+        ActualMeasure = GeneralMeasures.MeanEnergy;
         NameMeas = ENERGY_NAME;
         UnitMeas = ENERGY_UNIT;
         break;
@@ -164,7 +164,7 @@ bool DrawCurrentWave()
 #ifdef SIM_SIN_WAVE
             YPos = 32 - ((HALF_GRAPHIC_AMPLITUDE * SinTestGraphic[XPos]) / INT16_SCALE);
 #else
-            YPos = 30 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValue[XPos] - ADCOffset)) / ADC_HALF_MAX_VALUE);
+            YPos = 30 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValue[XPos] - GeneralParams.ADCOffset)) / ADC_HALF_MAX_VALUE);
 #endif            
             u8g2_DrawPixel(&u8g, XPos, YPos);      
         }

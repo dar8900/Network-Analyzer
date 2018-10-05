@@ -30,13 +30,14 @@ void TaskOled(void const * argument)
 {
     OledInit();
     
-    /* USER CODE BEGIN 5 */
+    DrawStartLogo();
+    osDelay(1000);
+    
     /* Infinite loop */
     for(;;)
     {
         MainScreen();
     }
-    /* USER CODE END 5 */ 
 }
 
 

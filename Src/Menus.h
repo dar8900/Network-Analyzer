@@ -28,6 +28,7 @@ typedef enum
     LED_GEST,
     PARAMETER_SEUP,
     TIME_SET,    
+    RESET_ITEM,
     MAX_SETUP_ITEM
 }SETUP_ITEM_VALUE;
 
@@ -54,6 +55,13 @@ typedef enum
     MAX_MEASURE_PAGE
 }MEASURE_PAGES;
 
+typedef enum
+{
+    RESET_ENERGY = 0,
+    SYSTEM_RESET,
+    MAX_RESET_ITEM
+}RESET_ITEMS;
+
 
 bool LedCtrl(void);
 void MainScreen(void);
@@ -61,6 +69,8 @@ bool ParameterSetup(void);
 bool ChangeDateTimeMenu(void);
 bool ChangeTime(void);
 bool ChangeDate(void);
+bool ResetMenu(void);
+void WichReset(char * ResetTitle, uint8_t ResetType);
 
 bool ShowMeasure(void);
 bool ChooseGraphics(void);

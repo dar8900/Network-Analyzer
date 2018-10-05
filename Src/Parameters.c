@@ -4,10 +4,11 @@
 #include "TaskKeyboard.h"
 #include "Menus.h"
 #include "TaskOled.h"
+#include <math.h>
 
 // Parametri 
-extern bool EnableMeasure;
-extern uint16_t ADCOffset;
+PARAMETERS_S GeneralParams;
+
 
 enum
 {
@@ -17,8 +18,8 @@ enum
 
 PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
 {
-    {"Abilitare misura"  , CONFIRM_TYPE,  &EnableMeasure},
-    {"ADC Offset"        , VALUE_TYPE  ,  &ADCOffset    },
+    {"Abilitare misura"  , CONFIRM_TYPE,  &GeneralParams.EnableMeasure},
+    {"ADC Offset"        , VALUE_TYPE  ,  &GeneralParams.ADCOffset    },
 };
 
 

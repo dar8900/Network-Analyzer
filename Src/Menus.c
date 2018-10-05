@@ -7,8 +7,8 @@
 #include "TaskKeyboard.h"
 #include "Graphix.h"
 #include "Parameters.h"
+#include "TaskMeasure.h"
 
-#include <math.h>
 
 extern bool HalfSecondTick;
 
@@ -20,6 +20,9 @@ extern bool SettingTimeDate;
 
 extern uint8_t LedConf;
 
+extern MEASURES GeneralMeasures;
+
+
 extern PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM];
 
 MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] = 
@@ -29,7 +32,8 @@ MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] =
     {"Gestione Led"       , LedCtrl           },
     {"Gestione parametri" , ParameterSetup    },
     {"Setta l'orario"     , ChangeDateTimeMenu},
-};
+    {"Reset"              , ResetMenu         },
+}; 
 
 MENU_ITEM TimeSetting[MAX_TIME_DATE_ITEM] = 
 {
@@ -40,6 +44,24 @@ MENU_ITEM TimeSetting[MAX_TIME_DATE_ITEM] =
 MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] = 
 {
     {"Forma d'onda I"     , DrawCurrentWave},
+};
+
+char *ResetList[MAX_RESET_ITEM] = 
+{
+    "Reset energia",
+    "Riavvia sistema",
+};
+
+enum
+{
+    RESET_ENERGY_TYPE = 0,
+    SYSTEM_RESET_TYPE
+};
+
+const uint8_t ResetType[MAX_RESET_ITEM] = 
+{
+    RESET_ENERGY_TYPE,
+    SYSTEM_RESET_TYPE,
 };
 
 const char *LedCombStr[MAX_LED_COMBINATIONS] = 
@@ -484,6 +506,85 @@ bool ChangeDate()
     return true;
     
 }
+
+void WichReset(char * ResetTitle, uint8_t ResetType)
+{
+    bool ResetChoose = false;
+    ResetChoose = ChooseYesNo(ResetTitle); 
+    if(ResetChoose)
+    {
+        switch(ResetType)
+        {
+          case RESET_ENERGY_TYPE:
+            MessageScreen("Reset in corso");
+            GeneralMeasures.MeanEnergy = 0.0;
+            break;
+          case SYSTEM_RESET_TYPE:
+            MessageScreen("Reset in corso");
+            HAL_NVIC_SystemReset();
+            break;
+          default:
+            break;
+        }
+    }
+    return;
+}
+
+bool ResetMenu()
+{
+    uint8_t ItemPos = 0, FirstListItem = 0;
+    bool ExitResetMenu = false, ChoosedReset = false;
+    
+    while(!ExitResetMenu)
+    {
+        CheckOperation();
+        DrawListLoop("Reset", ResetList, ItemPos, FirstListItem, MAX_RESET_ITEM, MAX_SETUP_MENU_LINES);
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+            if(ItemPos > 0)
+                ItemPos--;
+            else
+                ItemPos = MAX_RESET_ITEM - 1;
+            break;
+          case BUTTON_DOWN:
+            if(ItemPos < MAX_RESET_ITEM - 1)
+                ItemPos++;
+            else
+                ItemPos = 0;            
+            break;
+          case BUTTON_LEFT:
+            ExitResetMenu = true;
+            break;
+          case BUTTON_RIGHT:
+            ChoosedReset = true;
+            break;
+          case BUTTON_OK:
+            break;
+          default:
+            break;
+        }
+        if(ItemPos <= (MAX_SETUP_MENU_LINES - 1))
+        {
+            FirstListItem = 0;  
+        }
+        else
+        {
+            FirstListItem = ItemPos - (MAX_SETUP_MENU_LINES - 1);
+        }
+        if(ChoosedReset)
+        {
+            LastButtonPressed = NO_PRESS;
+            WichReset(ResetList[ItemPos], ResetType[ItemPos]);
+            ChoosedReset = false;
+        }
+        osDelay(WHILE_LOOP_DELAY);
+    }
+    
+    return true;
+}
+
+
 
 void MainMenu()
 {

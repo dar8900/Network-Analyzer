@@ -1,9 +1,11 @@
+#include <math.h>
 #include "main.h"
 #include "TaskMeasure.h"
 #include "ADC.h"
 #include "SysTime.h"
 #include "Graphix.h"
-#include <math.h>
+#include "Parameters.h"
+
 
 #ifdef ENABLE_MEASURE
 
@@ -12,18 +14,19 @@
 extern bool ConversionEnd;
 extern bool SecondTick;
 extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
-
-bool EnableMeasure = false;
+extern PARAMETERS_S GeneralParams;
 
 #ifdef SIM_SIN_WAVE
 int16_t SinTestGraphic[NUM_TEST_SAMPLE];
 #endif
 
-uint64_t CubeRawValue;
-float CurrentRMS[CURRENT_SAMPLE], MeanCurrentRMS;
-float Power;
-float MeanEnergy, EnergyAcc;
-uint16_t ADCOffset = ADC_HALF_MAX_VALUE;
+static uint64_t CubeRawValue;
+static float CurrentRMS[CURRENT_SAMPLE];
+static float EnergyAcc;
+
+MEASURES GeneralMeasures;
+
+
 
 #ifdef SIM_SIN_WAVE
 void FillTestArray()
@@ -81,10 +84,11 @@ static float CalcMeanCurrent(float CurrentRMS[])
 /* TaskMeasure function */
 void TaskMeasure(void const * argument)
 {
-        
     uint8_t NumberOfCurrentSampling = 0;
-    uint32_t NumberOfEnergySampling = 0;  
-
+    uint32_t NumberOfEnergySampling = 0; 
+    GeneralParams.ADCOffset = ADC_HALF_MAX_VALUE;
+    GeneralParams.EnableMeasure = false;
+        
 #ifdef SIM_SIN_WAVE    
     FillTestArray();
 #endif
@@ -94,22 +98,20 @@ void TaskMeasure(void const * argument)
     for(;;)
     {
         
-        if(EnableMeasure)
+        if(GeneralParams.EnableMeasure)
         {
 
             while(!ConversionEnd)
             {
                 ADCConvToDMA();                
-            }
-
-            
+            }           
             if(ConversionEnd)
             {
                 StopADC_DMA_Conv();
                 ConversionEnd = false;
                 for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
                 {
-                    CubeRawValue += ((ADCReadedValue[ValueIndx] - ADCOffset) * (ADCReadedValue[ValueIndx] - ADCOffset));
+                    CubeRawValue += ((ADCReadedValue[ValueIndx] - GeneralParams.ADCOffset) * (ADCReadedValue[ValueIndx] - GeneralParams.ADCOffset));
                 }
                 CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
                 NumberOfCurrentSampling++;
@@ -117,22 +119,22 @@ void TaskMeasure(void const * argument)
             }
             if(NumberOfCurrentSampling == CURRENT_SAMPLE)
             {
-                MeanCurrentRMS = CalcMeanCurrent(CurrentRMS);            
-                if(MeanCurrentRMS > 0.1)
-                    Power = MeanCurrentRMS * VOLTAGE_VALUE;
+                GeneralMeasures.MeanCurrentRMS = CalcMeanCurrent(CurrentRMS);            
+                if(GeneralMeasures.MeanCurrentRMS > 0.1)
+                    GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * VOLTAGE_VALUE;
                 else
                 {
-                    MeanCurrentRMS = 0.0;
-                    Power = 0.0;
+                    GeneralMeasures.MeanCurrentRMS = 0.0;
+                    GeneralMeasures.Power = 0.0;
                 }
-                EnergyAcc += Power;
+                EnergyAcc += GeneralMeasures.Power;
                 NumberOfEnergySampling++;
                 NumberOfCurrentSampling = 0;                
             } 
             if(SecondTick)
             {
                 if(NumberOfEnergySampling > 0)
-                    MeanEnergy += ((EnergyAcc / NumberOfEnergySampling)/3600.0);
+                    GeneralMeasures.MeanEnergy += ((EnergyAcc / NumberOfEnergySampling)/3600.0);
                 NumberOfEnergySampling = 0;
                 EnergyAcc = 0;
             }
@@ -140,9 +142,9 @@ void TaskMeasure(void const * argument)
         else
         {
             ClearFLArray(CurrentRMS, CURRENT_SAMPLE);
-            MeanCurrentRMS = 0.0;
-            Power      = 0.0;
-            MeanEnergy = 0.0;
+            GeneralMeasures.MeanCurrentRMS = 0.0;
+            GeneralMeasures.Power          = 0.0;
+            GeneralMeasures.MeanEnergy     = 0.0;
             EnergyAcc  = 0.0;
         }
         osDelay(20);
