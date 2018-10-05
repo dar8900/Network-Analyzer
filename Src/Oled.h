@@ -4,6 +4,8 @@
 #include "OLEDLIB2/u8g2.h"
 
 #include "Menus.h"
+#include "Parameters.h"
+
 #define SSD1306_I2C_ADDRESS 0x78
 
 

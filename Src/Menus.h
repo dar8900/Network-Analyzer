@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #define MAX_SETUP_MENU_LINES    3
+#define WHILE_LOOP_DELAY    200
 
 typedef struct 
 {
@@ -11,12 +12,7 @@ typedef struct
      bool (*MenuFunc)(void);
 }MENU_ITEM;
 
-typedef struct 
-{
-     char *ItemTitle;
-     uint8_t Type;
-     void *ParamValue;
-}PARAMETER_ITEM;
+
 
 typedef enum
 {
@@ -59,14 +55,6 @@ typedef enum
 }MEASURE_PAGES;
 
 
-typedef enum
-{
-    MEASURE_ENABLE = 0,
-    ADC_OFFSET,
-    MAX_PARAMETER_ITEM
-}PARAMETER_ITEMS;
-
-bool ChooseYesNo(char *TitleChoice);
 bool LedCtrl(void);
 void MainScreen(void);
 bool ParameterSetup(void);

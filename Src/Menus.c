@@ -6,10 +6,9 @@
 #include "TaskLed.h"
 #include "TaskKeyboard.h"
 #include "Graphix.h"
+#include "Parameters.h"
 
 #include <math.h>
-
-#define WHILE_LOOP_DELAY    200
 
 extern bool HalfSecondTick;
 
@@ -19,11 +18,9 @@ extern DATE_VAR GlobalDate;
 extern uint8_t DaysPerMonth[];
 extern bool SettingTimeDate;
 
-// Parametri 
-extern bool EnableMeasure;
-extern uint16_t ADCOffset;
-
 extern uint8_t LedConf;
+
+extern PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM];
 
 MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] = 
 {
@@ -45,13 +42,6 @@ MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] =
     {"Forma d'onda I"     , DrawCurrentWave},
 };
 
-PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
-{
-    {"Abilitare misura"  , CONFIRM_TYPE,  &EnableMeasure},
-    {"ADC Offset"        , VALUE_TYPE  ,  &ADCOffset    },
-};
-
-
 const char *LedCombStr[MAX_LED_COMBINATIONS] = 
 {
     "RGB",
@@ -64,119 +54,7 @@ const char *LedCombStr[MAX_LED_COMBINATIONS] =
     "Tutti spenti",
 };
 
-bool ChooseYesNo(char *TitleChoice)
-{
-    char *ChoiceStr[2] = {"Si", "No"};
-    uint8_t ChoiceNum = 0, FirstListItem = 0;
-    bool ExitChoice = false, Choice = false;
-    while(!ExitChoice)
-    {
-        CheckOperation();
-        DrawListLoop(TitleChoice, ChoiceStr, ChoiceNum, FirstListItem, 2, MAX_SETUP_MENU_LINES);
-        switch(LastButtonPressed)
-        {
-          case BUTTON_UP:
-            if(ChoiceNum > 0)
-                ChoiceNum--;
-            else
-                ChoiceNum = 1;
-            break;
-          case BUTTON_DOWN:
-            if(ChoiceNum < 1)
-                ChoiceNum++;
-            else
-                ChoiceNum = 0;
-            break;
-          case BUTTON_LEFT:
-            ExitChoice = true;
-            break;
-          case BUTTON_RIGHT:           
-            ExitChoice = true;
-            if(ChoiceNum == 0)
-                Choice = true;
-            else
-               Choice = false; 
-            break;
-          case BUTTON_OK:
-            break;
-          default:
-            break;
-        }        
-        if(ChoiceNum <= (MAX_SETUP_MENU_LINES - 1))
-        {
-            FirstListItem = 0;  
-        }
-        else
-        {
-            FirstListItem = ChoiceNum - (MAX_SETUP_MENU_LINES - 1);
-        } 
-        osDelay(WHILE_LOOP_DELAY);
-    }
-    return Choice;
-}
 
-static void SingleNumbers(uint16_t Value, uint8_t StoreArray[])
-{
-    uint16_t ValueCopy = Value;
-    for(uint8_t j = 0; j < 5; j++)
-    {
-        StoreArray[j] = ValueCopy/pow(10,(5-j));
-        ValueCopy %= (uint16_t)pow(10,(5-j));         
-    }
-    return;
-}
-
-uint16_t ChangeValue(uint16_t ParamValue)
-{
-    uint8_t ValueArray[5] = {0}, BoxPos = 0;
-    uint16_t FinalValue = ParamValue;
-    bool ExitChangeValue = false, ChangedValue = false;
-    SingleNumbers(FinalValue, ValueArray);
-    while(!ExitChangeValue)
-    {
-        CheckOperation();
-        DrawChangeValueLoop(BoxPos, ValueArray);
-        switch(LastButtonPressed)
-        {
-          case BUTTON_UP:
-            if(ValueArray[BoxPos] > 0)
-                ValueArray[BoxPos]--;
-            else
-                ValueArray[BoxPos] = 9;    
-            break;
-          case BUTTON_DOWN:
-            if(ValueArray[BoxPos] < 9)
-                ValueArray[BoxPos]++;
-            else
-                ValueArray[BoxPos] = 0;   
-            break;
-          case BUTTON_LEFT:
-            ExitChangeValue = true;
-            break;
-          case BUTTON_RIGHT:           
-            if(BoxPos < 4)
-                BoxPos++;
-            else
-                BoxPos = 0;
-            break;
-          case BUTTON_OK:
-            ChangedValue = true;
-            ExitChangeValue = true;
-            break;
-          default:
-            break;
-        }
-        
-        osDelay(WHILE_LOOP_DELAY);
-    }
-    if(ChangedValue)
-    {
-        FinalValue = (ValueArray[0] * 10000) + (ValueArray[1] * 1000) + (ValueArray[2] * 100) + (ValueArray[3] * 10) + ValueArray[4];
-        if(FinalValue > 65534)
-            FinalValue = 65534;
-    }
-    return FinalValue;
-}
 
 bool ShowMeasure()
 {
