@@ -24,13 +24,15 @@ extern MEASURES GeneralMeasures;
 
 
 extern PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM];
+extern PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM];
 
 MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] = 
 {
     {"Grafici"            , ChooseGraphics    },
     {"Misure"             , ShowMeasure       },
-    {"Gestione Led"       , LedCtrl           },
-    {"Gestione parametri" , ParameterSetup    },
+    {"Impostare allarmi"  , AlarmSetup        },
+    {"Impostare i Led"    , LedCtrl           },
+    {"Modifica parametri" , ParameterSetup    },
     {"Setta l'orario"     , ChangeDateTimeMenu},
     {"Reset"              , ResetMenu         },
 }; 
@@ -45,6 +47,7 @@ MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] =
 {
     {"Forma d'onda I"     , DrawCurrentWave},
 };
+
 
 char *ResetList[MAX_RESET_ITEM] = 
 {
@@ -168,6 +171,58 @@ bool ChooseGraphics()
     return true;
 }
 
+bool AlarmSetup()
+{
+    uint8_t AlarmItem = 0, FirstListItem = 0;
+    bool ExitAlarmsetup = false, ChooseAlarm = false;
+    while(!ExitAlarmsetup)
+    {
+        CheckOperation();
+        DrawParamLoop("Imposta allarmi", AlarmThrMenu, AlarmItem, FirstListItem, MAX_ALARM_SETUP_ITEM, MAX_SETUP_MENU_LINES);     
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+            if(AlarmItem > 0)
+                AlarmItem--;
+            else
+                AlarmItem = MAX_ALARM_SETUP_ITEM - 1;
+            break;
+          case BUTTON_DOWN:
+            if(AlarmItem < MAX_ALARM_SETUP_ITEM - 1)
+                AlarmItem++;
+            else
+                AlarmItem = 0;            
+            break;
+          case BUTTON_LEFT:
+            ExitAlarmsetup = true;
+            break;
+          case BUTTON_RIGHT:
+            ChooseAlarm = true;
+            break;
+          case BUTTON_OK:
+            break;
+            default:
+              break;
+        } 
+        if(AlarmItem <= (MAX_SETUP_MENU_LINES - 1))
+        {
+            FirstListItem = 0;  
+        }
+        else
+        {
+            FirstListItem = AlarmItem - (MAX_SETUP_MENU_LINES - 1);
+        }    
+        if(ChooseAlarm)
+        {
+            
+            ChooseAlarm = false;
+        }
+        osDelay(WHILE_LOOP_DELAY);
+    }
+    return true;
+}
+
+
 bool LedCtrl()
 {
     uint8_t LedComb = 0, FirstListItem = 0;
@@ -229,7 +284,7 @@ bool ParameterSetup()
     while(!ExitParamSetup)
     {
         CheckOperation();
-        DrawParamLoop("Ges.Parametri", ParametersMenu, ParamItem, FirstListItem, MAX_PARAMETER_ITEM, MAX_SETUP_MENU_LINES);     
+        DrawParamLoop("Imp.Parametri", ParametersMenu, ParamItem, FirstListItem, MAX_PARAMETER_ITEM, MAX_SETUP_MENU_LINES);     
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -270,7 +325,7 @@ bool ParameterSetup()
               case CONFIRM_TYPE:
                 *(bool *)ParametersMenu[ParamItem].ParamValue = ChooseYesNo(ParametersMenu[ParamItem].ItemTitle);
                 break;
-              case VALUE_TYPE:
+              case INT_VALUE_TYPE:
                 *(uint16_t*)ParametersMenu[ParamItem].ParamValue = ChangeValue(*(uint16_t*)ParametersMenu[ParamItem].ParamValue, ParamItem);
                 break;
               default:

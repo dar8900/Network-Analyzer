@@ -18,9 +18,17 @@ enum
 
 PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
 {
-    {"Abilitare misura"  , CONFIRM_TYPE,  &GeneralParams.EnableMeasure},
-    {"ADC Offset"        , VALUE_TYPE  ,  &GeneralParams.ADCOffset    },
+    {"Abilitare misura"  , CONFIRM_TYPE    ,  &GeneralParams.EnableMeasure},
+    {"ADC Offset"        , INT_VALUE_TYPE  ,  &GeneralParams.ADCOffset    },
 };
+
+PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM] = 
+{
+    {"Soglie corrente "  , FLOAT_VALUE_TYPE    ,  NULL},
+    {"Soglie potenza  "  , FLOAT_VALUE_TYPE    ,  NULL},
+    {"Soglia energia  "  , FLOAT_VALUE_TYPE    ,  NULL},
+};
+
 
 
 static void NumbersOperation(uint16_t *Value, uint8_t StoreArray[], uint8_t CompOrDecomp)
@@ -80,7 +88,7 @@ bool ChooseYesNo(char *TitleChoice)
             if(ChoiceNum == 0)
                 Choice = true;
             else
-               Choice = false; 
+                Choice = false; 
             break;
           case BUTTON_OK:
             break;
@@ -151,3 +159,42 @@ uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
     return FinalValue;
 }
 
+void ChangeAlarmThrs(uint8_t AlarmItem)
+{
+    uint8_t BoxPos = 0, NumbOfThr = 0;
+    float OverUnderThr[2];
+    bool ThrSetted = false, ExitFromAll = false;
+    
+    for(NumbOfThr = 0; NumbOfThr < 2; NumbOfThr++)
+    {
+        while(!ThrSetted || !ExitFromAll)
+        {
+            CheckOperation();
+            switch(LastButtonPressed)
+            {
+              case BUTTON_UP:
+                break;
+              case BUTTON_DOWN:  
+                break;
+              case BUTTON_LEFT:
+                ExitFromAll = true;
+                break;
+              case BUTTON_RIGHT:           
+                if(BoxPos < 4)
+                    BoxPos++;
+                else
+                    BoxPos = 0;
+                break;
+              case BUTTON_OK:
+                break;
+              default:
+                break;
+            }
+            
+            osDelay(WHILE_LOOP_DELAY);
+        }
+        if(ExitFromAll)
+            break;
+    }
+    
+}

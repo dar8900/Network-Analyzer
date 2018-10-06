@@ -9,6 +9,13 @@ typedef struct
     uint16_t ADCOffset;
 }PARAMETERS_S;
 
+typedef enum
+{
+    CONFIRM_TYPE = 0,
+    INT_VALUE_TYPE,
+    FLOAT_VALUE_TYPE,
+    MAX_TYPE
+}PARAMETER_TYPES;
 
 typedef struct 
 {
@@ -24,7 +31,13 @@ typedef enum
     MAX_PARAMETER_ITEM
 }PARAMETER_ITEMS;
 
-
+typedef enum
+{
+    CURRENT_THRS_ITEM = 0,
+    POWER_THRS_ITEM,
+    ENERGY_THRS_ITEM,
+    MAX_ALARM_SETUP_ITEM
+}ALARM_THRS_ITEM;
 
 bool ChooseYesNo(char *TitleChoice);
 uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem);

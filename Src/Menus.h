@@ -13,18 +13,11 @@ typedef struct
 }MENU_ITEM;
 
 
-
-typedef enum
-{
-    CONFIRM_TYPE = 0,
-    VALUE_TYPE,
-    MAX_TYPE
-}PARAMETER_TYPES;
-
 typedef enum
 {
     GRAPHICS_ITEM = 0,
     MEASURE_ITEM,
+    ALARM_SETUP_ITEM,
     LED_GEST,
     PARAMETER_SEUP,
     TIME_SET,    
@@ -63,6 +56,7 @@ typedef enum
 }RESET_ITEMS;
 
 
+
 bool LedCtrl(void);
 void MainScreen(void);
 bool ParameterSetup(void);
@@ -74,5 +68,6 @@ void WichReset(char * ResetTitle, uint8_t ResetType);
 
 bool ShowMeasure(void);
 bool ChooseGraphics(void);
+bool AlarmSetup(void);
 
 #endif
