@@ -27,6 +27,6 @@ typedef enum
 
 
 bool ChooseYesNo(char *TitleChoice);
-uint16_t ChangeValue(uint16_t ParamValue);
+uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem);
 
 #endif

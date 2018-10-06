@@ -5,6 +5,7 @@
 #include "SysTime.h"
 #include "Graphix.h"
 #include "Parameters.h"
+#include "AlarmMachine.h"
 
 
 #ifdef ENABLE_MEASURE
@@ -88,6 +89,7 @@ void TaskMeasure(void const * argument)
     uint32_t NumberOfEnergySampling = 0; 
     GeneralParams.ADCOffset = ADC_HALF_MAX_VALUE;
     GeneralParams.EnableMeasure = false;
+    bool NotReEnter = false;
         
 #ifdef SIM_SIN_WAVE    
     FillTestArray();
@@ -133,16 +135,26 @@ void TaskMeasure(void const * argument)
             } 
             if(SecondTick)
             {
-                if(NumberOfEnergySampling > 0)
-                    GeneralMeasures.MeanEnergy += ((EnergyAcc / NumberOfEnergySampling)/3600.0);
-                NumberOfEnergySampling = 0;
-                EnergyAcc = 0;
+                if(!NotReEnter)
+                {
+                    if(NumberOfEnergySampling > 0)
+                        GeneralMeasures.MeanEnergy += ((EnergyAcc / NumberOfEnergySampling)/3600.0);
+                    NumberOfEnergySampling = 0;
+                    EnergyAcc = 0;
+                    CheckAlarm();
+                }
+                NotReEnter = true;
+            }
+            else
+            {
+                NotReEnter = false;
             }
         } 
         else
         {
             ClearFLArray(CurrentRMS, CURRENT_SAMPLE);
-            GeneralMeasures.MeanCurrentRMS = 0.0;
+            CheckAlarm();
+//            GeneralMeasures.MeanCurrentRMS = 0.0;
             GeneralMeasures.Power          = 0.0;
             GeneralMeasures.MeanEnergy     = 0.0;
             EnergyAcc  = 0.0;

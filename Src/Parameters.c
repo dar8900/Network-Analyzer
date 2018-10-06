@@ -37,9 +37,10 @@ static void NumbersOperation(uint16_t *Value, uint8_t StoreArray[], uint8_t Comp
     }
     else
     {
+        ValueCopy = 0;
         for(j = 0; j < 5; j++)
         {
-            ValueCopy = StoreArray[j] * pow(10,(4-j));
+            ValueCopy += StoreArray[j] * pow(10,(4-j));
         }
         if(ValueCopy > 65534)
             ValueCopy = 65534;
@@ -99,7 +100,7 @@ bool ChooseYesNo(char *TitleChoice)
     return Choice;
 }
 
-uint16_t ChangeValue(uint16_t ParamValue)
+uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
 {
     uint8_t ValueArray[5] = {0}, BoxPos = 0;
     uint16_t FinalValue = ParamValue;
@@ -109,7 +110,7 @@ uint16_t ChangeValue(uint16_t ParamValue)
     while(!ExitChangeValue)
     {
         CheckOperation();
-        DrawChangeValueLoop(BoxPos, ValueArray);
+        DrawChangeValueLoop(BoxPos, ValueArray, ParametersMenu[ParamItem].ItemTitle);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -149,3 +150,4 @@ uint16_t ChangeValue(uint16_t ParamValue)
     }
     return FinalValue;
 }
+

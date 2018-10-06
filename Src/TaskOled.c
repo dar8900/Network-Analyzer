@@ -10,6 +10,8 @@
 extern uint8_t LedConf;
 extern uint8_t LastButtonPressed;
 
+extern char Initial_Logo[];
+
 void CheckOperation()
 {
     if(LastButtonPressed == BUTTON_OK_LONG)
@@ -30,8 +32,8 @@ void TaskOled(void const * argument)
 {
     OledInit();
     
-    DrawStartLogo();
-    osDelay(1000);
+    DrawStartLogo(Initial_Logo);
+    osDelay(3000);
     
     /* Infinite loop */
     for(;;)

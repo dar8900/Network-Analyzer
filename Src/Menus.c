@@ -271,11 +271,12 @@ bool ParameterSetup()
                 *(bool *)ParametersMenu[ParamItem].ParamValue = ChooseYesNo(ParametersMenu[ParamItem].ItemTitle);
                 break;
               case VALUE_TYPE:
-                *(uint16_t*)ParametersMenu[ParamItem].ParamValue = ChangeValue(*(uint16_t*)ParametersMenu[ParamItem].ParamValue);
+                *(uint16_t*)ParametersMenu[ParamItem].ParamValue = ChangeValue(*(uint16_t*)ParametersMenu[ParamItem].ParamValue, ParamItem);
                 break;
               default:
                 break;       
             }
+            ChooseParam = false;
         }
         osDelay(WHILE_LOOP_DELAY);
     }
@@ -659,8 +660,7 @@ void MainScreen()
           case BUTTON_RIGHT:
           default:
             break;
-        }
-        LastButtonPressed = NO_PRESS;   
+        }   
         osDelay(WHILE_LOOP_DELAY);
         if(EnterMenu)
         {
