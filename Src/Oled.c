@@ -177,6 +177,18 @@ void MessageScreen(char *Message)
     osDelay(POPUP_DELAY);
 }
 
+void PopUp(char *PopupTitle, char *Body1, char *Body2, char *Body3, char *Body4)
+{
+    u8g2_ClearBuffer(&u8g);
+    u8g2_SetFont(&u8g, u8g2_font_7x13B_tf);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(PopupTitle), 0, PopupTitle);
+    u8g2_SetFont(&u8g, u8g2_font_6x12_tf);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body1), 14 , Body1);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body2), 27 , Body2);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body3), 40 , Body3);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body4), 53 , Body4);
+    u8g2_SendBuffer(&u8g);
+}
 
 void DrawMainScreenLoop()
 {
@@ -204,8 +216,10 @@ void DrawTopInfoBar()
     u8g2_SetDrawColor(&u8g, 2);
     u8g2_DrawStr(&u8g, X_LEFT_POS, TOP_INFO_BAR_Y_POS, Time);  
     u8g2_DrawStr(&u8g, X_RIGHT_POS(Date), TOP_INFO_BAR_Y_POS, Date);
-//    if(AlarmsControls)
-//        u8g2_DrawXBMP(&u8g, ALARM_ICON_SML_X_POS, 0, 12, 6, AlarmIconSmall);
+    if(AlarmsActive())
+    {
+        u8g2_DrawXBMP(&u8g, ALARM_ICON_SML_X_POS, 0, 12, 6, AlarmIconSmall);
+    }
 }
 
 

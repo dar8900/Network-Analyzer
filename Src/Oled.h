@@ -39,6 +39,7 @@ void OledInit(void);
 void DrawStartLogo(const char Logo[]);
 void DrawMainLogo(const char Logo[]);
 void MessageScreen(char *Message);
+void PopUp(char *PopupTitle, char *Body1, char *Body2, char *Body3, char *Body4);
 void DrawArrow(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t Direction);
 void DrawTopInfoBar(void);
 void DrawBottomBarInfo(uint8_t WichPage);

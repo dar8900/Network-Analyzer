@@ -4,6 +4,7 @@
 #include "TaskKeyboard.h"
 #include "Oled.h"
 #include "Menus.h"
+#include "AlarmMachine.h"
 
 #ifdef ENABLE_OLED
 
@@ -14,6 +15,7 @@ extern char Initial_Logo[];
 
 void CheckOperation()
 {
+    uint8_t AlarmIndex = 0;
     if(LastButtonPressed == BUTTON_OK_LONG)
     {
         if(LedConf == RGB)
@@ -21,6 +23,14 @@ void CheckOperation()
         else if(LedConf == ALL_LED_OFF)
             LedConf = RGB;
         LastButtonPressed = NO_PRESS;
+    }
+    if(AlarmsActive() && !AlarmsChecked())
+    {
+        while(LastButtonPressed != BUTTON_OK)
+        {
+            AlarmIndex = LastActiveAlarm();
+            osDelay(500);
+        }
     }
 }
 

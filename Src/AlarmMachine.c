@@ -73,6 +73,30 @@ bool AlarmsActive()
     uint8_t AlarmIndx = 0;
     for(AlarmIndx = 0; AlarmIndx < MAX_ALARM_NUMBER; AlarmIndx++)
     {
-    
+        if(AlarmsControls[AlarmIndx].Active)
+            return true;
     }
+    return false;
+}
+
+bool AlarmsChecked()
+{
+    uint8_t AlarmIndx = 0;
+    for(AlarmIndx = 0; AlarmIndx < MAX_ALARM_NUMBER; AlarmIndx++)
+    {
+        if(!AlarmsControls[AlarmIndx].Cheked)
+            return false;
+    }
+    return true;
+}
+
+uint8_t LastActiveAlarm()
+{
+    uint8_t AlarmIndx = 0;
+    for(AlarmIndx = MAX_ALARM_NUMBER - 1; AlarmIndx >= 0; AlarmIndx--)
+    {
+        if(AlarmsControls[AlarmIndx].Active)
+            return AlarmIndx;
+    }
+    return MAX_ALARM_NUMBER;
 }

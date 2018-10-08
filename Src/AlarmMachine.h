@@ -53,5 +53,8 @@ enum
 
 
 void CheckAlarm(void);
+bool AlarmsActive(void);
+bool AlarmsChecked(void);
+uint8_t LastActiveAlarm(void);
 
 #endif
