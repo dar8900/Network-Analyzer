@@ -109,7 +109,7 @@ bool ShowMeasure()
           default:
             break;
         }
-        
+        LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);
     }
     
@@ -166,6 +166,7 @@ bool ChooseGraphics()
             GraphicsMenu[ItemPos].MenuFunc();
             EnterGraphic = false;
         }
+        LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);
     }
     return true;
@@ -214,9 +215,10 @@ bool AlarmSetup()
         }    
         if(ChooseAlarm)
         {
-            
+            ChangeAlarmThrs(AlarmItem);
             ChooseAlarm = false;
         }
+        LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);
     }
     return true;
@@ -266,6 +268,7 @@ bool LedCtrl()
         {
             FirstListItem = LedComb - (MAX_SETUP_MENU_LINES - 1);
         }
+        LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);
     }
     if(ChoosedLedComb)
@@ -333,6 +336,7 @@ bool ParameterSetup()
             }
             ChooseParam = false;
         }
+        LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);
     }
      
@@ -387,6 +391,7 @@ bool ChangeDateTimeMenu()
             TimeSetting[ItemPos].MenuFunc();
             ChangeTimeParam = false;
         }
+        LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);
     }  
     return true;
@@ -576,7 +581,7 @@ void WichReset(char * ResetTitle, uint8_t ResetType)
             GeneralMeasures.MeanEnergy = 0.0;
             break;
           case SYSTEM_RESET_TYPE:
-            MessageScreen("Reset in corso");
+            MessageScreen("Restart in corso");
             HAL_NVIC_SystemReset();
             break;
           default:
@@ -634,6 +639,7 @@ bool ResetMenu()
             WichReset(ResetList[ItemPos], ResetType[ItemPos]);
             ChoosedReset = false;
         }
+        LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);
     }
     
@@ -691,6 +697,7 @@ void MainMenu()
             MainSetupMenu[ItemPos].MenuFunc();
             EnterMenu = false;
         }
+        LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);
     }
 }
@@ -716,12 +723,14 @@ void MainScreen()
           default:
             break;
         }   
-        osDelay(WHILE_LOOP_DELAY);
         if(EnterMenu)
         {
+            LastButtonPressed = NO_PRESS;
             EnterMenu = false;
             break;
         }
+        LastButtonPressed = NO_PRESS;
+        osDelay(WHILE_LOOP_DELAY);
     }
     MainMenu();
 }

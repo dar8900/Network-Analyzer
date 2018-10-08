@@ -4,10 +4,12 @@
 #include "DisplayDef.h"
 #include "TaskRTC.h"
 #include "Menus.h"
+#include "AlarmMachine.h"
 
 #define	STM32_HAL_I2C_TIMEOUT	2000
 
-extern const char MainScreenLogo[];
+extern const char AlarmIconSmall[];
+extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 
 extern I2C_HandleTypeDef hi2c1;
 
@@ -27,6 +29,7 @@ typedef enum
     OK_STR,
     POS_STR,
     PAGE_STR,
+    OK_LONG_STR,
     MAX_BOTTOM_BAR_ITEM    
 }BOTTOM_BAR_ITEMS;
 
@@ -39,6 +42,7 @@ const char *BarItem[] =
     "Ok",   
     "Pos.",
     "Page",
+    "Premere ok per confermare"
 };
 
 static uint8_t u8x8_gpio_and_delay_STM32F103(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
@@ -200,6 +204,8 @@ void DrawTopInfoBar()
     u8g2_SetDrawColor(&u8g, 2);
     u8g2_DrawStr(&u8g, X_LEFT_POS, TOP_INFO_BAR_Y_POS, Time);  
     u8g2_DrawStr(&u8g, X_RIGHT_POS(Date), TOP_INFO_BAR_Y_POS, Date);
+//    if(AlarmsControls)
+//        u8g2_DrawXBMP(&u8g, ALARM_ICON_SML_X_POS, 0, 12, 6, AlarmIconSmall);
 }
 
 
@@ -325,11 +331,45 @@ void DrawChangeValueLoop(uint8_t BoxPos , uint8_t BoxValues[], char *Title)
                    (VALUE_BOX_WIDTH + 2 ), FontH + 5);
     
     u8g2_SetFont(&u8g, u8g_font_4x6);
-    u8g2_DrawStr(&u8g, X_CENTER_POS("Premere ok per confermare"), 45, "Premere ok per confermare");
+    u8g2_DrawStr(&u8g, X_CENTER_POS(BarItem[OK_LONG_STR]), 45, BarItem[OK_LONG_STR]);
     
     DrawBottomBarInfo(CHANGE_VALUE_PAGE);
     u8g2_SendBuffer(&u8g);   
 }
+
+void DrawChangeAlarmThrsLoop(uint8_t BoxPos , char *StrValue, char *Title, char *FactorChar)
+{
+    uint8_t FontH = 0;
+    
+    u8g2_ClearBuffer(&u8g);
+    DrawTopInfoBar();
+    
+    u8g2_SetFont(&u8g, u8g_font_6x13B);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Title), MENU_TITLE_Y_POS, Title);
+    
+
+    u8g2_SetFont(&u8g, u8g_font_6x10);
+    FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
+    u8g2_SetDrawColor(&u8g, 2);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(StrValue), VALUE_BOX_Y_POS + FontH, StrValue);
+    u8g2_DrawStr(&u8g, 94, VALUE_BOX_Y_POS + FontH, FactorChar);
+    
+    FontH = u8g2_GetFontAscent(&u8g);
+    
+    if(BoxPos < 9)
+        u8g2_DrawFrame(&u8g, (X_CENTER_POS(StrValue) - 2 + (BoxPos * VALUE_BOX_WIDTH)), VALUE_BOX_Y_POS , 
+                      (VALUE_BOX_WIDTH + 2 ), FontH + 5);
+    else
+        u8g2_DrawFrame(&u8g, 94 - 2 , VALUE_BOX_Y_POS , 
+                      (VALUE_BOX_WIDTH + 2 ), FontH + 5);
+    
+    u8g2_SetFont(&u8g, u8g_font_4x6);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(BarItem[OK_LONG_STR]), 45, BarItem[OK_LONG_STR]);
+    
+    DrawBottomBarInfo(CHANGE_VALUE_PAGE);
+    u8g2_SendBuffer(&u8g);   
+}
+
 
 
 void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxMenuItemNum, uint8_t MaxMenuLines)

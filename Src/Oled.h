@@ -48,5 +48,6 @@ void DrawParamLoop(char *PageTitle, PARAMETER_ITEM MenuItem[], uint8_t ItemPos, 
 void DrawTimeDateChangeLoop(uint8_t BoxPos, uint8_t TypeSetting,uint8_t BoxOneNum, uint8_t BoxTwoNum, uint8_t BoxThreeNum);
 void DrawListLoop(char *PageTitle, const char *ListItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxListItemNum, uint8_t MaxMenuLines);
 void DrawChangeValueLoop(uint8_t BoxPos , uint8_t BoxValues[], char *Title);
+void DrawChangeAlarmThrsLoop(uint8_t BoxPos , char *StrValue, char *Title, char *FactorChar);
 
 #endif

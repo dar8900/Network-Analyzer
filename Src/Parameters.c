@@ -4,11 +4,20 @@
 #include "TaskKeyboard.h"
 #include "Menus.h"
 #include "TaskOled.h"
+#include "AlarmMachine.h"
 #include <math.h>
+
+extern ALARM_PARAMS AlarmsParameters[MAX_ALARM_NUMBER];
 
 // Parametri 
 PARAMETERS_S GeneralParams;
 
+typedef struct
+{
+    float Value;
+    float ScaleFactor;
+    char  *Unit;
+}FL_SCALE;
 
 enum
 {
@@ -29,7 +38,43 @@ PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM] =
     {"Soglia energia  "  , FLOAT_VALUE_TYPE    ,  NULL},
 };
 
+enum
+{
+    FACTOR_MILLI = 0,
+    FACTOR_NULL,
+    FACTOR_KILO,
+    FACTOR_MEGA,
+    FACTOR_GIGA,
+    MAX_UNIT_FACTOR
+};
 
+FL_SCALE TabReScale[] = 
+{
+    {0.001        , 1000.0      , "m"},
+    {1.0          , 1.0         , " "},
+    {1000.0       , 0.001       , "k"},
+    {1000000.0    , 0.000001    , "M"},
+    {1000000000.0 , 0.000000001 , "G"},
+
+};
+
+static uint8_t SearchScaleFlRange(float Value)
+{
+    uint8_t Range = 0;
+    for(Range = 0; Range < 7; Range++)
+    {
+        if(Value < TabReScale[Range].Value)
+        {
+            if(Range == 0)
+                break;
+            else
+            {
+                Range -= 1;
+            }
+        }
+    }
+    return Range;
+}
 
 static void NumbersOperation(uint16_t *Value, uint8_t StoreArray[], uint8_t CompOrDecomp)
 {
@@ -55,6 +100,22 @@ static void NumbersOperation(uint16_t *Value, uint8_t StoreArray[], uint8_t Comp
         *Value = ValueCopy;
     }
     return;
+}
+
+static void FloatStr(float *Value, char *StrArray, bool ToStr)
+{
+    float ValueCopy = *Value;
+    if(ToStr)
+    {
+        if(ValueCopy < 0)
+            ValueCopy = - ValueCopy;
+        snprintf(StrArray, 8, "04.03f", ValueCopy);
+    }
+    else
+    {
+        ValueCopy = atof(StrArray);
+        *Value = ValueCopy;
+    }
 }
 
 bool ChooseYesNo(char *TitleChoice)
@@ -103,6 +164,7 @@ bool ChooseYesNo(char *TitleChoice)
         {
             FirstListItem = ChoiceNum - (MAX_SETUP_MENU_LINES - 1);
         } 
+        LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);
     }
     return Choice;
@@ -149,7 +211,7 @@ uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
           default:
             break;
         }
-        
+        LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);
     }
     if(ChangedValue)
@@ -159,38 +221,97 @@ uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
     return FinalValue;
 }
 
+
+
 void ChangeAlarmThrs(uint8_t AlarmItem)
 {
-    uint8_t BoxPos = 0, NumbOfThr = 0;
-    float OverUnderThr[2];
+    uint8_t BoxPos = 0, NumbOfThr = 0, MaxNumThr = 0, ScaleRange = 0, FactorUnitIndex = 0;
+    float ThrValue = 0.0;
+    char ValueArray[9];
+    char *OverUnderThrStr[2] = {"Sovra-soglia", "Sotto-Soglia"};   
     bool ThrSetted = false, ExitFromAll = false;
+  
+    if(AlarmItem == ENERGY_THRS_ITEM)
+        MaxNumThr = 1;
+    else 
+        MaxNumThr = 2;
     
-    for(NumbOfThr = 0; NumbOfThr < 2; NumbOfThr++)
+    for(NumbOfThr = 0; NumbOfThr < MaxNumThr; NumbOfThr++)
     {
+        if(NumbOfThr == 0)
+            ThrValue = AlarmsParameters[AlarmItem].OverThreshold;
+        else
+            ThrValue = AlarmsParameters[AlarmItem].UnderThreshold; 
+        
+        ScaleRange = SearchScaleFlRange(ThrValue);
+        FactorUnitIndex = ScaleRange;
+        ThrValue *= TabReScale[ScaleRange].ScaleFactor;
+        FloatStr(&ThrValue, ValueArray, true);
+        
         while(!ThrSetted || !ExitFromAll)
         {
             CheckOperation();
+            DrawChangeAlarmThrsLoop(BoxPos, ValueArray, OverUnderThrStr[NumbOfThr], TabReScale[FactorUnitIndex].Unit);
             switch(LastButtonPressed)
             {
               case BUTTON_UP:
+                if(BoxPos < 9)
+                {
+                    if(ValueArray[BoxPos] > '0')
+                        ValueArray[BoxPos]--;
+                    else
+                        ValueArray[BoxPos] = '9';    
+                }
+                else
+                {
+                    if(ValueArray[BoxPos] > 0 )
+                        FactorUnitIndex--;
+                    else
+                        FactorUnitIndex = MAX_UNIT_FACTOR - 1;
+                }
                 break;
               case BUTTON_DOWN:  
+                if(BoxPos < 9)
+                {
+                    if(ValueArray[BoxPos] < '9')
+                        ValueArray[BoxPos]++;
+                    else
+                        ValueArray[BoxPos] = '0'; 
+                }
+                else
+                {
+                    if(ValueArray[BoxPos] < MAX_UNIT_FACTOR - 1)
+                        FactorUnitIndex++;
+                    else
+                        FactorUnitIndex = 0;
+                }
                 break;
               case BUTTON_LEFT:
                 ExitFromAll = true;
                 break;
               case BUTTON_RIGHT:           
-                if(BoxPos < 4)
+                if(BoxPos < 9)
+                {
                     BoxPos++;
+                    if(ValueArray[BoxPos] == '.' && (BoxPos + 1) != 9)
+                        BoxPos++;
+                }
                 else
                     BoxPos = 0;
                 break;
               case BUTTON_OK:
+                FloatStr(&ThrValue, ValueArray, false);
+                ThrValue *= TabReScale[FactorUnitIndex].Value;
+                if(NumbOfThr == 0)
+                    AlarmsParameters[AlarmItem].OverThreshold = ThrValue;
+                else
+                    AlarmsParameters[AlarmItem].UnderThreshold = ThrValue;               
+                ThrSetted = true;
                 break;
               default:
                 break;
             }
-            
+            LastButtonPressed = NO_PRESS;
             osDelay(WHILE_LOOP_DELAY);
         }
         if(ExitFromAll)

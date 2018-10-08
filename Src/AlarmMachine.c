@@ -67,3 +67,12 @@ void CheckAlarm()
     }
 
 }
+
+bool AlarmsActive()
+{
+    uint8_t AlarmIndx = 0;
+    for(AlarmIndx = 0; AlarmIndx < MAX_ALARM_NUMBER; AlarmIndx++)
+    {
+    
+    }
+}

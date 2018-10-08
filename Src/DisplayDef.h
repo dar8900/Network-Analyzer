@@ -9,6 +9,8 @@
 #define START_LOGO_X_POS      ((128 - START_LOGO_LEN)/2)
 #define START_LOGO_Y_POS      (64 - START_LOGO_HIGH)
 
+#define ALARM_ICON_SML_X_POS  58
+
 #define POPUP_DELAY  1500
 
 #define GENERAL_STR_Y_POS(Pos)  (Pos + (u8g2_GetAscent(&u8g)))    
