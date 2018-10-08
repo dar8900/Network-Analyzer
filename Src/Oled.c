@@ -180,13 +180,16 @@ void MessageScreen(char *Message)
 void PopUp(char *PopupTitle, char *Body1, char *Body2, char *Body3, char *Body4)
 {
     u8g2_ClearBuffer(&u8g);
+    uint8_t FontH = 0;
     u8g2_SetFont(&u8g, u8g2_font_7x13B_tf);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(PopupTitle), 0, PopupTitle);
+    FontH = u8g2_GetAscent(&u8g);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(PopupTitle), 0 + FontH, PopupTitle);
     u8g2_SetFont(&u8g, u8g2_font_6x12_tf);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body1), 14 , Body1);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body2), 27 , Body2);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body3), 40 , Body3);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body4), 53 , Body4);
+    FontH = u8g2_GetAscent(&u8g);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body1), 14 + FontH , Body1);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body2), 27 + FontH , Body2);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body3), 40 + FontH , Body3);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body4), 53 + FontH , Body4);
     u8g2_SendBuffer(&u8g);
 }
 
@@ -370,7 +373,7 @@ void DrawChangeAlarmThrsLoop(uint8_t BoxPos , char *StrValue, char *Title, char 
     
     FontH = u8g2_GetFontAscent(&u8g);
     
-    if(BoxPos < 9)
+    if(BoxPos < 8)
         u8g2_DrawFrame(&u8g, (X_CENTER_POS(StrValue) - 2 + (BoxPos * VALUE_BOX_WIDTH)), VALUE_BOX_Y_POS , 
                       (VALUE_BOX_WIDTH + 2 ), FontH + 5);
     else

@@ -7,7 +7,10 @@
 #include "AlarmMachine.h"
 #include <math.h>
 
+#define  ALARM_FACTOR_UNIT_BOXPOS   8
+
 extern ALARM_PARAMS AlarmsParameters[MAX_ALARM_NUMBER];
+
 
 // Parametri 
 PARAMETERS_S GeneralParams;
@@ -48,7 +51,7 @@ enum
     MAX_UNIT_FACTOR
 };
 
-FL_SCALE TabReScale[] = 
+FL_SCALE TabReScale[MAX_UNIT_FACTOR] = 
 {
     {0.001        , 1000.0      , "m"},
     {1.0          , 1.0         , " "},
@@ -61,7 +64,7 @@ FL_SCALE TabReScale[] =
 static uint8_t SearchScaleFlRange(float Value)
 {
     uint8_t Range = 0;
-    for(Range = 0; Range < 7; Range++)
+    for(Range = 0; Range < MAX_UNIT_FACTOR; Range++)
     {
         if(Value < TabReScale[Range].Value)
         {
@@ -70,6 +73,7 @@ static uint8_t SearchScaleFlRange(float Value)
             else
             {
                 Range -= 1;
+                break;
             }
         }
     }
@@ -102,18 +106,37 @@ static void NumbersOperation(uint16_t *Value, uint8_t StoreArray[], uint8_t Comp
     return;
 }
 
-static void FloatStr(float *Value, char *StrArray, bool ToStr)
+static void ReWriteStr(char OldStr[], char NewStr[], uint8_t Size)
+{
+    uint8_t i = 0, j = 0;
+    for(i = 0; i < Size; i++)
+    {
+        if(OldStr[i] != '0')
+        {
+            break;
+        }
+    }
+    for(j = 0; j < Size - i; j++)
+    {
+        NewStr[j] = OldStr[i + j];
+    }
+}
+
+
+static void FloatStr(float *Value, char StrArray[], uint8_t ArraySize, bool ToStr)
 {
     float ValueCopy = *Value;
+    char NewFlArray[9];
     if(ToStr)
     {
         if(ValueCopy < 0)
             ValueCopy = - ValueCopy;
-        snprintf(StrArray, 8, "04.03f", ValueCopy);
+        snprintf(StrArray, 9, "%08.3f", ValueCopy);
     }
     else
     {
-        ValueCopy = atof(StrArray);
+        ReWriteStr(StrArray, NewFlArray, ArraySize);
+        ValueCopy = strtof(NewFlArray, NULL);
         *Value = ValueCopy;
     }
 }
@@ -246,16 +269,17 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
         ScaleRange = SearchScaleFlRange(ThrValue);
         FactorUnitIndex = ScaleRange;
         ThrValue *= TabReScale[ScaleRange].ScaleFactor;
-        FloatStr(&ThrValue, ValueArray, true);
+        FloatStr(&ThrValue, ValueArray, 9, true);
+        ThrSetted = false;
         
-        while(!ThrSetted || !ExitFromAll)
+        while(!ThrSetted && !ExitFromAll)
         {
             CheckOperation();
             DrawChangeAlarmThrsLoop(BoxPos, ValueArray, OverUnderThrStr[NumbOfThr], TabReScale[FactorUnitIndex].Unit);
             switch(LastButtonPressed)
             {
               case BUTTON_UP:
-                if(BoxPos < 9)
+                if(BoxPos < ALARM_FACTOR_UNIT_BOXPOS)
                 {
                     if(ValueArray[BoxPos] > '0')
                         ValueArray[BoxPos]--;
@@ -264,14 +288,14 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
                 }
                 else
                 {
-                    if(ValueArray[BoxPos] > 0 )
+                    if(FactorUnitIndex > 0 )
                         FactorUnitIndex--;
                     else
                         FactorUnitIndex = MAX_UNIT_FACTOR - 1;
                 }
                 break;
               case BUTTON_DOWN:  
-                if(BoxPos < 9)
+                if(BoxPos < ALARM_FACTOR_UNIT_BOXPOS)
                 {
                     if(ValueArray[BoxPos] < '9')
                         ValueArray[BoxPos]++;
@@ -280,7 +304,7 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
                 }
                 else
                 {
-                    if(ValueArray[BoxPos] < MAX_UNIT_FACTOR - 1)
+                    if(FactorUnitIndex < MAX_UNIT_FACTOR - 1)
                         FactorUnitIndex++;
                     else
                         FactorUnitIndex = 0;
@@ -290,17 +314,17 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
                 ExitFromAll = true;
                 break;
               case BUTTON_RIGHT:           
-                if(BoxPos < 9)
+                if(BoxPos < ALARM_FACTOR_UNIT_BOXPOS)
                 {
                     BoxPos++;
-                    if(ValueArray[BoxPos] == '.' && (BoxPos + 1) != 9)
+                    if(ValueArray[BoxPos] == '.' && (BoxPos + 1) != ALARM_FACTOR_UNIT_BOXPOS)
                         BoxPos++;
                 }
                 else
                     BoxPos = 0;
                 break;
               case BUTTON_OK:
-                FloatStr(&ThrValue, ValueArray, false);
+                FloatStr(&ThrValue, ValueArray, 9, false);
                 ThrValue *= TabReScale[FactorUnitIndex].Value;
                 if(NumbOfThr == 0)
                     AlarmsParameters[AlarmItem].OverThreshold = ThrValue;

@@ -615,7 +615,7 @@ static void GetGlobalTime()
 
 static void GetGlobalDate()
 {
-    GlobalDate.day = ds1307_get_day();
+    GlobalDate.day = ds1307_get_date();
     GlobalDate.month = ds1307_get_month();
     GlobalDate.year = ds1307_get_year();
 }
@@ -643,9 +643,10 @@ void SetChangedTime(uint8_t Hour, uint8_t Minute)
 
 void SetChangedDate(uint8_t Day, uint8_t Month, uint8_t Year)
 {
-    ds1307_set_day(Day);
-    ds1307_set_month(Month);
-    ds1307_set_year(Year);
+    ds1307_set_calendar_date(2, Day, Month, Year);
+//    ds1307_set_day(Day);
+//    ds1307_set_month(Month);
+//    ds1307_set_year(Year);
 
 }
 
@@ -666,7 +667,7 @@ void TaskRTC(void const * argument)
 //        GetSecondTick();
         HalfSecondTick = !HalfSecondTick;
         ds1307_get_time_24(&LocalTime.hours, &LocalTime.minutes, &LocalTime.seconds);
-        LocalDate.day   = ds1307_get_day();
+        LocalDate.day   = ds1307_get_date();
         LocalDate.month = ds1307_get_month();
         LocalDate.year  = ds1307_get_year();
         

@@ -155,8 +155,8 @@ void TaskMeasure(void const * argument)
             ClearFLArray(CurrentRMS, CURRENT_SAMPLE);
             CheckAlarm();
 //            GeneralMeasures.MeanCurrentRMS = 0.0;
-            GeneralMeasures.Power          = 0.0;
-            GeneralMeasures.MeanEnergy     = 0.0;
+//            GeneralMeasures.Power          = 0.0;
+//            GeneralMeasures.MeanEnergy     = 0.0;
             EnergyAcc  = 0.0;
         }
         osDelay(20);

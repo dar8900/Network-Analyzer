@@ -37,6 +37,7 @@ typedef struct
 {
     bool     Active;
     bool     Cheked;
+    bool     RePorted;
     uint32_t NumbOccurrence;
     TIME_VAR AlarmActivationTime;
     DATE_VAR AlarmActivationDate;
@@ -53,8 +54,9 @@ enum
 
 
 void CheckAlarm(void);
+bool AlarmsReported(void);
 bool AlarmsActive(void);
 bool AlarmsChecked(void);
-uint8_t LastActiveAlarm(void);
+uint8_t LastReportedAlarm(void);
 
 #endif

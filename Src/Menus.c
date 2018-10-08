@@ -215,6 +215,7 @@ bool AlarmSetup()
         }    
         if(ChooseAlarm)
         {
+            LastButtonPressed = NO_PRESS;
             ChangeAlarmThrs(AlarmItem);
             ChooseAlarm = false;
         }
@@ -323,6 +324,7 @@ bool ParameterSetup()
         }    
         if(ChooseParam)
         {
+            LastButtonPressed = NO_PRESS;
             switch(ParametersMenu[ParamItem].Type)
             {
               case CONFIRM_TYPE:
@@ -494,17 +496,16 @@ bool ChangeDate()
             switch(BoxPos)
             {
               case 0:
-                if(Month > 1)
-                    Month--;
-                else
-                    Month = 12;
-                break;
-              case 1:
                 if(Day > 1)
                     Day--;
                 else
-                    Day = DaysPerMonth[Month];
+                    Day = DaysPerMonth[Month-1];
                 break;
+              case 1:
+                if(Day > 1)
+                    Month--;
+                else
+                    Month = 12;
               case 2:
                 if(Year > 0)
                     Year--;
@@ -519,16 +520,16 @@ bool ChangeDate()
             switch(BoxPos)
             {
               case 0:
+                if(Day < DaysPerMonth[Month-1])
+                    Day++;
+                else
+                    Day = 1;
+                break;
+              case 1:
                 if(Month < 12)
                     Month++;
                 else
                     Month = 1;
-                break;
-              case 1:
-                if(Day < DaysPerMonth[Month])
-                    Day++;
-                else
-                    Day = 1;
                 break;
               case 2:
                 if(Year < 99)
