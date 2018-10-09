@@ -87,8 +87,8 @@ void TaskMeasure(void const * argument)
 {
     uint8_t NumberOfCurrentSampling = 0;
     uint32_t NumberOfEnergySampling = 0; 
-    GeneralParams.ADCOffset = ADC_HALF_MAX_VALUE;
-    GeneralParams.EnableMeasure = false;
+//    GeneralParams.ADCOffset = ADC_HALF_MAX_VALUE;
+//    GeneralParams.EnableMeasure = false;
     bool NotReEnter = false;
         
 #ifdef SIM_SIN_WAVE    

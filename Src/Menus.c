@@ -5,6 +5,7 @@
 #include "TaskRTC.h"
 #include "TaskLed.h"
 #include "TaskKeyboard.h"
+#include "TaskEeprom.h"
 #include "Graphix.h"
 #include "Parameters.h"
 #include "TaskMeasure.h"
@@ -337,6 +338,8 @@ bool ParameterSetup()
                 break;       
             }
             ChooseParam = false;
+            EepFlag.SaveEnableMeasure = true;
+            EepFlag.SaveAdcOffset = true;
         }
         LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);
