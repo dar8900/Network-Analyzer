@@ -15,6 +15,8 @@
 
 #define ENABLE_LED        // Abilita il TaskLed
 
+#define ENABLE_EEPROM     // Abilita il TaskEeprom
+
 #endif // UNSELECT_ALL
 
 #undef SIM_SIN_WAVE

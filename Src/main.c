@@ -15,15 +15,23 @@
 #include "TaskRTC.h"
 #include "TaskMeasure.h"
 #include "TaskKeyboard.h"
+#include "TaskEeprom.h"
 #include "GPIO.h"
 #include "ADC.h"
 #include "DMA.h"
 #include "I2C.h"
 #include "Oled.h"
 
-/* USER CODE BEGIN Includes */
+//RTOS heap
+#define MAX_RTOS_HEAP         4096
 
-/* USER CODE END Includes */
+#define TASK_OLED_HEAP         256
+#define TASK_LED_HEAP           64
+#define TASK_RTC_HEAP           64
+#define TASK_EEPROM_HEAP        64
+#define TASK_MEASURE_HEAP      128
+#define TASK_KEYBOARD_HEAP      64
+
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -36,6 +44,7 @@ osThreadId KeyboardHandle;
 osThreadId MeasureHandle;
 osThreadId LedHandle;
 osThreadId RTCHandle;
+osThreadId EepromHandle;
 
 char *ErrorMsg;
 uint16_t ErrorLine;
@@ -46,7 +55,6 @@ uint16_t ErrorLine;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-
 /**
 * @brief  The application entry point.
 *
@@ -77,36 +85,42 @@ static void CreateTask()
     
 #ifdef ENABLE_OLED
     /* definition and creation of Oled */
-    osThreadDef(Oled, TaskOled, osPriorityNormal, 0, 256);
+    osThreadDef(Oled, TaskOled, osPriorityNormal, 0, TASK_OLED_HEAP);
     OledHandle = osThreadCreate(osThread(Oled), NULL);
 #endif
  
 #ifdef ENABLE_KEYBOARD    
     /* definition and creation of Keyboard */
-    osThreadDef(Keyboard, TaskKeyboard, osPriorityBelowNormal, 0, 64);
+    osThreadDef(Keyboard, TaskKeyboard, osPriorityBelowNormal, 0, TASK_KEYBOARD_HEAP);
     KeyboardHandle = osThreadCreate(osThread(Keyboard), NULL);
 #endif 
  
 #ifdef ENABLE_MEASURE
     /* definition and creation of Measure */
-    osThreadDef(Measure, TaskMeasure, osPriorityHigh, 0, 128);
+    osThreadDef(Measure, TaskMeasure, osPriorityHigh, 0, TASK_MEASURE_HEAP);
     MeasureHandle = osThreadCreate(osThread(Measure), NULL);
 #endif 
 
 #ifdef ENABLE_LED    
     /* definition and creation of Led */
-    osThreadDef(Led, TaskLed, osPriorityLow, 0, 64);
+    osThreadDef(Led, TaskLed, osPriorityLow, 0, TASK_LED_HEAP);
     LedHandle = osThreadCreate(osThread(Led), NULL);
 #endif
     
 #ifdef ENABLE_RTC
     /* definition and creation of RTC */
-    osThreadDef(RTC, TaskRTC, osPriorityBelowNormal, 0, 64);
-    RTCHandle = osThreadCreate(osThread(RTC), NULL);
+    osThreadDef(Rtc, TaskRTC, osPriorityBelowNormal, 0, TASK_RTC_HEAP);
+    RTCHandle = osThreadCreate(osThread(Rtc), NULL);
 #endif   
- 
+    
+#ifdef ENABLE_EEPROM
+     /* definition and creation of Eeprom */
+    osThreadDef(Eeprom, TaskEeprom, osPriorityBelowNormal, 0, TASK_EEPROM_HEAP);
+    EepromHandle = osThreadCreate(osThread(Eeprom), NULL);
+#endif   
     return;
 }
+
 
 
 int main(void)
@@ -128,22 +142,6 @@ int main(void)
     
     
 }
-
-/**
-* @brief System Clock Configuration
-* @retval None
-*/
-
-
-
-/**
-* @brief  Period elapsed callback in non blocking mode
-* @note   This function is called  when TIM1 interrupt took place, inside
-* HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-* a global variable "uwTick" used as application time base.
-* @param  htim : TIM handle
-* @retval None
-*/
 
 
 /**

@@ -2,7 +2,7 @@
 #define __EEPROM_H
 
 #include <stdbool.h>
-#include "stm32f1xx_hal.h"
+#include <stdint.h>
 
 //#define   _EEPROM_F1_LOW_DESTINY
 #define   _EEPROM_F1_MEDIUM_DESTINY

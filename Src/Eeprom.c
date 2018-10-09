@@ -76,7 +76,7 @@ bool EE_Write(uint16_t VirtualAddress, uint32_t Data)
 	if((*(__IO uint32_t*)((VirtualAddress*4)+_EEPROM_FLASH_PAGE_ADDRESS)) != 0xFFFFFFFF)
 	{
 		
-		if( EE_Reads(0,(_EEPROM_FLASH_PAGE_SIZE/4),EEPROMPageBackup)==false)
+		if( EE_MultiReads(0,(_EEPROM_FLASH_PAGE_SIZE/4),EEPROMPageBackup)==false)
 		{
 			HAL_FLASH_Lock();
 			return false;
@@ -129,7 +129,7 @@ bool EE_MultiWrites(uint16_t StartVirtualAddress,uint16_t HowMuchToWrite,uint32_
 {
 	if((StartVirtualAddress+HowMuchToWrite) >	(_EEPROM_FLASH_PAGE_SIZE/4))
 		return false;
-	if( EE_Reads(0,(_EEPROM_FLASH_PAGE_SIZE/4),EEPROMPageBackup)==false)
+	if( EE_MultiReads(0,(_EEPROM_FLASH_PAGE_SIZE/4),EEPROMPageBackup)==false)
 		return false;
 	for(uint16_t	i=StartVirtualAddress ; i<HowMuchToWrite+StartVirtualAddress ; i++)
 	{

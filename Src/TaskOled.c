@@ -5,6 +5,7 @@
 #include "Oled.h"
 #include "Menus.h"
 #include "AlarmMachine.h"
+#include "cmsis_os.h"
 
 #ifdef ENABLE_OLED
 
@@ -52,6 +53,8 @@ void CheckOperation()
             AlarmsControls[AlarmIndex].Cheked = true;
         }
     }
+    
+    
 }
 
 
