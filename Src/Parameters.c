@@ -9,8 +9,6 @@
 
 #define  ALARM_FACTOR_UNIT_BOXPOS   8
 
-extern ALARM_PARAMS AlarmsParameters[MAX_ALARM_NUMBER];
-
 
 // Parametri 
 PARAMETERS_S GeneralParams;

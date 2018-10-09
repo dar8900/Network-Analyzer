@@ -39,6 +39,10 @@ typedef enum
     MAX_ALARM_SETUP_ITEM
 }ALARM_THRS_ITEM;
 
+extern PARAMETERS_S GeneralParams;
+
+
+
 bool ChooseYesNo(char *TitleChoice);
 uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem);
 void ChangeAlarmThrs(uint8_t AlarmItem);

@@ -7,6 +7,7 @@
 #include "TaskMeasure.h"
 #include "TaskKeyboard.h"
 #include "Menus.h"
+#include "Parameters.h"
 
 #define TAB_RANGE_LEN   15
 
@@ -14,8 +15,7 @@ extern u8g2_t u8g;
 extern uint32_t ADCReadedValue[NUM_SAMPLE];
 extern int16_t SinTestGraphic[];
 
-extern MEASURES GeneralMeasures;
-extern PARAMETERS_S GeneralParams; 
+
 
 //extern uint16_t ACDOffset;
 

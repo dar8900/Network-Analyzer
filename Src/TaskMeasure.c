@@ -15,7 +15,7 @@
 extern bool ConversionEnd;
 extern bool SecondTick;
 extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
-extern PARAMETERS_S GeneralParams;
+
 
 #ifdef SIM_SIN_WAVE
 int16_t SinTestGraphic[NUM_TEST_SAMPLE];

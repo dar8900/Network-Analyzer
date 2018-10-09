@@ -4,11 +4,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+
 //#define   _EEPROM_F1_LOW_DESTINY
 #define   _EEPROM_F1_MEDIUM_DESTINY
 //#define   _EEPROM_F1_HIGH_DESTINY
 
-#define		_EEPROM_USE_FLASH_PAGE				120 
+#define		_EEPROM_USE_FLASH_PAGE				125 
 
 
 #define   U_INT8_SIZE     1

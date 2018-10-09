@@ -52,6 +52,8 @@ enum
     NO_ALARM
 };
 
+extern ALARM_PARAMS AlarmsParameters[MAX_ALARM_NUMBER];
+extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 
 void CheckAlarm(void);
 bool AlarmsReported(void);

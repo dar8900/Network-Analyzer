@@ -25,5 +25,7 @@ typedef struct
     float MeanEnergy;
 }MEASURES;
 
+extern MEASURES GeneralMeasures;
+
 void TaskMeasure(void const * argument);
 #endif
