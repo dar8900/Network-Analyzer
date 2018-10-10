@@ -6,6 +6,7 @@
 #include "Graphix.h"
 #include "Parameters.h"
 #include "AlarmMachine.h"
+#include "TaskLed.h"
 
 
 #ifdef ENABLE_MEASURE
@@ -87,8 +88,6 @@ void TaskMeasure(void const * argument)
 {
     uint8_t NumberOfCurrentSampling = 0;
     uint32_t NumberOfEnergySampling = 0; 
-//    GeneralParams.ADCOffset = ADC_HALF_MAX_VALUE;
-//    GeneralParams.EnableMeasure = false;
     bool NotReEnter = false;
         
 #ifdef SIM_SIN_WAVE    
@@ -142,6 +141,10 @@ void TaskMeasure(void const * argument)
                     NumberOfEnergySampling = 0;
                     EnergyAcc = 0;
                     CheckAlarm();
+                    if(AlarmEnergyLed == NO_CONF)
+                    {
+                        AlarmEnergyLed = ENERGY_IMPULSE;
+                    }
                 }
                 NotReEnter = true;
             }

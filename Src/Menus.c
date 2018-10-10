@@ -338,8 +338,7 @@ bool ParameterSetup()
                 break;       
             }
             ChooseParam = false;
-            EepFlag.SaveEnableMeasure = true;
-            EepFlag.SaveAdcOffset = true;
+            EepFlag.SaveParameters = true;
         }
         LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);

@@ -354,9 +354,12 @@ void DrawChangeValueLoop(uint8_t BoxPos , uint8_t BoxValues[], char *Title)
     u8g2_SendBuffer(&u8g);   
 }
 
-void DrawChangeAlarmThrsLoop(uint8_t BoxPos , char *StrValue, char *Title, char *FactorChar)
+void DrawChangeAlarmThrsLoop(uint8_t BoxPos , char *StrValue, char *Title, char FactorChar)
 {
     uint8_t FontH = 0;
+    char FakeChar;
+    char *FactorStr = &FakeChar;
+    snprintf(FactorStr, 2, "%c", FactorChar);
     
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();
@@ -369,7 +372,7 @@ void DrawChangeAlarmThrsLoop(uint8_t BoxPos , char *StrValue, char *Title, char 
     FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
     u8g2_SetDrawColor(&u8g, 2);
     u8g2_DrawStr(&u8g, X_CENTER_POS(StrValue), VALUE_BOX_Y_POS + FontH, StrValue);
-    u8g2_DrawStr(&u8g, 94, VALUE_BOX_Y_POS + FontH, FactorChar);
+    u8g2_DrawStr(&u8g, 94, VALUE_BOX_Y_POS + FontH, FactorStr);
     
     FontH = u8g2_GetFontAscent(&u8g);
     

@@ -643,18 +643,16 @@ void SetChangedTime(uint8_t Hour, uint8_t Minute)
 
 void SetChangedDate(uint8_t Day, uint8_t Month, uint8_t Year)
 {
-    ds1307_set_calendar_date(2, Day, Month, Year);
-//    ds1307_set_day(Day);
-//    ds1307_set_month(Month);
-//    ds1307_set_year(Year);
+//    ds1307_set_calendar_date(2, Day, Month, Year);
+    ds1307_set_date(Day);
+    ds1307_set_month(Month);
+    ds1307_set_year(Year);
 
 }
 
 /* TaskRTC function */
 void TaskRTC(void const * argument)
 {
-    I2C_HandleTypeDef *I2CState = &hi2c1;
-    
     TIME_VAR LocalTime;
     DATE_VAR LocalDate;
 

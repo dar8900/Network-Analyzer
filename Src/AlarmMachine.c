@@ -25,7 +25,7 @@ ALARM_PARAMS AlarmsParameters[MAX_ALARM_NUMBER] =
 {
     {&GeneralMeasures.MeanCurrentRMS, 10.0            , -1.0           },
     {&GeneralMeasures.Power         , 4000.0          , -1.0           },
-    {&GeneralMeasures.MeanEnergy    , 200000.0        , -1.0          },
+    {&GeneralMeasures.MeanEnergy    , 200000.0        , -1.0           },
     
 };
 ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];

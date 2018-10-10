@@ -39,10 +39,28 @@ typedef enum
     MAX_ALARM_SETUP_ITEM
 }ALARM_THRS_ITEM;
 
+typedef struct
+{
+    float Value;
+    float ScaleFactor;
+    char  Unit;
+}FL_SCALE;
+
+enum
+{
+    FACTOR_MILLI = 0,
+    FACTOR_NULL,
+    FACTOR_KILO,
+    FACTOR_MEGA,
+    FACTOR_GIGA,
+    MAX_UNIT_FACTOR
+};
+
+
 extern PARAMETERS_S GeneralParams;
 
 
-
+uint8_t SearchScaleFlRange(float Value);
 bool ChooseYesNo(char *TitleChoice);
 uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem);
 void ChangeAlarmThrs(uint8_t AlarmItem);

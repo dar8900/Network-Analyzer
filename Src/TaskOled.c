@@ -45,12 +45,14 @@ void CheckOperation()
             AlarmIndex = LastReportedAlarm();
             WriteTimeDateOccurrenceAlarm(AlarmIndex, AlarmTimeDateStr, NumberOccurence);
             PopUp(AlarmList[AlarmIndex], AlarmMotivationStr[AlarmsControls[AlarmIndex].AlarmMotivation], AlarmTimeDateStr, NumberOccurence, " ");
+            AlarmEnergyLed = ALARM_RUNNING;
             osDelay(500);
         }
         if(LastButtonPressed == BUTTON_OK)
         {
             LastButtonPressed = NO_PRESS;
             AlarmsControls[AlarmIndex].Cheked = true;
+            AlarmEnergyLed = NO_CONF;
         }
     }
     

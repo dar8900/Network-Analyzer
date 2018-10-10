@@ -5,6 +5,7 @@
 #include "Menus.h"
 #include "TaskOled.h"
 #include "AlarmMachine.h"
+#include "TaskEeprom.h"
 #include <math.h>
 
 #define  ALARM_FACTOR_UNIT_BOXPOS   8
@@ -13,12 +14,7 @@
 // Parametri 
 PARAMETERS_S GeneralParams;
 
-typedef struct
-{
-    float Value;
-    float ScaleFactor;
-    char  *Unit;
-}FL_SCALE;
+
 
 enum
 {
@@ -39,27 +35,19 @@ PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM] =
     {"Soglia energia  "  , FLOAT_VALUE_TYPE    ,  NULL},
 };
 
-enum
-{
-    FACTOR_MILLI = 0,
-    FACTOR_NULL,
-    FACTOR_KILO,
-    FACTOR_MEGA,
-    FACTOR_GIGA,
-    MAX_UNIT_FACTOR
-};
+
 
 FL_SCALE TabReScale[MAX_UNIT_FACTOR] = 
 {
-    {0.001        , 1000.0      , "m"},
-    {1.0          , 1.0         , " "},
-    {1000.0       , 0.001       , "k"},
-    {1000000.0    , 0.000001    , "M"},
-    {1000000000.0 , 0.000000001 , "G"},
+    {0.001        , 1000.0      , 'm'},
+    {1.0          , 1.0         , ' '},
+    {1000.0       , 0.001       , 'k'},
+    {1000000.0    , 0.000001    , 'M'},
+    {1000000000.0 , 0.000000001 , 'G'},
 
 };
 
-static uint8_t SearchScaleFlRange(float Value)
+uint8_t SearchScaleFlRange(float Value)
 {
     uint8_t Range = 0;
     for(Range = 0; Range < MAX_UNIT_FACTOR; Range++)
@@ -338,6 +326,10 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
         }
         if(ExitFromAll)
             break;
+    }
+    if(!ExitFromAll)
+    {
+        //Salva soglie
     }
     
 }

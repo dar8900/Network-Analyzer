@@ -19,7 +19,7 @@ void MX_GPIO_Init(void)
     __HAL_RCC_GPIOB_CLK_ENABLE();
     
     /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(GPIOA, Red_Pin|Blue_Pin|Green_Pin|EnergyLed_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOA, Red_Pin|Blue_Pin|Green_Pin|EnergyLed_Pin, LOW);
     
     /*Configure GPIO pins : Red_Pin Blue_Pin Green_Pin EnergyLed_Pin */
     GPIO_InitStruct.Pin = Red_Pin|Blue_Pin|Green_Pin|EnergyLed_Pin;

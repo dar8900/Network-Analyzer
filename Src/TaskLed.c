@@ -5,6 +5,7 @@
 #ifdef ENABLE_LED
 
 uint8_t LedConf = ALL_LED_OFF;
+uint8_t AlarmEnergyLed = NO_CONF;
 
 LED_FLAG LedFlag[NLED];
 
@@ -34,6 +35,14 @@ static bool TurnOffLed(uint8_t WichLed)
         {
             HAL_GPIO_WritePin(Blue_GPIO_Port, Blue_Pin, LOW);
             LedFlag[BLUE_LED].IsOn = false;
+        }
+        SwitchSuccess = true;
+        break;
+      case AL_EN_LED:
+        if(LedFlag[AL_EN_LED].IsOn)
+        {
+            HAL_GPIO_WritePin(EnergyLed_GPIO_Port, EnergyLed_Pin, LOW);
+            LedFlag[AL_EN_LED].IsOn = false;
         }
         SwitchSuccess = true;
         break;
@@ -73,13 +82,21 @@ static bool TurnOnLed(uint8_t WichLed)
         }
         SwitchSuccess = true;
         break;
+      case AL_EN_LED:
+        if(!LedFlag[AL_EN_LED].IsOn)
+        {
+            HAL_GPIO_WritePin(EnergyLed_GPIO_Port, EnergyLed_Pin, HIGH);
+            LedFlag[AL_EN_LED].IsOn = true;
+        }
+        SwitchSuccess = true;
+        break;
       default:
         break;
     }
     return SwitchSuccess;
 }
 
-void GesLed()
+static void GesRGBLed()
 {
     switch(LedConf)
     {
@@ -128,19 +145,44 @@ void GesLed()
     }
 }
 
+static void GesAlarmEnergyLed()
+{
+    switch(AlarmEnergyLed)
+    {
+      case ALARM_RUNNING:
+        TurnOnLed(AL_EN_LED);
+        osDelay(200);
+        TurnOffLed(AL_EN_LED);
+        break;
+      case ENERGY_IMPULSE:
+        TurnOnLed(AL_EN_LED);
+        osDelay(5);
+        TurnOffLed(AL_EN_LED);
+        break;
+      case NO_CONF:
+        break;
+      default:
+        break;
+    }
+    
+}
+
 /* TaskLed function */
 void TaskLed(void const * argument)
 {
     /* USER CODE BEGIN TaskLed */
     
-    LedConf = RGB;
-    GesLed();
-    LedConf = ALL_LED_OFF;
+//    LedConf = RGB;
+//    GesLed();
+//    LedConf = ALL_LED_OFF;
+    
     
     /* Infinite loop */
     for(;;)
     {
-        GesLed();
+        GesRGBLed();
+        GesAlarmEnergyLed();
+        osDelay(50);
     }
     /* USER CODE END TaskLed */
 }
