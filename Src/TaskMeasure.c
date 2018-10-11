@@ -83,12 +83,39 @@ static float CalcMeanCurrent(float CurrentRMS[])
     return SumCurr;
 }
 
+
+static void SecondEvent(uint32_t *NumberOfEnergySampling)
+{
+    static bool NotReEnter = false;
+    if(SecondTick)
+    {
+        if(!NotReEnter)
+        {
+            if(*NumberOfEnergySampling > 0)
+                GeneralMeasures.MeanEnergy += ((EnergyAcc / *NumberOfEnergySampling)/3600.0);
+            *NumberOfEnergySampling = 0;
+            EnergyAcc = 0;
+            CheckAlarm();
+            if(AlarmEnergyLed == NO_CONF)
+            {
+                AlarmEnergyLed = ENERGY_IMPULSE;
+            }
+        }
+        NotReEnter = true;
+    }
+    else
+    {
+        NotReEnter = false;
+    }
+}
+
+
 /* TaskMeasure function */
 void TaskMeasure(void const * argument)
 {
     uint8_t NumberOfCurrentSampling = 0;
     uint32_t NumberOfEnergySampling = 0; 
-    bool NotReEnter = false;
+    GeneralParams.MeasureVoltage = VOLTAGE_VALUE_DFLT;
         
 #ifdef SIM_SIN_WAVE    
     FillTestArray();
@@ -122,7 +149,7 @@ void TaskMeasure(void const * argument)
             {
                 GeneralMeasures.MeanCurrentRMS = CalcMeanCurrent(CurrentRMS);            
                 if(GeneralMeasures.MeanCurrentRMS > 0.1)
-                    GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * VOLTAGE_VALUE;
+                    GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * (float)GeneralParams.MeasureVoltage;
                 else
                 {
                     GeneralMeasures.MeanCurrentRMS = 0.0;
@@ -132,26 +159,9 @@ void TaskMeasure(void const * argument)
                 NumberOfEnergySampling++;
                 NumberOfCurrentSampling = 0;                
             } 
-            if(SecondTick)
-            {
-                if(!NotReEnter)
-                {
-                    if(NumberOfEnergySampling > 0)
-                        GeneralMeasures.MeanEnergy += ((EnergyAcc / NumberOfEnergySampling)/3600.0);
-                    NumberOfEnergySampling = 0;
-                    EnergyAcc = 0;
-                    CheckAlarm();
-                    if(AlarmEnergyLed == NO_CONF)
-                    {
-                        AlarmEnergyLed = ENERGY_IMPULSE;
-                    }
-                }
-                NotReEnter = true;
-            }
-            else
-            {
-                NotReEnter = false;
-            }
+            
+            // Gestisce gli eventi al secondo
+            SecondEvent(&NumberOfEnergySampling);
         } 
         else
         {

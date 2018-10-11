@@ -9,6 +9,15 @@
 #define	STM32_HAL_I2C_TIMEOUT	2000
 
 extern const char AlarmIconSmall[];
+
+extern const char BatteriaVuota[];
+extern const char BatteriaQuarto[];
+extern const char BatteriaMeta[];
+extern const char Batteria3_4[];
+extern const char BatteriaPiena[];
+extern const char BatteriaInCarica[];
+
+
 extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 
 extern I2C_HandleTypeDef hi2c1;
@@ -189,16 +198,17 @@ void MessageScreen(char *Message)
 void PopUp(char *PopupTitle, char *Body1, char *Body2, char *Body3, char *Body4)
 {
     u8g2_ClearBuffer(&u8g);
-    uint8_t FontH = 0;
+    u8g2_DrawFrame(&u8g, 0 ,0, SCREEN_MAX_WIDTH, SCREEN_MAX_HIGH);
+    u8g2_DrawFrame(&u8g, 1 ,1, SCREEN_MAX_WIDTH - 1, SCREEN_MAX_HIGH - 1);
+    
     u8g2_SetFont(&u8g, u8g2_font_7x13B_tf);
-    FontH = u8g2_GetAscent(&u8g);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(PopupTitle), 0 + FontH, PopupTitle);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(PopupTitle), GENERAL_STR_Y_POS(3), PopupTitle);
+    
     u8g2_SetFont(&u8g, u8g2_font_6x12_tf);
-    FontH = u8g2_GetAscent(&u8g);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body1), 14 + FontH , Body1);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body2), 27 + FontH , Body2);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body3), 40 + FontH , Body3);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body4), 53 + FontH , Body4);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body1), GENERAL_STR_Y_POS(16) , Body1);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body2), GENERAL_STR_Y_POS(29) , Body2);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body3), GENERAL_STR_Y_POS(42) , Body3);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body4), GENERAL_STR_Y_POS(55) , Body4);
     u8g2_SendBuffer(&u8g);
 }
 

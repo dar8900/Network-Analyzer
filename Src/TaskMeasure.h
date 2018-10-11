@@ -12,7 +12,7 @@
 #define TO_GRADES(Angle)     (Angle * (180.0 / PIGRECO))
 #define TO_RADIANTS(Angle)   (Angle * (PIGRECO / 180.0))
 
-#define VOLTAGE_VALUE         220.0
+#define VOLTAGE_VALUE_DFLT    220
 
 
 #define TOVOLT(Value)        (Value*(3.3/4096.0))

@@ -2,6 +2,7 @@
 #define DISPLAY_DEF_H
 
 #define SCREEN_MAX_WIDTH    u8g2_GetDisplayWidth(&u8g)
+#define SCREEN_MAX_HIGH     u8g2_GetDisplayHeight(&u8g)
 
 
 #define START_LOGO_LEN        128
