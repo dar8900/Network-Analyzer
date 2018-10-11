@@ -32,6 +32,7 @@ static void CopyCharArray(char OrigArray[], char DestArray[])
 
 static void WriteNumbOfWrites()
 {
+    uint32_t OldSavedValue = 0;
     if(EepromSavedValue.NumeroScritture == UINT32_MAX)
     {
         EepromSavedValue.NumeroScritture = 0;
@@ -39,7 +40,11 @@ static void WriteNumbOfWrites()
     }
     if(EepFlag.SaveCounter)
     {
-        EE_WriteInt(NUMBER_OF_WRITES_ADDR, EepromSavedValue.NumeroScritture);    
+        EE_ReadInt(NUMBER_OF_WRITES_ADDR, &OldSavedValue);
+        if(OldSavedValue != EepromSavedValue.NumeroScritture)
+        {
+            EE_WriteInt(NUMBER_OF_WRITES_ADDR, EepromSavedValue.NumeroScritture);    
+        }
         EepFlag.SaveCounter = false;
     }
 }
@@ -338,7 +343,7 @@ static void ReadEnergy()
 
 //##########################################################################################################
 
-static void ReadAll()
+static void TransferToRam()
 {
     for(uint8_t i = 0; i < MAX_PARAMETER_ITEM; i++)
     {
@@ -356,7 +361,7 @@ static void ReadAll()
 /* TaskEeprom function */
 void TaskEeprom(void const * argument)
 {
-    ReadAll();
+    TransferToRam();
     
     /* Infinite loop */
     for(;;)

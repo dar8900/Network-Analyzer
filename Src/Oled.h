@@ -25,6 +25,7 @@ typedef enum
     TIME_DATE_PAGE,
     MEASURE_PAGE,
     CHANGE_VALUE_PAGE,
+    READ_ONLY_PARAM,
     MAX_SCREEN_PAGES
 }SCREEN_PAGES;
 
@@ -36,6 +37,7 @@ enum
 };
 
 void OledInit(void);
+void ClearScreen(void);
 void DrawStartLogo(const char Logo[]);
 void DrawMainLogo(const char Logo[]);
 void MessageScreen(char *Message);
@@ -50,5 +52,5 @@ void DrawTimeDateChangeLoop(uint8_t BoxPos, uint8_t TypeSetting,uint8_t BoxOneNu
 void DrawListLoop(char *PageTitle, const char *ListItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxListItemNum, uint8_t MaxMenuLines);
 void DrawChangeValueLoop(uint8_t BoxPos , uint8_t BoxValues[], char *Title);
 void DrawChangeAlarmThrsLoop(uint8_t BoxPos , char *StrValue, char *Title, char FactorChar);
-
+void ViewReadOnlyParam(uint32_t ValueTOView);
 #endif

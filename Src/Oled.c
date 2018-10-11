@@ -30,6 +30,8 @@ typedef enum
     POS_STR,
     PAGE_STR,
     OK_LONG_STR,
+    CONFIRM_OK,
+    LEFT_BACK,
     MAX_BOTTOM_BAR_ITEM    
 }BOTTOM_BAR_ITEMS;
 
@@ -42,7 +44,8 @@ const char *BarItem[] =
     "Ok",   
     "Pos.",
     "Page",
-    "Premere ok per confermare"
+    "Premere ok per confermare",
+    "Premere Left per uscire",
 };
 
 static uint8_t u8x8_gpio_and_delay_STM32F103(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
@@ -149,6 +152,12 @@ void DrawArrow(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t Direction
         break;        
     }
     
+}
+
+void ClearScreen()
+{
+    u8g2_ClearBuffer(&u8g);
+    u8g2_SendBuffer(&u8g);     
 }
 
 // Per disegnare il logo durante il boot
@@ -288,6 +297,13 @@ void DrawBottomBarInfo(uint8_t WichPage)
         DrawArrow(DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
         DrawArrow(RIGHT_ARROW_X_POS - 4, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 2, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
         break;
+      case READ_ONLY_PARAM:
+        u8g2_SetFont(&u8g, u8g_font_4x6);
+        FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g); 
+        u8g2_SetDrawColor(&u8g, 2);
+        u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
+        DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
+        break;
       default:
         break;           
     }
@@ -316,11 +332,25 @@ void DrawTimeDateChangeLoop(uint8_t BoxPos, uint8_t TypeSetting,uint8_t BoxOneNu
                    (TIME_DATE_BOX_WIDTH + 2 ), FontH + 5);
     
     u8g2_SetFont(&u8g, u8g_font_4x6);
-    u8g2_DrawStr(&u8g, X_CENTER_POS("Premere ok per confermare"), 45, "Premere ok per confermare");
+    u8g2_DrawStr(&u8g, X_CENTER_POS(BarItem[CONFIRM_OK]), 45, BarItem[CONFIRM_OK]);
     
     DrawBottomBarInfo(TIME_DATE_PAGE);
     u8g2_SendBuffer(&u8g);   
 }
+
+void ViewReadOnlyParam(uint32_t ValueToView)
+{
+    char ReadOnlyStr[12];
+    snprintf(ReadOnlyStr, 12, "%010d", ValueToView);
+    u8g2_ClearBuffer(&u8g);
+    DrawTopInfoBar();
+    u8g2_SetFont(&u8g, u8g_font_6x13B);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(ReadOnlyStr), GENERAL_STR_Y_POS(32), ReadOnlyStr);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(BarItem[LEFT_BACK]), 45, BarItem[LEFT_BACK]);
+    DrawBottomBarInfo(READ_ONLY_PARAM);
+    u8g2_SendBuffer(&u8g); 
+}
+
 
 void DrawChangeValueLoop(uint8_t BoxPos , uint8_t BoxValues[], char *Title)
 {

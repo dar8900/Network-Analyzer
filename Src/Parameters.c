@@ -24,8 +24,9 @@ enum
 
 PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
 {
-    {"Abilitare misura"  , CONFIRM_TYPE    ,  &GeneralParams.EnableMeasure},
-    {"ADC Offset"        , INT_VALUE_TYPE  ,  &GeneralParams.ADCOffset    },
+    {"Abilitare misura"  , CONFIRM_TYPE    ,  &GeneralParams.EnableMeasure         },
+    {"ADC Offset"        , INT_VALUE_TYPE  ,  &GeneralParams.ADCOffset             },
+    {"Scritture in memoria", READ_ONLY_TYPE,  &EepromSavedValue.NumeroScritture    },
 };
 
 PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM] = 

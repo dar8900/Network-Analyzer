@@ -64,7 +64,8 @@ void CheckOperation()
 void TaskOled(void const * argument)
 {
     OledInit();
-    
+    ClearScreen();
+    osDelay(500);
     DrawStartLogo(Initial_Logo);
     osDelay(3000);
     
