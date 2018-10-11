@@ -335,7 +335,7 @@ bool ParameterSetup()
                 *(uint16_t*)ParametersMenu[ParamItem].ParamValue = ChangeValue(*(uint16_t*)ParametersMenu[ParamItem].ParamValue, ParamItem);
                 break;
               case READ_ONLY_TYPE:
-                while(LastButtonPressed != BUTTON_DOWN_LEFT)
+                while(LastButtonPressed != BUTTON_LEFT)
                 {
                     ViewReadOnlyParam(*(uint32_t*)ParametersMenu[ParamItem].ParamValue);
                     osDelay(WHILE_LOOP_DELAY);

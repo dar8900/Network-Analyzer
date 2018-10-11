@@ -115,7 +115,7 @@ void TaskMeasure(void const * argument)
 {
     uint8_t NumberOfCurrentSampling = 0;
     uint32_t NumberOfEnergySampling = 0; 
-    GeneralParams.MeasureVoltage = VOLTAGE_VALUE_DFLT;
+//    GeneralParams.MeasureVoltage = VOLTAGE_VALUE_DFLT;
         
 #ifdef SIM_SIN_WAVE    
     FillTestArray();

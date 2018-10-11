@@ -27,7 +27,7 @@ PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] =
     {"Abilitare misura"  , CONFIRM_TYPE    ,  &GeneralParams.EnableMeasure         },
     {"Tensione di misura", INT_VALUE_TYPE  ,  &GeneralParams.MeasureVoltage        },
     {"ADC Offset"        , INT_VALUE_TYPE  ,  &GeneralParams.ADCOffset             },
-    {"Scritture in memoria", READ_ONLY_TYPE,  &EepromSavedValue.NumeroScritture    },
+    {"Scritture in memoria", READ_ONLY_TYPE,  &EepromSavedValue[NUMBER_OF_WRITES_ADDR]    },
 };
 
 PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM] = 
