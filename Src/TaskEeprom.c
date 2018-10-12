@@ -7,9 +7,11 @@
 #ifdef ENABLE_EEPROM
 
 #define MAX_DIM_EEPROM_ARRAY    (_EEPROM_FLASH_PAGE_SIZE/4)
+#define BLANK_VALUE             0xFFFFFFFF
 
 extern FL_SCALE TabReScale[MAX_UNIT_FACTOR];
-
+extern TIME_VAR GlobalTime;
+extern DATE_VAR GlobalDate;
 
 EEPROM_DATA EepromSavedValue[MAX_DIM_EEPROM_ARRAY];
 
@@ -77,27 +79,39 @@ static void EraseEeprom()
     return;
 }
 
+
+static bool IsEepromClear()
+{
+    for(uint16_t i = 0; i < MAX_DIM_EEPROM_ARRAY; i++)
+    {
+        if(EepromSavedValue[i] != BLANK_VALUE)
+            return false;
+    }          
+    return true;
+}
+
+
+
 //##########################################################################################################
 
 //                                      NUMERO SCRITTURE       
 
 //##########################################################################################################
 
-static void WriteNumbOfWrites()
+static void WriteNumbOfWrites(uint8_t Numb)
 {
-    uint32_t OldValue = 0;
-    
-    if(EepFlag.SaveCounter)
-    {
-        EE_SingleRead(NUMBER_OF_WRITES_ADDR, &OldValue);
-        if(EepromSavedValue[NUMBER_OF_WRITES_ADDR] != OldValue)
-        {
-            EepromSavedValue[NUMBER_OF_WRITES_ADDR]++;
-            TransferValuesToMem(EepromSavedValue[NUMBER_OF_WRITES_ADDR]);
-        }
-        EepFlag.SaveCounter = false;
-    }
+    EepromSavedValue[NUMBER_OF_WRITES_ADDR] += Numb;
     return;
+}
+
+static void ReadNumbOfWrites()
+{
+    EE_SingleRead(NUMBER_OF_WRITES_ADDR, &EepromSavedValue[NUMBER_OF_WRITES_ADDR]);
+    if(EepromSavedValue[NUMBER_OF_WRITES_ADDR] == BLANK_VALUE)
+    {
+        EepromSavedValue[NUMBER_OF_WRITES_ADDR] = 0;
+        TransferValuesToMem(EepromSavedValue);
+    }   
 }
 
 //##########################################################################################################
@@ -114,24 +128,35 @@ static void WriteParameters()
         EepromSavedValue[ENABLE_MEASURE_ADDR] = (uint32_t)GeneralParams.EnableMeasure;
         EepromSavedValue[ADC_OFFSET_ADDR] = (uint32_t)GeneralParams.ADCOffset;
         EepromSavedValue[VOLTAGE_MEASURE_ADDR] = (uint32_t)GeneralParams.MeasureVoltage;
+        EepromSavedValue[LOG_ENERGY_ADDR] = (uint32_t)GeneralParams.LogEnergyPeriod;
+        
         EE_SingleRead(ENABLE_MEASURE_ADDR, &OldValue);
         if(OldValue != EepromSavedValue[ENABLE_MEASURE_ADDR])
-        {           
+        {    
+            WriteNumbOfWrites(1);
             TransferValuesToMem(EepromSavedValue);
         }
         
         EE_SingleRead(ADC_OFFSET_ADDR, &OldValue);
         if(OldValue != EepromSavedValue[ADC_OFFSET_ADDR])
-        {            
+        {     
+            WriteNumbOfWrites(1);
             TransferValuesToMem(EepromSavedValue);
         }
         
         EE_SingleRead(VOLTAGE_MEASURE_ADDR, &OldValue);
         if(OldValue != EepromSavedValue[VOLTAGE_MEASURE_ADDR])
-        {            
+        {       
+            WriteNumbOfWrites(1);
             TransferValuesToMem(EepromSavedValue);
         }
 
+        EE_SingleRead(LOG_ENERGY_ADDR, &OldValue);
+        if(OldValue != EepromSavedValue[LOG_ENERGY_ADDR])
+        {       
+            WriteNumbOfWrites(1);
+            TransferValuesToMem(EepromSavedValue);
+        }
 
         EepFlag.SaveParameters = false;
     
@@ -152,6 +177,8 @@ static void ReadParameters(uint8_t ParamItem)
       case ADC_OFFSET:
         GeneralParams.ADCOffset = EepromSavedValue[ADC_OFFSET_ADDR];
         break;
+      case LOG_ENERGY_PERIOD:
+        GeneralParams.LogEnergyPeriod = EepromSavedValue[LOG_ENERGY_ADDR];
       default:
         break;
     
@@ -207,6 +234,7 @@ static void WriteThr()
             EepromSavedValue[AddrEep] = UnderThresholdChar[AddrEep - SOGLIE_ALLARMI_IU_ADDR];
         }
         EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
+        WriteNumbOfWrites(1);
         TransferValuesToMem(EepromSavedValue);
         osDelay(10);
         EepFlag.SaveThresholds[CURRENT_THR_FLAG] = false;  
@@ -226,6 +254,7 @@ static void WriteThr()
             EepromSavedValue[AddrEep] = UnderThresholdChar[AddrEep - SOGLIE_ALLARMI_PU_ADDR];
         }
         EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
+        WriteNumbOfWrites(1);
         TransferValuesToMem(EepromSavedValue);
         osDelay(10);
         EepFlag.SaveThresholds[POWER_THR_FLAG] = false;  
@@ -244,6 +273,7 @@ static void WriteThr()
             EepromSavedValue[AddrEep] = UnderThresholdChar[AddrEep - SOGLIE_ALLARMI_EU_ADDR];
         }
         EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
+        WriteNumbOfWrites(1);
         TransferValuesToMem(EepromSavedValue);
         osDelay(10);
         EepFlag.SaveThresholds[ENERGY_THR_FLAG] = false;  
@@ -360,11 +390,11 @@ static void ReadEnergyThr()
 
 //##########################################################################################################
 
-//                                      ENERGIA        
+//                                      VALORI FLOAT GENERALI        
 
 //##########################################################################################################
 
-static void EnergyToChar(float Energy, char EnergyChar[], uint8_t *FactorOver)
+static void EnergyToChar(float Energy, char EnergyChar[], uint8_t *Factor)
 {
     char TempChars[9];
     uint8_t FactorIndex = 0;
@@ -373,7 +403,7 @@ static void EnergyToChar(float Energy, char EnergyChar[], uint8_t *FactorOver)
     Energy *= TabReScale[FactorIndex].ScaleFactor;
     snprintf(TempChars, 9, "%08.3f", Energy);
     CopyCharArray(TempChars, EnergyChar);
-    *FactorOver = TabReScale[FactorIndex].Unit;
+    *Factor = FactorIndex;
     
     return;
 }
@@ -386,12 +416,13 @@ static void WriteEnergy()
     if(EepFlag.SaveEnergy)
     {   
         EnergyToChar(GeneralMeasures.MeanEnergy, EnergyToStr, &Factor);
-        for(AddrEep = ENERGIA_ADDR; AddrEep < (STR_SIZE - 1); AddrEep++)
+        for(AddrEep = ENERGIA_ADDR; AddrEep < (ENERGIA_ADDR + STR_SIZE - 1); AddrEep++)
         {
             EepromSavedValue[AddrEep] = EnergyToStr[AddrEep - ENERGIA_ADDR];
         }
         EepromSavedValue[AddrEep] = (uint32_t)Factor;
-        TransferValuesToMem(ENERGIA_ADDR, STR_SIZE, EepromSavedValue);
+        WriteNumbOfWrites(1);
+        TransferValuesToMem(EepromSavedValue);
         EepFlag.SaveEnergy = false;
     }
 }
@@ -403,7 +434,7 @@ static void ReadEnergy()
     char StrToEnergy[8];
     char CopyStr[8];
     uint8_t FactorScale = 0;
-    for(Addr = ENERGIA_ADDR; Addr < (STR_SIZE - 1); Addr++)
+    for(Addr = ENERGIA_ADDR; Addr < (ENERGIA_ADDR + STR_SIZE - 1); Addr++)
     {
         StrToEnergy[Addr - ENERGIA_ADDR] = (char)EepromSavedValue[Addr];
     }
@@ -414,7 +445,52 @@ static void ReadEnergy()
     GeneralMeasures.MeanEnergy = Value;
 }
 
+//##########################################################################################################
 
+//                                     VALORI A DFLT O IN RAM
+//##########################################################################################################
+
+static void TranferToGlobalVars()
+{
+    for(uint8_t i = 0; i < MAX_PARAMETER_ITEM; i++)
+    {
+        ReadParameters(i);
+    }
+    ReadCurrentThr();
+    ReadPowerThr();
+    ReadEnergyThr();
+    ReadEnergy();
+    ReadNumbOfWrites();
+}
+
+static void CheckEepromAndTranfer()
+{
+    if(IsEepromClear())
+    {  
+        GeneralMeasures.MeanEnergy = 0.0;
+        GeneralParams.EnableMeasure = false;
+        GeneralParams.ADCOffset = 2048;
+        GeneralParams.MeasureVoltage = 220;
+        GeneralParams.LogEnergyPeriod = 15;
+        AlarmsParameters[CURRENT_ALARM].OverThreshold = 1.0;
+        AlarmsParameters[CURRENT_ALARM].UnderThreshold = 0.0;
+        AlarmsParameters[POWER_ALARM].OverThreshold = 1.0;
+        AlarmsParameters[POWER_ALARM].UnderThreshold = 0.0;
+        AlarmsParameters[ENERGY_ALARM].OverThreshold = 1.0;
+        AlarmsParameters[ENERGY_ALARM].UnderThreshold = 0.0;
+        
+        EepFlag.SaveParameters = true;
+        EepFlag.SaveThresholds[0] = true;
+        EepFlag.SaveThresholds[1] = true;
+        EepFlag.SaveThresholds[2] = true;
+        EepFlag.SaveEnergy = true;
+    }
+    else
+    {
+        TranferToGlobalVars();
+    } 
+}
+//##########################################################################################################
 
 
 //##########################################################################################################
@@ -426,19 +502,13 @@ static void ReadEnergy()
 
 
 
-
 /* TaskEeprom function */
 void TaskEeprom(void const * argument)
 {
+    bool NotResaveEnergy = false;
     TranferMemToRam(EepromSavedValue);
-    for(uint8_t i = 0; i < MAX_PARAMETER_ITEM; i++)
-    {
-        ReadParameters(i);
-    }
-    ReadCurrentThr();
-    ReadPowerThr();
-//    ReadEnergyThr();
-//    ReadEnergy();
+    CheckEepromAndTranfer();
+
     
     /* Infinite loop */
     for(;;)
@@ -447,7 +517,14 @@ void TaskEeprom(void const * argument)
         WriteParameters();
         WriteThr();
         WriteEnergy();
-        
+        if(!(GlobalTime.minutes % GeneralParams.LogEnergyPeriod) && GlobalDate.year != 0 && !NotResaveEnergy)
+        {
+            NotResaveEnergy = true;
+            EepFlag.SaveEnergy = true;  
+        } 
+        else if((GlobalTime.minutes % GeneralParams.LogEnergyPeriod) && GlobalDate.year != 0 && NotResaveEnergy)
+            NotResaveEnergy = false;
+
         osDelay(100);
     }
     

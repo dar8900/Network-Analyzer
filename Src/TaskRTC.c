@@ -1,6 +1,8 @@
 #include "main.h"
 #include "SysTime.h"
 #include "TaskRTC.h"
+#include "TaskEeprom.h"
+#include "Parameters.h"
 
 #ifdef ENABLE_RTC
 

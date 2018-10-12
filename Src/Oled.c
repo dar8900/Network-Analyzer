@@ -198,17 +198,17 @@ void MessageScreen(char *Message)
 void PopUp(char *PopupTitle, char *Body1, char *Body2, char *Body3, char *Body4)
 {
     u8g2_ClearBuffer(&u8g);
-    u8g2_DrawFrame(&u8g, 0 ,0, SCREEN_MAX_WIDTH, SCREEN_MAX_HIGH);
-    u8g2_DrawFrame(&u8g, 1 ,1, SCREEN_MAX_WIDTH - 1, SCREEN_MAX_HIGH - 1);
+    u8g2_DrawFrame(&u8g, 0 ,0, SCREEN_MAX_WIDTH - 1, SCREEN_MAX_HIGH - 1);
+    u8g2_DrawFrame(&u8g, 1 ,1, SCREEN_MAX_WIDTH - 2, SCREEN_MAX_HIGH - 2);
     
     u8g2_SetFont(&u8g, u8g2_font_7x13B_tf);
     u8g2_DrawStr(&u8g, X_CENTER_POS(PopupTitle), GENERAL_STR_Y_POS(3), PopupTitle);
     
     u8g2_SetFont(&u8g, u8g2_font_6x12_tf);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body1), GENERAL_STR_Y_POS(16) , Body1);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body2), GENERAL_STR_Y_POS(29) , Body2);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body3), GENERAL_STR_Y_POS(42) , Body3);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(Body4), GENERAL_STR_Y_POS(55) , Body4);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body1), GENERAL_STR_Y_POS(20) , Body1);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body2), GENERAL_STR_Y_POS(39) , Body2);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body3), GENERAL_STR_Y_POS(52) , Body3);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(Body4), GENERAL_STR_Y_POS(65) , Body4);
     u8g2_SendBuffer(&u8g);
 }
 
@@ -227,21 +227,25 @@ void DrawMainScreenLoop()
 
 void DrawTopInfoBar()
 {
-    uint8_t FontH = 0;
-    char Time[9];
+    char Time[6];
     char Date[9];
-    snprintf(Time, 7, "%02d:%02d", GlobalTime.hours, GlobalTime.minutes);
+    snprintf(Time, 6, "%02d:%02d", GlobalTime.hours, GlobalTime.minutes);
     snprintf(Date, 9, "%02d/%02d/%02d", GlobalDate.day, GlobalDate.month, GlobalDate.year);
     u8g2_SetFontMode(&u8g, 1);
     u8g2_SetFont(&u8g, u8g_font_4x6);
-    FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
     u8g2_SetDrawColor(&u8g, 2);
     u8g2_DrawStr(&u8g, X_LEFT_POS, TOP_INFO_BAR_Y_POS, Time);  
     u8g2_DrawStr(&u8g, X_RIGHT_POS(Date), TOP_INFO_BAR_Y_POS, Date);
+    
+    // Icona allarme attivo e controllato
     if(AlarmsActive())
     {
         u8g2_DrawXBMP(&u8g, ALARM_ICON_SML_X_POS, 0, 12, 6, AlarmIconSmall);
     }
+    
+    // Icona batteria (ancora da gestire)
+    u8g2_DrawXBMP(&u8g, BATTERY_ICON_SML_X_POS, 0, 19, 6, BatteriaMeta);
+    
 }
 
 

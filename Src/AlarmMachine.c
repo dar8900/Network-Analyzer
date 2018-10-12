@@ -23,9 +23,9 @@ char *AlarmList[MAX_ALARM_STR] =
 
 ALARM_PARAMS AlarmsParameters[MAX_ALARM_NUMBER] = 
 {
-    {&GeneralMeasures.MeanCurrentRMS, 10.0            , -1.0           },
-    {&GeneralMeasures.Power         , 4000.0          , -1.0           },
-    {&GeneralMeasures.MeanEnergy    , 200000.0        , -1.0           },
+    {&GeneralMeasures.MeanCurrentRMS, 1.0        , 0.0           },
+    {&GeneralMeasures.Power         , 1.0        , 0.0           },
+    {&GeneralMeasures.MeanEnergy    , 1.0        , 0.0           },
     
 };
 ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];

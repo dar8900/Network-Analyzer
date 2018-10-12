@@ -138,9 +138,9 @@ static void FormatMeasure(uint8_t Page)
 
 static void DrawGraphicSkeleton()
 {
-    u8g2_DrawFrame(&u8g, 0, 0 , 128, 64);
-    u8g2_DrawLine(&u8g, 64, 0, 64, 64);
-    u8g2_DrawLine(&u8g, 0, 32, 128, 32);
+    u8g2_DrawFrame(&u8g, 0, 0 , SCREEN_MAX_WIDTH, SCREEN_MAX_HIGH);
+    u8g2_DrawLine(&u8g, SCREEN_MAX_HIGH, 0, SCREEN_MAX_HIGH, SCREEN_MAX_HIGH);
+    u8g2_DrawLine(&u8g, 0, (SCREEN_MAX_HIGH/2), SCREEN_MAX_WIDTH, (SCREEN_MAX_HIGH/2));
     return;
 }
 

@@ -22,7 +22,7 @@ typedef enum
     SOGLIE_ALLARMI_EO_ADDR =  SOGLIE_ALLARMI_PU_ADDR + STR_SIZE,
     SOGLIE_ALLARMI_EU_ADDR =  SOGLIE_ALLARMI_EO_ADDR + STR_SIZE,
     ENERGIA_ADDR           =  SOGLIE_ALLARMI_EU_ADDR + STR_SIZE,
-    NONE1,
+    LOG_ENERGY_ADDR = 66,
     NONE2,
     NONE3,
     NONE4,
@@ -238,7 +238,6 @@ typedef struct
     bool SaveParameters;
     bool SaveThresholds[3];
     bool SaveEnergy;
-    bool SaveCounter;
     bool EraseAll;
 }FLAG_EEPROM;
 

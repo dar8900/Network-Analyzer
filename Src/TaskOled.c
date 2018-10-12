@@ -54,6 +54,11 @@ void CheckOperation()
             AlarmsControls[AlarmIndex].Cheked = true;
             AlarmEnergyLed = NO_CONF;
         }
+        else
+        {           
+            AlarmEnergyLed = NO_CONF;            
+        }           
+            
     }
     
     

@@ -8,6 +8,7 @@ typedef struct
     bool EnableMeasure;
     uint16_t ADCOffset;
     uint16_t MeasureVoltage;
+    uint8_t  LogEnergyPeriod;
 }PARAMETERS_S;
 
 typedef enum
@@ -30,6 +31,7 @@ typedef enum
 {
     MEASURE_ENABLE = 0,
     MEASURE_VOLTAGE,
+    LOG_ENERGY_PERIOD,
     ADC_OFFSET,
     NUMBER_MEMORY_WRITES,
     MAX_PARAMETER_ITEM

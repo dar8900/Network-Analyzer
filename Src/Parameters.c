@@ -25,7 +25,8 @@ enum
 PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
 {
     {"Abilitare misura"  , CONFIRM_TYPE    ,  &GeneralParams.EnableMeasure         },
-    {"Tensione di misura", INT_VALUE_TYPE  ,  &GeneralParams.MeasureVoltage        },
+    {"Tensione misura (V)", INT_VALUE_TYPE  ,  &GeneralParams.MeasureVoltage        },
+    {"Periodo log en.(s)", INT_VALUE_TYPE  , &GeneralParams.LogEnergyPeriod       },
     {"ADC Offset"        , INT_VALUE_TYPE  ,  &GeneralParams.ADCOffset             },
     {"Scritture in memoria", READ_ONLY_TYPE,  &EepromSavedValue[NUMBER_OF_WRITES_ADDR]    },
 };
@@ -228,6 +229,15 @@ uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
     if(ChangedValue)
     {
         NumbersOperation(&FinalValue, ValueArray, COMPOSE);
+        if(ParamItem == LOG_ENERGY_PERIOD)
+        {
+            FinalValue /= 60;
+            if(FinalValue > 59 || FinalValue < 1)
+            {  
+                MessageScreen("Valore non permesso");
+                FinalValue = 59;
+            }
+        }
     }
     return FinalValue;
 }
@@ -331,7 +341,20 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
     }
     if(!ExitFromAll)
     {
-        //Salva soglie
+        switch(AlarmItem)
+        { 
+          case CURRENT_ALARM:
+            EepFlag.SaveThresholds[0] = true;
+            break;
+          case POWER_ALARM:
+            EepFlag.SaveThresholds[1] = true;
+            break;
+          case ENERGY_ALARM:
+            EepFlag.SaveThresholds[2] = true;
+            break;
+          default:
+            break;
+        }
     }
     
 }

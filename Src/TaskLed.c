@@ -151,7 +151,7 @@ static void GesAlarmEnergyLed()
     {
       case ALARM_RUNNING:
         TurnOnLed(AL_EN_LED);
-        osDelay(200);
+        osDelay(20);
         TurnOffLed(AL_EN_LED);
         break;
       case ENERGY_IMPULSE:
@@ -160,6 +160,7 @@ static void GesAlarmEnergyLed()
         TurnOffLed(AL_EN_LED);
         break;
       case NO_CONF:
+        TurnOffLed(AL_EN_LED);
         break;
       default:
         break;

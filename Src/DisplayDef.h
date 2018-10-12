@@ -1,23 +1,25 @@
 #ifndef DISPLAY_DEF_H
 #define DISPLAY_DEF_H
 
-#define SCREEN_MAX_WIDTH    u8g2_GetDisplayWidth(&u8g)
-#define SCREEN_MAX_HIGH     u8g2_GetDisplayHeight(&u8g)
+#define SCREEN_MAX_WIDTH    128
+#define SCREEN_MAX_HIGH      64
 
 
-#define START_LOGO_LEN        128
-#define START_LOGO_HIGH       56
-#define START_LOGO_X_POS      ((128 - START_LOGO_LEN)/2)
-#define START_LOGO_Y_POS      (64 - START_LOGO_HIGH)
+#define START_LOGO_LEN        SCREEN_MAX_WIDTH
+#define START_LOGO_HIGH       (SCREEN_MAX_HIGH - 8)
+#define START_LOGO_X_POS      ((SCREEN_MAX_WIDTH - START_LOGO_LEN)/2)
+#define START_LOGO_Y_POS      (SCREEN_MAX_HIGH - START_LOGO_HIGH)
 
-#define ALARM_ICON_SML_X_POS  58
+#define ALARM_ICON_SML_X_POS     22
+
+#define BATTERY_ICON_SML_X_POS   75
 
 #define POPUP_DELAY  1500
 
 #define GENERAL_STR_Y_POS(Pos)  (Pos + (u8g2_GetAscent(&u8g)))    
 
 #define TOP_INFO_BAR_Y_POS      (0 + (u8g2_GetAscent(&u8g)))
-#define BOTTOM_INFO_BAR_Y_POS   (64 - (u8g2_GetAscent(&u8g)) + 4)
+#define BOTTOM_INFO_BAR_Y_POS   (SCREEN_MAX_HIGH - (u8g2_GetAscent(&u8g)) + 4)
 #define UP_STR_X_POS            44
 #define DOWN_STR_X_POS          72
 #define OK_STR_X_POS           118

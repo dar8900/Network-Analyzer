@@ -35,7 +35,7 @@ bool EE_Format(void)
 
 
 
-bool EE_ReadInt(uint16_t VirtualAddress, uint32_t* Data)
+bool EE_SingleRead(uint16_t VirtualAddress, uint32_t* Data)
 {
 	if(VirtualAddress >=	(_EEPROM_FLASH_PAGE_SIZE/4))
 		return false;
@@ -44,7 +44,7 @@ bool EE_ReadInt(uint16_t VirtualAddress, uint32_t* Data)
 }
 
 
-bool EE_MultiReadsInt(uint16_t StartVirtualAddress,uint16_t HowMuchToRead, uint32_t* Data)
+bool EE_MultiRead(uint16_t StartVirtualAddress,uint16_t HowMuchToRead, uint32_t* Data)
 {
 	if((StartVirtualAddress+HowMuchToRead) >	(_EEPROM_FLASH_PAGE_SIZE/4))
 		return false;
@@ -116,7 +116,7 @@ bool EE_Write(uint32_t Data[])
 	HAL_FLASH_Unlock();
 	for(uint16_t i = 0 ; i < (_EEPROM_FLASH_PAGE_SIZE/4); i++)
 	{
-        EE_ReadInt(i, &OldValue);
+        EE_SingleRead(i, &OldValue);
         if(Data[i] != OldValue)
         {
             if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD,(i*4)+_EEPROM_FLASH_PAGE_ADDRESS,(uint64_t)Data[i])!=HAL_OK)
