@@ -60,6 +60,7 @@ static void TransferValuesToMem(uint16_t InitAddress, uint8_t NumbElem, uint32_t
     for(Addr = InitAddress; Addr < (InitAddress + NumbElem); Addr++)
     {
         EE_WriteInt(Addr, ValueToTransfer[Addr]);
+        osDelay(5);
     }
 }
 
@@ -76,12 +77,8 @@ static void EraseEeprom()
 {
     if(EepFlag.EraseAll)
     {
-//        ClearArray(EepromSavedValue, MAX_DIM_EEPROM_ARRAY);  
-//        for(uint16_t i = 0; i < MAX_DIM_EEPROM_ARRAY; i++) 
-//        {
-//            EE_WriteInt(EEPROM_VIRTUAL_ADDR_BEGIN, EepromSavedValue[i]);
-//        }
         EE_Format();
+        TranferMemToRam(EepromSavedValue);
         EepFlag.EraseAll = false;
     }
     return;
@@ -218,6 +215,7 @@ static void WriteThr()
         }
         EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
         TransferValuesToMem(SOGLIE_ALLARMI_IO_ADDR, (STR_SIZE * 2), EepromSavedValue);
+        osDelay(10);
         EepFlag.SaveThresholds[CURRENT_THR_FLAG] = false;  
     }
     
@@ -235,7 +233,8 @@ static void WriteThr()
             EepromSavedValue[AddrEep] = UnderThresholdChar[AddrEep - SOGLIE_ALLARMI_PU_ADDR];
         }
         EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
-        TransferValuesToMem(SOGLIE_ALLARMI_PO_ADDR, (STR_SIZE * 2), EepromSavedValue);   
+        TransferValuesToMem(SOGLIE_ALLARMI_PO_ADDR, (STR_SIZE * 2), EepromSavedValue);
+        osDelay(10);
         EepFlag.SaveThresholds[POWER_THR_FLAG] = false;  
     }
     if(EepFlag.SaveThresholds[ENERGY_THR_FLAG])
@@ -252,7 +251,8 @@ static void WriteThr()
             EepromSavedValue[AddrEep] = UnderThresholdChar[AddrEep - SOGLIE_ALLARMI_EU_ADDR];
         }
         EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
-        TransferValuesToMem(SOGLIE_ALLARMI_EO_ADDR, (STR_SIZE * 2), EepromSavedValue);     
+        TransferValuesToMem(SOGLIE_ALLARMI_EO_ADDR, (STR_SIZE * 2), EepromSavedValue);
+        osDelay(10);
         EepFlag.SaveThresholds[ENERGY_THR_FLAG] = false;  
     }
 }
@@ -262,14 +262,17 @@ static void ReWriteStr(char OldStr[], char NewStr[], uint8_t Size)
     uint8_t i = 0, j = 0;
     for(i = 0; i < Size; i++)
     {
-        if(OldStr[i] != '0')
+        if(OldStr[i] > '0' || (OldStr[i] == '0' && OldStr[i + 1] == '.'))
         {
             break;
         }
     }
-    for(j = 0; j < Size - i; j++)
+    for(j = 0; j < Size; j++)
     {
-        NewStr[j] = OldStr[i + j];
+        if((i + j) < Size )
+            NewStr[j] = OldStr[i + j];
+        else
+            NewStr[j] = '0';
     }
 }
 
@@ -289,7 +292,7 @@ static void ReadCurrentThr()
     }
     FactorScale = EepromSavedValue[Addr];    
     ReWriteStr(OverThresholdChar, CopyStr, 8);
-    Value = strtof(OverThresholdChar, NULL);
+    Value = strtof(CopyStr, NULL);
     Value /= TabReScale[FactorScale].ScaleFactor;
     AlarmsParameters[CURRENT_ALARM].OverThreshold = Value;
     
@@ -298,7 +301,8 @@ static void ReadCurrentThr()
         UnderThresholdChar[Addr - SOGLIE_ALLARMI_IU_ADDR] = (char)EepromSavedValue[Addr];
     }
     FactorScale = EepromSavedValue[Addr];    
-    Value = strtof(UnderThresholdChar, NULL);
+    ReWriteStr(UnderThresholdChar, CopyStr, 8);
+    Value = strtof(CopyStr, NULL);
     Value /= TabReScale[FactorScale].ScaleFactor;
     AlarmsParameters[CURRENT_ALARM].UnderThreshold = Value;
 }
@@ -308,22 +312,25 @@ static void ReadPowerThr()
     uint8_t Addr = 0;
     float Value = 0.0;
     char OverThresholdChar[8], UnderThresholdChar[8];
+    char CopyStr[8];
     uint8_t FactorScale = 0;
-    for(Addr = SOGLIE_ALLARMI_PO_ADDR; Addr < (STR_SIZE - 1); Addr++)
+    for(Addr = SOGLIE_ALLARMI_PO_ADDR; Addr < (SOGLIE_ALLARMI_PO_ADDR + STR_SIZE - 1); Addr++)
     {
         OverThresholdChar[Addr - SOGLIE_ALLARMI_PO_ADDR] = (char)EepromSavedValue[Addr];
     }
-    FactorScale = EepromSavedValue[Addr];    
-    Value = strtof(OverThresholdChar, NULL);
+    FactorScale = EepromSavedValue[Addr]; 
+    ReWriteStr(OverThresholdChar, CopyStr, 8);
+    Value = strtof(CopyStr, NULL);
     Value /= TabReScale[FactorScale].ScaleFactor;
     AlarmsParameters[POWER_ALARM].OverThreshold = Value;
     
-    for(Addr = SOGLIE_ALLARMI_PU_ADDR; Addr < (STR_SIZE - 1); Addr++)
+    for(Addr = SOGLIE_ALLARMI_PU_ADDR; Addr < (SOGLIE_ALLARMI_PU_ADDR + STR_SIZE - 1); Addr++)
     {
         UnderThresholdChar[Addr - SOGLIE_ALLARMI_PU_ADDR] = (char)EepromSavedValue[Addr];
     }
     FactorScale = EepromSavedValue[Addr];    
-    Value = strtof(UnderThresholdChar, NULL);
+    ReWriteStr(UnderThresholdChar, CopyStr, 8);
+    Value = strtof(CopyStr, NULL);
     Value /= TabReScale[FactorScale].ScaleFactor;
     AlarmsParameters[POWER_ALARM].UnderThreshold = Value;
 
@@ -334,22 +341,25 @@ static void ReadEnergyThr()
     uint8_t Addr = 0;
     float Value = 0.0;
     char OverThresholdChar[8], UnderThresholdChar[8];
+    char CopyStr[8];
     uint8_t FactorScale = 0;
-    for(Addr = SOGLIE_ALLARMI_EO_ADDR; Addr < (STR_SIZE - 1); Addr++)
+    for(Addr = SOGLIE_ALLARMI_EO_ADDR; Addr < (SOGLIE_ALLARMI_EO_ADDR + STR_SIZE - 1); Addr++)
     {
         OverThresholdChar[Addr - SOGLIE_ALLARMI_EO_ADDR] = (char)EepromSavedValue[Addr];
     }
     FactorScale = EepromSavedValue[Addr];    
-    Value = strtof(OverThresholdChar, NULL);
+    ReWriteStr(OverThresholdChar, CopyStr, 8);
+    Value = strtof(CopyStr, NULL);
     Value /= TabReScale[FactorScale].ScaleFactor;
     AlarmsParameters[ENERGY_ALARM].OverThreshold = Value;
     
-    for(Addr = SOGLIE_ALLARMI_EU_ADDR; Addr < (STR_SIZE - 1); Addr++)
+    for(Addr = SOGLIE_ALLARMI_EU_ADDR; Addr < (SOGLIE_ALLARMI_EU_ADDR + STR_SIZE - 1); Addr++)
     {
         UnderThresholdChar[Addr - SOGLIE_ALLARMI_EU_ADDR] = (char)EepromSavedValue[Addr];
     }
     FactorScale = EepromSavedValue[Addr];    
-    Value = strtof(UnderThresholdChar, NULL);
+    ReWriteStr(UnderThresholdChar, CopyStr, 8);
+    Value = strtof(CopyStr, NULL);
     Value /= TabReScale[FactorScale].ScaleFactor;
     AlarmsParameters[ENERGY_ALARM].UnderThreshold = Value;
 
@@ -380,26 +390,32 @@ static void WriteEnergy()
     uint16_t AddrEep = 0;
     char EnergyToStr[9];
     uint8_t Factor = 0;
-    EnergyToChar(GeneralMeasures.MeanEnergy, EnergyToStr, &Factor);
-    for(AddrEep = ENERGIA_ADDR; AddrEep < (STR_SIZE - 1); AddrEep++)
-    {
-        EepromSavedValue[AddrEep] = EnergyToStr[AddrEep - ENERGIA_ADDR];
+    if(EepFlag.SaveEnergy)
+    {   
+        EnergyToChar(GeneralMeasures.MeanEnergy, EnergyToStr, &Factor);
+        for(AddrEep = ENERGIA_ADDR; AddrEep < (STR_SIZE - 1); AddrEep++)
+        {
+            EepromSavedValue[AddrEep] = EnergyToStr[AddrEep - ENERGIA_ADDR];
+        }
+        EepromSavedValue[AddrEep] = (uint32_t)Factor;
+        EepFlag.SaveEnergy = false;
     }
-    EepromSavedValue[AddrEep] = (uint32_t)Factor;
 }
 
 static void ReadEnergy()
 {
     uint8_t Addr = 0;
     float Value = 0.0;
-    char StrToEnergy[8];;
+    char StrToEnergy[8];
+    char CopyStr[8];
     uint8_t FactorScale = 0;
     for(Addr = ENERGIA_ADDR; Addr < (STR_SIZE - 1); Addr++)
     {
         StrToEnergy[Addr - ENERGIA_ADDR] = (char)EepromSavedValue[Addr];
     }
-    FactorScale = EepromSavedValue[Addr];    
-    Value = strtof(StrToEnergy, NULL);
+    FactorScale = EepromSavedValue[Addr];   
+    ReWriteStr(StrToEnergy, CopyStr, 8);
+    Value = strtof(CopyStr, NULL);
     Value /= TabReScale[FactorScale].ScaleFactor;
     GeneralMeasures.MeanEnergy = Value;
 }
@@ -426,6 +442,9 @@ void TaskEeprom(void const * argument)
         ReadParameters(i);
     }
     ReadCurrentThr();
+    ReadPowerThr();
+//    ReadEnergyThr();
+//    ReadEnergy();
     
     /* Infinite loop */
     for(;;)
@@ -433,8 +452,9 @@ void TaskEeprom(void const * argument)
         EraseEeprom();
         WriteParameters();
         WriteThr();
+        WriteEnergy();
         
-        osDelay(250);
+        osDelay(100);
     }
     
 }
