@@ -28,7 +28,7 @@
 #define TASK_OLED_HEAP         256
 #define TASK_LED_HEAP           64
 #define TASK_RTC_HEAP           64
-#define TASK_EEPROM_HEAP        64
+#define TASK_EEPROM_HEAP       128
 #define TASK_MEASURE_HEAP      128
 #define TASK_KEYBOARD_HEAP      64
 
@@ -115,7 +115,7 @@ static void CreateTask()
     
 #ifdef ENABLE_EEPROM
      /* definition and creation of Eeprom */
-    osThreadDef(Eeprom, TaskEeprom, osPriorityBelowNormal, 0, TASK_EEPROM_HEAP);
+    osThreadDef(Eeprom, TaskEeprom, osPriorityNormal, 0, TASK_EEPROM_HEAP);
     EepromHandle = osThreadCreate(osThread(Eeprom), NULL);
 #endif   
     return;

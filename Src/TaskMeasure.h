@@ -15,7 +15,7 @@
 #define VOLTAGE_VALUE_DFLT    220
 
 
-#define TOVOLT(Value)        (Value*(3.3/4096.0))
+#define TOVOLT(Value)            (Value*(3.3/4096.0))
 #define CURR_SENSOR_SENSITIVITY  185.0
 
 typedef struct

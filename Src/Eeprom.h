@@ -36,11 +36,9 @@
 
 //################################################################################################################
 bool	EE_Format(void);
-
-bool 	EE_ReadInt(uint16_t VirtualAddress, uint32_t* Data);
-bool 	EE_WriteInt(uint16_t VirtualAddress, uint32_t Data);
-bool	EE_MultiReadsInt(uint16_t StartVirtualAddress,uint16_t HowMuchToRead,uint32_t* Data);
-bool 	EE_MultiWritesInt(uint16_t StartVirtualAddress,uint16_t HowMuchToWrite,uint32_t* Data);
+bool 	EE_SingleRead(uint16_t VirtualAddress, uint32_t* Data);
+bool	EE_MultiRead(uint16_t StartVirtualAddress,uint16_t HowMuchToRead,uint32_t* Data);
+bool    EE_Write(uint32_t Data[]);
 //################################################################################################################
 
 #endif

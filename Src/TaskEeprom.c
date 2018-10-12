@@ -26,6 +26,7 @@ static void CopyCharArray(char OrigArray[], char DestArray[])
     return;
 }
 
+/*
 static void CopyValueToArray(uint32_t DestArray[], uint16_t Size, uint8_t Index, uint32_t ValueToCopy)
 {
     uint16_t Head = 0, Tail = Size - 1, Cnt = 0;   
@@ -44,6 +45,7 @@ static void CopyValueToArray(uint32_t DestArray[], uint16_t Size, uint8_t Index,
     }
     return;
 }
+*/
 
 static void ClearArray(uint32_t DestArray[], uint16_t Size)
 {
@@ -54,23 +56,14 @@ static void ClearArray(uint32_t DestArray[], uint16_t Size)
     return;
 }
 
-static void TransferValuesToMem(uint16_t InitAddress, uint8_t NumbElem, uint32_t ValueToTransfer[])
+static void TransferValuesToMem(uint32_t ValueToTransfer[])
 {
-    uint16_t Addr = 0;
-    for(Addr = InitAddress; Addr < (InitAddress + NumbElem); Addr++)
-    {
-        EE_WriteInt(Addr, ValueToTransfer[Addr]);
-        osDelay(5);
-    }
+    EE_Write(ValueToTransfer);
 }
 
 static void TranferMemToRam(uint32_t ValueToTransfer[])
 {
-    uint16_t Addr = 0;
-    for(Addr = EEPROM_VIRTUAL_ADDR_BEGIN; Addr < MAX_DIM_EEPROM_ARRAY; Addr++)
-    {
-        EE_ReadInt(Addr, &ValueToTransfer[Addr]);
-    }
+    EE_MultiRead(EEPROM_VIRTUAL_ADDR_BEGIN, MAX_DIM_EEPROM_ARRAY, ValueToTransfer);
 }
 
 static void EraseEeprom()
@@ -96,11 +89,11 @@ static void WriteNumbOfWrites()
     
     if(EepFlag.SaveCounter)
     {
-        EE_ReadInt(NUMBER_OF_WRITES_ADDR, &OldValue);
+        EE_SingleRead(NUMBER_OF_WRITES_ADDR, &OldValue);
         if(EepromSavedValue[NUMBER_OF_WRITES_ADDR] != OldValue)
         {
             EepromSavedValue[NUMBER_OF_WRITES_ADDR]++;
-            EE_WriteInt(NUMBER_OF_WRITES_ADDR, EepromSavedValue[NUMBER_OF_WRITES_ADDR]);
+            TransferValuesToMem(EepromSavedValue[NUMBER_OF_WRITES_ADDR]);
         }
         EepFlag.SaveCounter = false;
     }
@@ -121,22 +114,22 @@ static void WriteParameters()
         EepromSavedValue[ENABLE_MEASURE_ADDR] = (uint32_t)GeneralParams.EnableMeasure;
         EepromSavedValue[ADC_OFFSET_ADDR] = (uint32_t)GeneralParams.ADCOffset;
         EepromSavedValue[VOLTAGE_MEASURE_ADDR] = (uint32_t)GeneralParams.MeasureVoltage;
-        EE_ReadInt(ENABLE_MEASURE_ADDR, &OldValue);
+        EE_SingleRead(ENABLE_MEASURE_ADDR, &OldValue);
         if(OldValue != EepromSavedValue[ENABLE_MEASURE_ADDR])
         {           
-            EE_WriteInt(ENABLE_MEASURE_ADDR, EepromSavedValue[ENABLE_MEASURE_ADDR]);
+            TransferValuesToMem(EepromSavedValue);
         }
         
-        EE_ReadInt(ADC_OFFSET_ADDR, &OldValue);
+        EE_SingleRead(ADC_OFFSET_ADDR, &OldValue);
         if(OldValue != EepromSavedValue[ADC_OFFSET_ADDR])
         {            
-            EE_WriteInt(ADC_OFFSET_ADDR, EepromSavedValue[ADC_OFFSET_ADDR]);
+            TransferValuesToMem(EepromSavedValue);
         }
         
-        EE_ReadInt(VOLTAGE_MEASURE_ADDR, &OldValue);
+        EE_SingleRead(VOLTAGE_MEASURE_ADDR, &OldValue);
         if(OldValue != EepromSavedValue[VOLTAGE_MEASURE_ADDR])
         {            
-            EE_WriteInt(VOLTAGE_MEASURE_ADDR, EepromSavedValue[VOLTAGE_MEASURE_ADDR]);
+            TransferValuesToMem(EepromSavedValue);
         }
 
 
@@ -214,7 +207,7 @@ static void WriteThr()
             EepromSavedValue[AddrEep] = UnderThresholdChar[AddrEep - SOGLIE_ALLARMI_IU_ADDR];
         }
         EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
-        TransferValuesToMem(SOGLIE_ALLARMI_IO_ADDR, (STR_SIZE * 2), EepromSavedValue);
+        TransferValuesToMem(EepromSavedValue);
         osDelay(10);
         EepFlag.SaveThresholds[CURRENT_THR_FLAG] = false;  
     }
@@ -233,7 +226,7 @@ static void WriteThr()
             EepromSavedValue[AddrEep] = UnderThresholdChar[AddrEep - SOGLIE_ALLARMI_PU_ADDR];
         }
         EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
-        TransferValuesToMem(SOGLIE_ALLARMI_PO_ADDR, (STR_SIZE * 2), EepromSavedValue);
+        TransferValuesToMem(EepromSavedValue);
         osDelay(10);
         EepFlag.SaveThresholds[POWER_THR_FLAG] = false;  
     }
@@ -251,7 +244,7 @@ static void WriteThr()
             EepromSavedValue[AddrEep] = UnderThresholdChar[AddrEep - SOGLIE_ALLARMI_EU_ADDR];
         }
         EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
-        TransferValuesToMem(SOGLIE_ALLARMI_EO_ADDR, (STR_SIZE * 2), EepromSavedValue);
+        TransferValuesToMem(EepromSavedValue);
         osDelay(10);
         EepFlag.SaveThresholds[ENERGY_THR_FLAG] = false;  
     }
@@ -398,6 +391,7 @@ static void WriteEnergy()
             EepromSavedValue[AddrEep] = EnergyToStr[AddrEep - ENERGIA_ADDR];
         }
         EepromSavedValue[AddrEep] = (uint32_t)Factor;
+        TransferValuesToMem(ENERGIA_ADDR, STR_SIZE, EepromSavedValue);
         EepFlag.SaveEnergy = false;
     }
 }
