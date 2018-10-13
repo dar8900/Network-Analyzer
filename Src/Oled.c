@@ -44,6 +44,28 @@ typedef enum
     MAX_BOTTOM_BAR_ITEM    
 }BOTTOM_BAR_ITEMS;
 
+typedef enum
+{
+    BATTERIA_VUOTA = 0,
+    BATTERIA_1_4,
+    BATTERIA_META,
+    BATTERIA_3_4,
+    BATTERIA_PIENA,
+    BATTERIA_IN_CARICA,
+    MAX_BATTERY_ICONS
+}BATTERY_ICONS;
+
+const char *BatteryIcons[MAX_BATTERY_ICONS] = 
+{
+    BatteriaVuota,
+    BatteriaQuarto,
+    BatteriaMeta,
+    Batteria3_4,
+    BatteriaPiena,
+    BatteriaInCarica,
+};
+
+
 const char *BarItem[] = 
 {
     "Menu",
@@ -198,8 +220,7 @@ void MessageScreen(char *Message)
 void PopUp(char *PopupTitle, char *Body1, char *Body2, char *Body3, char *Body4)
 {
     u8g2_ClearBuffer(&u8g);
-    u8g2_DrawFrame(&u8g, 0 ,0, SCREEN_MAX_WIDTH - 1, SCREEN_MAX_HIGH - 1);
-    u8g2_DrawFrame(&u8g, 1 ,1, SCREEN_MAX_WIDTH - 2, SCREEN_MAX_HIGH - 2);
+
     
     u8g2_SetFont(&u8g, u8g2_font_7x13B_tf);
     u8g2_DrawStr(&u8g, X_CENTER_POS(PopupTitle), GENERAL_STR_Y_POS(3), PopupTitle);
@@ -209,6 +230,9 @@ void PopUp(char *PopupTitle, char *Body1, char *Body2, char *Body3, char *Body4)
     u8g2_DrawStr(&u8g, X_CENTER_POS(Body2), GENERAL_STR_Y_POS(39) , Body2);
     u8g2_DrawStr(&u8g, X_CENTER_POS(Body3), GENERAL_STR_Y_POS(52) , Body3);
     u8g2_DrawStr(&u8g, X_CENTER_POS(Body4), GENERAL_STR_Y_POS(65) , Body4);
+    
+//    u8g2_DrawFrame(&u8g, 0 ,0, 122, 62);
+//    u8g2_DrawFrame(&u8g, 1 ,1, 125, 61);
     u8g2_SendBuffer(&u8g);
 }
 
@@ -244,7 +268,7 @@ void DrawTopInfoBar()
     }
     
     // Icona batteria (ancora da gestire)
-    u8g2_DrawXBMP(&u8g, BATTERY_ICON_SML_X_POS, 0, 19, 6, BatteriaMeta);
+    u8g2_DrawXBMP(&u8g, BATTERY_ICON_SML_X_POS, 0, 19, 6, BatteryIcons[BATTERIA_IN_CARICA]);
     
 }
 

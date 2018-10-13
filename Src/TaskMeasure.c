@@ -96,7 +96,7 @@ static void SecondEvent(uint32_t *NumberOfEnergySampling)
             *NumberOfEnergySampling = 0;
             EnergyAcc = 0;
             CheckAlarm();
-            if(AlarmEnergyLed == NO_CONF)
+            if(AlarmEnergyLed == NO_CONF && !AlarmsReported())
             {
                 AlarmEnergyLed = ENERGY_IMPULSE;
             }
@@ -171,6 +171,7 @@ void TaskMeasure(void const * argument)
             GeneralMeasures.Power          = 0.0;
 //            GeneralMeasures.MeanEnergy     = 0.0;
             EnergyAcc  = 0.0;
+            AlarmEnergyLed = NO_CONF;
         }
         osDelay(20);
     }

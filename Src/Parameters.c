@@ -187,6 +187,10 @@ uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
     uint8_t ValueArray[5] = {0}, BoxPos = 0;
     uint16_t FinalValue = ParamValue;
     bool ExitChangeValue = false, ChangedValue = false;
+    if(ParamItem == LOG_ENERGY_PERIOD)
+    {
+        FinalValue *= 60;
+    }
     NumbersOperation(&FinalValue, ValueArray, DECOMPOSE);
     
     while(!ExitChangeValue)
@@ -234,7 +238,7 @@ uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
             FinalValue /= 60;
             if(FinalValue > 59 || FinalValue < 1)
             {  
-                MessageScreen("Valore non permesso");
+                MessageScreen("Valore sbagliato");
                 FinalValue = 59;
             }
         }
