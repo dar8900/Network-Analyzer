@@ -8,8 +8,9 @@
 #define HALF_GRAPHIC_AMPLITUDE  (MAX_GRAPHIC_AMPLITUDE/2)
 
 #define INT16_SCALE           32766 
-
+ 
 
 bool DrawCurrentWave(void);
 void DrawMeasure(uint8_t Page);
+void DrawClock(void);
 #endif

@@ -717,11 +717,18 @@ void MainMenu()
 void MainScreen()
 {
     bool EnterMenu = false;
+    uint16_t ClockTimer = 25;
     LastButtonPressed = NO_PRESS;
     while(1)
     {
-        CheckOperation();     
-        DrawMainScreenLoop();
+        CheckOperation();   
+        if(ClockTimer != 0)
+            DrawMainScreenLoop();
+        else
+        {
+            //Mostra orologio
+            DrawClock();
+        }
         switch(LastButtonPressed)
         {
           case BUTTON_OK:
@@ -731,16 +738,21 @@ void MainScreen()
           case BUTTON_DOWN:
           case BUTTON_LEFT:
           case BUTTON_RIGHT:
+            ClockTimer = 25;
+            break;
           default:
             break;
         }   
         if(EnterMenu)
         {
             LastButtonPressed = NO_PRESS;
+            ClockTimer = 25;
             EnterMenu = false;
             break;
         }
         LastButtonPressed = NO_PRESS;
+        if(ClockTimer > 0)
+            ClockTimer--;
         osDelay(WHILE_LOOP_DELAY);
     }
     MainMenu();

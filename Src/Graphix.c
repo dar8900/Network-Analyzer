@@ -8,13 +8,15 @@
 #include "TaskKeyboard.h"
 #include "Menus.h"
 #include "Parameters.h"
+#include "TaskRTC.h"
 
 #define TAB_RANGE_LEN   15
 
 extern u8g2_t u8g;
 extern uint32_t ADCReadedValue[NUM_SAMPLE];
 extern int16_t SinTestGraphic[];
-
+extern TIME_VAR GlobalTime;
+extern DATE_VAR GlobalDate;
 
 
 //extern uint16_t ACDOffset;
@@ -214,4 +216,45 @@ void DrawMeasure(uint8_t Page)
     u8g2_SendBuffer(&u8g);
     
     return;
+}
+
+
+#define CLOCK_RADIUS    28
+#define CLOCK_X_CENTER  (127 - CLOCK_RADIUS)
+#define CLOCK_Y_CENTER  32
+
+void DrawClock()
+{
+    char Date[9];
+    snprintf(Date, 9, "%02d/%02d/%02d", GlobalDate.day, GlobalDate.month, GlobalDate.year);
+    
+    int16_t XPosHour =   (int16_t) (CLOCK_RADIUS - 10) * cos((double)TO_RADIANTS(15*GlobalTime.hours ) + 1.570796);
+    int16_t YPosHour =   (int16_t) (CLOCK_RADIUS - 10) * sin((double)TO_RADIANTS(15*GlobalTime.hours ) + 1.570796);   
+    int16_t XPosMinute = (int16_t) (CLOCK_RADIUS - 2) * cos((double)TO_RADIANTS(6*GlobalTime.minutes ) + 1.570796);
+    int16_t YPosMinute = (int16_t) (CLOCK_RADIUS - 2) * sin((double)TO_RADIANTS(6*GlobalTime.minutes ) + 1.570796);   
+    int16_t XPosSecond = (int16_t) (CLOCK_RADIUS - 2) * cos((double)TO_RADIANTS(6*GlobalTime.seconds ) + 1.570796);
+    int16_t YPosSecond = (int16_t) (CLOCK_RADIUS - 2) * sin((double)TO_RADIANTS(6*GlobalTime.seconds ) + 1.570796);
+    
+    u8g2_ClearBuffer(&u8g);
+    
+    u8g2_DrawCircle(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_RADIUS, U8G2_DRAW_ALL);
+    u8g2_DrawCircle(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, 3, U8G2_DRAW_ALL);
+    
+    // ORE
+    u8g2_DrawLine(&u8g, CLOCK_X_CENTER,CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosHour, CLOCK_Y_CENTER - YPosHour);
+
+   
+//    // MINUTI
+    u8g2_DrawLine(&u8g, CLOCK_X_CENTER,CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosMinute, CLOCK_Y_CENTER - YPosMinute);
+
+    
+    // SECONDI  
+    u8g2_DrawLine(&u8g, CLOCK_X_CENTER,CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosSecond, CLOCK_Y_CENTER - YPosSecond); 
+   
+    u8g2_SetFont(&u8g, u8g_font_7x13B);
+    u8g2_DrawStr(&u8g, X_LEFT_POS, GENERAL_STR_Y_POS(29), Date);
+                  
+    u8g2_SendBuffer(&u8g);   
+                  
+                  
 }
