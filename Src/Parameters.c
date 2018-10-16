@@ -6,11 +6,12 @@
 #include "TaskOled.h"
 #include "AlarmMachine.h"
 #include "TaskEeprom.h"
+#include "TaskLed.h"
 #include <math.h>
 
 #define  ALARM_FACTOR_UNIT_BOXPOS   8
 
-
+extern uint8_t LedConf;
 // Parametri 
 PARAMETERS_S GeneralParams;
 
@@ -22,13 +23,7 @@ enum
     DECOMPOSE
 };
 
-typedef enum
-{
-    ANALOG_DATE = 0,
-    DIGITAL_DATE,
-    ANALOG_ONLY,
-    MAX_SCREENSAVER_TYPE
-}SCREENSAVER_TYPE_ENUM;
+
 
 const ENUM_VALUE_ITEM ScreenSaverEnum[MAX_SCREENSAVER_TYPE] = 
 {
@@ -37,6 +32,17 @@ const ENUM_VALUE_ITEM ScreenSaverEnum[MAX_SCREENSAVER_TYPE] =
     {ANALOG_ONLY, "Solo analogico"},
 };
 
+const ENUM_VALUE_ITEM LedConfiguration[MAX_LED_COMBINATIONS] = 
+{
+    {RGB            ,    "RGB"            },
+    {RED            ,    "Rosso"          },
+    {GREEN          ,    "Verde"          },
+    {BLUE           ,    "Blu"            },
+    {RED_GREEN      ,    "Rosso e verde"  },
+    {RED_BLUE       ,    "Rosso e blu"    },
+    {GREEN_BLUE     ,    "Blu e verde"    },
+    {ALL_LED_OFF    ,    "Tutti spenti"   },
+};
 
 const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
 {
@@ -46,6 +52,7 @@ const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] =
     {"ADC Offset"             , INT_VALUE_TYPE   ,  &GeneralParams.ADCOffset                 ,   NULL                      , 0                     },
     {"Usare screensaver"      , CONFIRM_TYPE     ,  &GeneralParams.EnableScreenSaver         ,   NULL                      , 0                     },
     {"Tipo screensaver"       , ENUM_VALUE_TYPE  ,  &GeneralParams.ScreenSaverType           ,   (void *)ScreenSaverEnum   , MAX_SCREENSAVER_TYPE  },
+    {"Configura i led "       , ENUM_VALUE_TYPE  ,  &LedConf                                 ,   (void *)LedConfiguration  , MAX_LED_COMBINATIONS  },
     {"Scritture in memoria"   , READ_ONLY_TYPE   ,  &EepromSavedValue[NUMBER_OF_WRITES_ADDR] ,   NULL                      , 0                     },
 }; 
 
@@ -429,7 +436,7 @@ int8_t ChangeEnumValue(uint8_t ParamItem)
         osDelay(WHILE_LOOP_DELAY);
     }
     if(ValueSetted)
-        EnumValueRet = TmpValue[EnumItem].EnumValue;
+        EnumValueRet = (int8_t)TmpValue[EnumItem].EnumValue;
     
     return EnumValueRet;
 }

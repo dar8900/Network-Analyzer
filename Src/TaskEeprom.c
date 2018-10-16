@@ -574,7 +574,7 @@ void TaskEeprom(void const * argument)
         else if((GlobalTime.minutes % GeneralParams.LogEnergyPeriod) && GlobalDate.year != 0 && NotResaveEnergy)
             NotResaveEnergy = false;
 
-        osDelay(100);
+        osDelay(1000);
     }
     
 }

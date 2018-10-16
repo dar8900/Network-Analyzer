@@ -47,6 +47,7 @@ typedef enum
     ADC_OFFSET,
     ENABLE_SCREENSAVER,
     SCREENSAVER_TYPE,
+    LED_CONFIGUTATION,
     NUMBER_MEMORY_WRITES,
     MAX_PARAMETER_ITEM
 }PARAMETER_ITEMS;
@@ -66,7 +67,13 @@ typedef struct
     char  Unit;
 }FL_SCALE;
 
-
+typedef enum
+{
+    ANALOG_DATE = 0,
+    DIGITAL_DATE,
+    ANALOG_ONLY,
+    MAX_SCREENSAVER_TYPE
+}SCREENSAVER_TYPE_ENUM;
 
 
 

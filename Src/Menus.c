@@ -31,10 +31,10 @@ MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] =
 {
     {"Grafici"            , ChooseGraphics    },
     {"Misure"             , ShowMeasure       },
-    {"Impostare allarmi"  , AlarmSetup        },
-    {"Impostare i Led"    , LedCtrl           },
-    {"Modifica parametri" , ParameterSetup    },
-    {"Setta l'orario"     , ChangeDateTimeMenu},
+    {"Imposta allarmi"    , AlarmSetup        },
+//    {"Impostare i Led"    , LedCtrl           },
+    {"Setup generale"     , ParameterSetup    },
+    {"Imposta orario"     , ChangeDateTimeMenu},
     {"Reset"              , ResetMenu         },
 }; 
 
@@ -68,17 +68,17 @@ const uint8_t ResetType[MAX_RESET_ITEM] =
     SYSTEM_RESET_TYPE,
 };
 
-const char *LedCombStr[MAX_LED_COMBINATIONS] = 
-{
-    "RGB",
-    "Rosso",
-    "Verde",
-    "Blu",
-    "Rosso e verde",
-    "Rosso e blu",
-    "Blu e verde",
-    "Tutti spenti",
-};
+//const char *LedCombStr[MAX_LED_COMBINATIONS] = 
+//{
+//    "RGB",
+//    "Rosso",
+//    "Verde",
+//    "Blu",
+//    "Rosso e verde",
+//    "Rosso e blu",
+//    "Blu e verde",
+//    "Tutti spenti",
+//};
 
 
 
@@ -227,60 +227,60 @@ bool AlarmSetup()
 }
 
 
-bool LedCtrl()
-{
-    uint8_t LedComb = 0, FirstListItem = 0;
-    bool ExitLedConf = false, ChoosedLedComb = false;
-    while(!ExitLedConf)
-    {
-        CheckOperation();
-        DrawListLoop("Controllo Led", LedCombStr, LedComb, FirstListItem, MAX_LED_COMBINATIONS, MAX_SETUP_MENU_LINES);
-        switch(LastButtonPressed)
-        {
-          case BUTTON_UP:
-            if(LedComb > 0)
-                LedComb--;
-            else
-                LedComb = MAX_LED_COMBINATIONS - 1;
-            break;
-          case BUTTON_DOWN:
-            if(LedComb < MAX_LED_COMBINATIONS - 1)
-                LedComb++;
-            else
-                LedComb = 0;            
-            break;
-          case BUTTON_LEFT:
-            ExitLedConf = true;
-            break;
-          case BUTTON_RIGHT:
-            ChoosedLedComb = true;
-            ExitLedConf = true;
-            break;
-          case BUTTON_OK:
-            break;
-          default:
-            break;           
-        }
-        
-        if(LedComb <= (MAX_SETUP_MENU_LINES - 1))
-        {
-            FirstListItem = 0;  
-        }
-        else
-        {
-            FirstListItem = LedComb - (MAX_SETUP_MENU_LINES - 1);
-        }
-        LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
-    }
-    if(ChoosedLedComb)
-    {
-        LastButtonPressed = NO_PRESS;
-        LedConf = LedComb;
-        ChoosedLedComb = false;
-    }
-    return true;
-}
+//bool LedCtrl()
+//{
+//    uint8_t LedComb = 0, FirstListItem = 0;
+//    bool ExitLedConf = false, ChoosedLedComb = false;
+//    while(!ExitLedConf)
+//    {
+//        CheckOperation();
+//        DrawListLoop("Controllo Led", LedCombStr, LedComb, FirstListItem, MAX_LED_COMBINATIONS, MAX_SETUP_MENU_LINES);
+//        switch(LastButtonPressed)
+//        {
+//          case BUTTON_UP:
+//            if(LedComb > 0)
+//                LedComb--;
+//            else
+//                LedComb = MAX_LED_COMBINATIONS - 1;
+//            break;
+//          case BUTTON_DOWN:
+//            if(LedComb < MAX_LED_COMBINATIONS - 1)
+//                LedComb++;
+//            else
+//                LedComb = 0;            
+//            break;
+//          case BUTTON_LEFT:
+//            ExitLedConf = true;
+//            break;
+//          case BUTTON_RIGHT:
+//            ChoosedLedComb = true;
+//            ExitLedConf = true;
+//            break;
+//          case BUTTON_OK:
+//            break;
+//          default:
+//            break;           
+//        }
+//        
+//        if(LedComb <= (MAX_SETUP_MENU_LINES - 1))
+//        {
+//            FirstListItem = 0;  
+//        }
+//        else
+//        {
+//            FirstListItem = LedComb - (MAX_SETUP_MENU_LINES - 1);
+//        }
+//        LastButtonPressed = NO_PRESS;
+//        osDelay(WHILE_LOOP_DELAY);
+//    }
+//    if(ChoosedLedComb)
+//    {
+//        LastButtonPressed = NO_PRESS;
+//        LedConf = LedComb;
+//        ChoosedLedComb = false;
+//    }
+//    return true;
+//}
 
 bool ParameterSetup()
 {
@@ -672,7 +672,7 @@ void MainMenu()
     while(!ExitMainMenu)
     {
         CheckOperation();
-        DrawMenuLoop("Setup", MainSetupMenu, ItemPos, FirstListItem, MAX_SETUP_ITEM, MAX_SETUP_MENU_LINES);
+        DrawMenuLoop("Menu", MainSetupMenu, ItemPos, FirstListItem, MAX_SETUP_ITEM, MAX_SETUP_MENU_LINES);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:

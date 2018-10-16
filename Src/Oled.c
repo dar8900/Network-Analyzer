@@ -25,24 +25,9 @@ extern I2C_HandleTypeDef hi2c1;
 extern TIME_VAR GlobalTime;
 extern DATE_VAR GlobalDate;
 
-uint8_t control = 0;
 
 u8g2_t u8g;
 
-typedef enum
-{
-    MENU_STR = 0,
-    SU_STR,
-    GIU_STR,
-    BACK_STR,
-    OK_STR,
-    POS_STR,
-    PAGE_STR,
-    OK_LONG_STR,
-    CONFIRM_OK,
-    LEFT_BACK,
-    MAX_BOTTOM_BAR_ITEM    
-}BOTTOM_BAR_ITEMS;
 
 typedef enum
 {
@@ -65,6 +50,20 @@ const char *BatteryIcons[MAX_BATTERY_ICONS] =
     BatteriaInCarica,
 };
 
+typedef enum
+{
+    MENU_STR = 0,
+    SU_STR,
+    GIU_STR,
+    BACK_STR,
+    OK_STR,
+    POS_STR,
+    PAGE_STR,
+    OK_LONG_STR,
+    CONFIRM_OK,
+    LEFT_BACK,
+    MAX_BOTTOM_BAR_ITEM    
+}BOTTOM_BAR_ITEMS;
 
 const char *BarItem[] = 
 {
@@ -276,21 +275,15 @@ void DrawTopInfoBar()
 
 void DrawBottomBarInfo(uint8_t WichPage)
 {
-    uint8_t FontH = 0;
-    
+    u8g2_SetFont(&u8g, u8g_font_4x6);
     switch(WichPage)
     {
-      case MAIN_SCREEN_PAGE:
-        u8g2_SetFont(&u8g, u8g_font_4x6);
-        FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
-//        u8g2_DrawBox(&u8g, 0, FontH+1, SCREEN_MAX_WIDTH, FontH); 
+      case MAIN_SCREEN_PAGE:        
         u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_CENTER_POS(BarItem[MENU_STR]), BOTTOM_INFO_BAR_Y_POS, BarItem[MENU_STR]);        
         break;
+        
       case SETUP_PAGE:
-        u8g2_SetFont(&u8g, u8g_font_4x6);
-        FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
-//        u8g2_DrawBox(&u8g, X_LEFT_POS, FontH+1, SCREEN_MAX_WIDTH, FontH); 
         u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
         u8g2_DrawStr(&u8g, OK_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[OK_STR]); 
@@ -301,9 +294,8 @@ void DrawBottomBarInfo(uint8_t WichPage)
         DrawArrow(DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
         DrawArrow(RIGHT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
         break;
+        
       case TIME_DATE_PAGE:
-        u8g2_SetFont(&u8g, u8g_font_4x6);
-        FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g); 
         u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
         u8g2_DrawStr(&u8g, BOXPOS_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[POS_STR]); 
@@ -314,18 +306,16 @@ void DrawBottomBarInfo(uint8_t WichPage)
         DrawArrow(DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
         DrawArrow(RIGHT_ARROW_X_POS - 4, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 2, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
         break;
+        
       case MEASURE_PAGE:
-        u8g2_SetFont(&u8g, u8g_font_4x6);
-        FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g); 
         u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
         u8g2_DrawStr(&u8g, BOXPOS_STR_X_POS - 2, BOTTOM_INFO_BAR_Y_POS, BarItem[PAGE_STR]); 
         DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
         DrawArrow(RIGHT_ARROW_X_POS - 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 2, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
-        break;        
+        break;   
+        
       case CHANGE_VALUE_PAGE:
-        u8g2_SetFont(&u8g, u8g_font_4x6);
-        FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g); 
         u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
         u8g2_DrawStr(&u8g, BOXPOS_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[POS_STR]); 
@@ -336,9 +326,8 @@ void DrawBottomBarInfo(uint8_t WichPage)
         DrawArrow(DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
         DrawArrow(RIGHT_ARROW_X_POS - 4, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 2, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
         break;
+        
       case READ_ONLY_PARAM:
-        u8g2_SetFont(&u8g, u8g_font_4x6);
-        FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g); 
         u8g2_SetDrawColor(&u8g, 2);
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
         DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
@@ -498,10 +487,9 @@ void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_
     
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();
+    
     // Disegna titolo menu
     u8g2_SetFont(&u8g, u8g_font_6x13B);
-    FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
-    u8g2_SetDrawColor(&u8g, 2);
     u8g2_DrawStr(&u8g, X_CENTER_POS(PageTitle), MENU_TITLE_Y_POS, PageTitle);  
     
     // Disegna voci menu

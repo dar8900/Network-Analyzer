@@ -12,6 +12,10 @@
 
 #define TAB_RANGE_LEN   15
 
+#define CLOCK_RADIUS    28
+#define CLOCK_X_CENTER  (127 - CLOCK_RADIUS)
+#define CLOCK_Y_CENTER  32
+
 extern u8g2_t u8g;
 extern uint32_t ADCReadedValue[NUM_SAMPLE];
 extern int16_t SinTestGraphic[];
@@ -219,15 +223,12 @@ void DrawMeasure(uint8_t Page)
 }
 
 
-#define CLOCK_RADIUS    28
-#define CLOCK_X_CENTER  (127 - CLOCK_RADIUS)
-#define CLOCK_Y_CENTER  32
 
 void DrawClock()
 {
-    char Date[9];
+    char Date[9], Time[9];
     snprintf(Date, 9, "%02d/%02d/%02d", GlobalDate.day, GlobalDate.month, GlobalDate.year);
-    
+    snprintf(Time, 9, "%02d:%02d:%02d", GlobalTime.hours, GlobalTime.minutes, GlobalTime.seconds);
     int16_t XPosHour =   (int16_t) (CLOCK_RADIUS - 10) * cos((double)TO_RADIANTS(15*GlobalTime.hours ) + 1.570796);
     int16_t YPosHour =   (int16_t) (CLOCK_RADIUS - 10) * sin((double)TO_RADIANTS(15*GlobalTime.hours ) + 1.570796);   
     int16_t XPosMinute = (int16_t) (CLOCK_RADIUS - 2) * cos((double)TO_RADIANTS(6*GlobalTime.minutes ) + 1.570796);
@@ -236,25 +237,47 @@ void DrawClock()
     int16_t YPosSecond = (int16_t) (CLOCK_RADIUS - 2) * sin((double)TO_RADIANTS(6*GlobalTime.seconds ) + 1.570796);
     
     u8g2_ClearBuffer(&u8g);
-    
-    u8g2_DrawCircle(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_RADIUS, U8G2_DRAW_ALL);
-    u8g2_DrawCircle(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, 3, U8G2_DRAW_ALL);
-    
-    // ORE
-    u8g2_DrawLine(&u8g, CLOCK_X_CENTER,CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosHour, CLOCK_Y_CENTER - YPosHour);
-
-   
-//    // MINUTI
-    u8g2_DrawLine(&u8g, CLOCK_X_CENTER,CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosMinute, CLOCK_Y_CENTER - YPosMinute);
-
-    
-    // SECONDI  
-    u8g2_DrawLine(&u8g, CLOCK_X_CENTER,CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosSecond, CLOCK_Y_CENTER - YPosSecond); 
-   
     u8g2_SetFont(&u8g, u8g_font_7x13B);
-    u8g2_DrawStr(&u8g, X_LEFT_POS, GENERAL_STR_Y_POS(29), Date);
-                  
+    
+    switch(GeneralParams.ScreenSaverType)
+    {
+      case ANALOG_DATE:
+        u8g2_DrawCircle(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_RADIUS, U8G2_DRAW_ALL);
+        u8g2_DrawCircle(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, 3, U8G2_DRAW_ALL);
+        
+        // ORE
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosHour, CLOCK_Y_CENTER - YPosHour);
+              
+       // MINUTI
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosMinute, CLOCK_Y_CENTER - YPosMinute);
+                
+        // SECONDI  
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosSecond, CLOCK_Y_CENTER - YPosSecond); 
+        
+        
+        u8g2_DrawStr(&u8g, X_LEFT_POS, GENERAL_STR_Y_POS(29), Date);
+        break;
+      case DIGITAL_DATE:
+        u8g2_DrawStr(&u8g, X_LEFT_POS, GENERAL_STR_Y_POS(29), Date);    
+        u8g2_DrawStr(&u8g, X_RIGHT_POS(Time), GENERAL_STR_Y_POS(29), Time); 
+        break;
+      case ANALOG_ONLY:
+        u8g2_DrawCircle(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, CLOCK_RADIUS, U8G2_DRAW_ALL);
+        u8g2_DrawCircle(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, 3, U8G2_DRAW_ALL);
+        
+        // ORE
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, (CLOCK_X_CENTER - 35) - XPosHour, CLOCK_Y_CENTER - YPosHour);
+        
+        // MINUTI
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, (CLOCK_X_CENTER - 35) - XPosMinute, CLOCK_Y_CENTER - YPosMinute);
+        
+        // SECONDI  
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, (CLOCK_X_CENTER - 35) - XPosSecond, CLOCK_Y_CENTER - YPosSecond); 
+        
+        break;
+      default:
+        break;  
+    }                 
     u8g2_SendBuffer(&u8g);   
-                  
-                  
+                                
 }
