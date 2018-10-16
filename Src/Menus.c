@@ -341,11 +341,16 @@ bool ParameterSetup()
                     osDelay(WHILE_LOOP_DELAY);
                 }
                 break;
+              case ENUM_VALUE_TYPE:
+                int8_t TmpEnumValue = ChangeEnumValue(ParamItem);
+                if(TmpEnumValue != -1)
+                    *(uint8_t *)ParametersMenu[ParamItem].ParamValue = (uint8_t) TmpEnumValue;
+                break;
               default:
                 break;       
             }
             ChooseParam = false;
-            if(ParametersMenu[ParamItem].Type != READ_ONLY_TYPE)
+            if(ParametersMenu[ParamItem].Type != READ_ONLY_TYPE || ParametersMenu[ParamItem].Type != ENUM_VALUE_TYPE)
                 EepFlag.SaveParameters = true;
         }
         LastButtonPressed = NO_PRESS;

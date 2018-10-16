@@ -18,6 +18,7 @@ EEPROM_DATA EepromSavedValue[MAX_DIM_EEPROM_ARRAY];
 FLAG_EEPROM EepFlag;
 
 
+
 static void CopyCharArray(char OrigArray[], char DestArray[])
 {
     uint8_t i, Size = 9;
@@ -129,6 +130,33 @@ static void WriteParameters()
         EepromSavedValue[ADC_OFFSET_ADDR] = (uint32_t)GeneralParams.ADCOffset;
         EepromSavedValue[VOLTAGE_MEASURE_ADDR] = (uint32_t)GeneralParams.MeasureVoltage;
         EepromSavedValue[LOG_ENERGY_ADDR] = (uint32_t)GeneralParams.LogEnergyPeriod;
+        EepromSavedValue[ENABLE_SCREENSAVER_ADDR] = (uint32_t)GeneralParams.EnableScreenSaver;
+        EepromSavedValue[SCREENSAVER_TYPE_ADDR] = (uint32_t)GeneralParams.ScreenSaverType;
+        
+        for(uint8_t ParamIndexAddr = 0; ParamIndexAddr < (MAX_PARAMETER_ITEM - 1); ParamIndexAddr++)
+        {
+            if(ParamIndexAddr < 3)
+            {
+                EE_SingleRead(ParamIndexAddr, &OldValue);
+                if(OldValue != EepromSavedValue[ParamIndexAddr])
+                {    
+//                    WriteNumbOfWrites(1);
+//                    TransferValuesToMem(EepromSavedValue);
+                }          
+            }
+            else
+            {
+                ParamIndexAddr -= 3;
+                ParamIndexAddr += LOG_ENERGY_ADDR;
+                EE_SingleRead(ParamIndexAddr, &OldValue);
+                if(OldValue != EepromSavedValue[ParamIndexAddr])
+                {    
+//                    WriteNumbOfWrites(1);
+//                    TransferValuesToMem(EepromSavedValue);
+                }                  
+            }
+        }
+
         
         EE_SingleRead(ENABLE_MEASURE_ADDR, &OldValue);
         if(OldValue != EepromSavedValue[ENABLE_MEASURE_ADDR])
@@ -157,7 +185,21 @@ static void WriteParameters()
             WriteNumbOfWrites(1);
             TransferValuesToMem(EepromSavedValue);
         }
+        
+        EE_SingleRead(ENABLE_SCREENSAVER_ADDR, &OldValue);
+        if(OldValue != EepromSavedValue[ENABLE_SCREENSAVER_ADDR])
+        {       
+            WriteNumbOfWrites(1);
+            TransferValuesToMem(EepromSavedValue);
+        }
 
+        EE_SingleRead(SCREENSAVER_TYPE_ADDR, &OldValue);
+        if(OldValue != EepromSavedValue[SCREENSAVER_TYPE_ADDR])
+        {       
+            WriteNumbOfWrites(1);
+            TransferValuesToMem(EepromSavedValue);
+        }
+        
         EepFlag.SaveParameters = false;
     
     }
@@ -179,6 +221,13 @@ static void ReadParameters(uint8_t ParamItem)
         break;
       case LOG_ENERGY_PERIOD:
         GeneralParams.LogEnergyPeriod = EepromSavedValue[LOG_ENERGY_ADDR];
+        break;
+      case SCREENSAVER_TYPE:
+        GeneralParams.ScreenSaverType = EepromSavedValue[SCREENSAVER_TYPE_ADDR];
+        break;
+      case ENABLE_SCREENSAVER:
+        GeneralParams.EnableScreenSaver = EepromSavedValue[ENABLE_SCREENSAVER_ADDR];
+        break;        
       default:
         break;
     

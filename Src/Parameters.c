@@ -22,16 +22,34 @@ enum
     DECOMPOSE
 };
 
-PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
+typedef enum
 {
-    {"Abilitare misura"  , CONFIRM_TYPE    ,  &GeneralParams.EnableMeasure         },
-    {"Tensione misura (V)", INT_VALUE_TYPE  ,  &GeneralParams.MeasureVoltage        },
-    {"Periodo log en.(s)", INT_VALUE_TYPE  , &GeneralParams.LogEnergyPeriod       },
-    {"ADC Offset"        , INT_VALUE_TYPE  ,  &GeneralParams.ADCOffset             },
-    {"Scritture in memoria", READ_ONLY_TYPE,  &EepromSavedValue[NUMBER_OF_WRITES_ADDR]    },
+    ANALOG_DATE = 0,
+    DIGITAL_DATE,
+    ANALOG_ONLY,
+    MAX_SCREENSAVER_TYPE
+}SCREENSAVER_TYPE_ENUM;
+
+const ENUM_VALUE_ITEM ScreenSaverEnum[MAX_SCREENSAVER_TYPE] = 
+{
+    {ANALOG_DATE, "Analogico/data"},
+    {DIGITAL_DATE, "Digitale/data"},
+    {ANALOG_ONLY, "Solo analogico"},
 };
 
-PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM] = 
+
+const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
+{
+    {"Abilitare misura"       , CONFIRM_TYPE     ,  &GeneralParams.EnableMeasure             ,   NULL                      , 0                     },
+    {"Tensione misura (V)"    , INT_VALUE_TYPE   ,  &GeneralParams.MeasureVoltage            ,   NULL                      , 0                     },
+    {"Periodo log en.(s)"     , INT_VALUE_TYPE   ,  &GeneralParams.LogEnergyPeriod           ,   NULL                      , 0                     },
+    {"ADC Offset"             , INT_VALUE_TYPE   ,  &GeneralParams.ADCOffset                 ,   NULL                      , 0                     },
+    {"Usare screensaver"      , CONFIRM_TYPE     ,  &GeneralParams.EnableScreenSaver         ,   NULL                      , 0                     },
+    {"Tipo screensaver"       , ENUM_VALUE_TYPE  ,  &GeneralParams.ScreenSaverType           ,   (void *)ScreenSaverEnum   , MAX_SCREENSAVER_TYPE  },
+    {"Scritture in memoria"   , READ_ONLY_TYPE   ,  &EepromSavedValue[NUMBER_OF_WRITES_ADDR] ,   NULL                      , 0                     },
+}; 
+
+const PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM] = 
 {
     {"Soglie corrente "  , FLOAT_VALUE_TYPE    ,  NULL},
     {"Soglie potenza  "  , FLOAT_VALUE_TYPE    ,  NULL},
@@ -40,7 +58,7 @@ PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM] =
 
 
 
-FL_SCALE TabReScale[MAX_UNIT_FACTOR] = 
+const FL_SCALE TabReScale[MAX_UNIT_FACTOR] = 
 {
     {0.001        , 1000.0      , 'm'},
     {1.0          , 1.0         , ' '},
@@ -361,4 +379,57 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
         }
     }
     
+}
+
+int8_t ChangeEnumValue(uint8_t ParamItem)
+{
+    uint8_t EnumItem = 0, FirstListItem = 0;
+    uint8_t MaxItems = ParametersMenu[ParamItem].MaxEnumItems;
+    ENUM_VALUE_ITEM *TmpValue = (ENUM_VALUE_ITEM *)ParametersMenu[ParamItem].EnumValuePtr;
+    bool ExitChangeEnum = false, ValueSetted = false;
+    int8_t EnumValueRet = -1;
+    while(!ExitChangeEnum)
+    {
+        CheckOperation();
+        DrawChangeEnumLoop(ParametersMenu[ParamItem].ItemTitle, TmpValue, EnumItem, FirstListItem, MaxItems, MAX_SETUP_MENU_LINES);
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+            if(EnumItem > 0)
+                EnumItem--;
+              else
+                  EnumItem = MaxItems - 1;
+            break;
+          case BUTTON_DOWN:
+            if(EnumItem < MaxItems - 1)
+                EnumItem++;
+            else
+                EnumItem = 0;
+            break;
+          case BUTTON_LEFT:
+            ExitChangeEnum = true;
+            ValueSetted = true;
+            break;
+          case BUTTON_RIGHT:
+            ExitChangeEnum = true;
+            break;
+          case BUTTON_OK:
+            break;
+          default:
+            break;        
+        }
+        if(EnumItem <= (MAX_SETUP_MENU_LINES - 1))
+        {
+            FirstListItem = 0;  
+        }
+        else
+        {
+            FirstListItem = EnumItem - (MAX_SETUP_MENU_LINES - 1);
+        }  
+        osDelay(WHILE_LOOP_DELAY);
+    }
+    if(ValueSetted)
+        EnumValueRet = TmpValue[EnumItem].EnumValue;
+    
+    return EnumValueRet;
 }

@@ -53,4 +53,6 @@ void DrawListLoop(char *PageTitle, const char *ListItem[], uint8_t ItemPos, uint
 void DrawChangeValueLoop(uint8_t BoxPos , uint8_t BoxValues[], char *Title);
 void DrawChangeAlarmThrsLoop(uint8_t BoxPos , char *StrValue, char *Title, char FactorChar);
 void ViewReadOnlyParam(uint32_t ValueTOView);
+void DrawChangeEnumLoop(char *PageTitle, ENUM_VALUE_ITEM MenuItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxMenuItemNum, uint8_t MaxMenuLines);
+
 #endif
