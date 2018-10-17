@@ -2,7 +2,7 @@
 #include "main.h"
 #include "ADC.h"
 #include "Graphix.h"
-#include "Oled.h"
+#include "Display.h"
 #include "DisplayDef.h"
 #include "TaskMeasure.h"
 #include "TaskKeyboard.h"

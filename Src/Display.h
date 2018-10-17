@@ -6,8 +6,12 @@
 #include "Menus.h"
 #include "Parameters.h"
 
-#define SSD1306_I2C_ADDRESS 0x78
+#define  USING_OLED
+#undef   USING_LCD
 
+#ifdef USING_OLED
+#define SSD1306_I2C_ADDRESS 0x78
+#endif
 
 
 typedef enum

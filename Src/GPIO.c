@@ -21,12 +21,21 @@ void MX_GPIO_Init(void)
     /*Configure GPIO pin Output Level */
     HAL_GPIO_WritePin(GPIOA, Red_Pin|Blue_Pin|Green_Pin|EnergyLed_Pin, LOW);
     
-    /*Configure GPIO pins : Red_Pin Blue_Pin Green_Pin EnergyLed_Pin */
-    GPIO_InitStruct.Pin = Red_Pin|Blue_Pin|Green_Pin|EnergyLed_Pin;
+    /*Configure GPIO pins : Red_Pin Blue_Pin Green_Pin EnergyLed_Pin, ChipSelect for SPI */
+    GPIO_InitStruct.Pin = Red_Pin|Blue_Pin|Green_Pin|EnergyLed_Pin|ChipSelect_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    
+    GPIO_InitStruct.Pin = RegisterSpiSelect_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+    
+    
+    
     
     /*Configure GPIO pins : Up_Pin Down_Pin */
     GPIO_InitStruct.Pin = Up_Pin|Down_Pin;

@@ -20,7 +20,8 @@
 #include "ADC.h"
 #include "DMA.h"
 #include "I2C.h"
-#include "Oled.h"
+#include "SPI.h"
+#include "Display.h"
 
 //RTOS heap
 #define MAX_RTOS_HEAP         4096
@@ -75,8 +76,9 @@ static void Setup()
     MX_GPIO_Init();
     MX_DMA_Init();
     MX_ADC1_Init();
+    MX_ADC2_Init();
     MX_I2C1_Init();
-    
+    MX_SPI1_Init();
 }
 
 static void CreateTask()
@@ -158,6 +160,7 @@ void _Error_Handler(char *file, int line)
     /* User can add his own implementation to report the HAL error return state */
     while(1)
     {
+        osDelay(10);
     }
     /* USER CODE END Error_Handler_Debug */
 }

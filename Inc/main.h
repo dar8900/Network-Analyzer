@@ -49,6 +49,12 @@
 #define EnergyLed_Pin GPIO_PIN_10
 #define EnergyLed_GPIO_Port GPIOA
 
+#define ChipSelect_Pin GPIO_PIN_15
+#define ChipSelect_Port GPIOA
+
+#define RegisterSpiSelect_Pin GPIO_PIN_9
+#define RegisterSpiSelect_Port GPIOB
+
 #define SWDIO_Pin GPIO_PIN_13
 #define SWDIO_GPIO_Port GPIOA
 #define SWCLK_Pin GPIO_PIN_14
