@@ -4,7 +4,7 @@
 
 #ifdef ENABLE_LED
 
-uint8_t LedConf = ALL_LED_OFF;
+uint8_t LedConf;
 uint8_t AlarmEnergyLed = NO_CONF;
 
 LED_FLAG LedFlag[NLED];

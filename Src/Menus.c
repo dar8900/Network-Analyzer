@@ -727,9 +727,9 @@ void MainScreen()
     while(1)
     {
         CheckOperation();   
-        if(ClockTimer != 0)
+        if(ClockTimer != 0 || !GeneralParams.EnableScreenSaver)
             DrawMainScreenLoop();
-        else
+        else if(ClockTimer == 0 && GeneralParams.EnableScreenSaver)
         {
             //Mostra orologio
             DrawClock();
@@ -755,7 +755,7 @@ void MainScreen()
             EnterMenu = false;
             break;
         }
-        LastButtonPressed = NO_PRESS;
+        LastButtonPressed = NO_PRESS; 
         if(ClockTimer > 0)
             ClockTimer--;
         osDelay(WHILE_LOOP_DELAY);
