@@ -722,7 +722,7 @@ void MainMenu()
 void MainScreen()
 {
     bool EnterMenu = false;
-    uint16_t ClockTimer = 25;
+    uint16_t ClockTimer = GeneralParams.ScreenSaverTimer;
     LastButtonPressed = NO_PRESS;
     while(1)
     {
@@ -743,7 +743,7 @@ void MainScreen()
           case BUTTON_DOWN:
           case BUTTON_LEFT:
           case BUTTON_RIGHT:
-            ClockTimer = 25;
+            ClockTimer = GeneralParams.ScreenSaverTimer;
             break;
           default:
             break;
@@ -751,7 +751,7 @@ void MainScreen()
         if(EnterMenu)
         {
             LastButtonPressed = NO_PRESS;
-            ClockTimer = 25;
+            ClockTimer = GeneralParams.ScreenSaverTimer;
             EnterMenu = false;
             break;
         }

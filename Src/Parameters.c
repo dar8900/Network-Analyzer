@@ -52,6 +52,7 @@ const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] =
     {"ADC Offset"             , INT_VALUE_TYPE   ,  &GeneralParams.ADCOffset                 ,   NULL                      , 0                     },
     {"Usare screensaver"      , CONFIRM_TYPE     ,  &GeneralParams.EnableScreenSaver         ,   NULL                      , 0                     },
     {"Tipo screensaver"       , ENUM_VALUE_TYPE  ,  &GeneralParams.ScreenSaverType           ,   (void *)ScreenSaverEnum   , MAX_SCREENSAVER_TYPE  },
+    {"Timer screensaver(s)"   , INT_VALUE_TYPE   ,  &GeneralParams.ScreenSaverTimer          ,   NULL                      , 0  },
     {"Configura i led "       , ENUM_VALUE_TYPE  ,  &LedConf                                 ,   (void *)LedConfiguration  , MAX_LED_COMBINATIONS  },
     {"Scritture in memoria"   , READ_ONLY_TYPE   ,  &EepromSavedValue[NUMBER_OF_WRITES_ADDR] ,   NULL                      , 0                     },
 }; 
@@ -216,6 +217,10 @@ uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
     {
         FinalValue *= 60;
     }
+    else if(ParamItem == SCREENSAVER_TIMER)
+    {
+        FinalValue = (FinalValue * 10) / 25;
+    }
     NumbersOperation(&FinalValue, ValueArray, DECOMPOSE);
     
     while(!ExitChangeValue)
@@ -266,6 +271,10 @@ uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
                 MessageScreen("Valore sbagliato");
                 FinalValue = 59;
             }
+        }
+        else if(ParamItem == SCREENSAVER_TIMER)
+        {
+            FinalValue = (25 * FinalValue) / 10;
         }
     }
     return FinalValue;
@@ -415,16 +424,17 @@ int8_t ChangeEnumValue(uint8_t ParamItem)
             break;
           case BUTTON_LEFT:
             ExitChangeEnum = true;
-            ValueSetted = true;
             break;
           case BUTTON_RIGHT:
             ExitChangeEnum = true;
+            ValueSetted = true;
             break;
           case BUTTON_OK:
             break;
           default:
             break;        
         }
+        LastButtonPressed = NO_PRESS;
         if(EnumItem <= (MAX_SETUP_MENU_LINES - 1))
         {
             FirstListItem = 0;  

@@ -11,6 +11,7 @@ typedef struct
     uint8_t  LogEnergyPeriod;
     bool     EnableScreenSaver;
     uint8_t  ScreenSaverType;
+    uint16_t ScreenSaverTimer;
 }PARAMETERS_S;
 
 typedef enum
@@ -47,6 +48,7 @@ typedef enum
     ADC_OFFSET,
     ENABLE_SCREENSAVER,
     SCREENSAVER_TYPE,
+    SCREENSAVER_TIMER,
     LED_CONFIGURATION,
     NUMBER_MEMORY_WRITES,
     MAX_PARAMETER_ITEM

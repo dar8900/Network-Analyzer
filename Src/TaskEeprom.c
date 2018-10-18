@@ -134,6 +134,7 @@ static void WriteParameters()
         EepromSavedValue[LOG_ENERGY_ADDR] = (uint32_t)GeneralParams.LogEnergyPeriod;
         EepromSavedValue[ENABLE_SCREENSAVER_ADDR] = (uint32_t)GeneralParams.EnableScreenSaver;
         EepromSavedValue[SCREENSAVER_TYPE_ADDR] = (uint32_t)GeneralParams.ScreenSaverType;
+        EepromSavedValue[SCREEN_SAVER_TIMER_ADDR] = (uint32_t)GeneralParams.ScreenSaverTimer;
         EepromSavedValue[LED_CONF_ADDR] = (uint32_t)LedConf;
 
         
@@ -238,6 +239,9 @@ static void ReadParameters(uint8_t ParamItem)
         break;
       case ENABLE_SCREENSAVER:
         GeneralParams.EnableScreenSaver = EepromSavedValue[ENABLE_SCREENSAVER_ADDR];
+        break;
+      case SCREENSAVER_TIMER:
+        GeneralParams.ScreenSaverTimer = EepromSavedValue[SCREEN_SAVER_TIMER_ADDR];
         break;
       case LED_CONFIGURATION:
         LedConf = EepromSavedValue[LED_CONF_ADDR];
@@ -537,6 +541,7 @@ static void CheckEepromAndTranfer()
         GeneralParams.LogEnergyPeriod = 15;
         GeneralParams.EnableScreenSaver = false;
         GeneralParams.ScreenSaverType = ANALOG_DATE;
+        GeneralParams.ScreenSaverTimer = 10;
         LedConf = ALL_LED_OFF;
         
         AlarmsParameters[CURRENT_ALARM].OverThreshold = 1.0;
@@ -584,14 +589,16 @@ void TaskEeprom(void const * argument)
         WriteParameters();
         WriteThr();
         WriteEnergy();
-        if(!(GlobalTime.minutes % GeneralParams.LogEnergyPeriod) && GlobalDate.year != 0 && !NotResaveEnergy)
+        if(GeneralParams.EnableMeasure)
         {
-            NotResaveEnergy = true;
-            EepFlag.SaveEnergy = true;  
-        } 
-        else if((GlobalTime.minutes % GeneralParams.LogEnergyPeriod) && GlobalDate.year != 0 && NotResaveEnergy)
-            NotResaveEnergy = false;
-
+            if(!(GlobalTime.minutes % GeneralParams.LogEnergyPeriod) && GlobalDate.year != 0 && !NotResaveEnergy)
+            {
+                NotResaveEnergy = true;
+                EepFlag.SaveEnergy = true;  
+            } 
+            else if((GlobalTime.minutes % GeneralParams.LogEnergyPeriod) && GlobalDate.year != 0 && NotResaveEnergy)
+                NotResaveEnergy = false;
+        }
         osDelay(1000);
     }
     

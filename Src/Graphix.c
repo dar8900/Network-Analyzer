@@ -229,8 +229,8 @@ void DrawClock()
     char Date[9], Time[9];
     snprintf(Date, 9, "%02d/%02d/%02d", GlobalDate.day, GlobalDate.month, GlobalDate.year);
     snprintf(Time, 9, "%02d:%02d:%02d", GlobalTime.hours, GlobalTime.minutes, GlobalTime.seconds);
-    int16_t XPosHour =   (int16_t) (CLOCK_RADIUS - 10) * cos((double)TO_RADIANTS(15*GlobalTime.hours ) + 1.570796);
-    int16_t YPosHour =   (int16_t) (CLOCK_RADIUS - 10) * sin((double)TO_RADIANTS(15*GlobalTime.hours ) + 1.570796);   
+    int16_t XPosHour =   (int16_t) (CLOCK_RADIUS - 10) * cos((double)TO_RADIANTS(15*GlobalTime.hours ) + 0.785398);
+    int16_t YPosHour =   (int16_t) (CLOCK_RADIUS - 10) * sin((double)TO_RADIANTS(15*GlobalTime.hours ) + 0.785398);   
     int16_t XPosMinute = (int16_t) (CLOCK_RADIUS - 2) * cos((double)TO_RADIANTS(6*GlobalTime.minutes ) + 1.570796);
     int16_t YPosMinute = (int16_t) (CLOCK_RADIUS - 2) * sin((double)TO_RADIANTS(6*GlobalTime.minutes ) + 1.570796);   
     int16_t XPosSecond = (int16_t) (CLOCK_RADIUS - 2) * cos((double)TO_RADIANTS(6*GlobalTime.seconds ) + 1.570796);

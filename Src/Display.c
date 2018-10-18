@@ -452,9 +452,8 @@ void ViewReadOnlyParam(uint32_t ValueToView)
     snprintf(ReadOnlyStr, 12, "%010d", ValueToView);
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();
-    u8g2_SetFont(&u8g, u8g_font_6x13B);
+    u8g2_SetFont(&u8g, u8g2_font_7x13_tf);
     u8g2_DrawStr(&u8g, X_CENTER_POS(ReadOnlyStr), GENERAL_STR_Y_POS(32), ReadOnlyStr);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(BarItem[LEFT_BACK]), 45, BarItem[LEFT_BACK]);
     DrawBottomBarInfo(READ_ONLY_PARAM);
     u8g2_SendBuffer(&u8g); 
 }
