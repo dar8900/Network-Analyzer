@@ -11,7 +11,7 @@
 
 #ifdef ENABLE_MEASURE
 
-#define CURRENT_SAMPLE  60
+#define CURRENT_SAMPLE  40
 
 extern bool ConversionEnd;
 extern bool SecondTick;
@@ -25,7 +25,7 @@ int16_t SinTestGraphic[NUM_TEST_SAMPLE];
 static uint64_t CubeRawValue;
 static float CurrentRMS[CURRENT_SAMPLE];
 static float EnergyAcc;
-
+static uint32_t NumberOfEnergySampling; 
 MEASURES GeneralMeasures;
 
 
@@ -84,22 +84,40 @@ static float CalcMeanCurrent(float CurrentRMS[])
 }
 
 
-static void SecondEvent(uint32_t *NumberOfEnergySampling)
+static void CheckMaxMinCurrentPower()
+{   
+    if(GeneralMeasures.MaxCurrent < GeneralMeasures.MeanCurrentRMS)
+        GeneralMeasures.MaxCurrent = GeneralMeasures.MeanCurrentRMS;
+    
+    if(GeneralMeasures.MinCurrent > GeneralMeasures.MeanCurrentRMS)
+        GeneralMeasures.MinCurrent = GeneralMeasures.MeanCurrentRMS;
+    
+    if(GeneralMeasures.MaxPower < GeneralMeasures.Power)
+        GeneralMeasures.MaxPower = GeneralMeasures.Power;
+    
+    if(GeneralMeasures.MinPower > GeneralMeasures.Power)
+        GeneralMeasures.MinPower = GeneralMeasures.Power;
+    return;
+}
+
+
+static void SecondEvent()
 {
     static bool NotReEnter = false;
     if(SecondTick)
     {
         if(!NotReEnter)
         {
-            if(*NumberOfEnergySampling > 0)
-                GeneralMeasures.MeanEnergy += ((EnergyAcc / *NumberOfEnergySampling)/3600.0);
-            *NumberOfEnergySampling = 0;
+            GeneralMeasures.MeanEnergy += ((EnergyAcc / NumberOfEnergySampling)/3600.0);
+            
+            NumberOfEnergySampling = 0;
             EnergyAcc = 0;
             CheckAlarm();
             if(AlarmEnergyLed == NO_CONF && !AlarmsReported())
             {
                 AlarmEnergyLed = ENERGY_IMPULSE;
             }
+            CheckMaxMinCurrentPower();
         }
         NotReEnter = true;
     }
@@ -114,7 +132,6 @@ static void SecondEvent(uint32_t *NumberOfEnergySampling)
 void TaskMeasure(void const * argument)
 {
     uint8_t NumberOfCurrentSampling = 0;
-    uint32_t NumberOfEnergySampling = 0; 
 //    GeneralParams.MeasureVoltage = VOLTAGE_VALUE_DFLT;
         
 #ifdef SIM_SIN_WAVE    
@@ -148,7 +165,7 @@ void TaskMeasure(void const * argument)
             if(NumberOfCurrentSampling == CURRENT_SAMPLE)
             {
                 GeneralMeasures.MeanCurrentRMS = CalcMeanCurrent(CurrentRMS);            
-                if(GeneralMeasures.MeanCurrentRMS > 0.1)
+                if(GeneralMeasures.MeanCurrentRMS > 0.114)
                     GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * (float)GeneralParams.MeasureVoltage;
                 else
                 {
@@ -161,7 +178,7 @@ void TaskMeasure(void const * argument)
             } 
             
             // Gestisce gli eventi al secondo
-            SecondEvent(&NumberOfEnergySampling);
+            SecondEvent();
         } 
         else
         {
@@ -169,9 +186,9 @@ void TaskMeasure(void const * argument)
             CheckAlarm();
             GeneralMeasures.MeanCurrentRMS = 0.0;
             GeneralMeasures.Power          = 0.0;
-//            GeneralMeasures.MeanEnergy     = 0.0;
             EnergyAcc  = 0.0;
             AlarmEnergyLed = NO_CONF;
+            NumberOfEnergySampling = 0;
         }
         osDelay(20);
     }

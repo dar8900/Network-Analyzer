@@ -23,6 +23,10 @@ typedef struct
     float MeanCurrentRMS;
     float Power;
     float MeanEnergy;
+    float MaxCurrent;
+    float MinCurrent;
+    float MaxPower;
+    float MinPower;
 }MEASURES;
 
 extern MEASURES GeneralMeasures;

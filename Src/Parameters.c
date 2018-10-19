@@ -52,7 +52,7 @@ const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] =
     {"ADC Offset"             , INT_VALUE_TYPE   ,  &GeneralParams.ADCOffset                 ,   NULL                      , 0                     },
     {"Usare screensaver"      , CONFIRM_TYPE     ,  &GeneralParams.EnableScreenSaver         ,   NULL                      , 0                     },
     {"Tipo screensaver"       , ENUM_VALUE_TYPE  ,  &GeneralParams.ScreenSaverType           ,   (void *)ScreenSaverEnum   , MAX_SCREENSAVER_TYPE  },
-    {"Timer screensaver(s)"   , INT_VALUE_TYPE   ,  &GeneralParams.ScreenSaverTimer          ,   NULL                      , 0  },
+    {"Timer screensaver(s)"   , INT_VALUE_TYPE   ,  &GeneralParams.ScreenSaverTimer          ,   NULL                      , 0                     },
     {"Configura i led "       , ENUM_VALUE_TYPE  ,  &LedConf                                 ,   (void *)LedConfiguration  , MAX_LED_COMBINATIONS  },
     {"Scritture in memoria"   , READ_ONLY_TYPE   ,  &EepromSavedValue[NUMBER_OF_WRITES_ADDR] ,   NULL                      , 0                     },
 }; 

@@ -58,6 +58,14 @@ const char MeasureIniz[] =
     'E',
 };
 
+const char *MaxMinName[] = 
+{
+    "Imax",
+    "Imin",
+    "Pmax",
+    "Pmin",
+};
+
 enum
 {
     CURRENT_NAME = 0,
@@ -122,13 +130,33 @@ static void FormatMeasure(uint8_t Page)
         break;
       case POWER_PAGE:
         ActualMeasure = GeneralMeasures.Power;
-        NameMeas = CURRENT_NAME;
+        NameMeas = POWER_NAME;
         UnitMeas = POWER_UNIT;
         break;
       case ENERGY_PAGE:
         ActualMeasure = GeneralMeasures.MeanEnergy;
         NameMeas = ENERGY_NAME;
         UnitMeas = ENERGY_UNIT;
+        break;
+      case MAX_CURRENT_PAGE:
+        ActualMeasure = GeneralMeasures.MaxCurrent;
+        NameMeas = CURRENT_NAME;
+        UnitMeas = CURRENT_UNIT;
+        break;
+      case MIN_CURRENT_PAGE:
+        ActualMeasure = GeneralMeasures.MinCurrent;
+        NameMeas = CURRENT_NAME;
+        UnitMeas = CURRENT_UNIT;
+        break;
+      case MAX_POWER_PAGE:
+        ActualMeasure = GeneralMeasures.MaxPower;
+        NameMeas = POWER_NAME;
+        UnitMeas = POWER_UNIT;
+        break;
+      case MIN_POWER_PAGE:
+        ActualMeasure = GeneralMeasures.MinPower;
+        NameMeas = POWER_NAME;
+        UnitMeas = POWER_UNIT;
         break;
       default:
         break;
@@ -195,7 +223,6 @@ void DrawMeasure(uint8_t Page)
     u8g2_ClearBuffer(&u8g);
     
     // Scrittura misura
-//    u8g2_SetFont(&u8g, u8g_font_9x18B);  
     u8g2_SetFont(&u8g, u8g_font_courR18);  
     u8g2_DrawStr(&u8g, MEASURE_X_POS, GENERAL_STR_Y_POS(20), MeasureStr);
     
@@ -209,11 +236,19 @@ void DrawMeasure(uint8_t Page)
     else
         u8g2_DrawStr(&u8g, X_RIGHT_POS(PrefixMeasureUnit), GENERAL_STR_Y_POS(20), PrefixMeasureUnit);
     
-    u8g2_SetFont(&u8g, u8g_font_8x13);    
-    u8g2_DrawStr(&u8g, X_LEFT_POS, GENERAL_STR_Y_POS(20), MeasureName);
-    
+    if(Page >=  MAX_CURRENT_PAGE && Page <= MIN_POWER_PAGE)
+    {
+        u8g2_SetFont(&u8g, u8g2_font_5x8_tf);    
+        u8g2_DrawStr(&u8g, X_LEFT_POS, GENERAL_STR_Y_POS(30), MaxMinName[Page - MAX_CURRENT_PAGE]);
+    }
+    else
+    {
+        u8g2_SetFont(&u8g, u8g_font_8x13);    
+        u8g2_DrawStr(&u8g, X_LEFT_POS, GENERAL_STR_Y_POS(20), MeasureName);
+    }
     u8g2_SetFont(&u8g, u8g_font_4x6);
     u8g2_DrawStr(&u8g, X_CENTER_POS(PageNumber), BOTTOM_INFO_BAR_Y_POS, PageNumber);
+    
     DrawTopInfoBar();
     DrawBottomBarInfo(MEASURE_PAGE);
     
@@ -227,14 +262,15 @@ void DrawMeasure(uint8_t Page)
 void DrawClock()
 {
     char Date[9], Time[9];
+    float Meno90 = (float)TO_RADIANTS(90.0);
     snprintf(Date, 9, "%02d/%02d/%02d", GlobalDate.day, GlobalDate.month, GlobalDate.year);
     snprintf(Time, 9, "%02d:%02d:%02d", GlobalTime.hours, GlobalTime.minutes, GlobalTime.seconds);
-    int16_t XPosHour =   (int16_t) (CLOCK_RADIUS - 10) * cos((double)TO_RADIANTS(15*GlobalTime.hours ) + 0.785398);
-    int16_t YPosHour =   (int16_t) (CLOCK_RADIUS - 10) * sin((double)TO_RADIANTS(15*GlobalTime.hours ) + 0.785398);   
-    int16_t XPosMinute = (int16_t) (CLOCK_RADIUS - 2) * cos((double)TO_RADIANTS(6*GlobalTime.minutes ) + 1.570796);
-    int16_t YPosMinute = (int16_t) (CLOCK_RADIUS - 2) * sin((double)TO_RADIANTS(6*GlobalTime.minutes ) + 1.570796);   
-    int16_t XPosSecond = (int16_t) (CLOCK_RADIUS - 2) * cos((double)TO_RADIANTS(6*GlobalTime.seconds ) + 1.570796);
-    int16_t YPosSecond = (int16_t) (CLOCK_RADIUS - 2) * sin((double)TO_RADIANTS(6*GlobalTime.seconds ) + 1.570796);
+    int16_t XPosHour =   (int16_t) (CLOCK_RADIUS - 10) * cos((double)TO_RADIANTS(30*(GlobalTime.hours%12))- Meno90);
+    int16_t YPosHour =   (int16_t) (CLOCK_RADIUS - 10) * sin((double)TO_RADIANTS(30*(GlobalTime.hours%12))- Meno90); 
+    int16_t XPosMinute = (int16_t) (CLOCK_RADIUS - 2) * cos((double)TO_RADIANTS(6*GlobalTime.minutes ) - Meno90);
+    int16_t YPosMinute = (int16_t) (CLOCK_RADIUS - 2) * sin((double)TO_RADIANTS(6*GlobalTime.minutes ) - Meno90);
+    int16_t XPosSecond = (int16_t) (CLOCK_RADIUS - 2) * cos((double)TO_RADIANTS(6*GlobalTime.seconds ) - Meno90);
+    int16_t YPosSecond = (int16_t) (CLOCK_RADIUS - 2) * sin((double)TO_RADIANTS(6*GlobalTime.seconds ) - Meno90);
     
     u8g2_ClearBuffer(&u8g);
     u8g2_SetFont(&u8g, u8g_font_7x13B);
@@ -246,13 +282,13 @@ void DrawClock()
         u8g2_DrawCircle(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, 3, U8G2_DRAW_ALL);
         
         // ORE
-        u8g2_DrawLine(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosHour, CLOCK_Y_CENTER - YPosHour);
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_X_CENTER + XPosHour,   CLOCK_Y_CENTER + YPosHour);
               
        // MINUTI
-        u8g2_DrawLine(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosMinute, CLOCK_Y_CENTER - YPosMinute);
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_X_CENTER + XPosMinute, CLOCK_Y_CENTER + YPosMinute);
                 
         // SECONDI  
-        u8g2_DrawLine(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_X_CENTER - XPosSecond, CLOCK_Y_CENTER - YPosSecond); 
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER, CLOCK_Y_CENTER, CLOCK_X_CENTER + XPosSecond, CLOCK_Y_CENTER + YPosSecond); 
         
         
         u8g2_DrawStr(&u8g, X_LEFT_POS, GENERAL_STR_Y_POS(29), Date);
@@ -266,13 +302,13 @@ void DrawClock()
         u8g2_DrawCircle(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, 3, U8G2_DRAW_ALL);
         
         // ORE
-        u8g2_DrawLine(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, (CLOCK_X_CENTER - 35) - XPosHour, CLOCK_Y_CENTER - YPosHour);
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, (CLOCK_X_CENTER - 35) + XPosHour, CLOCK_Y_CENTER + YPosHour);
         
         // MINUTI
-        u8g2_DrawLine(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, (CLOCK_X_CENTER - 35) - XPosMinute, CLOCK_Y_CENTER - YPosMinute);
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, (CLOCK_X_CENTER - 35) + XPosMinute, CLOCK_Y_CENTER + YPosMinute);
         
         // SECONDI  
-        u8g2_DrawLine(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, (CLOCK_X_CENTER - 35) - XPosSecond, CLOCK_Y_CENTER - YPosSecond); 
+        u8g2_DrawLine(&u8g, CLOCK_X_CENTER - 35, CLOCK_Y_CENTER, (CLOCK_X_CENTER - 35) + XPosSecond, CLOCK_Y_CENTER + YPosSecond); 
         
         break;
       default:
