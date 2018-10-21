@@ -86,17 +86,32 @@ static float CalcMeanCurrent(float CurrentRMS[])
 
 static void CheckMaxMinCurrentPower()
 {   
+    static bool RecMaxMin = true;
+    if(RecMaxMin && GeneralMeasures.MeanCurrentRMS > 0 && GeneralMeasures.Power > 0)
+    {
+        GeneralMeasures.MaxCurrent = GeneralMeasures.MeanCurrentRMS;
+        GeneralMeasures.MinCurrent = GeneralMeasures.MeanCurrentRMS;
+        GeneralMeasures.MaxPower = GeneralMeasures.Power;
+        GeneralMeasures.MinPower = GeneralMeasures.Power;
+        RecMaxMin = false;
+    }
     if(GeneralMeasures.MaxCurrent < GeneralMeasures.MeanCurrentRMS)
         GeneralMeasures.MaxCurrent = GeneralMeasures.MeanCurrentRMS;
     
     if(GeneralMeasures.MinCurrent > GeneralMeasures.MeanCurrentRMS)
-        GeneralMeasures.MinCurrent = GeneralMeasures.MeanCurrentRMS;
+    {
+        if(GeneralMeasures.MeanCurrentRMS > 0)
+            GeneralMeasures.MinCurrent = GeneralMeasures.MeanCurrentRMS;
+    }
     
     if(GeneralMeasures.MaxPower < GeneralMeasures.Power)
         GeneralMeasures.MaxPower = GeneralMeasures.Power;
     
     if(GeneralMeasures.MinPower > GeneralMeasures.Power)
-        GeneralMeasures.MinPower = GeneralMeasures.Power;
+    {
+        if(GeneralMeasures.Power > 0)
+            GeneralMeasures.MinPower = GeneralMeasures.Power;
+    }
     return;
 }
 
@@ -108,7 +123,8 @@ static void SecondEvent()
     {
         if(!NotReEnter)
         {
-            GeneralMeasures.MeanEnergy += ((EnergyAcc / NumberOfEnergySampling)/3600.0);
+            if(NumberOfEnergySampling > 0)
+                GeneralMeasures.MeanEnergy += ((EnergyAcc / NumberOfEnergySampling)/3600.0);
             
             NumberOfEnergySampling = 0;
             EnergyAcc = 0;

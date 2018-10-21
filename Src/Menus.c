@@ -98,6 +98,7 @@ bool ShowMeasure()
             break;
           case BUTTON_LEFT:
             ExitShowMeasure = true;
+            
             break;
           case BUTTON_RIGHT:           
             if(MeasurePage < MAX_MEASURE_PAGE - 1)
@@ -111,7 +112,7 @@ bool ShowMeasure()
             break;
         }
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        osDelay(WHILE_LOOP_DELAY+20);
     }
     
     return true;

@@ -211,9 +211,7 @@ bool DrawCurrentWave()
 }
 
 void DrawMeasure(uint8_t Page)
-{
-    LastButtonPressed = NO_PRESS;
-    
+{    
     char PageNumber[4];
     
     snprintf(PageNumber, 4, "%d/%d", (Page + 1), MAX_MEASURE_PAGE);
@@ -239,7 +237,7 @@ void DrawMeasure(uint8_t Page)
     if(Page >=  MAX_CURRENT_PAGE && Page <= MIN_POWER_PAGE)
     {
         u8g2_SetFont(&u8g, u8g2_font_5x8_tf);    
-        u8g2_DrawStr(&u8g, X_LEFT_POS, GENERAL_STR_Y_POS(30), MaxMinName[Page - MAX_CURRENT_PAGE]);
+        u8g2_DrawStr(&u8g, X_CENTER_POS(MaxMinName[Page - MAX_CURRENT_PAGE]), GENERAL_STR_Y_POS(40), MaxMinName[Page - MAX_CURRENT_PAGE]);
     }
     else
     {
