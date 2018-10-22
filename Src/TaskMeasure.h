@@ -17,7 +17,7 @@
 
 #define TOVOLT(Value)            (Value*(3.3/4096.0))
 #define CURR_SENSOR_CAPACITY     5  
-#define CURR_SENSOR_SENSITIVITY  (((3300*(CURR_SENSOR_CAPACITY * 185))/5000)/CURR_SENSOR_CAPACITY) // real 185.0 
+#define CURR_SENSOR_SENSITIVITY  185
 
 typedef struct
 {

@@ -64,7 +64,7 @@ static float CalcCurrent(uint64_t QuadraticValue)
     
     SquareQuadratic =  (TOVOLT(SquareQuadratic)) * 1000;
     
-    // Divido i V ottenuti per la sensibilita del sensore per ottere gli A 
+    // Divido i mV ottenuti per la sensibilita del sensore per ottere gli A 
     SquareQuadratic /= CURR_SENSOR_SENSITIVITY;
     
     return SquareQuadratic;
