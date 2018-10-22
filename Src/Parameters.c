@@ -27,9 +27,9 @@ enum
 
 const ENUM_VALUE_ITEM ScreenSaverEnum[MAX_SCREENSAVER_TYPE] = 
 {
-    {ANALOG_DATE, "Analogico/data"},
-    {DIGITAL_DATE, "Digitale/data"},
-    {ANALOG_ONLY, "Solo analogico"},
+    {ANALOG_DATE  , "Analogico/data"},
+    {DIGITAL_DATE , "Digitale/data"},
+    {ANALOG_ONLY  , "Solo analogico"},
 };
 
 const ENUM_VALUE_ITEM LedConfiguration[MAX_LED_COMBINATIONS] = 
