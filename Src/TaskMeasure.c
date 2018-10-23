@@ -7,6 +7,7 @@
 #include "Parameters.h"
 #include "AlarmMachine.h"
 #include "TaskLed.h"
+#include "Simulation.h"
 
 
 #ifdef ENABLE_MEASURE
@@ -16,34 +17,14 @@
 extern bool ConversionEnd;
 extern bool SecondTick;
 extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
+extern bool EnableSimulation;
 
-
-#ifdef SIM_SIN_WAVE
-int16_t SinTestGraphic[NUM_TEST_SAMPLE];
-#endif
-
-static uint64_t CubeRawValue;
+static double CubeRawValue;
 static float CurrentRMS[CURRENT_SAMPLE];
 static float EnergyAcc;
 static uint32_t NumberOfEnergySampling; 
 MEASURES GeneralMeasures;
 
-
-
-#ifdef SIM_SIN_WAVE
-void FillTestArray()
-{
-    uint8_t NCamp = 0;
-    uint16_t Angle = 0;
-    float SinCalc = 0.0;
-    for(NCamp = 0; NCamp < NUM_TEST_SAMPLE; NCamp++)
-    {
-        Angle = NCamp * 4;
-        SinCalc = sin(TO_RADIANTS(Angle));
-        SinTestGraphic[NCamp] = (int16_t)(SinCalc * INT16_SCALE);
-    }   
-}
-#endif
 
 static void ClearFLArray(float Array[], uint8_t Size)
 {
@@ -54,7 +35,7 @@ static void ClearFLArray(float Array[], uint8_t Size)
 }
 
 
-static float CalcCurrent(uint64_t QuadraticValue)
+static float CalcCurrent(double QuadraticValue)
 {
     float SquareQuadratic;
     QuadraticValue = (QuadraticValue / NUM_SAMPLE); 
@@ -148,40 +129,68 @@ static void SecondEvent()
 void TaskMeasure(void const * argument)
 {
     uint8_t NumberOfCurrentSampling = 0;
+    int32_t AdcRawDiff = 0;
+    float OldSimCurrent = 0;
 //    GeneralParams.MeasureVoltage = VOLTAGE_VALUE_DFLT;
         
-#ifdef SIM_SIN_WAVE    
-    FillTestArray();
-#endif
+//    if(EnableSimulation)
+//        SimAdcWave();
+
     
     
     /* Infinite loop */
     for(;;)
-    {
-        
+    {       
         if(GeneralParams.EnableMeasure)
         {
-
-            while(!ConversionEnd)
+            if(!GeneralParams.EnableSimulation)   
             {
-                ADCConvToDMA();                
-            }           
-            if(ConversionEnd)
+                while(!ConversionEnd)
+                {
+                    ADCConvToDMA();                
+                }  
+                
+                if(ConversionEnd)
+                {
+                    StopADC_DMA_Conv();
+                    ConversionEnd = false;
+                    if(ADCReadedValue[0] <= (GeneralParams.ADCOffset + (uint16_t)SENSOR_NOISE_TO_RAW_VAL) &&
+                       ADCReadedValue[0] >= (GeneralParams.ADCOffset - (uint16_t)SENSOR_NOISE_TO_RAW_VAL))
+                    {    
+                        for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
+                        {
+                            AdcRawDiff = (int32_t)ADCReadedValue[ValueIndx] - (int32_t)GeneralParams.ADCOffset;
+                            CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
+                        }
+                        CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
+                        NumberOfCurrentSampling++;
+                        CubeRawValue = 0;
+                    }
+                }
+            }
+            else
             {
-                StopADC_DMA_Conv();
-                ConversionEnd = false;
+                if(OldSimCurrent != SimCurrentValue)
+                {
+                    SimAdcWave();
+                    OldSimCurrent = SimCurrentValue;
+                }
+                
                 for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
                 {
-                    CubeRawValue += ((ADCReadedValue[ValueIndx] - GeneralParams.ADCOffset) * (ADCReadedValue[ValueIndx] - GeneralParams.ADCOffset));
+                    AdcRawDiff = (int32_t)ADCReadedValue[ValueIndx] - (int32_t)GeneralParams.ADCOffset;
+                    CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
                 }
                 CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
                 NumberOfCurrentSampling++;
-                CubeRawValue = 0;
+                CubeRawValue = 0; 
             }
+
             if(NumberOfCurrentSampling == CURRENT_SAMPLE)
             {
-                GeneralMeasures.MeanCurrentRMS = CalcMeanCurrent(CurrentRMS);            
-                if(GeneralMeasures.MeanCurrentRMS > 0.114)
+                GeneralMeasures.MeanCurrentRMS = CalcMeanCurrent(CurrentRMS); 
+                GeneralMeasures.MeanCurrentRMS = (floor(GeneralMeasures.MeanCurrentRMS *100))/100;
+                if(GeneralMeasures.MeanCurrentRMS > 0.11)
                     GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * (float)GeneralParams.MeasureVoltage;
                 else
                 {

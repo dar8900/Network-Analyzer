@@ -56,6 +56,7 @@ typedef enum
 {
     RESET_ENERGY = 0,
     SYSTEM_RESET,
+    RESET_DEFAULT,
     MAX_RESET_ITEM
 }RESET_ITEMS;
 

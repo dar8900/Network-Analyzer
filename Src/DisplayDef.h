@@ -12,6 +12,8 @@
 
 #define ALARM_ICON_SML_X_POS     22
 
+#define SIMULATION_STR_POS       36
+
 #define BATTERY_ICON_SML_X_POS   75
 
 #define POPUP_DELAY  1500

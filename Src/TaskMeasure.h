@@ -5,7 +5,6 @@
 #define ADC_HALF_MAX_VALUE          2048
 
 
-
 #define NUM_TEST_SAMPLE       126
 
 #define PIGRECO               3.141592653
@@ -18,6 +17,9 @@
 #define TOVOLT(Value)            (Value*(3.3/4096.0))
 #define CURR_SENSOR_CAPACITY     5  
 #define CURR_SENSOR_SENSITIVITY  185
+
+#define SENSOR_NOISE              22
+#define SENSOR_NOISE_TO_RAW_VAL   (22 / (3.3/4096.0))
 
 typedef struct
 {

@@ -50,6 +50,7 @@ osThreadId EepromHandle;
 char *ErrorMsg;
 uint16_t ErrorLine;
 
+
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 

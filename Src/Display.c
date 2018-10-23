@@ -346,9 +346,11 @@ void DrawTopInfoBar()
     {
         u8g2_DrawXBMP(&u8g, ALARM_ICON_SML_X_POS, 0, 12, 6, AlarmIconSmall);
     }
+    if(GeneralParams.EnableSimulation)
+        u8g2_DrawStr(&u8g, SIMULATION_STR_POS, TOP_INFO_BAR_Y_POS, "Simul.");
     
     // Icona batteria (ancora da gestire)
-    u8g2_DrawXBMP(&u8g, BATTERY_ICON_SML_X_POS, 0, 19, 6, BatteryIcons[BATTERIA_IN_CARICA]);
+    u8g2_DrawXBMP(&u8g, BATTERY_ICON_SML_X_POS, 0, 19, 6, BatteryIcons[BATTERIA_1_4]);
     
 }
 

@@ -12,6 +12,7 @@
 #define  ALARM_FACTOR_UNIT_BOXPOS   8
 
 extern uint8_t LedConf;
+extern bool EnableSimulation;
 // Parametri 
 PARAMETERS_S GeneralParams;
 
@@ -47,6 +48,7 @@ const ENUM_VALUE_ITEM LedConfiguration[MAX_LED_COMBINATIONS] =
 const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
 {
     {"Abilitare misura"       , CONFIRM_TYPE     ,  &GeneralParams.EnableMeasure             ,   NULL                      , 0                     },
+    {"Abilitare simulaz."     , CONFIRM_TYPE     ,  &GeneralParams.EnableSimulation          ,   NULL                      , 0                     },
     {"Tensione misura (V)"    , INT_VALUE_TYPE   ,  &GeneralParams.MeasureVoltage            ,   NULL                      , 0                     },
     {"Periodo log en.(s)"     , INT_VALUE_TYPE   ,  &GeneralParams.LogEnergyPeriod           ,   NULL                      , 0                     },
     {"ADC Offset"             , INT_VALUE_TYPE   ,  &GeneralParams.ADCOffset                 ,   NULL                      , 0                     },

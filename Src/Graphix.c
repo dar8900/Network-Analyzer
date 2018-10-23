@@ -22,7 +22,6 @@ extern int16_t SinTestGraphic[];
 extern TIME_VAR GlobalTime;
 extern DATE_VAR GlobalDate;
 
-
 //extern uint16_t ACDOffset;
 
 typedef struct
@@ -195,11 +194,7 @@ bool DrawCurrentWave()
 
         for(XPos = 0; XPos < MAX_GRAPHIC_WIDTH; XPos++)
         {
-#ifdef SIM_SIN_WAVE
-            YPos = 32 - ((HALF_GRAPHIC_AMPLITUDE * SinTestGraphic[XPos]) / INT16_SCALE);
-#else
-            YPos = 30 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValue[XPos] - GeneralParams.ADCOffset)) / ADC_HALF_MAX_VALUE);
-#endif            
+            YPos = 30 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValue[XPos] - GeneralParams.ADCOffset)) / ADC_HALF_MAX_VALUE);          
             u8g2_DrawPixel(&u8g, XPos, YPos);      
         }
         

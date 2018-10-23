@@ -19,6 +19,5 @@
 
 #endif // UNSELECT_ALL
 
-#undef SIM_SIN_WAVE
 
 #endif

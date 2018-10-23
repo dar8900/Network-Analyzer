@@ -32,7 +32,6 @@ MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] =
     {"Grafici"            , ChooseGraphics    },
     {"Misure"             , ShowMeasure       },
     {"Imposta allarmi"    , AlarmSetup        },
-//    {"Impostare i Led"    , LedCtrl           },
     {"Setup generale"     , ParameterSetup    },
     {"Imposta orario"     , ChangeDateTimeMenu},
     {"Reset"              , ResetMenu         },
@@ -54,6 +53,7 @@ char *ResetList[MAX_RESET_ITEM] =
 {
     "Reset energia",
     "Riavvia sistema",
+    "Reset a default",
 };
 
 enum
@@ -67,18 +67,6 @@ const uint8_t ResetType[MAX_RESET_ITEM] =
     RESET_ENERGY_TYPE,
     SYSTEM_RESET_TYPE,
 };
-
-//const char *LedCombStr[MAX_LED_COMBINATIONS] = 
-//{
-//    "RGB",
-//    "Rosso",
-//    "Verde",
-//    "Blu",
-//    "Rosso e verde",
-//    "Rosso e blu",
-//    "Blu e verde",
-//    "Tutti spenti",
-//};
 
 
 
@@ -227,61 +215,6 @@ bool AlarmSetup()
     return true;
 }
 
-
-//bool LedCtrl()
-//{
-//    uint8_t LedComb = 0, FirstListItem = 0;
-//    bool ExitLedConf = false, ChoosedLedComb = false;
-//    while(!ExitLedConf)
-//    {
-//        CheckOperation();
-//        DrawListLoop("Controllo Led", LedCombStr, LedComb, FirstListItem, MAX_LED_COMBINATIONS, MAX_SETUP_MENU_LINES);
-//        switch(LastButtonPressed)
-//        {
-//          case BUTTON_UP:
-//            if(LedComb > 0)
-//                LedComb--;
-//            else
-//                LedComb = MAX_LED_COMBINATIONS - 1;
-//            break;
-//          case BUTTON_DOWN:
-//            if(LedComb < MAX_LED_COMBINATIONS - 1)
-//                LedComb++;
-//            else
-//                LedComb = 0;            
-//            break;
-//          case BUTTON_LEFT:
-//            ExitLedConf = true;
-//            break;
-//          case BUTTON_RIGHT:
-//            ChoosedLedComb = true;
-//            ExitLedConf = true;
-//            break;
-//          case BUTTON_OK:
-//            break;
-//          default:
-//            break;           
-//        }
-//        
-//        if(LedComb <= (MAX_SETUP_MENU_LINES - 1))
-//        {
-//            FirstListItem = 0;  
-//        }
-//        else
-//        {
-//            FirstListItem = LedComb - (MAX_SETUP_MENU_LINES - 1);
-//        }
-//        LastButtonPressed = NO_PRESS;
-//        osDelay(WHILE_LOOP_DELAY);
-//    }
-//    if(ChoosedLedComb)
-//    {
-//        LastButtonPressed = NO_PRESS;
-//        LedConf = LedComb;
-//        ChoosedLedComb = false;
-//    }
-//    return true;
-//}
 
 bool ParameterSetup()
 {
@@ -596,9 +529,17 @@ void WichReset(char * ResetTitle, uint8_t ResetType)
           case RESET_ENERGY_TYPE:
             MessageScreen("Reset in corso");
             GeneralMeasures.MeanEnergy = 0.0;
+            EepFlag.SaveEnergy = true;
             break;
           case SYSTEM_RESET_TYPE:
             MessageScreen("Restart in corso");
+            HAL_NVIC_SystemReset();
+            break;
+          case RESET_DEFAULT:
+            MessageScreen("Reset in corso");
+            EepFlag.EraseAll = true;
+            while(EepFlag.EraseAll)
+                osDelay(100);
             HAL_NVIC_SystemReset();
             break;
           default:

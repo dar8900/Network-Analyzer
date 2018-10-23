@@ -92,8 +92,15 @@ static bool IsEepromClear()
     return true;
 }
 
-
-
+static void SaveAllToMem()
+{
+    if(EepFlag.SaveAll)
+    {
+        TransferValuesToMem(EepromSavedValue);
+        EepFlag.SaveAll = false;
+    }
+    
+}
 //##########################################################################################################
 
 //                                      NUMERO SCRITTURE       
@@ -136,7 +143,7 @@ static void WriteParameters()
         EepromSavedValue[SCREENSAVER_TYPE_ADDR] = (uint32_t)GeneralParams.ScreenSaverType;
         EepromSavedValue[SCREEN_SAVER_TIMER_ADDR] = (uint32_t)GeneralParams.ScreenSaverTimer;
         EepromSavedValue[LED_CONF_ADDR] = (uint32_t)LedConf;
-
+        EepromSavedValue[ENABLE_SIMULATION_ADDR] = (uint32_t)GeneralParams.EnableSimulation;
         
         for(uint8_t ParamIndexAddr = 0; ParamIndexAddr < (MAX_PARAMETER_ITEM - 1); ParamIndexAddr++)
         {
@@ -160,58 +167,7 @@ static void WriteParameters()
                     TransferValuesToMem(EepromSavedValue);
                 }                  
             }
-        }
-
-        
-//        EE_SingleRead(ENABLE_MEASURE_ADDR, &OldValue);
-//        if(OldValue != EepromSavedValue[ENABLE_MEASURE_ADDR])
-//        {    
-//            WriteNumbOfWrites(1);
-//            TransferValuesToMem(EepromSavedValue);
-//        }
-//        
-//        EE_SingleRead(ADC_OFFSET_ADDR, &OldValue);
-//        if(OldValue != EepromSavedValue[ADC_OFFSET_ADDR])
-//        {     
-//            WriteNumbOfWrites(1);
-//            TransferValuesToMem(EepromSavedValue);
-//        }
-//        
-//        EE_SingleRead(VOLTAGE_MEASURE_ADDR, &OldValue);
-//        if(OldValue != EepromSavedValue[VOLTAGE_MEASURE_ADDR])
-//        {       
-//            WriteNumbOfWrites(1);
-//            TransferValuesToMem(EepromSavedValue);
-//        }
-//
-//        EE_SingleRead(LOG_ENERGY_ADDR, &OldValue);
-//        if(OldValue != EepromSavedValue[LOG_ENERGY_ADDR])
-//        {       
-//            WriteNumbOfWrites(1);
-//            TransferValuesToMem(EepromSavedValue);
-//        }
-//        
-//        EE_SingleRead(ENABLE_SCREENSAVER_ADDR, &OldValue);
-//        if(OldValue != EepromSavedValue[ENABLE_SCREENSAVER_ADDR])
-//        {       
-//            WriteNumbOfWrites(1);
-//            TransferValuesToMem(EepromSavedValue);
-//        }
-//
-//        EE_SingleRead(SCREENSAVER_TYPE_ADDR, &OldValue);
-//        if(OldValue != EepromSavedValue[SCREENSAVER_TYPE_ADDR])
-//        {       
-//            WriteNumbOfWrites(1);
-//            TransferValuesToMem(EepromSavedValue);
-//        }
-//        
-//        EE_SingleRead(LED_CONF_ADDR, &OldValue);
-//        if(OldValue != EepromSavedValue[LED_CONF_ADDR])
-//        {       
-//            WriteNumbOfWrites(1);
-//            TransferValuesToMem(EepromSavedValue);
-//        }
-//        
+        }      
         EepFlag.SaveParameters = false;
     
     }
@@ -245,6 +201,9 @@ static void ReadParameters(uint8_t ParamItem)
         break;
       case LED_CONFIGURATION:
         LedConf = EepromSavedValue[LED_CONF_ADDR];
+        break;
+      case ENABLE_SIMULATION:
+        GeneralParams.EnableSimulation = EepromSavedValue[ENABLE_SIMULATION_ADDR];
         break;
       default:
         break;
@@ -535,14 +494,15 @@ static void CheckEepromAndTranfer()
     if(IsEepromClear())
     {  
         GeneralMeasures.MeanEnergy = 0.0;
-        GeneralParams.EnableMeasure = false;
-        GeneralParams.ADCOffset = 2048;
-        GeneralParams.MeasureVoltage = 220;
-        GeneralParams.LogEnergyPeriod = 15;
-        GeneralParams.EnableScreenSaver = false;
-        GeneralParams.ScreenSaverType = ANALOG_DATE;
-        GeneralParams.ScreenSaverTimer = 10;
-        LedConf = ALL_LED_OFF;
+        EepromSavedValue[ENABLE_MEASURE_ADDR] = GeneralParams.EnableMeasure = false;
+        EepromSavedValue[ADC_OFFSET_ADDR] = GeneralParams.ADCOffset = 2048;
+        EepromSavedValue[VOLTAGE_MEASURE_ADDR] = GeneralParams.MeasureVoltage = 220;
+        EepromSavedValue[LOG_ENERGY_ADDR] = GeneralParams.LogEnergyPeriod = 15;
+        EepromSavedValue[ENABLE_SCREENSAVER_ADDR] = GeneralParams.EnableScreenSaver = false;
+        EepromSavedValue[SCREENSAVER_TYPE_ADDR] = GeneralParams.ScreenSaverType = ANALOG_DATE;
+        EepromSavedValue[SCREEN_SAVER_TIMER_ADDR] = GeneralParams.ScreenSaverTimer = 10;
+        EepromSavedValue[LED_CONF_ADDR] = LedConf = ALL_LED_OFF;
+        EepromSavedValue[ENABLE_SIMULATION_ADDR] = GeneralParams.EnableSimulation = false;
         
         AlarmsParameters[CURRENT_ALARM].OverThreshold = 1.0;
         AlarmsParameters[CURRENT_ALARM].UnderThreshold = 0.0;
@@ -552,10 +512,9 @@ static void CheckEepromAndTranfer()
         AlarmsParameters[ENERGY_ALARM].UnderThreshold = 0.0;
         
         EepFlag.SaveParameters = true;
-        EepFlag.SaveThresholds[0] = true;
-        EepFlag.SaveThresholds[1] = true;
-        EepFlag.SaveThresholds[2] = true;
-        EepFlag.SaveEnergy = true;
+        EepFlag.SaveThresholds[CURRENT_THR_FLAG] = true;
+        EepFlag.SaveThresholds[POWER_THR_FLAG]   = true;
+        EepFlag.SaveThresholds[ENERGY_THR_FLAG]  = true;
     }
     else
     {

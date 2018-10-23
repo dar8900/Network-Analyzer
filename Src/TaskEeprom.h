@@ -27,7 +27,7 @@ typedef enum
     SCREENSAVER_TYPE_ADDR,
     LED_CONF_ADDR,
     SCREEN_SAVER_TIMER_ADDR ,
-    ADDR_71 ,
+    ENABLE_SIMULATION_ADDR ,
     ADDR_72 ,
     ADDR_73 ,
     ADDR_74 ,
@@ -217,7 +217,7 @@ typedef enum
 enum
 {
     CURRENT_THR_FLAG = 0,
-    POWER_THR_FLAG,
+    POWER_THR_FLAG      ,
     ENERGY_THR_FLAG
 };
 
@@ -227,6 +227,7 @@ typedef struct
     bool SaveThresholds[3];
     bool SaveEnergy;
     bool EraseAll;
+    bool SaveAll;
 }FLAG_EEPROM;
 
 extern FLAG_EEPROM EepFlag;
