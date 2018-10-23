@@ -49,6 +49,7 @@ const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] =
 {
     {"Abilitare misura"       , CONFIRM_TYPE     ,  &GeneralParams.EnableMeasure             ,   NULL                      , 0                     },
     {"Abilitare simulaz."     , CONFIRM_TYPE     ,  &GeneralParams.EnableSimulation          ,   NULL                      , 0                     },
+    {"Frequenza sim.(Hz)"     , INT_VALUE_TYPE   ,  &GeneralParams.Frequency                 ,   NULL                      , 0                     },
     {"Tensione misura (V)"    , INT_VALUE_TYPE   ,  &GeneralParams.MeasureVoltage            ,   NULL                      , 0                     },
     {"Periodo log en.(s)"     , INT_VALUE_TYPE   ,  &GeneralParams.LogEnergyPeriod           ,   NULL                      , 0                     },
     {"ADC Offset"             , INT_VALUE_TYPE   ,  &GeneralParams.ADCOffset                 ,   NULL                      , 0                     },

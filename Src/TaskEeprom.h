@@ -28,7 +28,7 @@ typedef enum
     LED_CONF_ADDR,
     SCREEN_SAVER_TIMER_ADDR ,
     ENABLE_SIMULATION_ADDR ,
-    ADDR_72 ,
+    FREQUENCY_SIM_ADDR ,
     ADDR_73 ,
     ADDR_74 ,
     ADDR_75 ,

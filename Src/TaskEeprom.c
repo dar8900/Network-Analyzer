@@ -144,6 +144,7 @@ static void WriteParameters()
         EepromSavedValue[SCREEN_SAVER_TIMER_ADDR] = (uint32_t)GeneralParams.ScreenSaverTimer;
         EepromSavedValue[LED_CONF_ADDR] = (uint32_t)LedConf;
         EepromSavedValue[ENABLE_SIMULATION_ADDR] = (uint32_t)GeneralParams.EnableSimulation;
+        EepromSavedValue[FREQUENCY_SIM_ADDR] = (uint32_t)GeneralParams.Frequency;
         
         for(uint8_t ParamIndexAddr = 0; ParamIndexAddr < (MAX_PARAMETER_ITEM - 1); ParamIndexAddr++)
         {
@@ -204,6 +205,9 @@ static void ReadParameters(uint8_t ParamItem)
         break;
       case ENABLE_SIMULATION:
         GeneralParams.EnableSimulation = EepromSavedValue[ENABLE_SIMULATION_ADDR];
+        break;
+      case FREQUENZA_SIM:
+        GeneralParams.Frequency = EepromSavedValue[FREQUENCY_SIM_ADDR];
         break;
       default:
         break;
@@ -503,6 +507,7 @@ static void CheckEepromAndTranfer()
         EepromSavedValue[SCREEN_SAVER_TIMER_ADDR] = GeneralParams.ScreenSaverTimer = 10;
         EepromSavedValue[LED_CONF_ADDR] = LedConf = ALL_LED_OFF;
         EepromSavedValue[ENABLE_SIMULATION_ADDR] = GeneralParams.EnableSimulation = false;
+        EepromSavedValue[FREQUENCY_SIM_ADDR] = GeneralParams.Frequency = 1;
         
         AlarmsParameters[CURRENT_ALARM].OverThreshold = 1.0;
         AlarmsParameters[CURRENT_ALARM].UnderThreshold = 0.0;
