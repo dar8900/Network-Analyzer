@@ -7,11 +7,13 @@
 
 extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
 
+
 #define  RAW_CURRENT_CONV(Current)   (331.52 * Current)
 #define  SAMPLE_TO_ANGLE             (NUM_SAMPLE / 360.0)
-#define  OMEGA                       (2 * PIGRECO * 50)
+#define  OMEGA                       (2 * PIGRECO * GeneralParams.Frequency)
 
 float SimCurrentValue = 1.0;
+
 
 void SimAdcWave()
 {

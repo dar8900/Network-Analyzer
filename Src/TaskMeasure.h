@@ -11,6 +11,7 @@
 #define TO_GRADES(Angle)     (Angle * (180.0 / PIGRECO))
 #define TO_RADIANTS(Angle)   (Angle * (PIGRECO / 180.0))
 
+//#define FREQUENZA               2
 #define VOLTAGE_VALUE_DFLT    220
 
 

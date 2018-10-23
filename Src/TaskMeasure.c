@@ -131,10 +131,8 @@ void TaskMeasure(void const * argument)
     uint8_t NumberOfCurrentSampling = 0;
     int32_t AdcRawDiff = 0;
     float OldSimCurrent = 0;
-//    GeneralParams.MeasureVoltage = VOLTAGE_VALUE_DFLT;
-        
-//    if(EnableSimulation)
-//        SimAdcWave();
+    uint8_t OldFrequency = 0;
+    GeneralParams.Frequency = 1;
 
     
     
@@ -170,10 +168,11 @@ void TaskMeasure(void const * argument)
             }
             else
             {
-                if(OldSimCurrent != SimCurrentValue)
+                if(OldSimCurrent != SimCurrentValue || OldFrequency != GeneralParams.Frequency)
                 {
                     SimAdcWave();
                     OldSimCurrent = SimCurrentValue;
+                    OldFrequency = GeneralParams.Frequency;
                 }
                 
                 for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)

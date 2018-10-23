@@ -13,6 +13,7 @@ typedef struct
     bool     EnableScreenSaver;
     uint8_t  ScreenSaverType;
     uint16_t ScreenSaverTimer;
+    uint8_t  Frequency;
 }PARAMETERS_S;
 
 typedef enum
