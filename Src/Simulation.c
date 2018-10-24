@@ -12,7 +12,6 @@ extern uint32_t ADCReadedValue[NUM_SAMPLE];
 #define  SAMPLE_TO_ANGLE             (NUM_SAMPLE / 360.0)
 #define  OMEGA                       (2 * PIGRECO * GeneralParams.Frequency)
 
-float SimCurrentValue = 1.0;
 
 
 void SimAdcWave()
@@ -25,7 +24,7 @@ void SimAdcWave()
     }
     for(Index = 0; Index < NUM_SAMPLE; Index++)
     {
-        Value = (int16_t)(RAW_CURRENT_CONV(SimCurrentValue)* sin((double)TO_RADIANTS((float)SAMPLE_TO_ANGLE * Index) * OMEGA));
+        Value = (int16_t)(RAW_CURRENT_CONV(GeneralParams.SimulationCurrent)* sin((double)TO_RADIANTS((float)SAMPLE_TO_ANGLE * Index) * OMEGA));
         ADCReadedValue[Index] = GeneralParams.ADCOffset - Value;
     }    
         

@@ -13,6 +13,7 @@ typedef struct
     bool     EnableScreenSaver;
     uint8_t  ScreenSaverType;
     uint16_t ScreenSaverTimer;
+    float    SimulationCurrent;
     uint8_t  Frequency;
 }PARAMETERS_S;
 
@@ -46,7 +47,8 @@ typedef enum
 {
     MEASURE_ENABLE = 0,
     ENABLE_SIMULATION,
-    FREQUENZA_SIM,
+    CURRENT_SIM,
+    FREQUENCY_SIM,
     MEASURE_VOLTAGE,
     LOG_ENERGY_PERIOD,
     ADC_OFFSET,
@@ -100,6 +102,7 @@ extern PARAMETERS_S GeneralParams;
 uint8_t SearchScaleFlRange(float Value);
 bool ChooseYesNo(char *TitleChoice);
 uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem);
+float ChangeValueFl(float ParamValue, uint8_t ParamItem);
 void ChangeAlarmThrs(uint8_t AlarmItem);
 int8_t ChangeEnumValue(uint8_t ParamItem);
 #endif

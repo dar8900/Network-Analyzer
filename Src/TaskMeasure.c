@@ -132,8 +132,6 @@ void TaskMeasure(void const * argument)
     int32_t AdcRawDiff = 0;
     float OldSimCurrent = 0;
     uint8_t OldFrequency = 0;
-    GeneralParams.Frequency = 1;
-
     
     
     /* Infinite loop */
@@ -168,10 +166,10 @@ void TaskMeasure(void const * argument)
             }
             else
             {
-                if(OldSimCurrent != SimCurrentValue || OldFrequency != GeneralParams.Frequency)
+                if(OldSimCurrent != GeneralParams.SimulationCurrent || OldFrequency != GeneralParams.Frequency)
                 {
                     SimAdcWave();
-                    OldSimCurrent = SimCurrentValue;
+                    OldSimCurrent = GeneralParams.SimulationCurrent;
                     OldFrequency = GeneralParams.Frequency;
                 }
                 

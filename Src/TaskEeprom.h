@@ -105,16 +105,16 @@ typedef enum
     ADDR_146,
     ADDR_147,
     ADDR_148,
-    ADDR_149,    // FINE BLOCCO PARAMETRI
-    ADDR_150,    // INIZIO SALVATAGGIO VALORI (posso salvare 11 float)
-    ADDR_151,    
-    ADDR_152,
-    ADDR_153,
-    ADDR_154,
-    ADDR_155,
-    ADDR_156,
-    ADDR_157,
-    ADDR_158,
+    ADDR_149,              // FINE BLOCCO PARAMETRI
+    CURRENT_SIM_ADDR_0,    // INIZIO SALVATAGGIO VALORI (posso salvare 11 float)
+    CURRENT_SIM_ADDR_1,    
+    CURRENT_SIM_ADDR_2,
+    CURRENT_SIM_ADDR_3,
+    CURRENT_SIM_ADDR_4,
+    CURRENT_SIM_ADDR_5,
+    CURRENT_SIM_ADDR_6,
+    CURRENT_SIM_ADDR_7,
+    CURRENT_SIM_ADDR_8,
     ADDR_159,
     ADDR_160,
     ADDR_161,
@@ -226,6 +226,7 @@ typedef struct
     bool SaveParameters;
     bool SaveThresholds[3];
     bool SaveEnergy;
+    bool SaveCurrentSim;
     bool EraseAll;
     bool SaveAll;
 }FLAG_EEPROM;

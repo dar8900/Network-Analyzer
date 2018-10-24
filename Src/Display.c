@@ -523,7 +523,7 @@ void DrawChangeEnumLoop(char *PageTitle, ENUM_VALUE_ITEM EnumItem[], uint8_t Ite
     u8g2_SendBuffer(&u8g);
 }
 
-void DrawChangeAlarmThrsLoop(uint8_t BoxPos , char *StrValue, char *Title, char FactorChar)
+void DrawChangeAlarmThrsOrFloatLoop(uint8_t BoxPos , char *StrValue, char *Title, char FactorChar)
 {
     uint8_t FontH = 0;
     char FakeChar;
@@ -565,6 +565,9 @@ void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_
 {
     uint8_t FontH = 0;
     uint8_t ItemIndx = 0;
+    char NumElement[4];
+    
+    snprintf(NumElement, 4, "%d/%d", ItemPos, MaxMenuItemNum);
     
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();
@@ -588,8 +591,11 @@ void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_
             u8g2_DrawBox(&u8g, 0, (FIRST_MENU_LINES_Y_POS - (FontH - 1) + (ItemIndx * (FontH - 1)) + ((MENU_LINES_DELTA_Y + 1) * ItemIndx) ), SCREEN_MAX_WIDTH, FontH + 1);    
         }
         u8g2_DrawStr(&u8g, X_CENTER_POS(MenuItem[ListBuildPos].ItemTitle), FIRST_MENU_LINES_Y_POS + (ItemIndx * FontH) + (MENU_LINES_DELTA_Y * ItemIndx), MenuItem[ListBuildPos].ItemTitle);          
+       
     }
     DrawBottomBarInfo(SETUP_PAGE);
+    // Scrittura elementi in lista
+    u8g2_DrawStr(&u8g, 54, BOTTOM_INFO_BAR_Y_POS, NumElement);
     u8g2_SendBuffer(&u8g);
 }
 
@@ -597,6 +603,9 @@ void DrawParamLoop(char *PageTitle, PARAMETER_ITEM MenuItem[], uint8_t ItemPos, 
 {
     uint8_t FontH = 0;
     uint8_t ItemIndx = 0;
+    char NumElement[4];
+    
+    snprintf(NumElement, 4, "%d/%d", ItemPos, MaxMenuItemNum);
     
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();
@@ -623,6 +632,9 @@ void DrawParamLoop(char *PageTitle, PARAMETER_ITEM MenuItem[], uint8_t ItemPos, 
         u8g2_DrawStr(&u8g, X_CENTER_POS(MenuItem[ListBuildPos].ItemTitle), FIRST_MENU_LINES_Y_POS + (ItemIndx * FontH) + (MENU_LINES_DELTA_Y * ItemIndx), MenuItem[ListBuildPos].ItemTitle);          
     }
     DrawBottomBarInfo(SETUP_PAGE);
+    
+    // Scrittura elementi in lista
+    u8g2_DrawStr(&u8g, 54, BOTTOM_INFO_BAR_Y_POS, NumElement);
     u8g2_SendBuffer(&u8g);
 }
 
@@ -630,6 +642,9 @@ void DrawListLoop(char *PageTitle, const char *ListItem[], uint8_t ItemPos, uint
 {
     uint8_t FontH = 0;
     uint8_t ItemIndx = 0;
+    char NumElement[4];
+    
+    snprintf(NumElement, 4, "%d/%d", ItemPos, MaxListItemNum);
     
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();
@@ -656,6 +671,8 @@ void DrawListLoop(char *PageTitle, const char *ListItem[], uint8_t ItemPos, uint
         u8g2_DrawStr(&u8g, X_CENTER_POS(ListItem[ListBuildPos]), FIRST_MENU_LINES_Y_POS + (ItemIndx * FontH) + (MENU_LINES_DELTA_Y * ItemIndx), ListItem[ListBuildPos]);          
     }
     DrawBottomBarInfo(SETUP_PAGE);
+    // Scrittura elementi in lista
+    u8g2_DrawStr(&u8g, 54, BOTTOM_INFO_BAR_Y_POS, NumElement);
     u8g2_SendBuffer(&u8g);
 }
 

@@ -268,6 +268,9 @@ bool ParameterSetup()
               case INT_VALUE_TYPE:
                 *(uint16_t*)ParametersMenu[ParamItem].ParamValue = ChangeValue(*(uint16_t*)ParametersMenu[ParamItem].ParamValue, ParamItem);
                 break;
+              case FLOAT_VALUE_TYPE:
+                *(float *)ParametersMenu[ParamItem].ParamValue = ChangeValueFl(*(float *)ParametersMenu[ParamItem].ParamValue, ParamItem);
+                break;
               case READ_ONLY_TYPE:
                 while(LastButtonPressed != BUTTON_LEFT)
                 {
@@ -284,7 +287,7 @@ bool ParameterSetup()
                 break;       
             }
             ChooseParam = false;
-            if(ParametersMenu[ParamItem].Type != READ_ONLY_TYPE || ParametersMenu[ParamItem].Type != ENUM_VALUE_TYPE)
+            if(ParametersMenu[ParamItem].Type != READ_ONLY_TYPE || ParametersMenu[ParamItem].Type != FLOAT_VALUE_TYPE)
                 EepFlag.SaveParameters = true;
         }
         LastButtonPressed = NO_PRESS;

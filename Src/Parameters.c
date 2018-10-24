@@ -9,7 +9,7 @@
 #include "TaskLed.h"
 #include <math.h>
 
-#define  ALARM_FACTOR_UNIT_BOXPOS   8
+#define  FLOAT_FACTOR_UNIT_BOXPOS   8
 
 extern uint8_t LedConf;
 extern bool EnableSimulation;
@@ -49,6 +49,7 @@ const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] =
 {
     {"Abilitare misura"       , CONFIRM_TYPE     ,  &GeneralParams.EnableMeasure             ,   NULL                      , 0                     },
     {"Abilitare simulaz."     , CONFIRM_TYPE     ,  &GeneralParams.EnableSimulation          ,   NULL                      , 0                     },
+    {"Corrent sim.(A)"        , FLOAT_VALUE_TYPE ,  &GeneralParams.SimulationCurrent         ,   NULL                      , 0                     },
     {"Frequenza sim.(Hz)"     , INT_VALUE_TYPE   ,  &GeneralParams.Frequency                 ,   NULL                      , 0                     },
     {"Tensione misura (V)"    , INT_VALUE_TYPE   ,  &GeneralParams.MeasureVoltage            ,   NULL                      , 0                     },
     {"Periodo log en.(s)"     , INT_VALUE_TYPE   ,  &GeneralParams.LogEnergyPeriod           ,   NULL                      , 0                     },
@@ -283,7 +284,79 @@ uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
     return FinalValue;
 }
 
-
+float ChangeValueFl(float ParamValue, uint8_t ParamItem)
+{
+    bool ExitChangeFloat = false;
+    uint8_t BoxPos = 0, ScaleRange = 0, FactorUnitIndex = 0;
+    char ValueArray[9];
+    ScaleRange = SearchScaleFlRange(ParamValue);
+    FactorUnitIndex = ScaleRange;
+    ParamValue *= TabReScale[ScaleRange].ScaleFactor;
+    FloatStr(&ParamValue, ValueArray, 9, true);       
+    while(!ExitChangeFloat)
+    {
+        CheckOperation();
+        DrawChangeAlarmThrsOrFloatLoop(BoxPos, ValueArray, ParametersMenu[ParamItem].ItemTitle, TabReScale[FactorUnitIndex].Unit);
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+            if(BoxPos < FLOAT_FACTOR_UNIT_BOXPOS)
+            {
+                if(ValueArray[BoxPos] > '0')
+                    ValueArray[BoxPos]--;
+                else
+                    ValueArray[BoxPos] = '9';    
+            }
+            else
+            {
+                if(FactorUnitIndex > 0 )
+                    FactorUnitIndex--;
+                else
+                    FactorUnitIndex = MAX_UNIT_FACTOR - 1;
+            }
+            break;
+          case BUTTON_DOWN:  
+            if(BoxPos < FLOAT_FACTOR_UNIT_BOXPOS)
+            {
+                if(ValueArray[BoxPos] < '9')
+                    ValueArray[BoxPos]++;
+                else
+                    ValueArray[BoxPos] = '0'; 
+            }
+            else
+            {
+                if(FactorUnitIndex < MAX_UNIT_FACTOR - 1)
+                    FactorUnitIndex++;
+                else
+                    FactorUnitIndex = 0;
+            }
+            break;
+          case BUTTON_LEFT:
+            ExitChangeFloat = true;
+            break;
+          case BUTTON_RIGHT:           
+            if(BoxPos < FLOAT_FACTOR_UNIT_BOXPOS)
+            {
+                BoxPos++;
+                if(ValueArray[BoxPos] == '.' && (BoxPos + 1) != FLOAT_FACTOR_UNIT_BOXPOS)
+                    BoxPos++;
+            }
+            else
+                BoxPos = 0;
+            break;
+          case BUTTON_OK:
+            FloatStr(&ParamValue, ValueArray, 9, false);
+            ParamValue *= TabReScale[FactorUnitIndex].Value;
+            ExitChangeFloat = true;
+            break;
+          default:
+            break;
+        }
+        LastButtonPressed = NO_PRESS;
+        osDelay(WHILE_LOOP_DELAY);
+    }
+    return ParamValue;
+}
 
 void ChangeAlarmThrs(uint8_t AlarmItem)
 {
@@ -314,11 +387,11 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
         while(!ThrSetted && !ExitFromAll)
         {
             CheckOperation();
-            DrawChangeAlarmThrsLoop(BoxPos, ValueArray, OverUnderThrStr[NumbOfThr], TabReScale[FactorUnitIndex].Unit);
+            DrawChangeAlarmThrsOrFloatLoop(BoxPos, ValueArray, OverUnderThrStr[NumbOfThr], TabReScale[FactorUnitIndex].Unit);
             switch(LastButtonPressed)
             {
               case BUTTON_UP:
-                if(BoxPos < ALARM_FACTOR_UNIT_BOXPOS)
+                if(BoxPos < FLOAT_FACTOR_UNIT_BOXPOS)
                 {
                     if(ValueArray[BoxPos] > '0')
                         ValueArray[BoxPos]--;
@@ -334,7 +407,7 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
                 }
                 break;
               case BUTTON_DOWN:  
-                if(BoxPos < ALARM_FACTOR_UNIT_BOXPOS)
+                if(BoxPos < FLOAT_FACTOR_UNIT_BOXPOS)
                 {
                     if(ValueArray[BoxPos] < '9')
                         ValueArray[BoxPos]++;
@@ -353,10 +426,10 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
                 ExitFromAll = true;
                 break;
               case BUTTON_RIGHT:           
-                if(BoxPos < ALARM_FACTOR_UNIT_BOXPOS)
+                if(BoxPos < FLOAT_FACTOR_UNIT_BOXPOS)
                 {
                     BoxPos++;
-                    if(ValueArray[BoxPos] == '.' && (BoxPos + 1) != ALARM_FACTOR_UNIT_BOXPOS)
+                    if(ValueArray[BoxPos] == '.' && (BoxPos + 1) != FLOAT_FACTOR_UNIT_BOXPOS)
                         BoxPos++;
                 }
                 else

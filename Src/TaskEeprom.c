@@ -20,6 +20,14 @@ FLAG_EEPROM EepFlag;
 
 
 
+//##########################################################################################################
+
+//                                      TOOLS       
+
+//##########################################################################################################
+
+
+
 static void CopyCharArray(char OrigArray[], char DestArray[])
 {
     uint8_t i, Size = 9;
@@ -30,26 +38,6 @@ static void CopyCharArray(char OrigArray[], char DestArray[])
     return;
 }
 
-/*
-static void CopyValueToArray(uint32_t DestArray[], uint16_t Size, uint8_t Index, uint32_t ValueToCopy)
-{
-    uint16_t Head = 0, Tail = Size - 1, Cnt = 0;   
-    while(Head <= Tail)
-    {   
-        Cnt = (Head + Tail) / 2;
-        if(Cnt == Index)
-        {
-            DestArray[Cnt] = ValueToCopy;
-            break;
-        }
-        else
-        {
-            Tail = Cnt - 1;
-        }
-    }
-    return;
-}
-*/
 
 static void ClearArray(uint32_t DestArray[], uint16_t Size)
 {
@@ -101,6 +89,26 @@ static void SaveAllToMem()
     }
     
 }
+
+static void ReWriteStr(char OldStr[], char NewStr[], uint8_t Size)
+{
+    uint8_t i = 0, j = 0;
+    for(i = 0; i < Size; i++)
+    {
+        if(OldStr[i] > '0' || (OldStr[i] == '0' && OldStr[i + 1] == '.'))
+        {
+            break;
+        }
+    }
+    for(j = 0; j < Size; j++)
+    {
+        if((i + j) < Size )
+            NewStr[j] = OldStr[i + j];
+        else
+            NewStr[j] = '0';
+    }
+}
+
 //##########################################################################################################
 
 //                                      NUMERO SCRITTURE       
@@ -206,7 +214,7 @@ static void ReadParameters(uint8_t ParamItem)
       case ENABLE_SIMULATION:
         GeneralParams.EnableSimulation = EepromSavedValue[ENABLE_SIMULATION_ADDR];
         break;
-      case FREQUENZA_SIM:
+      case FREQUENCY_SIM:
         GeneralParams.Frequency = EepromSavedValue[FREQUENCY_SIM_ADDR];
         break;
       default:
@@ -310,26 +318,6 @@ static void WriteThr()
     }
 }
 
-static void ReWriteStr(char OldStr[], char NewStr[], uint8_t Size)
-{
-    uint8_t i = 0, j = 0;
-    for(i = 0; i < Size; i++)
-    {
-        if(OldStr[i] > '0' || (OldStr[i] == '0' && OldStr[i + 1] == '.'))
-        {
-            break;
-        }
-    }
-    for(j = 0; j < Size; j++)
-    {
-        if((i + j) < Size )
-            NewStr[j] = OldStr[i + j];
-        else
-            NewStr[j] = '0';
-    }
-}
-
-
 
 static void ReadCurrentThr()
 {
@@ -424,15 +412,15 @@ static void ReadEnergyThr()
 
 //##########################################################################################################
 
-static void EnergyToChar(float Energy, char EnergyChar[], uint8_t *Factor)
+static void FloatToChar(float FLValue, char FloatChar[], uint8_t *Factor)
 {
     char TempChars[9];
     uint8_t FactorIndex = 0;
     
-    FactorIndex = SearchScaleFlRange(Energy);
-    Energy *= TabReScale[FactorIndex].ScaleFactor;
-    snprintf(TempChars, 9, "%08.3f", Energy);
-    CopyCharArray(TempChars, EnergyChar);
+    FactorIndex = SearchScaleFlRange(FLValue);
+    FLValue *= TabReScale[FactorIndex].ScaleFactor;
+    snprintf(TempChars, 9, "%08.3f", FLValue);
+    CopyCharArray(TempChars, FloatChar);
     *Factor = FactorIndex;
     
     return;
@@ -445,7 +433,7 @@ static void WriteEnergy()
     uint8_t Factor = 0;
     if(EepFlag.SaveEnergy)
     {   
-        EnergyToChar(GeneralMeasures.MeanEnergy, EnergyToStr, &Factor);
+        FloatToChar(GeneralMeasures.MeanEnergy, EnergyToStr, &Factor);
         for(AddrEep = ENERGIA_ADDR; AddrEep < (ENERGIA_ADDR + STR_SIZE - 1); AddrEep++)
         {
             EepromSavedValue[AddrEep] = EnergyToStr[AddrEep - ENERGIA_ADDR];
@@ -456,6 +444,7 @@ static void WriteEnergy()
         EepFlag.SaveEnergy = false;
     }
 }
+
 
 static void ReadEnergy()
 {
@@ -475,9 +464,67 @@ static void ReadEnergy()
     GeneralMeasures.MeanEnergy = Value;
 }
 
+
+static void WriteFloat(uint16_t ValueAddr, float ValueToSave)
+{
+    uint16_t AddrEep = 0;
+    char FloatToStr[9];
+    uint8_t Factor = 0;  
+    FloatToChar(ValueToSave, FloatToStr, &Factor);
+    for(AddrEep = ValueAddr; AddrEep < (ValueAddr + STR_SIZE - 1); AddrEep++)
+    {
+        EepromSavedValue[AddrEep] = FloatToStr[AddrEep - ValueAddr];
+    }
+    EepromSavedValue[AddrEep] = (uint32_t)Factor;
+    WriteNumbOfWrites(1);
+    TransferValuesToMem(EepromSavedValue);    
+}
+
+static void ReadFloat(uint16_t ValueAddr , float *ValueToRead)
+{
+    uint16_t Addr = 0;
+    float Value = 0.0;
+    char StrToFloat[8];
+    char CopyStr[8];
+    uint8_t FactorScale = 0;
+    for(Addr = ValueAddr; Addr < (ValueAddr + STR_SIZE - 1); Addr++)
+    {
+        StrToFloat[Addr - ValueAddr] = (char)EepromSavedValue[Addr];
+    }
+    FactorScale = EepromSavedValue[Addr];   
+    ReWriteStr(StrToFloat, CopyStr, 8);
+    Value = strtof(CopyStr, NULL);
+    Value /= TabReScale[FactorScale].ScaleFactor;
+    *ValueToRead = Value;
+}
+
+static void WriteFloatValues()
+{
+    if(EepFlag.SaveEnergy)
+    {
+        WriteFloat(ENERGIA_ADDR, GeneralMeasures.MeanEnergy);
+        EepFlag.SaveEnergy = false;
+    }
+    else if(EepFlag.SaveCurrentSim)
+    {
+        WriteFloat(CURRENT_SIM_ADDR_0, GeneralParams.SimulationCurrent);
+        EepFlag.SaveCurrentSim = false;
+    }
+    else
+        return;
+    return;
+}
+
+static void ReadFloatValues()
+{
+    ReadFloat(ENERGIA_ADDR, &GeneralMeasures.MeanEnergy);
+    ReadFloat(CURRENT_SIM_ADDR_0, &GeneralParams.SimulationCurrent);
+}
+
 //##########################################################################################################
 
 //                                     VALORI A DFLT O IN RAM
+
 //##########################################################################################################
 
 static void TranferToGlobalVars()
@@ -508,6 +555,9 @@ static void CheckEepromAndTranfer()
         EepromSavedValue[LED_CONF_ADDR] = LedConf = ALL_LED_OFF;
         EepromSavedValue[ENABLE_SIMULATION_ADDR] = GeneralParams.EnableSimulation = false;
         EepromSavedValue[FREQUENCY_SIM_ADDR] = GeneralParams.Frequency = 1;
+        
+        
+        GeneralParams.SimulationCurrent = 1.0;
         
         AlarmsParameters[CURRENT_ALARM].OverThreshold = 1.0;
         AlarmsParameters[CURRENT_ALARM].UnderThreshold = 0.0;
@@ -552,7 +602,7 @@ void TaskEeprom(void const * argument)
         EraseEeprom();
         WriteParameters();
         WriteThr();
-        WriteEnergy();
+        WriteFloatValues();
         if(GeneralParams.EnableMeasure)
         {
             if(!(GlobalTime.minutes % GeneralParams.LogEnergyPeriod) && GlobalDate.year != 0 && !NotResaveEnergy)
