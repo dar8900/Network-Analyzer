@@ -425,44 +425,44 @@ static void FloatToChar(float FLValue, char FloatChar[], uint8_t *Factor)
     
     return;
 }
-
-static void WriteEnergy()
-{
-    uint16_t AddrEep = 0;
-    char EnergyToStr[9];
-    uint8_t Factor = 0;
-    if(EepFlag.SaveEnergy)
-    {   
-        FloatToChar(GeneralMeasures.MeanEnergy, EnergyToStr, &Factor);
-        for(AddrEep = ENERGIA_ADDR; AddrEep < (ENERGIA_ADDR + STR_SIZE - 1); AddrEep++)
-        {
-            EepromSavedValue[AddrEep] = EnergyToStr[AddrEep - ENERGIA_ADDR];
-        }
-        EepromSavedValue[AddrEep] = (uint32_t)Factor;
-        WriteNumbOfWrites(1);
-        TransferValuesToMem(EepromSavedValue);
-        EepFlag.SaveEnergy = false;
-    }
-}
-
-
-static void ReadEnergy()
-{
-    uint8_t Addr = 0;
-    float Value = 0.0;
-    char StrToEnergy[8];
-    char CopyStr[8];
-    uint8_t FactorScale = 0;
-    for(Addr = ENERGIA_ADDR; Addr < (ENERGIA_ADDR + STR_SIZE - 1); Addr++)
-    {
-        StrToEnergy[Addr - ENERGIA_ADDR] = (char)EepromSavedValue[Addr];
-    }
-    FactorScale = EepromSavedValue[Addr];   
-    ReWriteStr(StrToEnergy, CopyStr, 8);
-    Value = strtof(CopyStr, NULL);
-    Value /= TabReScale[FactorScale].ScaleFactor;
-    GeneralMeasures.MeanEnergy = Value;
-}
+//
+//static void WriteEnergy()
+//{
+//    uint16_t AddrEep = 0;
+//    char EnergyToStr[9];
+//    uint8_t Factor = 0;
+//    if(EepFlag.SaveEnergy)
+//    {   
+//        FloatToChar(GeneralMeasures.MeanEnergy, EnergyToStr, &Factor);
+//        for(AddrEep = ENERGIA_ADDR; AddrEep < (ENERGIA_ADDR + STR_SIZE - 1); AddrEep++)
+//        {
+//            EepromSavedValue[AddrEep] = EnergyToStr[AddrEep - ENERGIA_ADDR];
+//        }
+//        EepromSavedValue[AddrEep] = (uint32_t)Factor;
+//        WriteNumbOfWrites(1);
+//        TransferValuesToMem(EepromSavedValue);
+//        EepFlag.SaveEnergy = false;
+//    }
+//}
+//
+//
+//static void ReadEnergy()
+//{
+//    uint8_t Addr = 0;
+//    float Value = 0.0;
+//    char StrToEnergy[8];
+//    char CopyStr[8];
+//    uint8_t FactorScale = 0;
+//    for(Addr = ENERGIA_ADDR; Addr < (ENERGIA_ADDR + STR_SIZE - 1); Addr++)
+//    {
+//        StrToEnergy[Addr - ENERGIA_ADDR] = (char)EepromSavedValue[Addr];
+//    }
+//    FactorScale = EepromSavedValue[Addr];   
+//    ReWriteStr(StrToEnergy, CopyStr, 8);
+//    Value = strtof(CopyStr, NULL);
+//    Value /= TabReScale[FactorScale].ScaleFactor;
+//    GeneralMeasures.MeanEnergy = Value;
+//}
 
 
 static void WriteFloat(uint16_t ValueAddr, float ValueToSave)
@@ -536,7 +536,7 @@ static void TranferToGlobalVars()
     ReadCurrentThr();
     ReadPowerThr();
     ReadEnergyThr();
-    ReadEnergy();
+    ReadFloatValues();
     ReadNumbOfWrites();
 }
 

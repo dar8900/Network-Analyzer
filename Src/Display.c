@@ -372,10 +372,10 @@ void DrawBottomBarInfo(uint8_t WichPage)
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
         u8g2_DrawStr(&u8g, OK_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[OK_STR]); 
         u8g2_DrawStr(&u8g, UP_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[SU_STR]);
-        u8g2_DrawStr(&u8g, DOWN_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[GIU_STR]);
+        u8g2_DrawStr(&u8g, DOWN_STR_X_POS+5, BOTTOM_INFO_BAR_Y_POS, BarItem[GIU_STR]);
         DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
         DrawArrow(UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, UP_DIRECTION);
-        DrawArrow(DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
+        DrawArrow(DOWN_ARROW_X_POS+5, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS+5, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
         DrawArrow(RIGHT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
         break;
         
@@ -499,7 +499,9 @@ void DrawChangeEnumLoop(char *PageTitle, ENUM_VALUE_ITEM EnumItem[], uint8_t Ite
 {
     uint8_t FontH = 0;
     uint8_t ItemIndx = 0;
+    char NumElement[6];
     
+    snprintf(NumElement, 6, "%d/%d", ItemPos + 1, MaxMenuItemNum);
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();
     // Disegna titolo menu
@@ -522,6 +524,7 @@ void DrawChangeEnumLoop(char *PageTitle, ENUM_VALUE_ITEM EnumItem[], uint8_t Ite
         u8g2_DrawStr(&u8g, X_CENTER_POS(EnumItem[ListBuildPos].EnumTitle), FIRST_MENU_LINES_Y_POS + (ItemIndx * FontH) + (MENU_LINES_DELTA_Y * ItemIndx), EnumItem[ListBuildPos].EnumTitle);          
     }
     DrawBottomBarInfo(SETUP_PAGE);
+    u8g2_DrawStr(&u8g, 54, BOTTOM_INFO_BAR_Y_POS, NumElement);
     u8g2_SendBuffer(&u8g);
 }
 
@@ -572,11 +575,12 @@ void ShowAlarmStatus(char *PageTitle, uint8_t AlarmItem)
      u8g2_SetFont(&u8g, u8g2_font_5x8_tf);
      
      WriteTimeDateOccurrenceAlarm(AlarmItem, AlarmTimeDateStr, NumberOccurence);
-     u8g2_DrawStr(&u8g, X_CENTER_POS(AlarmMotivationStr[AlarmsControls[AlarmItem].AlarmMotivation]), GENERAL_STR_Y_POS(39) , AlarmMotivationStr[AlarmsControls[AlarmItem].AlarmMotivation]);
-     u8g2_DrawStr(&u8g, X_CENTER_POS(AlarmTimeDateStr), GENERAL_STR_Y_POS(52) , AlarmTimeDateStr);
-     u8g2_DrawStr(&u8g, X_CENTER_POS(NumberOccurence), GENERAL_STR_Y_POS(65) , NumberOccurence);
+     u8g2_DrawStr(&u8g, X_CENTER_POS(AlarmMotivationStr[AlarmsControls[AlarmItem].AlarmMotivation]), GENERAL_STR_Y_POS(21) , AlarmMotivationStr[AlarmsControls[AlarmItem].AlarmMotivation]);
+     u8g2_DrawStr(&u8g, X_CENTER_POS(AlarmTimeDateStr), GENERAL_STR_Y_POS(32) , AlarmTimeDateStr);
+     u8g2_DrawStr(&u8g, X_CENTER_POS(NumberOccurence), GENERAL_STR_Y_POS(45) , NumberOccurence);
      
      DrawBottomBarInfo(READ_ONLY_PARAM);
+     u8g2_SendBuffer(&u8g); 
 }
 
 
@@ -586,7 +590,7 @@ void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_
     uint8_t ItemIndx = 0;
     char NumElement[4];
     
-    snprintf(NumElement, 4, "%d/%d", ItemPos, MaxMenuItemNum);
+    snprintf(NumElement, 4, "%d/%d", ItemPos + 1, MaxMenuItemNum);
     
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();
@@ -622,9 +626,9 @@ void DrawParamLoop(char *PageTitle, PARAMETER_ITEM MenuItem[], uint8_t ItemPos, 
 {
     uint8_t FontH = 0;
     uint8_t ItemIndx = 0;
-    char NumElement[4];
+    char NumElement[6];
     
-    snprintf(NumElement, 4, "%d/%d", ItemPos, MaxMenuItemNum);
+    snprintf(NumElement, 6, "%d/%d", ItemPos + 1, MaxMenuItemNum);
     
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();
@@ -661,9 +665,9 @@ void DrawListLoop(char *PageTitle, char *ListItem[], uint8_t ItemPos, uint8_t Hi
 {
     uint8_t FontH = 0;
     uint8_t ItemIndx = 0;
-    char NumElement[4];
+    char NumElement[6];
     
-    snprintf(NumElement, 4, "%d/%d", ItemPos, MaxListItemNum);
+    snprintf(NumElement, 6, "%d/%d", ItemPos + 1, MaxListItemNum);
     
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();

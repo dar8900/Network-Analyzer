@@ -348,8 +348,10 @@ bool ParameterSetup()
                 break;       
             }
             ChooseParam = false;
-            if(ParametersMenu[ParamItem].Type != READ_ONLY_TYPE || ParametersMenu[ParamItem].Type != FLOAT_VALUE_TYPE)
+            if(ParametersMenu[ParamItem].Type != READ_ONLY_TYPE)
                 EepFlag.SaveParameters = true;
+            if(ParametersMenu[ParamItem].Type == FLOAT_VALUE_TYPE)
+                EepFlag.SaveCurrentSim = true;
         }
         LastButtonPressed = NO_PRESS;
         osDelay(WHILE_LOOP_DELAY);

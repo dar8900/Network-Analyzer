@@ -260,8 +260,8 @@ void DrawClock()
     snprintf(Time, 9, "%02d:%02d:%02d", GlobalTime.hours, GlobalTime.minutes, GlobalTime.seconds);
     int16_t XPosHour =   (int16_t) (CLOCK_RADIUS - 10) * cos((double)TO_RADIANTS(30*(GlobalTime.hours%12))- Meno90);
     int16_t YPosHour =   (int16_t) (CLOCK_RADIUS - 10) * sin((double)TO_RADIANTS(30*(GlobalTime.hours%12))- Meno90); 
-    int16_t XPosMinute = (int16_t) (CLOCK_RADIUS - 2) * cos((double)TO_RADIANTS(6*GlobalTime.minutes ) - Meno90);
-    int16_t YPosMinute = (int16_t) (CLOCK_RADIUS - 2) * sin((double)TO_RADIANTS(6*GlobalTime.minutes ) - Meno90);
+    int16_t XPosMinute = (int16_t) (CLOCK_RADIUS - 4) * cos((double)TO_RADIANTS(6*GlobalTime.minutes ) - Meno90);
+    int16_t YPosMinute = (int16_t) (CLOCK_RADIUS - 4) * sin((double)TO_RADIANTS(6*GlobalTime.minutes ) - Meno90);
     int16_t XPosSecond = (int16_t) (CLOCK_RADIUS - 2) * cos((double)TO_RADIANTS(6*GlobalTime.seconds ) - Meno90);
     int16_t YPosSecond = (int16_t) (CLOCK_RADIUS - 2) * sin((double)TO_RADIANTS(6*GlobalTime.seconds ) - Meno90);
     
