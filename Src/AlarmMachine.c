@@ -7,14 +7,14 @@ extern MEASURES GeneralMeasures;
 extern TIME_VAR GlobalTime;
 extern DATE_VAR GlobalDate;
 
-char *AlarmMotivationStr[2] = 
+const char *AlarmMotivationStr[2] = 
 {
     "Sovra-soglia",
     "Sotto-soglia",
 };
 
 
-char *AlarmList[MAX_ALARM_STR] = 
+const char *AlarmList[MAX_ALARM_STR] = 
 {
     "Allarme corrente",
     "Allarme potenza",

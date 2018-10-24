@@ -17,7 +17,9 @@ extern const char Batteria3_4[];
 extern const char BatteriaPiena[];
 extern const char BatteriaInCarica[];
 
-
+extern char *AlarmList[MAX_ALARM_STR];
+extern char *AlarmMotivationStr[2];
+extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 
 extern I2C_HandleTypeDef hi2c1;
@@ -559,6 +561,23 @@ void DrawChangeAlarmThrsOrFloatLoop(uint8_t BoxPos , char *StrValue, char *Title
     u8g2_SendBuffer(&u8g);   
 }
 
+void ShowAlarmStatus(char *PageTitle, uint8_t AlarmItem)
+{
+    char AlarmTimeDateStr[20], NumberOccurence[3];
+     u8g2_ClearBuffer(&u8g);
+     DrawTopInfoBar();
+     u8g2_SetFont(&u8g, u8g_font_6x13B);
+     u8g2_DrawStr(&u8g, X_CENTER_POS(PageTitle), MENU_TITLE_Y_POS, PageTitle);  
+     
+     u8g2_SetFont(&u8g, u8g2_font_5x8_tf);
+     
+     WriteTimeDateOccurrenceAlarm(AlarmItem, AlarmTimeDateStr, NumberOccurence);
+     u8g2_DrawStr(&u8g, X_CENTER_POS(AlarmMotivationStr[AlarmsControls[AlarmItem].AlarmMotivation]), GENERAL_STR_Y_POS(39) , AlarmMotivationStr[AlarmsControls[AlarmItem].AlarmMotivation]);
+     u8g2_DrawStr(&u8g, X_CENTER_POS(AlarmTimeDateStr), GENERAL_STR_Y_POS(52) , AlarmTimeDateStr);
+     u8g2_DrawStr(&u8g, X_CENTER_POS(NumberOccurence), GENERAL_STR_Y_POS(65) , NumberOccurence);
+     
+     DrawBottomBarInfo(READ_ONLY_PARAM);
+}
 
 
 void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxMenuItemNum, uint8_t MaxMenuLines)
@@ -638,7 +657,7 @@ void DrawParamLoop(char *PageTitle, PARAMETER_ITEM MenuItem[], uint8_t ItemPos, 
     u8g2_SendBuffer(&u8g);
 }
 
-void DrawListLoop(char *PageTitle, const char *ListItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxListItemNum, uint8_t MaxMenuLines)
+void DrawListLoop(char *PageTitle, char *ListItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxListItemNum, uint8_t MaxMenuLines)
 {
     uint8_t FontH = 0;
     uint8_t ItemIndx = 0;

@@ -9,7 +9,7 @@
 #include "Graphix.h"
 #include "Parameters.h"
 #include "TaskMeasure.h"
-
+#include "AlarmMachine.h"
 
 extern bool HalfSecondTick;
 
@@ -23,18 +23,20 @@ extern uint8_t LedConf;
 
 extern MEASURES GeneralMeasures;
 
+extern char *AlarmList[MAX_ALARM_STR];
 
 extern PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM];
 extern PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM];
 
 MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] = 
 {
-    {"Grafici"            , ChooseGraphics    },
-    {"Misure"             , ShowMeasure       },
-    {"Imposta allarmi"    , AlarmSetup        },
-    {"Setup generale"     , ParameterSetup    },
-    {"Imposta orario"     , ChangeDateTimeMenu},
-    {"Reset"              , ResetMenu         },
+    {"Grafici"            , ChooseGraphics      },
+    {"Misure"             , ShowMeasure         },
+    {"Stato allarmi"      , ShowAlarmStatusList },
+    {"Imposta allarmi"    , AlarmSetup          },
+    {"Setup generale"     , ParameterSetup      },
+    {"Imposta orario"     , ChangeDateTimeMenu  },
+    {"Reset"              , ResetMenu           },
 }; 
 
 MENU_ITEM TimeSetting[MAX_TIME_DATE_ITEM] = 
@@ -47,8 +49,7 @@ MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] =
 {
     {"Forma d'onda I"     , DrawCurrentWave},
 };
-
-
+ 
 char *ResetList[MAX_RESET_ITEM] = 
 {
     "Reset energia",
@@ -161,6 +162,66 @@ bool ChooseGraphics()
     }
     return true;
 }
+
+
+bool ShowAlarmStatusList()
+{
+    bool ExitAlarmList = false, ChooseItemList = false;
+    uint8_t AlarmListItem = 0, FirstItem = 0;
+    while(!ExitAlarmList)
+    {
+        CheckOperation();
+        DrawListLoop("Lista allarmi", AlarmList, AlarmListItem, FirstItem, MAX_ALARM_STR, MAX_SETUP_MENU_LINES);
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+            if(AlarmListItem > 0)
+                AlarmListItem--;
+            else
+                AlarmListItem = MAX_ALARM_STR - 1;
+            break;
+          case BUTTON_DOWN:
+            if(AlarmListItem < MAX_ALARM_STR - 1)
+                AlarmListItem++;
+            else
+                AlarmListItem = 0;            
+            break;
+          case BUTTON_LEFT:
+            ExitAlarmList = true;
+            break;
+          case BUTTON_RIGHT:
+            ChooseItemList = true;
+            break;
+          case BUTTON_OK:
+            break;
+          default:
+            break;
+        } 
+        if(AlarmListItem <= (MAX_SETUP_MENU_LINES - 1))
+        {
+            FirstItem = 0;  
+        }
+        else
+        {
+            FirstItem = AlarmListItem - (MAX_SETUP_MENU_LINES - 1);
+        }    
+        LastButtonPressed = NO_PRESS;
+        osDelay(WHILE_LOOP_DELAY);
+        if(ChooseItemList)
+        {
+            while(LastButtonPressed != BUTTON_LEFT)
+            {
+                ShowAlarmStatus(AlarmList[AlarmListItem], AlarmListItem);
+                osDelay(WHILE_LOOP_DELAY);
+            }
+            LastButtonPressed = NO_PRESS;
+            ChooseItemList = false;
+        }
+    }   
+    
+
+}
+
 
 bool AlarmSetup()
 {

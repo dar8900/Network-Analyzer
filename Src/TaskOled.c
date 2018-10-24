@@ -17,7 +17,7 @@ extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 
 extern char Initial_Logo[];
 
-static void WriteTimeDateOccurrenceAlarm(uint8_t AlarmIndex, char *Str1, char *Str2)
+void WriteTimeDateOccurrenceAlarm(uint8_t AlarmIndex, char *Str1, char *Str2)
 {
     snprintf(Str1, 18, "%02d:%02d:%02d %02d/%02d/%02d", AlarmsControls[AlarmIndex].AlarmActivationTime.hours, AlarmsControls[AlarmIndex].AlarmActivationTime.minutes,
              AlarmsControls[AlarmIndex].AlarmActivationTime.seconds,AlarmsControls[AlarmIndex].AlarmActivationDate.day,AlarmsControls[AlarmIndex].AlarmActivationDate.month,

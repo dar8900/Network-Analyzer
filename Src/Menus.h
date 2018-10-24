@@ -17,8 +17,8 @@ typedef enum
 {
     GRAPHICS_ITEM = 0,
     MEASURE_ITEM,
+    ALARM_STATUS_ITEM,
     ALARM_SETUP_ITEM,
-//    LED_GEST,
     PARAMETER_SEUP,
     TIME_SET,    
     RESET_ITEM,
@@ -61,7 +61,6 @@ typedef enum
 }RESET_ITEMS;
 
 
-
 //bool LedCtrl(void);
 void MainScreen(void);
 bool ParameterSetup(void);
@@ -73,6 +72,7 @@ void WichReset(char * ResetTitle, uint8_t ResetType);
 
 bool ShowMeasure(void);
 bool ChooseGraphics(void);
+bool ShowAlarmStatusList(void);
 bool AlarmSetup(void);
 
 #endif
