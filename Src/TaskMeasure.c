@@ -67,15 +67,6 @@ static float CalcMeanCurrent(float CurrentRMS[])
 
 static void CheckMaxMinCurrentPower()
 {   
-    static bool RecMaxMin = true;
-    if(RecMaxMin && GeneralMeasures.MeanCurrentRMS > 0 && GeneralMeasures.Power > 0)
-    {
-        GeneralMeasures.MaxCurrent = GeneralMeasures.MeanCurrentRMS;
-        GeneralMeasures.MinCurrent = GeneralMeasures.MeanCurrentRMS;
-        GeneralMeasures.MaxPower = GeneralMeasures.Power;
-        GeneralMeasures.MinPower = GeneralMeasures.Power;
-        RecMaxMin = false;
-    }
     if(GeneralMeasures.MaxCurrent < GeneralMeasures.MeanCurrentRMS)
         GeneralMeasures.MaxCurrent = GeneralMeasures.MeanCurrentRMS;
     

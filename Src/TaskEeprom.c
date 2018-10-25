@@ -146,7 +146,7 @@ static void WriteParameters()
         EepromSavedValue[ENABLE_MEASURE_ADDR] = (uint32_t)GeneralParams.EnableMeasure;
         EepromSavedValue[ADC_OFFSET_ADDR] = (uint32_t)GeneralParams.ADCOffset;
         EepromSavedValue[VOLTAGE_MEASURE_ADDR] = (uint32_t)GeneralParams.MeasureVoltage;
-        EepromSavedValue[LOG_ENERGY_ADDR] = (uint32_t)GeneralParams.LogEnergyPeriod;
+        EepromSavedValue[LOG_MESAURE_ADDR] = (uint32_t)GeneralParams.LogMeasurePeriod;
         EepromSavedValue[ENABLE_SCREENSAVER_ADDR] = (uint32_t)GeneralParams.EnableScreenSaver;
         EepromSavedValue[SCREENSAVER_TYPE_ADDR] = (uint32_t)GeneralParams.ScreenSaverType;
         EepromSavedValue[SCREEN_SAVER_TIMER_ADDR] = (uint32_t)GeneralParams.ScreenSaverTimer;
@@ -168,7 +168,7 @@ static void WriteParameters()
             else
             {
                 ParamIdexShifted = ParamIndexAddr - 3;
-                ParamIdexShifted += LOG_ENERGY_ADDR;
+                ParamIdexShifted += LOG_MESAURE_ADDR;
                 EE_SingleRead(ParamIdexShifted, &OldValue);
                 if(OldValue != EepromSavedValue[ParamIdexShifted])
                 {    
@@ -196,8 +196,8 @@ static void ReadParameters(uint8_t ParamItem)
       case ADC_OFFSET:
         GeneralParams.ADCOffset = EepromSavedValue[ADC_OFFSET_ADDR];
         break;
-      case LOG_ENERGY_PERIOD:
-        GeneralParams.LogEnergyPeriod = EepromSavedValue[LOG_ENERGY_ADDR];
+      case LOG_MEASURE_PERIOD:
+        GeneralParams.LogMeasurePeriod = EepromSavedValue[LOG_MESAURE_ADDR];
         break;
       case SCREENSAVER_TYPE:
         GeneralParams.ScreenSaverType = EepromSavedValue[SCREENSAVER_TYPE_ADDR];
@@ -425,44 +425,6 @@ static void FloatToChar(float FLValue, char FloatChar[], uint8_t *Factor)
     
     return;
 }
-//
-//static void WriteEnergy()
-//{
-//    uint16_t AddrEep = 0;
-//    char EnergyToStr[9];
-//    uint8_t Factor = 0;
-//    if(EepFlag.SaveEnergy)
-//    {   
-//        FloatToChar(GeneralMeasures.MeanEnergy, EnergyToStr, &Factor);
-//        for(AddrEep = ENERGIA_ADDR; AddrEep < (ENERGIA_ADDR + STR_SIZE - 1); AddrEep++)
-//        {
-//            EepromSavedValue[AddrEep] = EnergyToStr[AddrEep - ENERGIA_ADDR];
-//        }
-//        EepromSavedValue[AddrEep] = (uint32_t)Factor;
-//        WriteNumbOfWrites(1);
-//        TransferValuesToMem(EepromSavedValue);
-//        EepFlag.SaveEnergy = false;
-//    }
-//}
-//
-//
-//static void ReadEnergy()
-//{
-//    uint8_t Addr = 0;
-//    float Value = 0.0;
-//    char StrToEnergy[8];
-//    char CopyStr[8];
-//    uint8_t FactorScale = 0;
-//    for(Addr = ENERGIA_ADDR; Addr < (ENERGIA_ADDR + STR_SIZE - 1); Addr++)
-//    {
-//        StrToEnergy[Addr - ENERGIA_ADDR] = (char)EepromSavedValue[Addr];
-//    }
-//    FactorScale = EepromSavedValue[Addr];   
-//    ReWriteStr(StrToEnergy, CopyStr, 8);
-//    Value = strtof(CopyStr, NULL);
-//    Value /= TabReScale[FactorScale].ScaleFactor;
-//    GeneralMeasures.MeanEnergy = Value;
-//}
 
 
 static void WriteFloat(uint16_t ValueAddr, float ValueToSave)
@@ -505,20 +467,35 @@ static void WriteFloatValues()
         WriteFloat(ENERGIA_ADDR, GeneralMeasures.MeanEnergy);
         EepFlag.SaveEnergy = false;
     }
-    else if(EepFlag.SaveCurrentSim)
+    if(EepFlag.SaveCurrentSim)
     {
         WriteFloat(CURRENT_SIM_ADDR_0, GeneralParams.SimulationCurrent);
         EepFlag.SaveCurrentSim = false;
     }
-    else
-        return;
+    if(EepFlag.SaveMaxMinCurrent)
+    {
+        WriteFloat(MAX_CURRENT_0_ADDR, GeneralMeasures.MaxCurrent);
+        WriteFloat(MIN_CURRENT_0_ADDR, GeneralMeasures.MinCurrent);
+        EepFlag.SaveMaxMinCurrent = false;
+    }
+    if(EepFlag.SaveMaxMinPower)
+    {
+        WriteFloat(MAX_POWER_0_ADDR, GeneralMeasures.MaxPower);
+        WriteFloat(MIN_POWER_0_ADDR, GeneralMeasures.MinPower);
+        EepFlag.SaveMaxMinPower = false;
+    }
+
     return;
 }
 
 static void ReadFloatValues()
 {
-    ReadFloat(ENERGIA_ADDR, &GeneralMeasures.MeanEnergy);
+    ReadFloat(ENERGIA_ADDR      , &GeneralMeasures.MeanEnergy);
     ReadFloat(CURRENT_SIM_ADDR_0, &GeneralParams.SimulationCurrent);
+    ReadFloat(MAX_CURRENT_0_ADDR, &GeneralMeasures.MaxCurrent);
+    ReadFloat(MIN_CURRENT_0_ADDR, &GeneralMeasures.MinCurrent);
+    ReadFloat(MAX_POWER_0_ADDR  , &GeneralMeasures.MaxPower);
+    ReadFloat(MIN_POWER_0_ADDR  , &GeneralMeasures.MinPower);
 }
 
 //##########################################################################################################
@@ -548,7 +525,7 @@ static void CheckEepromAndTranfer()
         EepromSavedValue[ENABLE_MEASURE_ADDR] = GeneralParams.EnableMeasure = false;
         EepromSavedValue[ADC_OFFSET_ADDR] = GeneralParams.ADCOffset = 2048;
         EepromSavedValue[VOLTAGE_MEASURE_ADDR] = GeneralParams.MeasureVoltage = 220;
-        EepromSavedValue[LOG_ENERGY_ADDR] = GeneralParams.LogEnergyPeriod = 15;
+        EepromSavedValue[LOG_MESAURE_ADDR] = GeneralParams.LogMeasurePeriod = 15;
         EepromSavedValue[ENABLE_SCREENSAVER_ADDR] = GeneralParams.EnableScreenSaver = false;
         EepromSavedValue[SCREENSAVER_TYPE_ADDR] = GeneralParams.ScreenSaverType = ANALOG_DATE;
         EepromSavedValue[SCREEN_SAVER_TIMER_ADDR] = GeneralParams.ScreenSaverTimer = 10;
@@ -605,12 +582,14 @@ void TaskEeprom(void const * argument)
         WriteFloatValues();
         if(GeneralParams.EnableMeasure)
         {
-            if(!(GlobalTime.minutes % GeneralParams.LogEnergyPeriod) && GlobalDate.year != 0 && !NotResaveEnergy)
+            if(!(GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalDate.year != 0 && !NotResaveEnergy)
             {
                 NotResaveEnergy = true;
                 EepFlag.SaveEnergy = true;  
+                EepFlag.SaveMaxMinCurrent = true;
+                EepFlag.SaveMaxMinPower = true;
             } 
-            else if((GlobalTime.minutes % GeneralParams.LogEnergyPeriod) && GlobalDate.year != 0 && NotResaveEnergy)
+            else if((GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalDate.year != 0 && NotResaveEnergy)
                 NotResaveEnergy = false;
         }
         osDelay(1000);

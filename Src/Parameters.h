@@ -9,7 +9,7 @@ typedef struct
     bool     EnableSimulation;
     uint16_t ADCOffset;
     uint16_t MeasureVoltage;
-    uint8_t  LogEnergyPeriod;
+    uint8_t  LogMeasurePeriod;
     bool     EnableScreenSaver;
     uint8_t  ScreenSaverType;
     uint16_t ScreenSaverTimer;
@@ -50,7 +50,7 @@ typedef enum
     CURRENT_SIM,
     FREQUENCY_SIM,
     MEASURE_VOLTAGE,
-    LOG_ENERGY_PERIOD,
+    LOG_MEASURE_PERIOD,
     ADC_OFFSET,
     ENABLE_SCREENSAVER,
     SCREENSAVER_TYPE,
