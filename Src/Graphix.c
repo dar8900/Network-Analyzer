@@ -194,7 +194,7 @@ bool DrawCurrentWave()
 
         for(XPos = 0; XPos < MAX_GRAPHIC_WIDTH; XPos++)
         {
-            YPos = 30 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValue[XPos] - GeneralParams.ADCOffset)) / ADC_HALF_MAX_VALUE);          
+            YPos = 30 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValue[XPos] - GeneralParams.ADCOffset)) / GeneralParams.ADCOffset);          
             u8g2_DrawPixel(&u8g, XPos, YPos);      
         }
         

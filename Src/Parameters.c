@@ -53,7 +53,7 @@ const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] =
     {"Frequenza sim.(Hz)"     , INT_VALUE_TYPE   ,  &GeneralParams.Frequency                 ,   NULL                      , 0                     },
     {"Tensione misura (V)"    , INT_VALUE_TYPE   ,  &GeneralParams.MeasureVoltage            ,   NULL                      , 0                     },
     {"Periodo log mis.(s)"    , INT_VALUE_TYPE   ,  &GeneralParams.LogMeasurePeriod          ,   NULL                      , 0                     },
-    {"ADC Offset"             , INT_VALUE_TYPE   ,  &GeneralParams.ADCOffset                 ,   NULL                      , 0                     },
+    {"ADC Offset"             , READ_ONLY_TYPE   ,  &GeneralParams.ADCOffset                 ,   NULL                      , 0                     },
     {"Usare screensaver"      , CONFIRM_TYPE     ,  &GeneralParams.EnableScreenSaver         ,   NULL                      , 0                     },
     {"Tipo screensaver"       , ENUM_VALUE_TYPE  ,  &GeneralParams.ScreenSaverType           ,   (void *)ScreenSaverEnum   , MAX_SCREENSAVER_TYPE  },
     {"Timer screensaver(s)"   , INT_VALUE_TYPE   ,  &GeneralParams.ScreenSaverTimer          ,   NULL                      , 0                     },

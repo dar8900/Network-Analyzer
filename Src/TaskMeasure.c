@@ -23,6 +23,9 @@ static double CubeRawValue;
 static float CurrentRMS[CURRENT_SAMPLE];
 static float EnergyAcc;
 static uint32_t NumberOfEnergySampling; 
+
+static uint8_t SensorSensibility = 66;
+
 MEASURES GeneralMeasures;
 
 
@@ -34,6 +37,18 @@ static void ClearFLArray(float Array[], uint8_t Size)
     }
 }
 
+
+static uint32_t CalcMeanAdcOffset()
+{
+    uint8_t i = 0;
+    uint64_t MeanOffset = 0;
+    for(i = 0; i < NUM_SAMPLE; i++)
+    {
+        MeanOffset += ADCReadedValue[i];
+    }
+    MeanOffset /= NUM_SAMPLE;
+    return (uint32_t)MeanOffset;
+}
 
 static float CalcCurrent(double QuadraticValue)
 {
@@ -116,6 +131,7 @@ static void SecondEvent()
 }
 
 
+
 /* TaskMeasure function */
 void TaskMeasure(void const * argument)
 {
@@ -123,13 +139,27 @@ void TaskMeasure(void const * argument)
     int32_t AdcRawDiff = 0;
     float OldSimCurrent = 0;
     uint8_t OldFrequency = 0;
-    
+    uint16_t Noise = (uint16_t)SENSOR_NOISE_TO_RAW_VAL;
+    int32_t AdcCorrection = 0;
+    bool NotDoCorrection = false;
     
     /* Infinite loop */
     for(;;)
-    {       
+    {            
         if(GeneralParams.EnableMeasure)
         {
+            if(GeneralParams.ADCOffset == 0)
+            {
+                GeneralParams.ADCOffset = CalcMeanAdcOffset();
+                if(!NotDoCorrection && GeneralParams.ADCOffset > 0)
+                {
+                    AdcCorrection = 2085 - GeneralParams.ADCOffset;
+                    GeneralParams.ADCOffset += AdcCorrection;
+                    NotDoCorrection = true;
+                }
+                
+            }
+
             if(!GeneralParams.EnableSimulation)   
             {
                 while(!ConversionEnd)
@@ -141,18 +171,14 @@ void TaskMeasure(void const * argument)
                 {
                     StopADC_DMA_Conv();
                     ConversionEnd = false;
-                    if(ADCReadedValue[0] <= (GeneralParams.ADCOffset + (uint16_t)SENSOR_NOISE_TO_RAW_VAL) &&
-                       ADCReadedValue[0] >= (GeneralParams.ADCOffset - (uint16_t)SENSOR_NOISE_TO_RAW_VAL))
-                    {    
-                        for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
-                        {
-                            AdcRawDiff = (int32_t)ADCReadedValue[ValueIndx] - (int32_t)GeneralParams.ADCOffset;
-                            CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
-                        }
-                        CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
-                        NumberOfCurrentSampling++;
-                        CubeRawValue = 0;
+                    for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
+                    {
+                        AdcRawDiff = (int32_t)(ADCReadedValue[ValueIndx] + AdcCorrection) - (int32_t)GeneralParams.ADCOffset;
+                        CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
                     }
+                    CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
+                    NumberOfCurrentSampling++;
+                    CubeRawValue = 0;
                 }
             }
             else
@@ -166,7 +192,7 @@ void TaskMeasure(void const * argument)
                 
                 for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
                 {
-                    AdcRawDiff = (int32_t)ADCReadedValue[ValueIndx] - (int32_t)GeneralParams.ADCOffset;
+                    AdcRawDiff = (int32_t)ADCReadedValue[ValueIndx] - 2048;
                     CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
                 }
                 CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
@@ -202,6 +228,7 @@ void TaskMeasure(void const * argument)
             EnergyAcc  = 0.0;
             AlarmEnergyLed = NO_CONF;
             NumberOfEnergySampling = 0;
+            GeneralParams.ADCOffset = 0;
         }
         osDelay(20);
     }

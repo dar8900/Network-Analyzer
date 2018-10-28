@@ -7,7 +7,7 @@ typedef struct
 {
     bool     EnableMeasure;
     bool     EnableSimulation;
-    uint16_t ADCOffset;
+    uint32_t ADCOffset;
     uint16_t MeasureVoltage;
     uint8_t  LogMeasurePeriod;
     bool     EnableScreenSaver;

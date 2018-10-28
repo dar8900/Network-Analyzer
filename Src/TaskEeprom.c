@@ -193,9 +193,9 @@ static void ReadParameters(uint8_t ParamItem)
       case MEASURE_VOLTAGE:
         GeneralParams.MeasureVoltage = EepromSavedValue[VOLTAGE_MEASURE_ADDR];
         break;
-      case ADC_OFFSET:
-        GeneralParams.ADCOffset = EepromSavedValue[ADC_OFFSET_ADDR];
-        break;
+//      case ADC_OFFSET:
+//        GeneralParams.ADCOffset = EepromSavedValue[ADC_OFFSET_ADDR];
+//        break;
       case LOG_MEASURE_PERIOD:
         GeneralParams.LogMeasurePeriod = EepromSavedValue[LOG_MESAURE_ADDR];
         break;
