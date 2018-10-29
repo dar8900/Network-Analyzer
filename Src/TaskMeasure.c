@@ -18,6 +18,7 @@ extern bool ConversionEnd;
 extern bool SecondTick;
 extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
 extern bool EnableSimulation;
+extern uint32_t ADCReadedValueSim[NUM_SAMPLE];
 
 static double CubeRawValue;
 static float CurrentRMS[CURRENT_SAMPLE];
@@ -41,7 +42,7 @@ static void ClearFLArray(float Array[], uint8_t Size)
 static uint32_t CalcMeanAdcOffset()
 {
     uint8_t i = 0;
-    uint64_t MeanOffset = 0;
+    float MeanOffset = 0;
     for(i = 0; i < NUM_SAMPLE; i++)
     {
         MeanOffset += ADCReadedValue[i];
@@ -58,7 +59,9 @@ static float CalcCurrent(double QuadraticValue)
     // Estraggo il valore quadratico facendolo diventare RMS e trasformandolo in mV 
     SquareQuadratic = (float)sqrt((double)QuadraticValue);
     
-    SquareQuadratic =  (TOVOLT(SquareQuadratic)) * 1000;
+//    SquareQuadratic =  (TOVOLT(SquareQuadratic)) * 1000;
+    SquareQuadratic *= 1000;
+
     
     // Divido i mV ottenuti per la sensibilita del sensore per ottere gli A 
     SquareQuadratic /= CURR_SENSOR_SENSITIVITY;
@@ -136,10 +139,10 @@ static void SecondEvent()
 void TaskMeasure(void const * argument)
 {
     uint8_t NumberOfCurrentSampling = 0;
-    int32_t AdcRawDiff = 0;
+    float AdcRawDiff = 0;
     float OldSimCurrent = 0;
     uint8_t OldFrequency = 0;
-    uint16_t Noise = (uint16_t)SENSOR_NOISE_TO_RAW_VAL;
+    uint16_t AdcOffsetOld = 0;
     int32_t AdcCorrection = 0;
     bool NotDoCorrection = false;
     
@@ -148,16 +151,18 @@ void TaskMeasure(void const * argument)
     {            
         if(GeneralParams.EnableMeasure)
         {
+//            GeneralParams.ADCOffset = CalcMeanAdcOffset();
             // Calibrazione dell'offset
             if(GeneralParams.ADCOffset == 0)
             {
                 GeneralParams.ADCOffset = CalcMeanAdcOffset();
-                if(!NotDoCorrection && GeneralParams.ADCOffset > 0)
-                {
-                    AdcCorrection = 2085 - GeneralParams.ADCOffset;
-                    GeneralParams.ADCOffset += AdcCorrection;
-                    NotDoCorrection = true;
-                }
+                AdcOffsetOld = GeneralParams.ADCOffset;
+                    //                if(!NotDoCorrection && GeneralParams.ADCOffset > 0)
+                    //                {
+                    //                    AdcCorrection = 2085 - GeneralParams.ADCOffset;
+                    //                    GeneralParams.ADCOffset += AdcCorrection;
+                    //                    NotDoCorrection = true;
+                    //                }
                 
             }
             // Se non siamo in simulazione
@@ -174,7 +179,8 @@ void TaskMeasure(void const * argument)
                     ConversionEnd = false;
                     for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
                     {
-                        AdcRawDiff = (int32_t)(ADCReadedValue[ValueIndx] + AdcCorrection) - (int32_t)GeneralParams.ADCOffset;
+                        AdcRawDiff = TOVOLT((float)ADCReadedValue[ValueIndx]) - TOVOLT((float)GeneralParams.ADCOffset);
+                        AdcRawDiff = APROXIMATION(AdcRawDiff, 2);
                         CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
                     }
                     CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
@@ -194,7 +200,7 @@ void TaskMeasure(void const * argument)
                 
                 for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
                 {
-                    AdcRawDiff = (int32_t)ADCReadedValue[ValueIndx] - 2048;
+                    AdcRawDiff = (int32_t)ADCReadedValueSim[ValueIndx] - 2048;
                     CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
                 }
                 CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
@@ -205,8 +211,8 @@ void TaskMeasure(void const * argument)
             if(NumberOfCurrentSampling == CURRENT_SAMPLE)
             {
                 GeneralMeasures.MeanCurrentRMS = CalcMeanCurrent(CurrentRMS); 
-                GeneralMeasures.MeanCurrentRMS = (floor(GeneralMeasures.MeanCurrentRMS *100))/100;
-                if(GeneralMeasures.MeanCurrentRMS > 0.11)
+                GeneralMeasures.MeanCurrentRMS = APROXIMATION(GeneralMeasures.MeanCurrentRMS, 2);
+                if(GeneralMeasures.MeanCurrentRMS > 0.30)
                     GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * (float)GeneralParams.MeasureVoltage;
                 else
                 {

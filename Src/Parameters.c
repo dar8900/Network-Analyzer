@@ -52,6 +52,7 @@ const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] =
     {"Corrente sim.(A)"       , FLOAT_VALUE_TYPE ,  &GeneralParams.SimulationCurrent         ,   NULL                      , 0                     },
     {"Frequenza sim.(Hz)"     , INT_VALUE_TYPE   ,  &GeneralParams.Frequency                 ,   NULL                      , 0                     },
     {"Tensione misura (V)"    , INT_VALUE_TYPE   ,  &GeneralParams.MeasureVoltage            ,   NULL                      , 0                     },
+    {"Abilitare log"          , CONFIRM_TYPE     ,  &GeneralParams.EnableLog                 ,   NULL                      , 0                     },
     {"Periodo log mis.(s)"    , INT_VALUE_TYPE   ,  &GeneralParams.LogMeasurePeriod          ,   NULL                      , 0                     },
     {"ADC Offset"             , READ_ONLY_TYPE   ,  &GeneralParams.ADCOffset                 ,   NULL                      , 0                     },
     {"Usare screensaver"      , CONFIRM_TYPE     ,  &GeneralParams.EnableScreenSaver         ,   NULL                      , 0                     },

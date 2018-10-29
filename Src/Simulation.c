@@ -5,7 +5,7 @@
 #include "Simulation.h"
 #include "Parameters.h"
 
-extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
+uint32_t ADCReadedValueSim[NUM_SAMPLE]; 
 
 
 #define  RAW_CURRENT_CONV(Current)   (331.52 * Current)
@@ -25,7 +25,7 @@ void SimAdcWave()
     for(Index = 0; Index < NUM_SAMPLE; Index++)
     {
         Value = (int16_t)(RAW_CURRENT_CONV(GeneralParams.SimulationCurrent)* sin((double)TO_RADIANTS((float)SAMPLE_TO_ANGLE * Index) * OMEGA));
-        ADCReadedValue[Index] = GeneralParams.ADCOffset - Value;
+        ADCReadedValueSim[Index] = GeneralParams.ADCOffset - Value;
     }    
         
 }

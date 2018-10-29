@@ -53,8 +53,7 @@ typedef enum
 }WRITE_TYPE_I2C;
 
 /******************************************************************************
-*	@brief	Read bytes from slave with specify register address               *
-* @param	Slave device address (7-bit right aligned)                        *
+*	@brief	Read bytes from slave with specify register address               *                   
 * @param	Register address                                                  *
 * @param	Number of data bytes to read from slave                           *
 * @param	Pointer to data array byte to store data from slave               *
@@ -87,8 +86,7 @@ static void ReadRtcI2C(uint8_t reg, uint8_t* data, uint8_t len, uint8_t WichFunc
 /**
 ******************************************************************************
 *	@brief	Write bytes to slave with specify register address where to      *
-*					start write                                              *
-* @param	Slave device address (7-bit right aligned)                       *
+*					start write                                              *                     
 * @param	Register address where to start write                            *
 * @param	Pointer to data byte array                                       *
 * @param	Number of bytes to write                                         *
@@ -169,124 +167,6 @@ static uint8_t check_min_max(uint8_t val, uint8_t min, uint8_t max)
 	return val;
 }
 
-
-
-
-//static void i2c_write_no_reg(uint8_t address, uint8_t data)
-//{
-//    HAL_I2C_Master_Transmit(&hi2c1, address << 1, &data, 1, 1);
-//}
-//
-///**
-//******************************************************************************
-//*	@brief	Write byte to slave with specify register address
-//* @param	Slave device address (7-bit right aligned)
-//* @param	Register address
-//* @param	Data byte
-//* @retval	None
-//******************************************************************************
-//*/
-//static void i2c_write_with_reg(uint8_t address, uint8_t reg, uint8_t data)
-//{
-//    HAL_I2C_Mem_Write(&hi2c1, address << 1, reg, 1, &data, 1, RTC_I2C_TIMEOUT);
-//}
-//
-///**
-//******************************************************************************
-//*	@brief	Write bytes to slave without specify register address where to
-//*					start write
-//* @param	Slave device address (7-bit right aligned)
-//* @param	Pointer to data byte array
-//* @param	Number of bytes to write
-//* @retval	None
-//******************************************************************************
-//*/
-//static void i2c_write_multi_no_reg(uint8_t address, uint8_t* data, uint8_t len)
-//{
-//    HAL_I2C_Master_Transmit(&hi2c1, address << 1, data, len, RTC_I2C_TIMEOUT);
-//}
-//
-///**
-//******************************************************************************
-//*	@brief	Write bytes to slave with specify register address where to
-//*					start write
-//* @param	Slave device address (7-bit right aligned)
-//* @param	Register address where to start write
-//* @param	Pointer to data byte array
-//* @param	Number of bytes to write
-//* @retval	None
-//******************************************************************************
-//*/
-//static void i2c_write_multi_with_reg(uint8_t address, uint8_t reg, uint8_t* data, uint8_t len)
-//{
-//    HAL_I2C_Mem_Write(&hi2c1, address << 1, reg, 1, data, len, RTC_I2C_TIMEOUT);
-//}
-
-///**
-//******************************************************************************
-//*	@brief	Read byte from slave without specify register address
-//* @param	Slave device address (7-bit right aligned)
-//* @param	Pointer to data byte to store data from slave
-//* @retval	None
-//******************************************************************************
-//*/
-//static void i2c_read_no_reg(uint8_t address, uint8_t* data)
-//{
-//    HAL_I2C_Master_Receive(&hi2c1, address << 1, data, 1, RTC_I2C_TIMEOUT);
-//}
-//
-///**
-//******************************************************************************
-//*	@brief	Read byte from slave with specify register address
-//* @param	Slave device address (7-bit right aligned)
-//* @param	Register address
-//* @param	Pointer to data byte to store data from slave
-//* @retval	None
-//******************************************************************************
-//*/
-//static void i2c_read_with_reg(uint8_t address, uint8_t reg, uint8_t* data)
-//{
-//    HAL_I2C_Mem_Read(&hi2c1, address << 1, reg, 1, data, 1, RTC_I2C_TIMEOUT);
-//}
-
-///**
-//******************************************************************************
-//*	@brief	Read bytes from slave without specify register address
-//* @param	Slave device address (7-bit right aligned)
-//* @param	Number of data bytes to read from slave 
-//* @param	Pointer to data array byte to store data from slave
-//* @retval	None
-//******************************************************************************
-//*/
-//static void i2c_read_multi_no_reg(uint8_t address, uint8_t len, uint8_t* data)
-//{
-//    HAL_I2C_Master_Receive(&hi2c1, address << 1, data, len, RTC_I2C_TIMEOUT);
-//}
-//
-///**
-//******************************************************************************
-//*	@brief	Read bytes from slave with specify register address
-//* @param	Slave device address (7-bit right aligned)
-//* @param	Register address
-//* @param	Number of data bytes to read from slave 
-//* @param	Pointer to data array byte to store data from slave
-//* @retval	None
-//******************************************************************************
-//*/
-//static void i2c_read_multi_with_reg(uint8_t address, uint8_t reg, uint8_t len, uint8_t* data)
-//{
-//    HAL_I2C_Mem_Read(&hi2c1, address << 1, reg, 1, data, len, RTC_I2C_TIMEOUT);
-//}
-
-
-/*
-******************************************************************************
-*	@brief	Initialize I2C in master mode then connect to DS1307 chip
-* @param	None
-* @retval	None
-******************************************************************************
-*/
-
 /**
 ******************************************************************************
 *	@brief	Get current seconds value from the register
@@ -297,7 +177,6 @@ static uint8_t check_min_max(uint8_t val, uint8_t min, uint8_t max)
 uint8_t ds1307_get_seconds()
 {
 	uint8_t seconds;
-//	i2c_read_with_reg(DS1307_DEVICE_ADDRESS, DS1307_SECONDS, &seconds);
     ReadRtcI2C(DS1307_SECONDS, &seconds, 0, SINGLE_READ_REG);
 	
 	return bcd2bin(seconds);
@@ -312,8 +191,6 @@ uint8_t ds1307_get_seconds()
 */
 void ds1307_set_seconds(uint8_t seconds)
 {
-//	i2c_write_with_reg(DS1307_DEVICE_ADDRESS, DS1307_SECONDS, 
-//                       bin2bcd(check_min_max(seconds, 0, 59)));
     uint8_t SetBcd = bin2bcd(check_min_max(seconds, 0, 59));
     WriteRtcI2C(DS1307_SECONDS, &SetBcd, 0, SINGLE_WRITE_REG);
 }
@@ -328,7 +205,6 @@ void ds1307_set_seconds(uint8_t seconds)
 uint8_t ds1307_get_minutes()
 {
 	uint8_t minutes;
-//	i2c_read_with_reg(DS1307_DEVICE_ADDRESS, DS1307_MINUTES, &minutes);
 	ReadRtcI2C(DS1307_MINUTES, &minutes, 0, SINGLE_READ_REG);
 	return bcd2bin(minutes);
 }
@@ -342,8 +218,6 @@ uint8_t ds1307_get_minutes()
 */
 void ds1307_set_minutes(uint8_t minutes)
 {
-//	i2c_write_with_reg(DS1307_DEVICE_ADDRESS, DS1307_MINUTES, 
-//                       bin2bcd(check_min_max(minutes, 0, 59)));
     uint8_t SetBcd = bin2bcd(check_min_max(minutes, 0, 59));
     WriteRtcI2C(DS1307_MINUTES, &SetBcd, 0, SINGLE_WRITE_REG);
 }
@@ -358,7 +232,6 @@ void ds1307_set_minutes(uint8_t minutes)
 uint8_t ds1307_get_hour_mode()
 {
 	uint8_t hours;
-//	i2c_read_with_reg(DS1307_DEVICE_ADDRESS, DS1307_HOURS, &hours);
 	ReadRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_READ_REG);
 	// If hour mode bit is set, then current hour mode is 12, otherwise 24
 	return ((hours & (1 << DS1307_HOUR_MODE)) == (1 << DS1307_HOUR_MODE)) ?   DS1307_HOUR_12 : DS1307_HOUR_24;
@@ -390,7 +263,6 @@ uint8_t ds1307_get_am_pm()
 uint8_t ds1307_get_hours_12()
 {
 	uint8_t hours;
-//	i2c_read_with_reg(DS1307_DEVICE_ADDRESS, DS1307_HOURS, &hours);
 	ReadRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_READ_REG);
 	// Mask hour register value from bit 7 to bit 5 to get hours value
 	// in hour mode 12
@@ -423,7 +295,6 @@ void ds1307_set_hours_12(uint8_t hours_12, uint8_t am_pm)
 			bin2bcd(check_min_max(hours_12, 1, 12));
 	}
     
-//	i2c_write_with_reg(DS1307_DEVICE_ADDRESS, DS1307_HOURS, hours);
     WriteRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_WRITE_REG);
 }
 
@@ -437,7 +308,6 @@ void ds1307_set_hours_12(uint8_t hours_12, uint8_t am_pm)
 uint8_t ds1307_get_hours_24()
 {
 	uint8_t hours;
-//	i2c_read_with_reg(DS1307_DEVICE_ADDRESS, DS1307_HOURS, &hours);
 	ReadRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_READ_REG);
 	// Mask hour register value from bit 7 to bit 6 to get hours value
 	// in hour mode 24
@@ -453,8 +323,6 @@ uint8_t ds1307_get_hours_24()
 */
 void ds1307_set_hours_24(uint8_t hours_24)
 {
-//	i2c_write_with_reg(DS1307_DEVICE_ADDRESS, DS1307_HOURS, 
-//                       bin2bcd(check_min_max(hours_24, 0, 23)));
     uint8_t SetBcd = bin2bcd(check_min_max(hours_24, 0, 59));
     WriteRtcI2C(DS1307_HOURS, &SetBcd, 0, SINGLE_WRITE_REG);
 }
@@ -469,7 +337,6 @@ void ds1307_set_hours_24(uint8_t hours_24)
 uint8_t ds1307_get_day()
 {
 	uint8_t day;
-//	i2c_read_with_reg(DS1307_DEVICE_ADDRESS, DS1307_DAY, &day);
     ReadRtcI2C(DS1307_DAY, &day, 0, SINGLE_READ_REG);
 	return bcd2bin(day);
 }
@@ -483,8 +350,6 @@ uint8_t ds1307_get_day()
 */
 void ds1307_set_day(uint8_t day)
 {
-//	i2c_write_with_reg(DS1307_DEVICE_ADDRESS, DS1307_DAY,
-//                       bin2bcd(check_min_max(day, 1, 7)));
     uint8_t SetBcd = bin2bcd(check_min_max(day, 0, 59));
     WriteRtcI2C(DS1307_DAY, &SetBcd, 0, SINGLE_WRITE_REG);
 }
@@ -499,7 +364,6 @@ void ds1307_set_day(uint8_t day)
 uint8_t ds1307_get_date()
 {
 	uint8_t date;
-//	i2c_read_with_reg(DS1307_DEVICE_ADDRESS, DS1307_DATE, &date);
 	ReadRtcI2C(DS1307_DATE, &date, 0, SINGLE_READ_REG);
 	return bcd2bin(date);
 }
@@ -513,8 +377,6 @@ uint8_t ds1307_get_date()
 */
 void ds1307_set_date(uint8_t date)
 {
-//	i2c_write_with_reg(DS1307_DEVICE_ADDRESS, DS1307_DATE,
-//                       bin2bcd(check_min_max(date, 1, 31)));
     uint8_t SetBcd = bin2bcd(check_min_max(date, 0, 59));
     WriteRtcI2C(DS1307_DATE, &SetBcd, 0, SINGLE_WRITE_REG);
 }
@@ -529,7 +391,6 @@ void ds1307_set_date(uint8_t date)
 uint8_t ds1307_get_month()
 {
 	uint8_t month;
-//	i2c_read_with_reg(DS1307_DEVICE_ADDRESS, DS1307_MONTH, &month);
 	ReadRtcI2C(DS1307_MONTH, &month, 0, SINGLE_READ_REG);
 	return bcd2bin(month);
 }
@@ -543,8 +404,6 @@ uint8_t ds1307_get_month()
 */
 void ds1307_set_month(uint8_t month)
 {
-//	i2c_write_with_reg(DS1307_DEVICE_ADDRESS, DS1307_MONTH,
-//                       bin2bcd(check_min_max(month, 1, 12)));
     uint8_t SetBcd = bin2bcd(check_min_max(month, 0, 59));
     WriteRtcI2C(DS1307_MONTH, &SetBcd, 0, SINGLE_WRITE_REG);
 }
@@ -559,7 +418,6 @@ void ds1307_set_month(uint8_t month)
 uint8_t ds1307_get_year()
 {
 	uint8_t year;
-//	i2c_read_with_reg(DS1307_DEVICE_ADDRESS, DS1307_YEAR, &year);
 	ReadRtcI2C(DS1307_YEAR, &year, 0, SINGLE_READ_REG);
 	return bcd2bin(year);
 }
@@ -573,48 +431,11 @@ uint8_t ds1307_get_year()
 */
 void ds1307_set_year(uint8_t year)
 {
-//	i2c_write_with_reg(DS1307_DEVICE_ADDRESS, DS1307_YEAR,
-//                       bin2bcd(check_min_max(year, 0, 99)));
     uint8_t SetBcd = bin2bcd(check_min_max(year, 0, 59));
     WriteRtcI2C(DS1307_YEAR, &SetBcd, 0, SINGLE_WRITE_REG);
 }
 
-///**
-//******************************************************************************
-//*	@brief	Get hours, minutes, seconds, and AM/PM value from the register in 12 
-//*					hour mode
-//* @param	Pointer to variable for store hours value
-//* @param	Pointer to variable for store minutes value 
-//* @param	Pointer to variable for store seconds value 
-//* @param	Pointer to variable for store AM/PM value  
-//* @retval	None
-//******************************************************************************
-//*/
-//void ds1307_get_time_12(uint8_t* hours, uint8_t* minutes, uint8_t* seconds, uint8_t* am_pm)
-//{
-//	*hours = ds1307_get_hours_12();
-//	*minutes = ds1307_get_minutes();
-//	*seconds = ds1307_get_seconds();
-//	*am_pm = ds1307_get_am_pm();
-//}
 
-/**
-******************************************************************************
-*	@brief	Set hours, minutes, seconds, and AM/PM value to the register in 12 
-*					hour mode
-* @param	Hours value to be set
-* @param	Minutes value to be set
-* @param	Seconds value to be set
-* @param	AM/PM value to be set
-* @retval	None
-******************************************************************************
-*/
-//void ds1307_set_time_12(uint8_t hours, uint8_t minutes, uint8_t seconds, uint8_t am_pm)
-//{
-//	ds1307_set_hours_12(hours, am_pm);
-//	ds1307_set_minutes(minutes);
-//	ds1307_set_seconds(seconds);
-//}
 
 /**
 ******************************************************************************
@@ -650,44 +471,7 @@ void ds1307_set_time_24(uint8_t hours, uint8_t minutes, uint8_t seconds)
 	ds1307_set_seconds(seconds);
 }
 
-///**
-//******************************************************************************
-//*	@brief	Get day, date, month, and year value from the register
-//* @param	Pointer to variable for store day value
-//* @param	Pointer to variable for store date value
-//* @param	Pointer to variable for store month value
-//* @param	Pointer to variable for store year value
-//* @retval	None
-//******************************************************************************
-//*/
-//void ds1307_get_calendar_date(uint8_t* day, uint8_t* date, uint8_t* month, uint8_t* year)
-//{
-//	*day = ds1307_get_day();
-//	*date = ds1307_get_date();
-//	*month = ds1307_get_month();
-//	*year = ds1307_get_year();
-//}
 
-///**
-//******************************************************************************
-//*	@brief	Set day, date, month, and year value to the register
-//* @param	Day value to be set
-//* @param	Date value to be set
-//* @param	Month value to be set
-//* @param	Year value to be set
-//* @retval	None
-//******************************************************************************
-//*/
-//void ds1307_set_calendar_date(uint8_t day, uint8_t date, uint8_t month, uint8_t year)
-//{
-//	ds1307_set_day(day);
-//	ds1307_set_date(date);
-//	ds1307_set_month(month);
-//	ds1307_set_year(year);
-//}
-
-/** Private functions ------------------------------------------------------- */
-/**/
 
 
 static void GetGlobalTime()
@@ -726,33 +510,15 @@ void SetChangedDate(uint8_t Day, uint8_t Month, uint8_t Year)
 /* TaskRTC function */
 void TaskRTC(void const * argument)
 {
-    TIME_VAR LocalTime;
-    DATE_VAR LocalDate;
-
-//    GetTimeDate(); 
+    GetTimeDate(&GlobalTime, &GlobalDate); 
     TickForSecond = 0;
     
     /* Infinite loop */
     for(;;)
-    {       
-        HalfSecondTick = !HalfSecondTick;
-        GetTimeDate(&LocalTime, &LocalDate);
-//        ds1307_get_time_24(&LocalTime.hours, &LocalTime.minutes, &LocalTime.seconds);
-//        LocalDate.day   = ds1307_get_date();
-//        LocalDate.month = ds1307_get_month();
-//        LocalDate.year  = ds1307_get_year();
+    {   
+        GetTimeDate(&GlobalTime, &GlobalDate); 
+        osDelay(250);
         
-        if(LocalDate.year == GlobalDate.year)
-        {
-            GlobalTime = LocalTime;
-            GlobalDate = LocalDate;
-        }
-        else if(LocalDate.year != GlobalDate.year && LocalDate.year != 0)
-        {
-            GlobalDate.year++;
-        }
-        osDelay(500);
-       
     }
     /* USER CODE END TaskRTC */
 }

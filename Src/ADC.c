@@ -1,5 +1,6 @@
 #include "main.h"
 #include "ADC.h"
+#include "TaskMeasure.h"
 
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;

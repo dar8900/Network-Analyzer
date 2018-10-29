@@ -153,6 +153,7 @@ static void WriteParameters()
         EepromSavedValue[LED_CONF_ADDR] = (uint32_t)LedConf;
         EepromSavedValue[ENABLE_SIMULATION_ADDR] = (uint32_t)GeneralParams.EnableSimulation;
         EepromSavedValue[FREQUENCY_SIM_ADDR] = (uint32_t)GeneralParams.Frequency;
+        EepromSavedValue[ENABLE_LOG_ADDR] = (uint32_t)GeneralParams.EnableLog;
         
         for(uint8_t ParamIndexAddr = 0; ParamIndexAddr < (MAX_PARAMETER_ITEM - 1); ParamIndexAddr++)
         {
@@ -196,6 +197,9 @@ static void ReadParameters(uint8_t ParamItem)
 //      case ADC_OFFSET:
 //        GeneralParams.ADCOffset = EepromSavedValue[ADC_OFFSET_ADDR];
 //        break;
+      case ENABLE_LOG:
+        GeneralParams.EnableLog = EepromSavedValue[ENABLE_LOG_ADDR];
+        break;
       case LOG_MEASURE_PERIOD:
         GeneralParams.LogMeasurePeriod = EepromSavedValue[LOG_MESAURE_ADDR];
         break;
@@ -532,7 +536,7 @@ static void CheckEepromAndTranfer()
         EepromSavedValue[LED_CONF_ADDR] = LedConf = ALL_LED_OFF;
         EepromSavedValue[ENABLE_SIMULATION_ADDR] = GeneralParams.EnableSimulation = false;
         EepromSavedValue[FREQUENCY_SIM_ADDR] = GeneralParams.Frequency = 1;
-        
+        EepromSavedValue[ENABLE_LOG_ADDR] = GeneralParams.EnableLog = false;
         
         GeneralParams.SimulationCurrent = 1.0;
         
@@ -580,17 +584,20 @@ void TaskEeprom(void const * argument)
         WriteParameters();
         WriteThr();
         WriteFloatValues();
-        if(GeneralParams.EnableMeasure)
+        if(GeneralParams.EnableLog)
         {
-            if(!(GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalDate.year != 0 && !NotResaveEnergy)
+            if(GeneralParams.EnableMeasure)
             {
-                NotResaveEnergy = true;
-                EepFlag.SaveEnergy = true;  
-                EepFlag.SaveMaxMinCurrent = true;
-                EepFlag.SaveMaxMinPower = true;
-            } 
-            else if((GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalDate.year != 0 && NotResaveEnergy)
-                NotResaveEnergy = false;
+                if(!(GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalDate.year != 0 && !NotResaveEnergy)
+                {
+                    NotResaveEnergy = true;
+                    EepFlag.SaveEnergy = true;  
+                    EepFlag.SaveMaxMinCurrent = true;
+                    EepFlag.SaveMaxMinPower = true;
+                } 
+                else if((GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalDate.year != 0 && NotResaveEnergy)
+                    NotResaveEnergy = false;
+            }
         }
         osDelay(1000);
     }

@@ -373,10 +373,10 @@ void DrawBottomBarInfo(uint8_t WichPage)
         u8g2_DrawStr(&u8g, X_LEFT_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[BACK_STR]);   
         u8g2_DrawStr(&u8g, OK_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[OK_STR]); 
         u8g2_DrawStr(&u8g, UP_STR_X_POS, BOTTOM_INFO_BAR_Y_POS, BarItem[SU_STR]);
-        u8g2_DrawStr(&u8g, DOWN_STR_X_POS+5, BOTTOM_INFO_BAR_Y_POS, BarItem[GIU_STR]);
+        u8g2_DrawStr(&u8g, DOWN_STR_X_POS+8, BOTTOM_INFO_BAR_Y_POS, BarItem[GIU_STR]);
         DrawArrow(LEFT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, LEFT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, RIGHT_DIRECTION);
         DrawArrow(UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS, UP_ARROW_X_POS, UP_DOWN_ARROW_Y_POS + 6, UP_DIRECTION);
-        DrawArrow(DOWN_ARROW_X_POS+5, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS+5, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
+        DrawArrow(DOWN_ARROW_X_POS+8, UP_DOWN_ARROW_Y_POS, DOWN_ARROW_X_POS+8, UP_DOWN_ARROW_Y_POS + 6, DOWN_DIRECTION);
         DrawArrow(RIGHT_ARROW_X_POS, LEFT_RIGHT_ARROW_Y_POS, RIGHT_ARROW_X_POS + 6, LEFT_RIGHT_ARROW_Y_POS, LEFT_DIRECTION);
         break;
         
@@ -619,7 +619,7 @@ void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_
     }
     DrawBottomBarInfo(SETUP_PAGE);
     // Scrittura elementi in lista
-    u8g2_DrawStr(&u8g, 54, BOTTOM_INFO_BAR_Y_POS, NumElement);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(NumElement), BOTTOM_INFO_BAR_Y_POS, NumElement);
     u8g2_SendBuffer(&u8g);
 }
 

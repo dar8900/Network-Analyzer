@@ -1,6 +1,8 @@
 #ifndef TASK_MEASURE_H
 #define TASK_MEASURE_H
 
+#include <math.h>
+
 #define ADC_MAX_VALUE               4095
 #define ADC_HALF_MAX_VALUE          2048
 
@@ -15,12 +17,14 @@
 #define VOLTAGE_VALUE_DFLT    220
 
 
-#define TOVOLT(Value)            (Value*(3.3/4096.0))
+#define TOVOLT(Value)            (Value * 0.0008)
 #define CURR_SENSOR_CAPACITY     5  
-#define CURR_SENSOR_SENSITIVITY  58 //100
+#define CURR_SENSOR_SENSITIVITY  60 //100
 
 #define SENSOR_NOISE              22
 #define SENSOR_NOISE_TO_RAW_VAL   (0.022 / (3.3/4096.0))
+
+#define APROXIMATION(Value, NDec) (floor(Value * pow(10.0, (double)NDec)))/pow(10.0, (double)NDec)
 
 typedef struct
 {

@@ -29,7 +29,7 @@ typedef enum
     SCREEN_SAVER_TIMER_ADDR ,
     ENABLE_SIMULATION_ADDR ,
     FREQUENCY_SIM_ADDR ,
-    ADDR_73 ,
+    ENABLE_LOG_ADDR ,
     ADDR_74 ,
     ADDR_75 ,
     ADDR_76 ,
