@@ -85,18 +85,18 @@ static void CheckMaxMinCurrentPower()
     if(GeneralMeasures.MaxCurrent < GeneralMeasures.MeanCurrentRMS)
         GeneralMeasures.MaxCurrent = GeneralMeasures.MeanCurrentRMS;
     
-    if(GeneralMeasures.MinCurrent > GeneralMeasures.MeanCurrentRMS)
+    if(GeneralMeasures.MinCurrent > GeneralMeasures.MeanCurrentRMS || GeneralMeasures.MeanCurrentRMS == 0)
     {
-        if(GeneralMeasures.MeanCurrentRMS > 0)
+        if(GeneralParams.EnableMeasure)
             GeneralMeasures.MinCurrent = GeneralMeasures.MeanCurrentRMS;
     }
     
     if(GeneralMeasures.MaxPower < GeneralMeasures.Power)
         GeneralMeasures.MaxPower = GeneralMeasures.Power;
     
-    if(GeneralMeasures.MinPower > GeneralMeasures.Power)
+    if(GeneralMeasures.MinPower > GeneralMeasures.Power || GeneralMeasures.Power == 0)
     {
-        if(GeneralMeasures.Power > 0)
+        if(GeneralParams.EnableMeasure)
             GeneralMeasures.MinPower = GeneralMeasures.Power;
     }
     return;
@@ -148,6 +148,7 @@ void TaskMeasure(void const * argument)
     {            
         if(GeneralParams.EnableMeasure)
         {
+            // Calibrazione dell'offset
             if(GeneralParams.ADCOffset == 0)
             {
                 GeneralParams.ADCOffset = CalcMeanAdcOffset();
@@ -159,7 +160,7 @@ void TaskMeasure(void const * argument)
                 }
                 
             }
-
+            // Se non siamo in simulazione
             if(!GeneralParams.EnableSimulation)   
             {
                 while(!ConversionEnd)
@@ -181,6 +182,7 @@ void TaskMeasure(void const * argument)
                     CubeRawValue = 0;
                 }
             }
+            // Se siamo in simulazione
             else
             {
                 if(OldSimCurrent != GeneralParams.SimulationCurrent || OldFrequency != GeneralParams.Frequency)
@@ -225,10 +227,10 @@ void TaskMeasure(void const * argument)
             CheckAlarm();
             GeneralMeasures.MeanCurrentRMS = 0.0;
             GeneralMeasures.Power          = 0.0;
-            EnergyAcc  = 0.0;
-            AlarmEnergyLed = NO_CONF;
-            NumberOfEnergySampling = 0;
-            GeneralParams.ADCOffset = 0;
+            EnergyAcc                      = 0.0;
+            AlarmEnergyLed                 = NO_CONF;
+            NumberOfEnergySampling         = 0;
+            GeneralParams.ADCOffset        = 0;
         }
         osDelay(20);
     }

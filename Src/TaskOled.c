@@ -72,7 +72,7 @@ void TaskOled(void const * argument)
     ClearScreen();
     osDelay(500);
     DrawStartLogo(Initial_Logo);
-    osDelay(3000);
+    osDelay(2000);
     
     /* Infinite loop */
     for(;;)

@@ -1,12 +1,13 @@
 #include "main.h"
 #include "SysTime.h"
+#include "I2C.h"
 #include "Display.h"
 #include "DisplayDef.h"
 #include "TaskRTC.h"
 #include "Menus.h"
 #include "AlarmMachine.h"
 
-#define	STM32_HAL_I2C_TIMEOUT	2000
+
 
 extern const char AlarmIconSmall[];
 
@@ -22,7 +23,7 @@ extern char *AlarmMotivationStr[2];
 extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 
-extern I2C_HandleTypeDef hi2c1;
+
 
 extern TIME_VAR GlobalTime;
 extern DATE_VAR GlobalDate;

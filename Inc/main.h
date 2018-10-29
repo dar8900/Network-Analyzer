@@ -74,6 +74,9 @@
 
 /* USER CODE BEGIN Private defines */
 
+// verifica compile-time del numero di elementi di un array
+#define assert_nelem_array(a,n)   typedef char __assertion_on_struct_size##a##n__[(!!((sizeof (a) / sizeof ((a)[0])) == n)) * 2 - 1];
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
