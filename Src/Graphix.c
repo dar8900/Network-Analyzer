@@ -31,7 +31,7 @@ typedef struct
     float RefactorValue;
 }FORMAT_INFO;
 
-FORMAT_INFO FormatTable[TAB_RANGE_LEN] = 
+const FORMAT_INFO FormatTable[TAB_RANGE_LEN] = 
 {
     {0.1              , 'm',      1000.0},
     {1                , ' ',         1.0},

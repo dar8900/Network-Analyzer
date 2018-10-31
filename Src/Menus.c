@@ -26,32 +26,59 @@ extern MEASURES GeneralMeasures;
 extern char *AlarmList[MAX_ALARM_STR];
 
 extern PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM];
+extern char *ParametersMenuStr[MAX_PARAMETER_ITEM];
+
 extern PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM];
+extern char *AlarmThrMenuStr[MAX_ALARM_SETUP_ITEM] ;
+
+const char *MainSetupMenuStr[MAX_SETUP_ITEM] = 
+{
+    "Grafici"            ,
+    "Misure"             ,
+    "Stato allarmi"      ,
+    "Imposta allarmi"    ,
+    "Setup generale"     ,
+    "Imposta orario"     ,
+    "Reset"              ,
+};
+
 
 MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] = 
 {
-    {"Grafici"            , ChooseGraphics      },
-    {"Misure"             , ShowMeasure         },
-    {"Stato allarmi"      , ShowAlarmStatusList },
-    {"Imposta allarmi"    , AlarmSetup          },
-    {"Setup generale"     , ParameterSetup      },
-    {"Imposta orario"     , ChangeDateTimeMenu  },
-    {"Reset"              , ResetMenu           },
+    { ChooseGraphics      },
+    { ShowMeasure         },
+    { ShowAlarmStatusList },
+    { AlarmSetup          },
+    { ParameterSetup      },
+    { ChangeDateTimeMenu  },
+    { ResetMenu           },
 }; 
+
+
+const char *TimeSettingStr[MAX_TIME_DATE_ITEM] = 
+{
+    "Cambia orario",
+    "Cambia data"  ,
+};
 
 
 MENU_ITEM TimeSetting[MAX_TIME_DATE_ITEM] = 
 {
-    {"Cambia orario", ChangeTime},
-    {"Cambia data"  , ChangeDate},
+    { ChangeTime},
+    { ChangeDate},
+};
+
+const  char *GraphicsMenuStr[MAX_GRAPHIC_ITEM] = 
+{
+    "Forma d'onda I"     ,
 };
 
 MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] = 
 {
-    {"Forma d'onda I"     , DrawCurrentWave},
+    { DrawCurrentWave},
 };
  
-char *ResetList[MAX_RESET_ITEM] = 
+const char *ResetList[MAX_RESET_ITEM] = 
 {
     "Reset energia",
     "Riavvia sistema",
@@ -118,7 +145,7 @@ bool ChooseGraphics()
     while(!ExitChooseGraphic)
     {
         CheckOperation();
-        DrawMenuLoop("Grafici", GraphicsMenu, ItemPos, FirstListItem, MAX_GRAPHIC_ITEM, MAX_SETUP_MENU_LINES);
+        RefreshItemList("Grafici", GraphicsMenuStr, ItemPos, FirstListItem, MAX_GRAPHIC_ITEM, MAX_SETUP_MENU_LINES);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -172,7 +199,7 @@ bool ShowAlarmStatusList()
     while(!ExitAlarmList)
     {
         CheckOperation();
-        DrawListLoop("Lista allarmi", AlarmList, AlarmListItem, FirstItem, MAX_ALARM_STR, MAX_SETUP_MENU_LINES);
+        RefreshItemList("Lista allarmi", AlarmList, AlarmListItem, FirstItem, MAX_ALARM_STR, MAX_SETUP_MENU_LINES);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -231,7 +258,7 @@ bool AlarmSetup()
     while(!ExitAlarmsetup)
     {
         CheckOperation();
-        DrawParamLoop("Imposta allarmi", AlarmThrMenu, AlarmItem, FirstListItem, MAX_ALARM_SETUP_ITEM, MAX_SETUP_MENU_LINES);     
+        RefreshItemList("Imposta allarmi", AlarmThrMenuStr, AlarmItem, FirstListItem, MAX_ALARM_SETUP_ITEM, MAX_SETUP_MENU_LINES);     
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -285,7 +312,7 @@ bool ParameterSetup()
     while(!ExitParamSetup)
     {
         CheckOperation();
-        DrawParamLoop("Imp.Parametri", ParametersMenu, ParamItem, FirstListItem, MAX_PARAMETER_ITEM, MAX_SETUP_MENU_LINES);     
+        RefreshItemList("Imp.Parametri", ParametersMenuStr, ParamItem, FirstListItem, MAX_PARAMETER_ITEM, MAX_SETUP_MENU_LINES);     
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -325,7 +352,7 @@ bool ParameterSetup()
             switch(ParametersMenu[ParamItem].Type)
             {
               case CONFIRM_TYPE:
-                *(bool *)ParametersMenu[ParamItem].ParamValue = ChooseYesNo(ParametersMenu[ParamItem].ItemTitle);
+                *(bool *)ParametersMenu[ParamItem].ParamValue = ChooseYesNo(ParametersMenuStr[ParamItem]);
                 break;
               case INT_VALUE_TYPE:
                 *(uint16_t*)ParametersMenu[ParamItem].ParamValue = ChangeValue(*(uint16_t*)ParametersMenu[ParamItem].ParamValue, ParamItem);
@@ -368,7 +395,7 @@ bool ChangeDateTimeMenu()
     while(!ExitChangeTimeDate)
     {
         CheckOperation();
-        DrawMenuLoop("Setta ora/data", TimeSetting, ItemPos, FirstListItem, MAX_TIME_DATE_ITEM, MAX_SETUP_MENU_LINES);
+        RefreshItemList("Setta ora/data", TimeSettingStr, ItemPos, FirstListItem, MAX_TIME_DATE_ITEM, MAX_SETUP_MENU_LINES);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -585,7 +612,7 @@ bool ChangeDate()
     
 }
 
-void WichReset(char * ResetTitle, uint8_t ResetType)
+void WichReset(const char * ResetTitle, uint8_t ResetType)
 {
     bool ResetChoose = false;
     ResetChoose = ChooseYesNo(ResetTitle); 
@@ -624,7 +651,7 @@ bool ResetMenu()
     while(!ExitResetMenu)
     {
         CheckOperation();
-        DrawListLoop("Reset", ResetList, ItemPos, FirstListItem, MAX_RESET_ITEM, MAX_SETUP_MENU_LINES);
+        RefreshItemList("Reset", ResetList, ItemPos, FirstListItem, MAX_RESET_ITEM, MAX_SETUP_MENU_LINES);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -681,7 +708,7 @@ void MainMenu()
     while(!ExitMainMenu)
     {
         CheckOperation();
-        DrawMenuLoop("Menu", MainSetupMenu, ItemPos, FirstListItem, MAX_SETUP_ITEM, MAX_SETUP_MENU_LINES);
+        RefreshItemList("Menu", MainSetupMenuStr, ItemPos, FirstListItem, MAX_SETUP_ITEM, MAX_SETUP_MENU_LINES);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:

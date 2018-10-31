@@ -208,7 +208,11 @@ typedef enum
     ADDR_249,   // FINE SALVATAGGIO VALORI
     ADDR_250, 
     
-    NUMBER_OF_WRITES_ADDR  =  MAX_EEPROM_ADDRESS     - U_INT32_SIZE, 
+    NUMBER_OF_WRITES_ADDR  =  MAX_EEPROM_ADDRESS - U_INT32_SIZE,  // 251
+    ADDR_252,
+    ADDR_253,
+    ADDR_254,
+    ADDR_255
 }EEPROM_ADDRESS;
 
 
@@ -224,7 +228,7 @@ enum
 typedef struct
 {
     bool SaveParameters;
-    bool SaveThresholds[3];
+    bool SaveThresholds;
     bool SaveEnergy;
     bool SaveCurrentSim;
     bool SaveMaxMinCurrent;

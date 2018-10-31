@@ -31,13 +31,11 @@ typedef enum
 typedef struct
 {
     uint8_t EnumValue;
-    char    *EnumTitle;
 }ENUM_VALUE_ITEM;
 
 
 typedef struct 
 {
-     char *ItemTitle;
      uint8_t Type;
      void *ParamValue;
      void *EnumValuePtr;
@@ -102,7 +100,7 @@ extern PARAMETERS_S GeneralParams;
 
 
 uint8_t SearchScaleFlRange(float Value);
-bool ChooseYesNo(char *TitleChoice);
+bool ChooseYesNo(const char *TitleChoice);
 uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem);
 float ChangeValueFl(float ParamValue, uint8_t ParamItem);
 void ChangeAlarmThrs(uint8_t AlarmItem);

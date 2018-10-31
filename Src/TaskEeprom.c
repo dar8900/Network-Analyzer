@@ -189,37 +189,34 @@ static void ReadParameters(uint8_t ParamItem)
     switch(ParamItem)
     {
       case MEASURE_ENABLE:
-        GeneralParams.EnableMeasure = EepromSavedValue[ENABLE_MEASURE_ADDR];
+        GeneralParams.EnableMeasure     = EepromSavedValue[ENABLE_MEASURE_ADDR];
         break;
       case MEASURE_VOLTAGE:
-        GeneralParams.MeasureVoltage = EepromSavedValue[VOLTAGE_MEASURE_ADDR];
+        GeneralParams.MeasureVoltage    = EepromSavedValue[VOLTAGE_MEASURE_ADDR];
         break;
-//      case ADC_OFFSET:
-//        GeneralParams.ADCOffset = EepromSavedValue[ADC_OFFSET_ADDR];
-//        break;
       case ENABLE_LOG:
-        GeneralParams.EnableLog = EepromSavedValue[ENABLE_LOG_ADDR];
+        GeneralParams.EnableLog         = EepromSavedValue[ENABLE_LOG_ADDR];
         break;
       case LOG_MEASURE_PERIOD:
-        GeneralParams.LogMeasurePeriod = EepromSavedValue[LOG_MESAURE_ADDR];
+        GeneralParams.LogMeasurePeriod  = EepromSavedValue[LOG_MESAURE_ADDR];
         break;
       case SCREENSAVER_TYPE:
-        GeneralParams.ScreenSaverType = EepromSavedValue[SCREENSAVER_TYPE_ADDR];
+        GeneralParams.ScreenSaverType   = EepromSavedValue[SCREENSAVER_TYPE_ADDR];
         break;
       case ENABLE_SCREENSAVER:
         GeneralParams.EnableScreenSaver = EepromSavedValue[ENABLE_SCREENSAVER_ADDR];
         break;
       case SCREENSAVER_TIMER:
-        GeneralParams.ScreenSaverTimer = EepromSavedValue[SCREEN_SAVER_TIMER_ADDR];
+        GeneralParams.ScreenSaverTimer  = EepromSavedValue[SCREEN_SAVER_TIMER_ADDR];
         break;
       case LED_CONFIGURATION:
-        LedConf = EepromSavedValue[LED_CONF_ADDR];
+        LedConf                         = EepromSavedValue[LED_CONF_ADDR];
         break;
       case ENABLE_SIMULATION:
-        GeneralParams.EnableSimulation = EepromSavedValue[ENABLE_SIMULATION_ADDR];
+        GeneralParams.EnableSimulation  = EepromSavedValue[ENABLE_SIMULATION_ADDR];
         break;
       case FREQUENCY_SIM:
-        GeneralParams.Frequency = EepromSavedValue[FREQUENCY_SIM_ADDR];
+        GeneralParams.Frequency         = EepromSavedValue[FREQUENCY_SIM_ADDR];
         break;
       default:
         break;
@@ -228,187 +225,7 @@ static void ReadParameters(uint8_t ParamItem)
     return;
 }
 
-//##########################################################################################################
 
-//                                      SOGLIE      
-
-//##########################################################################################################
-
-
-
-static void ThrsToChar(float ThrOver, float ThrUnder, char ThrOverChar[], char ThrUnderChar[], uint8_t *FactorOver, uint8_t *FactorUnder)
-{
-    char TempChars[9];
-    uint8_t FactorIndex = 0;
-    
-    FactorIndex = SearchScaleFlRange(ThrOver);
-    ThrOver *= TabReScale[FactorIndex].ScaleFactor;
-    snprintf(TempChars, 9, "%08.3f", ThrOver);
-    CopyCharArray(TempChars, ThrOverChar);
-    *FactorOver = FactorIndex;
-    
-    FactorIndex = SearchScaleFlRange(ThrUnder);
-    ThrUnder *= TabReScale[FactorIndex].ScaleFactor;
-    snprintf(TempChars, 9, "%08.3f", ThrUnder);
-    CopyCharArray(TempChars, ThrUnderChar);
-    *FactorUnder = FactorIndex;
-    
-    return;
-}
-
-
-static void WriteThr()
-{
-    char OverThresholdChar[8], UnderThresholdChar[8];
-    uint16_t AddrEep = 0;
-    uint8_t FactorOver = 0, FactorUnder = 0;
-    if(EepFlag.SaveThresholds[CURRENT_THR_FLAG])
-    {
-        ThrsToChar(AlarmsParameters[CURRENT_ALARM].OverThreshold, AlarmsParameters[CURRENT_ALARM].UnderThreshold, OverThresholdChar, UnderThresholdChar,
-                   &FactorOver, &FactorUnder);
-        for(AddrEep = SOGLIE_ALLARMI_IO_ADDR; AddrEep < (SOGLIE_ALLARMI_IO_ADDR + STR_SIZE - 1); AddrEep++)
-        {
-            EepromSavedValue[AddrEep] = OverThresholdChar[AddrEep - SOGLIE_ALLARMI_IO_ADDR];
-        }
-        EepromSavedValue[AddrEep] = (uint32_t)FactorOver;
-        for(AddrEep = SOGLIE_ALLARMI_IU_ADDR; AddrEep < (SOGLIE_ALLARMI_IU_ADDR + STR_SIZE - 1); AddrEep++)
-        {
-            EepromSavedValue[AddrEep] = UnderThresholdChar[AddrEep - SOGLIE_ALLARMI_IU_ADDR];
-        }
-        EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
-        WriteNumbOfWrites(1);
-        TransferValuesToMem(EepromSavedValue);
-        osDelay(10);
-        EepFlag.SaveThresholds[CURRENT_THR_FLAG] = false;  
-    }
-    
-    if(EepFlag.SaveThresholds[POWER_THR_FLAG])
-    {
-        ThrsToChar(AlarmsParameters[POWER_ALARM].OverThreshold, AlarmsParameters[POWER_ALARM].UnderThreshold, OverThresholdChar, UnderThresholdChar,
-                   &FactorOver, &FactorUnder);
-        for(AddrEep = SOGLIE_ALLARMI_PO_ADDR; AddrEep < (SOGLIE_ALLARMI_PO_ADDR + STR_SIZE - 1); AddrEep++)
-        {
-            EepromSavedValue[AddrEep] = OverThresholdChar[AddrEep - SOGLIE_ALLARMI_PO_ADDR];
-        }
-        EepromSavedValue[AddrEep] = (uint32_t)FactorOver;
-        for(AddrEep = SOGLIE_ALLARMI_PU_ADDR; AddrEep < (SOGLIE_ALLARMI_PU_ADDR + STR_SIZE - 1); AddrEep++)
-        {
-            EepromSavedValue[AddrEep] = UnderThresholdChar[AddrEep - SOGLIE_ALLARMI_PU_ADDR];
-        }
-        EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
-        WriteNumbOfWrites(1);
-        TransferValuesToMem(EepromSavedValue);
-        osDelay(10);
-        EepFlag.SaveThresholds[POWER_THR_FLAG] = false;  
-    }
-    if(EepFlag.SaveThresholds[ENERGY_THR_FLAG])
-    {
-        ThrsToChar(AlarmsParameters[ENERGY_ALARM].OverThreshold, AlarmsParameters[ENERGY_ALARM].UnderThreshold, OverThresholdChar, UnderThresholdChar,
-                   &FactorOver, &FactorUnder);
-        for(AddrEep = SOGLIE_ALLARMI_EO_ADDR; AddrEep < (SOGLIE_ALLARMI_EO_ADDR + STR_SIZE - 1); AddrEep++)
-        {
-            EepromSavedValue[AddrEep] = OverThresholdChar[AddrEep - SOGLIE_ALLARMI_EO_ADDR];
-        }
-        EepromSavedValue[AddrEep] = (uint32_t)FactorOver;
-        for(AddrEep = SOGLIE_ALLARMI_EU_ADDR; AddrEep < (SOGLIE_ALLARMI_EU_ADDR + STR_SIZE - 1); AddrEep++)
-        {
-            EepromSavedValue[AddrEep] = UnderThresholdChar[AddrEep - SOGLIE_ALLARMI_EU_ADDR];
-        }
-        EepromSavedValue[AddrEep] = (uint32_t)FactorUnder;
-        WriteNumbOfWrites(1);
-        TransferValuesToMem(EepromSavedValue);
-        osDelay(10);
-        EepFlag.SaveThresholds[ENERGY_THR_FLAG] = false;  
-    }
-}
-
-
-static void ReadCurrentThr()
-{
-    uint8_t Addr = 0;
-    float Value = 0.0;
-    char OverThresholdChar[8], UnderThresholdChar[8];
-    char CopyStr[8];
-    
-    uint8_t FactorScale = 0;
-    for(Addr = SOGLIE_ALLARMI_IO_ADDR; Addr < (SOGLIE_ALLARMI_IO_ADDR + STR_SIZE - 1); Addr++)
-    {
-        OverThresholdChar[Addr - SOGLIE_ALLARMI_IO_ADDR] = (char)EepromSavedValue[Addr];
-    }
-    FactorScale = EepromSavedValue[Addr];    
-    ReWriteStr(OverThresholdChar, CopyStr, 8);
-    Value = strtof(CopyStr, NULL);
-    Value /= TabReScale[FactorScale].ScaleFactor;
-    AlarmsParameters[CURRENT_ALARM].OverThreshold = Value;
-    
-    for(Addr = SOGLIE_ALLARMI_IU_ADDR; Addr < (SOGLIE_ALLARMI_IU_ADDR + STR_SIZE - 1); Addr++)
-    {
-        UnderThresholdChar[Addr - SOGLIE_ALLARMI_IU_ADDR] = (char)EepromSavedValue[Addr];
-    }
-    FactorScale = EepromSavedValue[Addr];    
-    ReWriteStr(UnderThresholdChar, CopyStr, 8);
-    Value = strtof(CopyStr, NULL);
-    Value /= TabReScale[FactorScale].ScaleFactor;
-    AlarmsParameters[CURRENT_ALARM].UnderThreshold = Value;
-}
-
-static void ReadPowerThr()
-{
-    uint8_t Addr = 0;
-    float Value = 0.0;
-    char OverThresholdChar[8], UnderThresholdChar[8];
-    char CopyStr[8];
-    uint8_t FactorScale = 0;
-    for(Addr = SOGLIE_ALLARMI_PO_ADDR; Addr < (SOGLIE_ALLARMI_PO_ADDR + STR_SIZE - 1); Addr++)
-    {
-        OverThresholdChar[Addr - SOGLIE_ALLARMI_PO_ADDR] = (char)EepromSavedValue[Addr];
-    }
-    FactorScale = EepromSavedValue[Addr]; 
-    ReWriteStr(OverThresholdChar, CopyStr, 8);
-    Value = strtof(CopyStr, NULL);
-    Value /= TabReScale[FactorScale].ScaleFactor;
-    AlarmsParameters[POWER_ALARM].OverThreshold = Value;
-    
-    for(Addr = SOGLIE_ALLARMI_PU_ADDR; Addr < (SOGLIE_ALLARMI_PU_ADDR + STR_SIZE - 1); Addr++)
-    {
-        UnderThresholdChar[Addr - SOGLIE_ALLARMI_PU_ADDR] = (char)EepromSavedValue[Addr];
-    }
-    FactorScale = EepromSavedValue[Addr];    
-    ReWriteStr(UnderThresholdChar, CopyStr, 8);
-    Value = strtof(CopyStr, NULL);
-    Value /= TabReScale[FactorScale].ScaleFactor;
-    AlarmsParameters[POWER_ALARM].UnderThreshold = Value;
-
-}
-
-static void ReadEnergyThr()
-{
-    uint8_t Addr = 0;
-    float Value = 0.0;
-    char OverThresholdChar[8], UnderThresholdChar[8];
-    char CopyStr[8];
-    uint8_t FactorScale = 0;
-    for(Addr = SOGLIE_ALLARMI_EO_ADDR; Addr < (SOGLIE_ALLARMI_EO_ADDR + STR_SIZE - 1); Addr++)
-    {
-        OverThresholdChar[Addr - SOGLIE_ALLARMI_EO_ADDR] = (char)EepromSavedValue[Addr];
-    }
-    FactorScale = EepromSavedValue[Addr];    
-    ReWriteStr(OverThresholdChar, CopyStr, 8);
-    Value = strtof(CopyStr, NULL);
-    Value /= TabReScale[FactorScale].ScaleFactor;
-    AlarmsParameters[ENERGY_ALARM].OverThreshold = Value;
-    
-    for(Addr = SOGLIE_ALLARMI_EU_ADDR; Addr < (SOGLIE_ALLARMI_EU_ADDR + STR_SIZE - 1); Addr++)
-    {
-        UnderThresholdChar[Addr - SOGLIE_ALLARMI_EU_ADDR] = (char)EepromSavedValue[Addr];
-    }
-    FactorScale = EepromSavedValue[Addr];    
-    ReWriteStr(UnderThresholdChar, CopyStr, 8);
-    Value = strtof(CopyStr, NULL);
-    Value /= TabReScale[FactorScale].ScaleFactor;
-    AlarmsParameters[ENERGY_ALARM].UnderThreshold = Value;
-
-}
 
 //##########################################################################################################
 
@@ -488,7 +305,16 @@ static void WriteFloatValues()
         WriteFloat(MIN_POWER_0_ADDR, GeneralMeasures.MinPower);
         EepFlag.SaveMaxMinPower = false;
     }
-
+    if(EepFlag.SaveThresholds)
+    {
+        WriteFloat(SOGLIE_ALLARMI_IO_ADDR, AlarmsParameters[CURRENT_ALARM].OverThreshold);
+        WriteFloat(SOGLIE_ALLARMI_IU_ADDR, AlarmsParameters[CURRENT_ALARM].UnderThreshold);      
+        WriteFloat(SOGLIE_ALLARMI_PO_ADDR, AlarmsParameters[POWER_ALARM].OverThreshold);
+        WriteFloat(SOGLIE_ALLARMI_PU_ADDR, AlarmsParameters[POWER_ALARM].UnderThreshold);     
+        WriteFloat(SOGLIE_ALLARMI_EO_ADDR, AlarmsParameters[ENERGY_ALARM].OverThreshold);
+        WriteFloat(SOGLIE_ALLARMI_EU_ADDR, AlarmsParameters[ENERGY_ALARM].UnderThreshold);
+        EepFlag.SaveThresholds = false;        
+    }
     return;
 }
 
@@ -500,6 +326,12 @@ static void ReadFloatValues()
     ReadFloat(MIN_CURRENT_0_ADDR, &GeneralMeasures.MinCurrent);
     ReadFloat(MAX_POWER_0_ADDR  , &GeneralMeasures.MaxPower);
     ReadFloat(MIN_POWER_0_ADDR  , &GeneralMeasures.MinPower);
+    ReadFloat(SOGLIE_ALLARMI_IO_ADDR, &AlarmsParameters[CURRENT_ALARM].OverThreshold);
+    ReadFloat(SOGLIE_ALLARMI_IU_ADDR, &AlarmsParameters[CURRENT_ALARM].UnderThreshold);
+    ReadFloat(SOGLIE_ALLARMI_PO_ADDR, &AlarmsParameters[POWER_ALARM].OverThreshold);
+    ReadFloat(SOGLIE_ALLARMI_PU_ADDR, &AlarmsParameters[POWER_ALARM].UnderThreshold);
+    ReadFloat(SOGLIE_ALLARMI_EO_ADDR, &AlarmsParameters[ENERGY_ALARM].OverThreshold);
+    ReadFloat(SOGLIE_ALLARMI_EU_ADDR, &AlarmsParameters[ENERGY_ALARM].UnderThreshold);
 }
 
 //##########################################################################################################
@@ -514,9 +346,6 @@ static void TranferToGlobalVars()
     {
         ReadParameters(i);
     }
-    ReadCurrentThr();
-    ReadPowerThr();
-    ReadEnergyThr();
     ReadFloatValues();
     ReadNumbOfWrites();
 }
@@ -548,9 +377,7 @@ static void CheckEepromAndTranfer()
         AlarmsParameters[ENERGY_ALARM].UnderThreshold = 0.0;
         
         EepFlag.SaveParameters = true;
-        EepFlag.SaveThresholds[CURRENT_THR_FLAG] = true;
-        EepFlag.SaveThresholds[POWER_THR_FLAG]   = true;
-        EepFlag.SaveThresholds[ENERGY_THR_FLAG]  = true;
+        EepFlag.SaveThresholds = true;
     }
     else
     {
@@ -582,7 +409,6 @@ void TaskEeprom(void const * argument)
     {
         EraseEeprom();
         WriteParameters();
-        WriteThr();
         WriteFloatValues();
         if(GeneralParams.EnableLog)
         {

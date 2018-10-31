@@ -24,49 +24,92 @@ enum
     DECOMPOSE
 };
 
+const char *ScreenSaverStr[MAX_SCREENSAVER_TYPE] = 
+{
+    "Analogico/data",
+    "Digitale/data",  
+    "Solo analogico",   
+};
 
+const char *LedConfigurationStr[MAX_LED_COMBINATIONS] = 
+{
+    "RGB"               ,
+    "Rosso"             ,
+    "Verde"             ,
+    "Blu"               ,
+    "Rosso e verde"     ,
+    "Rosso e blu"       ,
+    "Blu e verde"       ,
+    "Tutti spenti"      ,  
+};
 
 const ENUM_VALUE_ITEM ScreenSaverEnum[MAX_SCREENSAVER_TYPE] = 
 {
-    {ANALOG_DATE  , "Analogico/data"},
-    {DIGITAL_DATE , "Digitale/data"},
-    {ANALOG_ONLY  , "Solo analogico"},
+    {ANALOG_DATE },
+    {DIGITAL_DATE},
+    {ANALOG_ONLY },
 };
 
 const ENUM_VALUE_ITEM LedConfiguration[MAX_LED_COMBINATIONS] = 
 {
-    {RGB            ,    "RGB"            },
-    {RED            ,    "Rosso"          },
-    {GREEN          ,    "Verde"          },
-    {BLUE           ,    "Blu"            },
-    {RED_GREEN      ,    "Rosso e verde"  },
-    {RED_BLUE       ,    "Rosso e blu"    },
-    {GREEN_BLUE     ,    "Blu e verde"    },
-    {ALL_LED_OFF    ,    "Tutti spenti"   },
+    {RGB         },
+    {RED         },
+    {GREEN       },
+    {BLUE        },
+    {RED_GREEN   },
+    {RED_BLUE    },
+    {GREEN_BLUE  },
+    {ALL_LED_OFF },
 };
+
+
+const char *ParametersMenuStr[MAX_PARAMETER_ITEM] = 
+{
+    "Abilitare misura"       ,
+    "Abilitare simulaz."     ,
+    "Corrente sim.(A)"       ,
+    "Frequenza sim.(Hz)"     ,
+    "Tensione misura (V)"    ,
+    "Abilitare log"          ,
+    "Periodo log mis.(s)"    ,
+    "ADC Offset"             ,
+    "Usare screensaver"      ,
+    "Tipo screensaver"       ,
+    "Timer screensaver(s)"   ,
+    "Configura i led "       ,
+    "Scritture in memoria"   ,
+};
+
+const char *AlarmThrMenuStr[MAX_ALARM_SETUP_ITEM] = 
+{
+    "Soglie corrente "  ,
+    "Soglie potenza  "  ,
+    "Soglia energia  "  ,
+};
+
 
 const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
 {
-    {"Abilitare misura"       , CONFIRM_TYPE     ,  &GeneralParams.EnableMeasure             ,   NULL                      , 0                     },
-    {"Abilitare simulaz."     , CONFIRM_TYPE     ,  &GeneralParams.EnableSimulation          ,   NULL                      , 0                     },
-    {"Corrente sim.(A)"       , FLOAT_VALUE_TYPE ,  &GeneralParams.SimulationCurrent         ,   NULL                      , 0                     },
-    {"Frequenza sim.(Hz)"     , INT_VALUE_TYPE   ,  &GeneralParams.Frequency                 ,   NULL                      , 0                     },
-    {"Tensione misura (V)"    , INT_VALUE_TYPE   ,  &GeneralParams.MeasureVoltage            ,   NULL                      , 0                     },
-    {"Abilitare log"          , CONFIRM_TYPE     ,  &GeneralParams.EnableLog                 ,   NULL                      , 0                     },
-    {"Periodo log mis.(s)"    , INT_VALUE_TYPE   ,  &GeneralParams.LogMeasurePeriod          ,   NULL                      , 0                     },
-    {"ADC Offset"             , READ_ONLY_TYPE   ,  &GeneralParams.ADCOffset                 ,   NULL                      , 0                     },
-    {"Usare screensaver"      , CONFIRM_TYPE     ,  &GeneralParams.EnableScreenSaver         ,   NULL                      , 0                     },
-    {"Tipo screensaver"       , ENUM_VALUE_TYPE  ,  &GeneralParams.ScreenSaverType           ,   (void *)ScreenSaverEnum   , MAX_SCREENSAVER_TYPE  },
-    {"Timer screensaver(s)"   , INT_VALUE_TYPE   ,  &GeneralParams.ScreenSaverTimer          ,   NULL                      , 0                     },
-    {"Configura i led "       , ENUM_VALUE_TYPE  ,  &LedConf                                 ,   (void *)LedConfiguration  , MAX_LED_COMBINATIONS  },
-    {"Scritture in memoria"   , READ_ONLY_TYPE   ,  &EepromSavedValue[NUMBER_OF_WRITES_ADDR] ,   NULL                      , 0                     },
+    { CONFIRM_TYPE     ,  &GeneralParams.EnableMeasure             ,   NULL                      , 0                     },
+    { CONFIRM_TYPE     ,  &GeneralParams.EnableSimulation          ,   NULL                      , 0                     },
+    { FLOAT_VALUE_TYPE ,  &GeneralParams.SimulationCurrent         ,   NULL                      , 0                     },
+    { INT_VALUE_TYPE   ,  &GeneralParams.Frequency                 ,   NULL                      , 0                     },
+    { INT_VALUE_TYPE   ,  &GeneralParams.MeasureVoltage            ,   NULL                      , 0                     },
+    { CONFIRM_TYPE     ,  &GeneralParams.EnableLog                 ,   NULL                      , 0                     },
+    { INT_VALUE_TYPE   ,  &GeneralParams.LogMeasurePeriod          ,   NULL                      , 0                     },
+    { READ_ONLY_TYPE   ,  &GeneralParams.ADCOffset                 ,   NULL                      , 0                     },
+    { CONFIRM_TYPE     ,  &GeneralParams.EnableScreenSaver         ,   NULL                      , 0                     },
+    { ENUM_VALUE_TYPE  ,  &GeneralParams.ScreenSaverType           ,   (void *)ScreenSaverEnum   , MAX_SCREENSAVER_TYPE  },
+    { INT_VALUE_TYPE   ,  &GeneralParams.ScreenSaverTimer          ,   NULL                      , 0                     },
+    { ENUM_VALUE_TYPE  ,  &LedConf                                 ,   (void *)LedConfiguration  , MAX_LED_COMBINATIONS  },
+    { READ_ONLY_TYPE   ,  &EepromSavedValue[NUMBER_OF_WRITES_ADDR] ,   NULL                      , 0                     },
 }; 
 
 const PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM] = 
 {
-    {"Soglie corrente "  , FLOAT_VALUE_TYPE    ,  NULL},
-    {"Soglie potenza  "  , FLOAT_VALUE_TYPE    ,  NULL},
-    {"Soglia energia  "  , FLOAT_VALUE_TYPE    ,  NULL},
+    { FLOAT_VALUE_TYPE    ,  NULL},
+    { FLOAT_VALUE_TYPE    ,  NULL},
+    { FLOAT_VALUE_TYPE    ,  NULL},
 };
 
 
@@ -161,15 +204,15 @@ static void FloatStr(float *Value, char StrArray[], uint8_t ArraySize, bool ToSt
     }
 }
 
-bool ChooseYesNo(char *TitleChoice)
+bool ChooseYesNo(const char *TitleChoice)
 {
-    char *ChoiceStr[2] = {"Si", "No"};
+    const char *ChoiceStr[2] = {"Si", "No"};
     uint8_t ChoiceNum = 0, FirstListItem = 0;
     bool ExitChoice = false, Choice = false;
     while(!ExitChoice)
     {
         CheckOperation();
-        DrawListLoop(TitleChoice, ChoiceStr, ChoiceNum, FirstListItem, 2, MAX_SETUP_MENU_LINES);
+        RefreshItemList(TitleChoice, ChoiceStr, ChoiceNum, FirstListItem, 2, MAX_SETUP_MENU_LINES);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -231,7 +274,7 @@ uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
     while(!ExitChangeValue)
     {
         CheckOperation();
-        DrawChangeValueLoop(BoxPos, ValueArray, ParametersMenu[ParamItem].ItemTitle);
+        DrawChangeValueLoop(BoxPos, ValueArray, ParametersMenuStr[ParamItem]);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -297,7 +340,7 @@ float ChangeValueFl(float ParamValue, uint8_t ParamItem)
     while(!ExitChangeFloat)
     {
         CheckOperation();
-        DrawChangeAlarmThrsOrFloatLoop(BoxPos, ValueArray, ParametersMenu[ParamItem].ItemTitle, TabReScale[FactorUnitIndex].Unit);
+        DrawChangeAlarmThrsOrFloatLoop(BoxPos, ValueArray, ParametersMenuStr[ParamItem], TabReScale[FactorUnitIndex].Unit);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:
@@ -456,20 +499,7 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
     }
     if(!ExitFromAll)
     {
-        switch(AlarmItem)
-        { 
-          case CURRENT_ALARM:
-            EepFlag.SaveThresholds[0] = true;
-            break;
-          case POWER_ALARM:
-            EepFlag.SaveThresholds[1] = true;
-            break;
-          case ENERGY_ALARM:
-            EepFlag.SaveThresholds[2] = true;
-            break;
-          default:
-            break;
-        }
+        EepFlag.SaveThresholds = true;
     }
     
 }
@@ -478,13 +508,13 @@ int8_t ChangeEnumValue(uint8_t ParamItem)
 {
     uint8_t EnumItem = 0, FirstListItem = 0;
     uint8_t MaxItems = ParametersMenu[ParamItem].MaxEnumItems;
-    ENUM_VALUE_ITEM *TmpValue = (ENUM_VALUE_ITEM *)ParametersMenu[ParamItem].EnumValuePtr;
+    ENUM_VALUE_ITEM *TmpValue = (ENUM_VALUE_ITEM *)ParametersMenu;
     bool ExitChangeEnum = false, ValueSetted = false;
     int8_t EnumValueRet = -1;
     while(!ExitChangeEnum)
     {
         CheckOperation();
-        DrawChangeEnumLoop(ParametersMenu[ParamItem].ItemTitle, TmpValue, EnumItem, FirstListItem, MaxItems, MAX_SETUP_MENU_LINES);
+        RefreshItemList(ParametersMenuStr[ParamItem], ParametersMenuStr, EnumItem, FirstListItem, MaxItems, MAX_SETUP_MENU_LINES);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:

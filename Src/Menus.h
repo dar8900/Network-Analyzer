@@ -8,7 +8,6 @@
 
 typedef struct 
 {
-     char *ItemTitle;
      bool (*MenuFunc)(void);
 }MENU_ITEM;
 
@@ -68,7 +67,7 @@ bool ChangeDateTimeMenu(void);
 bool ChangeTime(void);
 bool ChangeDate(void);
 bool ResetMenu(void);
-void WichReset(char * ResetTitle, uint8_t ResetType);
+void WichReset(const char * ResetTitle, uint8_t ResetType);
 
 bool ShowMeasure(void);
 bool ChooseGraphics(void);

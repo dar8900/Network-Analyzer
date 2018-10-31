@@ -16,7 +16,7 @@
 
 extern bool ConversionEnd;
 extern bool SecondTick;
-extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
+extern uint32_t ADCReadedValue[NUM_SAMPLE * 2]; 
 extern bool EnableSimulation;
 extern uint32_t ADCReadedValueSim[NUM_SAMPLE];
 
@@ -25,9 +25,11 @@ static float CurrentRMS[CURRENT_SAMPLE];
 static float EnergyAcc;
 static uint32_t NumberOfEnergySampling; 
 
-static uint8_t SensorSensibility = 66;
+static uint8_t SensorSensibility = 60;
 
 MEASURES GeneralMeasures;
+
+uint32_t AdcMeanRawValue[NUM_SAMPLE];
 
 
 static void ClearFLArray(float Array[], uint8_t Size)
@@ -39,16 +41,15 @@ static void ClearFLArray(float Array[], uint8_t Size)
 }
 
 
-static uint32_t CalcMeanAdcOffset()
+static uint32_t CalcArrayAvarage(uint32_t Array[], uint8_t Size)
 {
-    uint8_t i = 0;
-    float MeanOffset = 0;
-    for(i = 0; i < NUM_SAMPLE; i++)
+    uint32_t Mean = 0;
+    for(uint8_t i = 0; i < Size; i++)
     {
-        MeanOffset += ADCReadedValue[i];
+        Mean += Array[i];
     }
-    MeanOffset /= NUM_SAMPLE;
-    return (uint32_t)MeanOffset;
+    Mean /= Size;
+    return Mean;   
 }
 
 static float CalcCurrent(double QuadraticValue)
@@ -64,7 +65,7 @@ static float CalcCurrent(double QuadraticValue)
 
     
     // Divido i mV ottenuti per la sensibilita del sensore per ottere gli A 
-    SquareQuadratic /= CURR_SENSOR_SENSITIVITY;
+    SquareQuadratic /= SensorSensibility;
     
     return SquareQuadratic;
 }
@@ -85,22 +86,34 @@ static float CalcMeanCurrent(float CurrentRMS[])
 
 static void CheckMaxMinCurrentPower()
 {   
+    // Max Min Current
     if(GeneralMeasures.MaxCurrent < GeneralMeasures.MeanCurrentRMS)
         GeneralMeasures.MaxCurrent = GeneralMeasures.MeanCurrentRMS;
     
-    if(GeneralMeasures.MinCurrent > GeneralMeasures.MeanCurrentRMS || GeneralMeasures.MeanCurrentRMS == 0)
-    {
-        if(GeneralParams.EnableMeasure)
+    if(GeneralMeasures.MeanCurrentRMS != 0)
+    {      
+        if(GeneralMeasures.MinCurrent == 0)
             GeneralMeasures.MinCurrent = GeneralMeasures.MeanCurrentRMS;
+        else
+        {
+            if(GeneralMeasures.MinCurrent > GeneralMeasures.MeanCurrentRMS)
+                GeneralMeasures.MinCurrent = GeneralMeasures.MeanCurrentRMS;
+        }
     }
     
+    // Max Min Power
     if(GeneralMeasures.MaxPower < GeneralMeasures.Power)
         GeneralMeasures.MaxPower = GeneralMeasures.Power;
     
-    if(GeneralMeasures.MinPower > GeneralMeasures.Power || GeneralMeasures.Power == 0)
+    if(GeneralMeasures.Power != 0)
     {
-        if(GeneralParams.EnableMeasure)
+        if(GeneralMeasures.MinPower == 0)
             GeneralMeasures.MinPower = GeneralMeasures.Power;
+        else
+        {
+            if(GeneralMeasures.MinPower > GeneralMeasures.Power)
+                GeneralMeasures.MinPower = GeneralMeasures.Power;
+        }
     }
     return;
 }
@@ -142,29 +155,15 @@ void TaskMeasure(void const * argument)
     float AdcRawDiff = 0;
     float OldSimCurrent = 0;
     uint8_t OldFrequency = 0;
-    uint16_t AdcOffsetOld = 0;
-    int32_t AdcCorrection = 0;
-    bool NotDoCorrection = false;
+    bool CleanAll = true;
+    uint8_t GrandRawMeanIndex = 0;
     
-    /* Infinite loop */
     for(;;)
     {            
         if(GeneralParams.EnableMeasure)
         {
-//            GeneralParams.ADCOffset = CalcMeanAdcOffset();
-            // Calibrazione dell'offset
-            if(GeneralParams.ADCOffset == 0)
-            {
-                GeneralParams.ADCOffset = CalcMeanAdcOffset();
-                AdcOffsetOld = GeneralParams.ADCOffset;
-                    //                if(!NotDoCorrection && GeneralParams.ADCOffset > 0)
-                    //                {
-                    //                    AdcCorrection = 2085 - GeneralParams.ADCOffset;
-                    //                    GeneralParams.ADCOffset += AdcCorrection;
-                    //                    NotDoCorrection = true;
-                    //                }
-                
-            }
+            CleanAll = true;
+            
             // Se non siamo in simulazione
             if(!GeneralParams.EnableSimulation)   
             {
@@ -177,15 +176,28 @@ void TaskMeasure(void const * argument)
                 {
                     StopADC_DMA_Conv();
                     ConversionEnd = false;
-                    for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
+                    
+                    AdcMeanRawValue[GrandRawMeanIndex] = CalcArrayAvarage(ADCReadedValue, NUM_SAMPLE * 2);
+                    GrandRawMeanIndex++;
+                    
+                    if(GrandRawMeanIndex == NUM_SAMPLE)
                     {
-                        AdcRawDiff = TOVOLT((float)ADCReadedValue[ValueIndx]) - TOVOLT((float)GeneralParams.ADCOffset);
-                        AdcRawDiff = APROXIMATION(AdcRawDiff, 2);
-                        CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
+                        GrandRawMeanIndex = 0;
+                        // Calibrazione dell'offset                   
+                        if(GeneralParams.ADCOffset == 0)
+                        {
+                            GeneralParams.ADCOffset = CalcArrayAvarage(AdcMeanRawValue, NUM_SAMPLE);
+                        }
+                        for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
+                        {
+                            AdcRawDiff = TOVOLT((float)AdcMeanRawValue[ValueIndx]) - TOVOLT((float)GeneralParams.ADCOffset);
+                            AdcRawDiff = APROXIMATION(AdcRawDiff, 4);
+                            CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
+                        }
+                        CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
+                        NumberOfCurrentSampling++;
+                        CubeRawValue = 0;
                     }
-                    CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
-                    NumberOfCurrentSampling++;
-                    CubeRawValue = 0;
                 }
             }
             // Se siamo in simulazione
@@ -229,18 +241,21 @@ void TaskMeasure(void const * argument)
         } 
         else
         {
-            ClearFLArray(CurrentRMS, CURRENT_SAMPLE);
-            CheckAlarm();
-            GeneralMeasures.MeanCurrentRMS = 0.0;
-            GeneralMeasures.Power          = 0.0;
-            EnergyAcc                      = 0.0;
-            AlarmEnergyLed                 = NO_CONF;
-            NumberOfEnergySampling         = 0;
-            GeneralParams.ADCOffset        = 0;
+            if(CleanAll)
+            {
+                ClearFLArray(CurrentRMS, CURRENT_SAMPLE);
+                CheckAlarm();
+                GeneralMeasures.MeanCurrentRMS = 0.0;
+                GeneralMeasures.Power          = 0.0;
+                EnergyAcc                      = 0.0;
+                AlarmEnergyLed                 = NO_CONF;
+                NumberOfEnergySampling         = 0;
+                GeneralParams.ADCOffset        = 0;
+                CleanAll = false;
+            }
         }
         osDelay(20);
     }
-    /* USER CODE END TaskMeasure */
 }
 
 #endif // ENABLE_MEASURE
