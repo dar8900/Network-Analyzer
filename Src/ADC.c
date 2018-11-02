@@ -6,9 +6,9 @@ ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 
 bool ConversionEnd = false;
-uint32_t ADCReadedValue[NUM_SAMPLE * 2]; 
+uint32_t ADCReadedValue[NUM_SAMPLE]; 
 
-static uint32_t DMABuff[NUM_SAMPLE * 2];
+static uint32_t DMABuff[NUM_SAMPLE];
 
 /* ADC1 init function */
 void MX_ADC1_Init(void)
@@ -77,7 +77,7 @@ void MX_ADC2_Init(void)
 
 static void TransferToAdcBuff()
 {
-    for(uint8_t i = 0; i < (NUM_SAMPLE * 2); i++)
+    for(uint8_t i = 0; i < (NUM_SAMPLE); i++)
     {
         ADCReadedValue[i] = DMABuff[i];
     }
@@ -92,7 +92,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 
 void ADCConvToDMA()
 {
-    HAL_ADC_Start_DMA(&hadc1, DMABuff, NUM_SAMPLE * 2);
+    HAL_ADC_Start_DMA(&hadc1, DMABuff, NUM_SAMPLE);
 }
 void StopADC_DMA_Conv()
 {

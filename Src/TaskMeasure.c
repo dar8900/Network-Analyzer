@@ -25,11 +25,10 @@ static float CurrentRMS[CURRENT_SAMPLE];
 static float EnergyAcc;
 static uint32_t NumberOfEnergySampling; 
 
-static uint8_t SensorSensibility = 60;
+static uint8_t SensorSensibility = 100;
 
 MEASURES GeneralMeasures;
 
-uint32_t AdcMeanRawValue[NUM_SAMPLE];
 
 
 static void ClearFLArray(float Array[], uint8_t Size)
@@ -177,27 +176,19 @@ void TaskMeasure(void const * argument)
                     StopADC_DMA_Conv();
                     ConversionEnd = false;
                     
-                    AdcMeanRawValue[GrandRawMeanIndex] = CalcArrayAvarage(ADCReadedValue, NUM_SAMPLE * 2);
-                    GrandRawMeanIndex++;
-                    
-                    if(GrandRawMeanIndex == NUM_SAMPLE)
+                    // Calibrazione dell'offset                   
+                    if(GeneralParams.ADCOffset == 0)
                     {
-                        GrandRawMeanIndex = 0;
-                        // Calibrazione dell'offset                   
-                        if(GeneralParams.ADCOffset == 0)
-                        {
-                            GeneralParams.ADCOffset = CalcArrayAvarage(AdcMeanRawValue, NUM_SAMPLE);
-                        }
-                        for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
-                        {
-                            AdcRawDiff = TOVOLT((float)AdcMeanRawValue[ValueIndx]) - TOVOLT((float)GeneralParams.ADCOffset);
-                            AdcRawDiff = APROXIMATION(AdcRawDiff, 4);
-                            CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
-                        }
-                        CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
-                        NumberOfCurrentSampling++;
-                        CubeRawValue = 0;
+                        GeneralParams.ADCOffset = CalcArrayAvarage(ADCReadedValue, NUM_SAMPLE);
                     }
+                    for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
+                    {
+                        AdcRawDiff = (TOVOLT((float)ADCReadedValue[ValueIndx]) - TOVOLT((float)GeneralParams.ADCOffset)) / VOLTAGE_DIV_ALPHA;
+                        CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
+                    }
+                    CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
+                    NumberOfCurrentSampling++;
+                    CubeRawValue = 0;
                 }
             }
             // Se siamo in simulazione
@@ -212,7 +203,7 @@ void TaskMeasure(void const * argument)
                 
                 for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
                 {
-                    AdcRawDiff = (int32_t)ADCReadedValueSim[ValueIndx] - 2048;
+                    AdcRawDiff = (TOVOLT((float)ADCReadedValueSim[ValueIndx]) - TOVOLT((float)2048)) / VOLTAGE_DIV_ALPHA;
                     CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
                 }
                 CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
@@ -224,7 +215,7 @@ void TaskMeasure(void const * argument)
             {
                 GeneralMeasures.MeanCurrentRMS = CalcMeanCurrent(CurrentRMS); 
                 GeneralMeasures.MeanCurrentRMS = APROXIMATION(GeneralMeasures.MeanCurrentRMS, 2);
-                if(GeneralMeasures.MeanCurrentRMS > 0.30)
+                if(GeneralMeasures.MeanCurrentRMS > 0.15)
                     GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * (float)GeneralParams.MeasureVoltage;
                 else
                 {

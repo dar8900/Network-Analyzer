@@ -19,10 +19,12 @@
 
 #define TOVOLT(Value)            (Value * 0.0008)
 #define CURR_SENSOR_CAPACITY     5  
-#define CURR_SENSOR_SENSITIVITY  60 //100
+#define CURR_SENSOR_SENSITIVITY  100 //100
 
 #define SENSOR_NOISE              22
 #define SENSOR_NOISE_TO_RAW_VAL   (0.022 / (3.3/4096.0))
+
+#define VOLTAGE_DIV_ALPHA         0.66666
 
 #define APROXIMATION(Value, NDec) (floor(Value * pow(10.0, (double)NDec)))/pow(10.0, (double)NDec)
 

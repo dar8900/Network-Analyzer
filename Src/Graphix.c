@@ -18,6 +18,7 @@
 
 extern u8g2_t u8g;
 extern uint32_t ADCReadedValue[NUM_SAMPLE];
+extern uint32_t ADCReadedValueSim[NUM_SAMPLE];
 extern int16_t SinTestGraphic[];
 extern TIME_VAR GlobalTime;
 extern DATE_VAR GlobalDate;
@@ -194,7 +195,14 @@ bool DrawCurrentWave()
 
         for(XPos = 0; XPos < MAX_GRAPHIC_WIDTH; XPos++)
         {
-            YPos = 30 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValue[XPos] - GeneralParams.ADCOffset)) / GeneralParams.ADCOffset);          
+            if(!GeneralParams.EnableSimulation)
+            {
+                YPos = 30 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValue[XPos] - GeneralParams.ADCOffset)) / GeneralParams.ADCOffset);       
+            }
+            else
+            {
+                YPos = 31 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValueSim[XPos] - 2048)) / 2048);  
+            }
             u8g2_DrawPixel(&u8g, XPos, YPos);      
         }
         

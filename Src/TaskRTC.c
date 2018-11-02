@@ -517,7 +517,7 @@ void TaskRTC(void const * argument)
     for(;;)
     {   
         GetTimeDate(&GlobalTime, &GlobalDate); 
-        osDelay(250);
+        osDelay(500);
         
     }
     /* USER CODE END TaskRTC */

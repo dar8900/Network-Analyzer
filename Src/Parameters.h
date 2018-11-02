@@ -31,6 +31,7 @@ typedef enum
 typedef struct
 {
     uint8_t EnumValue;
+    char *ItemName;
 }ENUM_VALUE_ITEM;
 
 

@@ -24,42 +24,42 @@ enum
     DECOMPOSE
 };
 
-const char *ScreenSaverStr[MAX_SCREENSAVER_TYPE] = 
-{
-    "Analogico/data",
-    "Digitale/data",  
-    "Solo analogico",   
-};
+//const char *ScreenSaverStr[MAX_SCREENSAVER_TYPE] = 
+//{
+//    "Analogico/data",
+//    "Digitale/data",  
+//    "Solo analogico",   
+//};
 
-const char *LedConfigurationStr[MAX_LED_COMBINATIONS] = 
-{
-    "RGB"               ,
-    "Rosso"             ,
-    "Verde"             ,
-    "Blu"               ,
-    "Rosso e verde"     ,
-    "Rosso e blu"       ,
-    "Blu e verde"       ,
-    "Tutti spenti"      ,  
-};
+//const char *LedConfigurationStr[MAX_LED_COMBINATIONS] = 
+//{
+//    "RGB"               ,
+//    "Rosso"             ,
+//    "Verde"             ,
+//    "Blu"               ,
+//    "Rosso e verde"     ,
+//    "Rosso e blu"       ,
+//    "Blu e verde"       ,
+//    "Tutti spenti"      ,  
+//};
 
 const ENUM_VALUE_ITEM ScreenSaverEnum[MAX_SCREENSAVER_TYPE] = 
 {
-    {ANALOG_DATE },
-    {DIGITAL_DATE},
-    {ANALOG_ONLY },
+    {ANALOG_DATE   , "Analogico/data"},
+    {DIGITAL_DATE  , "Digitale/data" },
+    {ANALOG_ONLY   , "Solo analogico"},
 };
 
 const ENUM_VALUE_ITEM LedConfiguration[MAX_LED_COMBINATIONS] = 
 {
-    {RGB         },
-    {RED         },
-    {GREEN       },
-    {BLUE        },
-    {RED_GREEN   },
-    {RED_BLUE    },
-    {GREEN_BLUE  },
-    {ALL_LED_OFF },
+    {RGB         , "RGB"           },
+    {RED         , "Rosso"         },
+    {GREEN       , "Verde"         },
+    {BLUE        , "Blu"           },
+    {RED_GREEN   , "Rosso e verde" },
+    {RED_BLUE    , "Rosso e blu"   },
+    {GREEN_BLUE  , "Blu e verde"   },
+    {ALL_LED_OFF , "Tutti spenti"  },
 };
 
 
@@ -508,13 +508,13 @@ int8_t ChangeEnumValue(uint8_t ParamItem)
 {
     uint8_t EnumItem = 0, FirstListItem = 0;
     uint8_t MaxItems = ParametersMenu[ParamItem].MaxEnumItems;
-    ENUM_VALUE_ITEM *TmpValue = (ENUM_VALUE_ITEM *)ParametersMenu;
+    ENUM_VALUE_ITEM *TmpValue = (ENUM_VALUE_ITEM *)ParametersMenu[ParamItem].EnumValuePtr;
     bool ExitChangeEnum = false, ValueSetted = false;
     int8_t EnumValueRet = -1;
     while(!ExitChangeEnum)
     {
         CheckOperation();
-        RefreshItemList(ParametersMenuStr[ParamItem], ParametersMenuStr, EnumItem, FirstListItem, MaxItems, MAX_SETUP_MENU_LINES);
+        DrawChangeEnumLoop(ParametersMenuStr[ParamItem], TmpValue, EnumItem, FirstListItem, MaxItems, MAX_SETUP_MENU_LINES);
         switch(LastButtonPressed)
         {
           case BUTTON_UP:

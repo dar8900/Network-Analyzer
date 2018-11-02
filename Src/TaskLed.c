@@ -185,7 +185,7 @@ void TaskLed(void const * argument)
     {
         GesRGBLed();
         GesAlarmEnergyLed();
-        osDelay(150);
+        osDelay(50);
     }
     /* USER CODE END TaskLed */
 }
