@@ -86,7 +86,8 @@ static void TransferToAdcBuff()
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
-    TransferToAdcBuff();
+//    TransferToAdcBuff();
+    memcpy(ADCReadedValue, DMABuff, sizeof(DMABuff));
     ConversionEnd = true;
 }
 

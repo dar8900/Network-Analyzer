@@ -81,6 +81,7 @@ MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] =
 const char *ResetList[MAX_RESET_ITEM] = 
 {
     "Reset energia",
+    "Reset max/min",
     "Riavvia sistema",
     "Reset a default",
 };
@@ -88,12 +89,14 @@ const char *ResetList[MAX_RESET_ITEM] =
 enum
 {
     RESET_ENERGY_TYPE = 0,
+    RESET_MAX_MIN_TYPE,
     SYSTEM_RESET_TYPE
 };
 
 const uint8_t ResetType[MAX_RESET_ITEM] = 
 {
     RESET_ENERGY_TYPE,
+    RESET_MAX_MIN_TYPE,
     SYSTEM_RESET_TYPE,
 };
 
@@ -624,6 +627,12 @@ void WichReset(const char * ResetTitle, uint8_t ResetType)
             MessageScreen("Reset in corso");
             GeneralMeasures.MeanEnergy = 0.0;
             EepFlag.SaveEnergy = true;
+            break;
+          case RESET_MAX_MIN_TYPE:
+            GeneralMeasures.MaxCurrent = 0;
+            GeneralMeasures.MaxPower = 0;
+            GeneralMeasures.MinCurrent = 0;
+            GeneralMeasures.MinPower = 0;
             break;
           case SYSTEM_RESET_TYPE:
             MessageScreen("Restart in corso");

@@ -54,6 +54,7 @@ typedef enum
 typedef enum
 {
     RESET_ENERGY = 0,
+    RESET_MAX_MIN,
     SYSTEM_RESET,
     RESET_DEFAULT,
     MAX_RESET_ITEM

@@ -5,22 +5,36 @@
 #include "Simulation.h"
 #include "Parameters.h"
 
-#define  SAMPLE_TO_ANGLE             (NUM_SAMPLE / 360.0)
+#define  SAMPLE_TO_ANGLE             2.88
 #define  OMEGA                       (2 * PIGRECO * GeneralParams.Frequency)
+
+extern float OldSimCurrent;
 
 uint32_t ADCReadedValueSim[NUM_SAMPLE]; 
 float    RawCurrConv;
-
+bool Shift;
 
 void SimAdcWave()
 {
     uint8_t Index = 0;
     int16_t Value = 0;
-    RawCurrConv = GeneralParams.SimulationCurrent * 120;
+    if(GeneralParams.EnableSimulation)
+        RawCurrConv = GeneralParams.SimulationCurrent * 120;
+    else
+    {
+        if(!Shift)
+            Shift = true;
+        else
+            Shift = false;
+        RawCurrConv = GeneralMeasures.MeanCurrentRMS * 120;
+    }
     for(Index = 0; Index < NUM_SAMPLE; Index++)
     {
-        Value = (int16_t)(RawCurrConv* sin((double)TO_RADIANTS((float)SAMPLE_TO_ANGLE * Index) * OMEGA));
-        ADCReadedValueSim[Index] = 2048 - Value;
+        if(Shift)
+            Value = (int16_t)(RawCurrConv* sin((double)TO_RADIANTS(((double)SAMPLE_TO_ANGLE * Index + 60)) * (double)GeneralParams.Frequency));
+        else
+            Value = (int16_t)(RawCurrConv* sin((double)TO_RADIANTS(((double)SAMPLE_TO_ANGLE * Index)) * (double)GeneralParams.Frequency));
+        ADCReadedValueSim[Index] = 2048 + Value;
     }    
         
 }

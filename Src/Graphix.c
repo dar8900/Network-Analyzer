@@ -178,6 +178,7 @@ static void DrawGraphicSkeleton()
     return;
 }
 
+//uint32_t AdcValueToGraphic[MAX_GRAPHIC_WIDTH];
 
 bool DrawCurrentWave()
 {
@@ -186,23 +187,26 @@ bool DrawCurrentWave()
         
     MessageScreen("Premere Left");
     MessageScreen("per tornare");
+       
     
     while(LastButtonPressed != BUTTON_LEFT)
     {
         u8g2_ClearBuffer(&u8g);
         
+//        memcpy(AdcValueToGraphic, ADCReadedValue, sizeof(ADCReadedValue));
+        
         DrawGraphicSkeleton();
 
         for(XPos = 0; XPos < MAX_GRAPHIC_WIDTH; XPos++)
         {
-            if(!GeneralParams.EnableSimulation)
-            {
-                YPos = 30 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValue[XPos] - GeneralParams.ADCOffset)) / GeneralParams.ADCOffset);       
-            }
-            else
-            {
+//            if(!GeneralParams.EnableSimulation)
+//            {
+//                YPos = 30 - ((HALF_GRAPHIC_AMPLITUDE * (AdcValueToGraphic[XPos] - (GeneralParams.ADCOffset))) / (GeneralParams.ADCOffset));       
+//            }
+//            else
+//            {
                 YPos = 31 - ((HALF_GRAPHIC_AMPLITUDE * (ADCReadedValueSim[XPos] - 2048)) / 2048);  
-            }
+//            }
             u8g2_DrawPixel(&u8g, XPos, YPos);      
         }
         

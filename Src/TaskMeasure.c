@@ -25,10 +25,10 @@ static float CurrentRMS[CURRENT_SAMPLE];
 static float EnergyAcc;
 static uint32_t NumberOfEnergySampling; 
 
-static uint8_t SensorSensibility = 100;
+static uint8_t SensorSensibility = 43;
 
 MEASURES GeneralMeasures;
-
+float OldSimCurrent = 0;
 
 
 static void ClearFLArray(float Array[], uint8_t Size)
@@ -64,7 +64,10 @@ static float CalcCurrent(double QuadraticValue)
 
     
     // Divido i mV ottenuti per la sensibilita del sensore per ottere gli A 
-    SquareQuadratic /= SensorSensibility;
+    if(!GeneralParams.EnableSimulation)
+        SquareQuadratic /= SensorSensibility;
+    else
+        SquareQuadratic /= 100;
     
     return SquareQuadratic;
 }
@@ -152,7 +155,6 @@ void TaskMeasure(void const * argument)
 {
     uint8_t NumberOfCurrentSampling = 0;
     float AdcRawDiff = 0;
-    float OldSimCurrent = 0;
     uint8_t OldFrequency = 0;
     bool CleanAll = true;
     uint8_t GrandRawMeanIndex = 0;
@@ -183,7 +185,7 @@ void TaskMeasure(void const * argument)
                     }
                     for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE; ValueIndx++)
                     {
-                        AdcRawDiff = (TOVOLT((float)ADCReadedValue[ValueIndx]) - TOVOLT((float)GeneralParams.ADCOffset)) / VOLTAGE_DIV_ALPHA;
+                        AdcRawDiff = (TOVOLT((float)ADCReadedValue[ValueIndx]) - TOVOLT((float)GeneralParams.ADCOffset));
                         CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
                     }
                     CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
@@ -215,7 +217,7 @@ void TaskMeasure(void const * argument)
             {
                 GeneralMeasures.MeanCurrentRMS = CalcMeanCurrent(CurrentRMS); 
                 GeneralMeasures.MeanCurrentRMS = APROXIMATION(GeneralMeasures.MeanCurrentRMS, 2);
-                if(GeneralMeasures.MeanCurrentRMS > 0.15)
+                if(GeneralMeasures.MeanCurrentRMS > 0.2)
                     GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * (float)GeneralParams.MeasureVoltage;
                 else
                 {
@@ -224,7 +226,14 @@ void TaskMeasure(void const * argument)
                 }
                 EnergyAcc += GeneralMeasures.Power;
                 NumberOfEnergySampling++;
-                NumberOfCurrentSampling = 0;                
+                NumberOfCurrentSampling = 0;   
+                // Simulo un'onda sinusoidale con l'ampiezza della corrente misurata 
+                if(OldSimCurrent != GeneralMeasures.MeanCurrentRMS || OldFrequency != GeneralParams.Frequency)
+                {
+                    SimAdcWave();
+                    OldSimCurrent = GeneralMeasures.MeanCurrentRMS;
+                    OldFrequency = GeneralParams.Frequency;
+                }
             } 
             
             // Gestisce gli eventi al secondo
