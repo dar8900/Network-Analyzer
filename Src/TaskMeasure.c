@@ -12,24 +12,25 @@
 
 #ifdef ENABLE_MEASURE
 
-#define CURRENT_SAMPLE  40
+#define CURRENT_SAMPLE  20
 
 extern bool ConversionEnd;
 extern bool SecondTick;
-extern uint32_t ADCReadedValue[NUM_SAMPLE * 2]; 
+extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
 extern bool EnableSimulation;
 extern uint32_t ADCReadedValueSim[NUM_SAMPLE];
 
 static double CubeRawValue;
-static float CurrentRMS[CURRENT_SAMPLE];
+static double CurrentRMS;
 static float EnergyAcc;
 static uint32_t NumberOfEnergySampling; 
 
 static uint8_t SensorSensibility = 43;
+static uint16_t NumberOfCurrentSampling;
 
 MEASURES GeneralMeasures;
 float OldSimCurrent = 0;
-
+uint8_t OldFrequency = 0;
 
 static void ClearFLArray(float Array[], uint8_t Size)
 {
@@ -73,16 +74,10 @@ static float CalcCurrent(double QuadraticValue)
 }
 
 
-static float CalcMeanCurrent(float CurrentRMS[])
+static double CalcMeanCurrent(double CurrentRMS, uint16_t Size)
 {
-    uint8_t CurrentIndx = 0;
-    float SumCurr = 0.0;
-    for(CurrentIndx = 0; CurrentIndx < CURRENT_SAMPLE; CurrentIndx++)
-    {
-        SumCurr += CurrentRMS[CurrentIndx];
-    }
-    SumCurr /= CURRENT_SAMPLE;
-    return SumCurr;
+    CurrentRMS /= Size;
+    return CurrentRMS;
 }
 
 
@@ -128,17 +123,39 @@ static void SecondEvent()
     {
         if(!NotReEnter)
         {
+            GeneralMeasures.MeanCurrentRMS = CalcMeanCurrent(CurrentRMS, NumberOfCurrentSampling); 
+            //                GeneralMeasures.MeanCurrentRMS = APROXIMATION(GeneralMeasures.MeanCurrentRMS, 2);
+            if(GeneralMeasures.MeanCurrentRMS > 0.2)
+                GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * (float)GeneralParams.MeasureVoltage;
+            else
+            {
+                GeneralMeasures.MeanCurrentRMS = 0.0;
+                GeneralMeasures.Power = 0.0;
+            }
+            
             if(NumberOfEnergySampling > 0)
                 GeneralMeasures.MeanEnergy += ((EnergyAcc / NumberOfEnergySampling)/3600.0);
             
-            NumberOfEnergySampling = 0;
-            EnergyAcc = 0;
             CheckAlarm();
             if(AlarmEnergyLed == NO_CONF && !AlarmsReported())
             {
                 AlarmEnergyLed = ENERGY_IMPULSE;
             }
             CheckMaxMinCurrentPower();
+            
+            // Simulo un'onda sinusoidale con l'ampiezza della corrente misurata 
+            if(OldSimCurrent != GeneralMeasures.MeanCurrentRMS || OldFrequency != GeneralParams.Frequency)
+            {
+                SimAdcWave();
+                OldSimCurrent = GeneralMeasures.MeanCurrentRMS;
+                OldFrequency = GeneralParams.Frequency;
+            }
+            
+            NumberOfCurrentSampling = 0; 
+            CurrentRMS = 0;
+            
+            NumberOfEnergySampling = 0;
+            EnergyAcc = 0;
         }
         NotReEnter = true;
     }
@@ -153,9 +170,7 @@ static void SecondEvent()
 /* TaskMeasure function */
 void TaskMeasure(void const * argument)
 {
-    uint8_t NumberOfCurrentSampling = 0;
     float AdcRawDiff = 0;
-    uint8_t OldFrequency = 0;
     bool CleanAll = true;
     uint8_t GrandRawMeanIndex = 0;
     
@@ -188,7 +203,7 @@ void TaskMeasure(void const * argument)
                         AdcRawDiff = (TOVOLT((float)ADCReadedValue[ValueIndx]) - TOVOLT((float)GeneralParams.ADCOffset));
                         CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
                     }
-                    CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
+                    CurrentRMS += (double)CalcCurrent(CubeRawValue);
                     NumberOfCurrentSampling++;
                     CubeRawValue = 0;
                 }
@@ -208,34 +223,13 @@ void TaskMeasure(void const * argument)
                     AdcRawDiff = (TOVOLT((float)ADCReadedValueSim[ValueIndx]) - TOVOLT((float)2048)) / VOLTAGE_DIV_ALPHA;
                     CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
                 }
-                CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue);
+                CurrentRMS += (double)CalcCurrent(CubeRawValue);
                 NumberOfCurrentSampling++;
                 CubeRawValue = 0; 
             }
-
-            if(NumberOfCurrentSampling == CURRENT_SAMPLE)
-            {
-                GeneralMeasures.MeanCurrentRMS = CalcMeanCurrent(CurrentRMS); 
-//                GeneralMeasures.MeanCurrentRMS = APROXIMATION(GeneralMeasures.MeanCurrentRMS, 2);
-                if(GeneralMeasures.MeanCurrentRMS > 0.2)
-                    GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * (float)GeneralParams.MeasureVoltage;
-                else
-                {
-                    GeneralMeasures.MeanCurrentRMS = 0.0;
-                    GeneralMeasures.Power = 0.0;
-                }
-                EnergyAcc += GeneralMeasures.Power;
-                NumberOfEnergySampling++;
-                NumberOfCurrentSampling = 0;   
-                // Simulo un'onda sinusoidale con l'ampiezza della corrente misurata 
-                if(OldSimCurrent != GeneralMeasures.MeanCurrentRMS || OldFrequency != GeneralParams.Frequency)
-                {
-                    SimAdcWave();
-                    OldSimCurrent = GeneralMeasures.MeanCurrentRMS;
-                    OldFrequency = GeneralParams.Frequency;
-                }
-            } 
-            
+            // Calcolo energia Acc
+            EnergyAcc += GeneralMeasures.Power;
+            NumberOfEnergySampling++;
             // Gestisce gli eventi al secondo
             SecondEvent();
         } 
@@ -243,7 +237,7 @@ void TaskMeasure(void const * argument)
         {
             if(CleanAll)
             {
-                ClearFLArray(CurrentRMS, CURRENT_SAMPLE);
+                CurrentRMS = 0;
                 CheckAlarm();
                 GeneralMeasures.MeanCurrentRMS = 0.0;
                 GeneralMeasures.Power          = 0.0;
@@ -254,7 +248,7 @@ void TaskMeasure(void const * argument)
                 CleanAll = false;
             }
         }
-        osDelay(20);
+        osDelay(5);
     }
 }
 
