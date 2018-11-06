@@ -5,7 +5,6 @@
 
 extern MEASURES GeneralMeasures;
 extern TIME_VAR GlobalTime;
-extern DATE_VAR GlobalDate;
 
 const char *AlarmMotivationStr[3] = 
 {
@@ -44,8 +43,7 @@ void CheckAlarm()
             if(!AlarmsControls[AlarmIndex].Active)
             {
                 AlarmsControls[AlarmIndex].NumbOccurrence++;
-                AlarmsControls[AlarmIndex].AlarmActivationTime = GlobalTime;
-                AlarmsControls[AlarmIndex].AlarmActivationDate = GlobalDate;
+                AlarmsControls[AlarmIndex].AlarmActivationTimeDate = GlobalTime;
                 AlarmsControls[AlarmIndex].Cheked = false;
                 AlarmsControls[AlarmIndex].RePorted = true;
                 
@@ -68,12 +66,12 @@ void CheckAlarm()
             AlarmsControls[AlarmIndex].RePorted = false;
             AlarmsControls[AlarmIndex].Cheked = true;
             AlarmsControls[AlarmIndex].AlarmMotivation = NO_ALARM;
-            AlarmsControls[AlarmIndex].AlarmActivationTime.hours = 0;
-            AlarmsControls[AlarmIndex].AlarmActivationTime.minutes = 0;
-            AlarmsControls[AlarmIndex].AlarmActivationTime.seconds = 0;
-            AlarmsControls[AlarmIndex].AlarmActivationDate.day = 0;
-            AlarmsControls[AlarmIndex].AlarmActivationDate.month = 0;
-            AlarmsControls[AlarmIndex].AlarmActivationDate.year = 0;
+            AlarmsControls[AlarmIndex].AlarmActivationTimeDate.hours = 0;
+            AlarmsControls[AlarmIndex].AlarmActivationTimeDate.minutes = 0;
+            AlarmsControls[AlarmIndex].AlarmActivationTimeDate.seconds = 0;
+            AlarmsControls[AlarmIndex].AlarmActivationTimeDate.day = 0;
+            AlarmsControls[AlarmIndex].AlarmActivationTimeDate.month = 0;
+            AlarmsControls[AlarmIndex].AlarmActivationTimeDate.year = 0;
         }
         if(AlarmsControls[AlarmIndex].Active && AlarmsControls[AlarmIndex].Cheked && AlarmsControls[AlarmIndex].RePorted)
             AlarmsControls[AlarmIndex].RePorted = false;

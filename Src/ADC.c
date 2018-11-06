@@ -84,11 +84,20 @@ static void TransferToAdcBuff()
     return;
 }
 
+
+uint8_t AdcBuffIndex;
+
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
-//    TransferToAdcBuff();
-    memcpy(ADCReadedValue, DMABuff, sizeof(DMABuff));
-    ConversionEnd = true;
+    ADCReadedValue[AdcBuffIndex] = CalcArrayAvarage(DMABuff, NUM_SAMPLE);
+    AdcBuffIndex++;
+//    memcpy(ADCReadedValue, DMABuff, sizeof(DMABuff));
+    if(AdcBuffIndex == NUM_SAMPLE)
+    {
+        AdcBuffIndex = 0;
+        StopADC_DMA_Conv();
+        ConversionEnd = true;
+    }
 }
 
 void ADCConvToDMA()

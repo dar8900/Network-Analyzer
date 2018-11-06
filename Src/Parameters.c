@@ -24,24 +24,6 @@ enum
     DECOMPOSE
 };
 
-//const char *ScreenSaverStr[MAX_SCREENSAVER_TYPE] = 
-//{
-//    "Analogico/data",
-//    "Digitale/data",  
-//    "Solo analogico",   
-//};
-
-//const char *LedConfigurationStr[MAX_LED_COMBINATIONS] = 
-//{
-//    "RGB"               ,
-//    "Rosso"             ,
-//    "Verde"             ,
-//    "Blu"               ,
-//    "Rosso e verde"     ,
-//    "Rosso e blu"       ,
-//    "Blu e verde"       ,
-//    "Tutti spenti"      ,  
-//};
 
 const ENUM_VALUE_ITEM ScreenSaverEnum[MAX_SCREENSAVER_TYPE] = 
 {

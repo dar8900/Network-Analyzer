@@ -16,7 +16,7 @@
 
 #define BATTERY_ICON_SML_X_POS   75
 
-#define POPUP_DELAY  1500
+#define POPUP_DELAY  1000
 
 #define GENERAL_STR_Y_POS(Pos)  (Pos + (u8g2_GetAscent(&u8g)))    
 

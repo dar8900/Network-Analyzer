@@ -26,7 +26,6 @@ extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 
 
 extern TIME_VAR GlobalTime;
-extern DATE_VAR GlobalDate;
 
 
 u8g2_t u8g;
@@ -290,7 +289,7 @@ void MessageScreen(char *Message)
     u8g2_SetFont(&u8g, u8g2_font_7x13_tf);
     if(u8g2_GetStrWidth(&u8g,Message) > SCREEN_MAX_WIDTH)
     {
-       u8g2_DrawStr(&u8g, X_CENTER_POS("Stringa non valida"), 32, "Stringa non valida"); 
+        u8g2_DrawStr(&u8g, X_CENTER_POS("Stringa non valida"), 32, "Stringa non valida"); 
     }
     else
     {
@@ -303,7 +302,7 @@ void MessageScreen(char *Message)
 void PopUp(char *PopupTitle, char *Body1, char *Body2, char *Body3, char *Body4)
 {
     u8g2_ClearBuffer(&u8g);
-
+    
     
     u8g2_SetFont(&u8g, u8g2_font_7x13B_tf);
     u8g2_DrawStr(&u8g, X_CENTER_POS(PopupTitle), GENERAL_STR_Y_POS(3), PopupTitle);
@@ -314,8 +313,8 @@ void PopUp(char *PopupTitle, char *Body1, char *Body2, char *Body3, char *Body4)
     u8g2_DrawStr(&u8g, X_CENTER_POS(Body3), GENERAL_STR_Y_POS(52) , Body3);
     u8g2_DrawStr(&u8g, X_CENTER_POS(Body4), GENERAL_STR_Y_POS(65) , Body4);
     
-//    u8g2_DrawFrame(&u8g, 0 ,0, 122, 62);
-//    u8g2_DrawFrame(&u8g, 1 ,1, 125, 61);
+    //    u8g2_DrawFrame(&u8g, 0 ,0, 122, 62);
+    //    u8g2_DrawFrame(&u8g, 1 ,1, 125, 61);
     u8g2_SendBuffer(&u8g);
 }
 
@@ -337,7 +336,7 @@ void DrawTopInfoBar()
     char Time[6];
     char Date[9];
     snprintf(Time, 6, "%02d:%02d", GlobalTime.hours, GlobalTime.minutes);
-    snprintf(Date, 9, "%02d/%02d/%02d", GlobalDate.day, GlobalDate.month, GlobalDate.year);
+    snprintf(Date, 9, "%02d/%02d/%02d", GlobalTime.day, GlobalTime.month, GlobalTime.year);
     u8g2_SetFontMode(&u8g, 1);
     u8g2_SetFont(&u8g, u8g_font_4x6);
     u8g2_SetDrawColor(&u8g, 2);
@@ -478,7 +477,7 @@ void DrawChangeValueLoop(uint8_t BoxPos , uint8_t BoxValues[], const char *Title
     u8g2_SetFont(&u8g, u8g_font_6x13B);
     u8g2_DrawStr(&u8g, X_CENTER_POS(Title), MENU_TITLE_Y_POS, Title);
     
-
+    
     u8g2_SetFont(&u8g, u8g_font_6x13);
     FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
     u8g2_SetDrawColor(&u8g, 2);
@@ -510,7 +509,7 @@ void DrawChangeAlarmThrsOrFloatLoop(uint8_t BoxPos , char *StrValue, const char 
     u8g2_SetFont(&u8g, u8g_font_6x13B);
     u8g2_DrawStr(&u8g, X_CENTER_POS(Title), MENU_TITLE_Y_POS, Title);
     
-
+    
     u8g2_SetFont(&u8g, u8g_font_6x10);
     FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
     u8g2_SetDrawColor(&u8g, 2);
@@ -521,10 +520,10 @@ void DrawChangeAlarmThrsOrFloatLoop(uint8_t BoxPos , char *StrValue, const char 
     
     if(BoxPos < 8)
         u8g2_DrawFrame(&u8g, (X_CENTER_POS(StrValue) - 2 + (BoxPos * VALUE_BOX_WIDTH)), VALUE_BOX_Y_POS , 
-                      (VALUE_BOX_WIDTH + 2 ), FontH + 5);
+                       (VALUE_BOX_WIDTH + 2 ), FontH + 5);
     else
         u8g2_DrawFrame(&u8g, 94 - 2 , VALUE_BOX_Y_POS , 
-                      (VALUE_BOX_WIDTH + 2 ), FontH + 5);
+                       (VALUE_BOX_WIDTH + 2 ), FontH + 5);
     
     u8g2_SetFont(&u8g, u8g_font_4x6);
     u8g2_DrawStr(&u8g, X_CENTER_POS(BarItem[OK_LONG_STR]), 45, BarItem[OK_LONG_STR]);
@@ -536,20 +535,20 @@ void DrawChangeAlarmThrsOrFloatLoop(uint8_t BoxPos , char *StrValue, const char 
 void ShowAlarmStatus(char *PageTitle, uint8_t AlarmItem)
 {
     char AlarmTimeDateStr[20], NumberOccurence[3];
-     u8g2_ClearBuffer(&u8g);
-     DrawTopInfoBar();
-     u8g2_SetFont(&u8g, u8g_font_6x13B);
-     u8g2_DrawStr(&u8g, X_CENTER_POS(PageTitle), MENU_TITLE_Y_POS, PageTitle);  
-     
-     u8g2_SetFont(&u8g, u8g2_font_5x8_tf);
-     
-     WriteTimeDateOccurrenceAlarm(AlarmItem, AlarmTimeDateStr, NumberOccurence);
-     u8g2_DrawStr(&u8g, X_CENTER_POS(AlarmMotivationStr[AlarmsControls[AlarmItem].AlarmMotivation]), GENERAL_STR_Y_POS(21) , AlarmMotivationStr[AlarmsControls[AlarmItem].AlarmMotivation]);
-     u8g2_DrawStr(&u8g, X_CENTER_POS(AlarmTimeDateStr), GENERAL_STR_Y_POS(32) , AlarmTimeDateStr);
-     u8g2_DrawStr(&u8g, X_CENTER_POS(NumberOccurence), GENERAL_STR_Y_POS(45) , NumberOccurence);
-     
-     DrawBottomBarInfo(READ_ONLY_PARAM);
-     u8g2_SendBuffer(&u8g); 
+    u8g2_ClearBuffer(&u8g);
+    DrawTopInfoBar();
+    u8g2_SetFont(&u8g, u8g_font_6x13B);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(PageTitle), MENU_TITLE_Y_POS, PageTitle);  
+    
+    u8g2_SetFont(&u8g, u8g2_font_5x8_tf);
+    
+    WriteTimeDateOccurrenceAlarm(AlarmItem, AlarmTimeDateStr, NumberOccurence);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(AlarmMotivationStr[AlarmsControls[AlarmItem].AlarmMotivation]), GENERAL_STR_Y_POS(21) , AlarmMotivationStr[AlarmsControls[AlarmItem].AlarmMotivation]);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(AlarmTimeDateStr), GENERAL_STR_Y_POS(32) , AlarmTimeDateStr);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(NumberOccurence), GENERAL_STR_Y_POS(45) , NumberOccurence);
+    
+    DrawBottomBarInfo(READ_ONLY_PARAM);
+    u8g2_SendBuffer(&u8g); 
 }
 
 
@@ -586,83 +585,6 @@ void DrawChangeEnumLoop(const char *PageTitle, ENUM_VALUE_ITEM EnumItem[], uint8
     u8g2_DrawStr(&u8g, 54, BOTTOM_INFO_BAR_Y_POS, NumElement);
     u8g2_SendBuffer(&u8g);
 }
-//
-//void DrawMenuLoop(char *PageTitle, MENU_ITEM MenuItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxMenuItemNum, uint8_t MaxMenuLines)
-//{
-//    uint8_t FontH = 0;
-//    uint8_t ItemIndx = 0;
-//    char NumElement[4];
-//    
-//    snprintf(NumElement, 4, "%d/%d", ItemPos + 1, MaxMenuItemNum);
-//    
-//    u8g2_ClearBuffer(&u8g);
-//    DrawTopInfoBar();
-//    
-//    // Disegna titolo menu
-//    u8g2_SetFont(&u8g, u8g_font_6x13B);
-//    u8g2_DrawStr(&u8g, X_CENTER_POS(PageTitle), MENU_TITLE_Y_POS, PageTitle);  
-//    
-//    // Disegna voci menu
-//    u8g2_SetFont(&u8g, u8g_font_6x10);
-//    FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
-//    u8g2_SetDrawColor(&u8g, 2);
-//    for(ItemIndx = 0; ItemIndx < MaxMenuLines; ItemIndx++)
-//    {
-//        uint8_t ListBuildPos = HighPosItem + ItemIndx;
-//        if(ListBuildPos >= MaxMenuItemNum)
-//            break;
-//        if (ItemPos == ListBuildPos) 
-//        {
-//            // Voce menu selezionata
-//            u8g2_DrawBox(&u8g, 0, (FIRST_MENU_LINES_Y_POS - (FontH - 1) + (ItemIndx * (FontH - 1)) + ((MENU_LINES_DELTA_Y + 1) * ItemIndx) ), SCREEN_MAX_WIDTH, FontH + 1);    
-//        }
-//        u8g2_DrawStr(&u8g, X_CENTER_POS(MenuItem[ListBuildPos].ItemTitle), FIRST_MENU_LINES_Y_POS + (ItemIndx * FontH) + (MENU_LINES_DELTA_Y * ItemIndx), MenuItem[ListBuildPos].ItemTitle);          
-//       
-//    }
-//    DrawBottomBarInfo(SETUP_PAGE);
-//    // Scrittura elementi in lista
-//    u8g2_DrawStr(&u8g, X_CENTER_POS(NumElement), BOTTOM_INFO_BAR_Y_POS, NumElement);
-//    u8g2_SendBuffer(&u8g);
-//}
-//
-//void DrawParamLoop(char *PageTitle, PARAMETER_ITEM MenuItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxMenuItemNum, uint8_t MaxMenuLines)
-//{
-//    uint8_t FontH = 0;
-//    uint8_t ItemIndx = 0;
-//    char NumElement[6];
-//    
-//    snprintf(NumElement, 6, "%d/%d", ItemPos + 1, MaxMenuItemNum);
-//    
-//    u8g2_ClearBuffer(&u8g);
-//    DrawTopInfoBar();
-//    // Disegna titolo menu
-//    u8g2_SetFont(&u8g, u8g_font_6x13B);
-//    FontH = u8g2_GetFontAscent(&u8g) - u8g2_GetFontDescent(&u8g);
-//    u8g2_SetDrawColor(&u8g, 2);
-//    u8g2_DrawStr(&u8g, X_CENTER_POS(PageTitle), MENU_TITLE_Y_POS, PageTitle);  
-//    
-//    // Disegna voci menu
-//    u8g2_SetFont(&u8g, u8g_font_6x10);
-//    FontH = u8g2_GetFontAscent(&u8g)-u8g2_GetFontDescent(&u8g);
-//    u8g2_SetDrawColor(&u8g, 2);
-//    for(ItemIndx = 0; ItemIndx < MaxMenuLines; ItemIndx++)
-//    {
-//        uint8_t ListBuildPos = HighPosItem + ItemIndx;
-//        if(ListBuildPos >= MaxMenuItemNum)
-//            break;
-//        if (ItemPos == ListBuildPos) 
-//        {
-//            // Voce menu selezionata
-//            u8g2_DrawBox(&u8g, 0, (FIRST_MENU_LINES_Y_POS - (FontH - 1) + (ItemIndx * (FontH - 1)) + ((MENU_LINES_DELTA_Y + 1) * ItemIndx) ), SCREEN_MAX_WIDTH, FontH + 1);    
-//        }
-//        u8g2_DrawStr(&u8g, X_CENTER_POS(MenuItem[ListBuildPos].ItemTitle), FIRST_MENU_LINES_Y_POS + (ItemIndx * FontH) + (MENU_LINES_DELTA_Y * ItemIndx), MenuItem[ListBuildPos].ItemTitle);          
-//    }
-//    DrawBottomBarInfo(SETUP_PAGE);
-//    
-//    // Scrittura elementi in lista
-//    u8g2_DrawStr(&u8g, 54, BOTTOM_INFO_BAR_Y_POS, NumElement);
-//    u8g2_SendBuffer(&u8g);
-//}
 
 void RefreshItemList(const char *PageTitle, const char *ListItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxListItemNum, uint8_t MaxMenuLines)
 {

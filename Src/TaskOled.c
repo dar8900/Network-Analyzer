@@ -19,9 +19,9 @@ extern char Initial_Logo[];
 
 void WriteTimeDateOccurrenceAlarm(uint8_t AlarmIndex, char *Str1, char *Str2)
 {
-    snprintf(Str1, 18, "%02d:%02d:%02d %02d/%02d/%02d", AlarmsControls[AlarmIndex].AlarmActivationTime.hours, AlarmsControls[AlarmIndex].AlarmActivationTime.minutes,
-             AlarmsControls[AlarmIndex].AlarmActivationTime.seconds,AlarmsControls[AlarmIndex].AlarmActivationDate.day,AlarmsControls[AlarmIndex].AlarmActivationDate.month,
-             AlarmsControls[AlarmIndex].AlarmActivationDate.year);
+    snprintf(Str1, 18, "%02d:%02d:%02d %02d/%02d/%02d", AlarmsControls[AlarmIndex].AlarmActivationTimeDate.hours, AlarmsControls[AlarmIndex].AlarmActivationTimeDate.minutes,
+             AlarmsControls[AlarmIndex].AlarmActivationTimeDate.seconds,AlarmsControls[AlarmIndex].AlarmActivationTimeDate.day,AlarmsControls[AlarmIndex].AlarmActivationTimeDate.month,
+             AlarmsControls[AlarmIndex].AlarmActivationTimeDate.year);
     snprintf(Str2, 3, "%d", AlarmsControls[AlarmIndex].NumbOccurrence);
 }
 
@@ -72,12 +72,13 @@ void TaskOled(void const * argument)
     ClearScreen();
     osDelay(500);
     DrawStartLogo(Initial_Logo);
-    osDelay(2000);
+    osDelay(1000);
     
     /* Infinite loop */
     for(;;)
     {
         MainScreen();
+        MainMenu();
     }
 }
 

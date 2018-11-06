@@ -12,7 +12,7 @@
 
 extern FL_SCALE TabReScale[MAX_UNIT_FACTOR];
 extern TIME_VAR GlobalTime;
-extern DATE_VAR GlobalDate;
+extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 
 EEPROM_DATA EepromSavedValue[MAX_DIM_EEPROM_ARRAY];
 
@@ -48,14 +48,14 @@ static void ClearArray(uint32_t DestArray[], uint16_t Size)
     return;
 }
 
-static void TransferValuesToMem(uint32_t ValueToTransfer[])
+static void TransferRamToMem(uint32_t RamVector[])
 {
-    EE_Write(ValueToTransfer);
+    EE_Write(RamVector);
 }
 
-static void TranferMemToRam(uint32_t ValueToTransfer[])
+static void TranferMemToRam(uint32_t RamVector[])
 {
-    EE_MultiRead(EEPROM_VIRTUAL_ADDR_BEGIN, MAX_DIM_EEPROM_ARRAY, ValueToTransfer);
+    EE_MultiRead(EEPROM_VIRTUAL_ADDR_BEGIN, MAX_DIM_EEPROM_ARRAY, RamVector);
 }
 
 static void EraseEeprom()
@@ -84,7 +84,7 @@ static void SaveAllToMem()
 {
     if(EepFlag.SaveAll)
     {
-        TransferValuesToMem(EepromSavedValue);
+        TransferRamToMem(EepromSavedValue);
         EepFlag.SaveAll = false;
     }
     
@@ -127,13 +127,13 @@ static void ReadNumbOfWrites()
     if(EepromSavedValue[NUMBER_OF_WRITES_ADDR] == BLANK_VALUE)
     {
         EepromSavedValue[NUMBER_OF_WRITES_ADDR] = 0;
-        TransferValuesToMem(EepromSavedValue);
+        TransferRamToMem(EepromSavedValue);
     }   
 }
 
 //##########################################################################################################
 
-//                                      PARAMETRI        
+//                                      PARAMETRI  E OCCORRENZE ALLARMI    
 
 //##########################################################################################################
 
@@ -163,7 +163,7 @@ static void WriteParameters()
                 if(OldValue != EepromSavedValue[ParamIndexAddr])
                 {    
                     WriteNumbOfWrites(1);
-                    TransferValuesToMem(EepromSavedValue);
+                    TransferRamToMem(EepromSavedValue);
                 }          
             }
             else
@@ -174,7 +174,7 @@ static void WriteParameters()
                 if(OldValue != EepromSavedValue[ParamIdexShifted])
                 {    
                     WriteNumbOfWrites(1);
-                    TransferValuesToMem(EepromSavedValue);
+                    TransferRamToMem(EepromSavedValue);
                 }                  
             }
         }      
@@ -225,6 +225,38 @@ static void ReadParameters(uint8_t ParamItem)
     return;
 }
 
+static void WriteAlarmOccurrence()
+{
+    uint32_t OldValue = 0;
+    if(EepFlag.SaveAlarmOccurrence)
+    {
+        EepromSavedValue[CURRENT_ALARM_OCCURRENCE_ADDR] = AlarmsControls[CURRENT_ALARM].NumbOccurrence;
+        EepromSavedValue[POWER_ALARM_OCCURRENCE_ADDR]   = AlarmsControls[POWER_ALARM].NumbOccurrence;
+        EepromSavedValue[ENERGY_ALARM_OCCURRENCE_ADDR]  = AlarmsControls[ENERGY_ALARM].NumbOccurrence;
+        
+        for(uint8_t i = CURRENT_ALARM_OCCURRENCE_ADDR; i <= ENERGY_ALARM_OCCURRENCE_ADDR; i++)
+        {
+            EE_SingleRead(i, &OldValue);
+            if(OldValue != EepromSavedValue[i])
+            {    
+                WriteNumbOfWrites(1);
+                TransferRamToMem(EepromSavedValue);
+            }                  
+        }
+        EepFlag.SaveAlarmOccurrence = false;
+    }
+}
+
+static void ReadAlarmOccurrence()
+{
+    if(GeneralParams.EnableLog)
+    {
+        AlarmsControls[CURRENT_ALARM].NumbOccurrence = EepromSavedValue[CURRENT_ALARM_OCCURRENCE_ADDR];
+        AlarmsControls[POWER_ALARM].NumbOccurrence   = EepromSavedValue[POWER_ALARM_OCCURRENCE_ADDR];  
+        AlarmsControls[ENERGY_ALARM].NumbOccurrence  = EepromSavedValue[ENERGY_ALARM_OCCURRENCE_ADDR]; 
+    }
+    return;
+}
 
 
 //##########################################################################################################
@@ -260,7 +292,7 @@ static void WriteFloat(uint16_t ValueAddr, float ValueToSave)
     }
     EepromSavedValue[AddrEep] = (uint32_t)Factor;
     WriteNumbOfWrites(1);
-    TransferValuesToMem(EepromSavedValue);    
+    TransferRamToMem(EepromSavedValue);    
 }
 
 static void ReadFloat(uint16_t ValueAddr , float *ValueToRead)
@@ -320,12 +352,15 @@ static void WriteFloatValues()
 
 static void ReadFloatValues()
 {
-    ReadFloat(ENERGIA_ADDR      , &GeneralMeasures.MeanEnergy);
-    ReadFloat(CURRENT_SIM_ADDR_0, &GeneralParams.SimulationCurrent);
-    ReadFloat(MAX_CURRENT_0_ADDR, &GeneralMeasures.MaxCurrent);
-    ReadFloat(MIN_CURRENT_0_ADDR, &GeneralMeasures.MinCurrent);
-    ReadFloat(MAX_POWER_0_ADDR  , &GeneralMeasures.MaxPower);
-    ReadFloat(MIN_POWER_0_ADDR  , &GeneralMeasures.MinPower);
+    if(GeneralParams.EnableLog)
+    {
+        ReadFloat(ENERGIA_ADDR      , &GeneralMeasures.MeanEnergy);
+        ReadFloat(CURRENT_SIM_ADDR_0, &GeneralParams.SimulationCurrent);
+        ReadFloat(MAX_CURRENT_0_ADDR, &GeneralMeasures.MaxCurrent);
+        ReadFloat(MIN_CURRENT_0_ADDR, &GeneralMeasures.MinCurrent);
+        ReadFloat(MAX_POWER_0_ADDR  , &GeneralMeasures.MaxPower);
+        ReadFloat(MIN_POWER_0_ADDR  , &GeneralMeasures.MinPower);
+    }
     ReadFloat(SOGLIE_ALLARMI_IO_ADDR, &AlarmsParameters[CURRENT_ALARM].OverThreshold);
     ReadFloat(SOGLIE_ALLARMI_IU_ADDR, &AlarmsParameters[CURRENT_ALARM].UnderThreshold);
     ReadFloat(SOGLIE_ALLARMI_PO_ADDR, &AlarmsParameters[POWER_ALARM].OverThreshold);
@@ -347,6 +382,7 @@ static void TranferToGlobalVars()
         ReadParameters(i);
     }
     ReadFloatValues();
+    ReadAlarmOccurrence();
     ReadNumbOfWrites();
 }
 
@@ -410,18 +446,21 @@ void TaskEeprom(void const * argument)
         EraseEeprom();
         WriteParameters();
         WriteFloatValues();
+        WriteAlarmOccurrence();
+        
         if(GeneralParams.EnableLog)
         {
             if(GeneralParams.EnableMeasure)
             {
-                if(!(GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalDate.year != 0 && !NotResaveEnergy)
+                if(!(GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalTime.year != 0 && !NotResaveEnergy)
                 {
                     NotResaveEnergy = true;
                     EepFlag.SaveEnergy = true;  
                     EepFlag.SaveMaxMinCurrent = true;
                     EepFlag.SaveMaxMinPower = true;
+                    EepFlag.SaveAlarmOccurrence = true;
                 } 
-                else if((GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalDate.year != 0 && NotResaveEnergy)
+                else if((GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalTime.year != 0 && NotResaveEnergy)
                     NotResaveEnergy = false;
             }
         }

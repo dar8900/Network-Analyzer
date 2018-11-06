@@ -4,20 +4,15 @@
 #include "TaskRTC.h"
 #include "TaskEeprom.h"
 #include "Parameters.h"
+#include "Menus.h"
 
 #ifdef ENABLE_RTC
 
 
-
-
 TIME_VAR GlobalTime;
-DATE_VAR GlobalDate;
 
-uint8_t SecondCnt;
 bool SecondTick = false;
 
-
-bool HalfSecondTick = false;
 bool SettingTimeDate = false;
 
 uint8_t DaysPerMonth[] = 
@@ -472,26 +467,12 @@ void ds1307_set_time_24(uint8_t hours, uint8_t minutes, uint8_t seconds)
 }
 
 
-
-
-static void GetGlobalTime()
-{
-    ds1307_get_time_24(&GlobalTime.hours, &GlobalTime.minutes, &GlobalTime.seconds);
-}
-
-static void GetGlobalDate()
-{
-    GlobalDate.day = ds1307_get_date();
-    GlobalDate.month = ds1307_get_month();
-    GlobalDate.year = ds1307_get_year();
-}
-
-static void GetTimeDate(TIME_VAR *Time, DATE_VAR *Date)
+static void GetTimeDate(TIME_VAR *Time)
 {
     ds1307_get_time_24(&Time->hours, &Time->minutes, &Time->seconds);
-    Date->day   = ds1307_get_date();
-    Date->month = ds1307_get_month();
-    Date->year  = ds1307_get_year();
+    Time->day   = ds1307_get_date();
+    Time->month = ds1307_get_month();
+    Time->year  = ds1307_get_year();
 }
 
 
@@ -507,18 +488,32 @@ void SetChangedDate(uint8_t Day, uint8_t Month, uint8_t Year)
     ds1307_set_year(Year);
 }
 
+static bool IsRtcRunning()
+{
+    GetTimeDate(&GlobalTime); 
+    if(GlobalTime.hours == 0 && GlobalTime.minutes == 0 && GlobalTime.seconds == 0)
+    {
+        if(GlobalTime.day == 0 && GlobalTime.month == 0 && GlobalTime.year == 0)
+            return false;
+    }
+    return true;
+}
+
 /* TaskRTC function */
 void TaskRTC(void const * argument)
 {
-    GetTimeDate(&GlobalTime, &GlobalDate); 
+    if(!IsRtcRunning) 
+    {
+        ChangeTime();
+        ChangeDate();
+    }
     TickForSecond = 0;
     
     /* Infinite loop */
     for(;;)
     {   
-        GetTimeDate(&GlobalTime, &GlobalDate); 
-        osDelay(500);
-        
+        GetTimeDate(&GlobalTime); 
+        osDelay(500);     
     }
     /* USER CODE END TaskRTC */
 }

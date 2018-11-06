@@ -40,7 +40,7 @@ static void ClearFLArray(float Array[], uint8_t Size)
 }
 
 
-static uint32_t CalcArrayAvarage(uint32_t Array[], uint8_t Size)
+uint32_t CalcArrayAvarage(uint32_t Array[], uint8_t Size)
 {
     uint32_t Mean = 0;
     for(uint8_t i = 0; i < Size; i++)
@@ -168,14 +168,14 @@ void TaskMeasure(void const * argument)
             // Se non siamo in simulazione
             if(!GeneralParams.EnableSimulation)   
             {
+                
                 while(!ConversionEnd)
                 {
-                    ADCConvToDMA();                
+                    ADCConvToDMA();                        
                 }  
                 
                 if(ConversionEnd)
                 {
-                    StopADC_DMA_Conv();
                     ConversionEnd = false;
                     
                     // Calibrazione dell'offset                   
@@ -216,7 +216,7 @@ void TaskMeasure(void const * argument)
             if(NumberOfCurrentSampling == CURRENT_SAMPLE)
             {
                 GeneralMeasures.MeanCurrentRMS = CalcMeanCurrent(CurrentRMS); 
-                GeneralMeasures.MeanCurrentRMS = APROXIMATION(GeneralMeasures.MeanCurrentRMS, 2);
+//                GeneralMeasures.MeanCurrentRMS = APROXIMATION(GeneralMeasures.MeanCurrentRMS, 2);
                 if(GeneralMeasures.MeanCurrentRMS > 0.2)
                     GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * (float)GeneralParams.MeasureVoltage;
                 else

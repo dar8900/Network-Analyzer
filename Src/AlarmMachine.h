@@ -39,8 +39,7 @@ typedef struct
     bool     Cheked;
     bool     RePorted;
     uint32_t NumbOccurrence;
-    TIME_VAR AlarmActivationTime;
-    DATE_VAR AlarmActivationDate;
+    TIME_VAR AlarmActivationTimeDate;
     uint8_t  AlarmMotivation;
     
 }ALARM_CONTROLS;

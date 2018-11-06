@@ -41,5 +41,6 @@ typedef struct
 
 extern MEASURES GeneralMeasures;
 
+uint32_t CalcArrayAvarage(uint32_t Array[], uint8_t Size);
 void TaskMeasure(void const * argument);
 #endif

@@ -39,14 +39,17 @@ typedef struct
     uint8_t hours;
     uint8_t minutes;
     uint8_t seconds;
-}TIME_VAR;
-
-typedef struct
-{
     uint8_t day;
     uint8_t month;
     uint8_t year;
-}DATE_VAR;
+}TIME_VAR;
+
+//typedef struct
+//{
+//    uint8_t day;
+//    uint8_t month;
+//    uint8_t year;
+//}DATE_VAR;
 
 
 

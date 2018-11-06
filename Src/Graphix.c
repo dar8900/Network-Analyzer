@@ -21,7 +21,6 @@ extern uint32_t ADCReadedValue[NUM_SAMPLE];
 extern uint32_t ADCReadedValueSim[NUM_SAMPLE];
 extern int16_t SinTestGraphic[];
 extern TIME_VAR GlobalTime;
-extern DATE_VAR GlobalDate;
 
 //extern uint16_t ACDOffset;
 
@@ -124,37 +123,37 @@ static void FormatMeasure(uint8_t Page)
     switch(Page)
     {
       case CURRENT_PAGE:
-        ActualMeasure = GeneralMeasures.MeanCurrentRMS;
+        ActualMeasure = APROXIMATION(GeneralMeasures.MeanCurrentRMS, 3);
         NameMeas = CURRENT_NAME;
         UnitMeas = CURRENT_UNIT;
         break;
       case POWER_PAGE:
-        ActualMeasure = GeneralMeasures.Power;
+        ActualMeasure = APROXIMATION(GeneralMeasures.Power, 3);
         NameMeas = POWER_NAME;
         UnitMeas = POWER_UNIT;
         break;
       case ENERGY_PAGE:
-        ActualMeasure = GeneralMeasures.MeanEnergy;
+        ActualMeasure = APROXIMATION(GeneralMeasures.MeanEnergy, 3);
         NameMeas = ENERGY_NAME;
         UnitMeas = ENERGY_UNIT;
         break;
       case MAX_CURRENT_PAGE:
-        ActualMeasure = GeneralMeasures.MaxCurrent;
+        ActualMeasure = APROXIMATION(GeneralMeasures.MaxCurrent, 3);
         NameMeas = CURRENT_NAME;
         UnitMeas = CURRENT_UNIT;
         break;
       case MIN_CURRENT_PAGE:
-        ActualMeasure = GeneralMeasures.MinCurrent;
+        ActualMeasure = APROXIMATION(GeneralMeasures.MinCurrent, 3);
         NameMeas = CURRENT_NAME;
         UnitMeas = CURRENT_UNIT;
         break;
       case MAX_POWER_PAGE:
-        ActualMeasure = GeneralMeasures.MaxPower;
+        ActualMeasure = APROXIMATION(GeneralMeasures.MaxPower, 3);
         NameMeas = POWER_NAME;
         UnitMeas = POWER_UNIT;
         break;
       case MIN_POWER_PAGE:
-        ActualMeasure = GeneralMeasures.MinPower;
+        ActualMeasure = APROXIMATION(GeneralMeasures.MinPower, 3);
         NameMeas = POWER_NAME;
         UnitMeas = POWER_UNIT;
         break;
@@ -268,7 +267,7 @@ void DrawClock()
 {
     char Date[9], Time[9];
     float Meno90 = (float)TO_RADIANTS(90.0);
-    snprintf(Date, 9, "%02d/%02d/%02d", GlobalDate.day, GlobalDate.month, GlobalDate.year);
+    snprintf(Date, 9, "%02d/%02d/%02d", GlobalTime.day, GlobalTime.month, GlobalTime.year);
     snprintf(Time, 9, "%02d:%02d:%02d", GlobalTime.hours, GlobalTime.minutes, GlobalTime.seconds);
     int16_t XPosHour =   (int16_t) (CLOCK_RADIUS - 10) * cos((double)TO_RADIANTS(30*(GlobalTime.hours%12))- Meno90);
     int16_t YPosHour =   (int16_t) (CLOCK_RADIUS - 10) * sin((double)TO_RADIANTS(30*(GlobalTime.hours%12))- Meno90); 

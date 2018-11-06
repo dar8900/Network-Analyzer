@@ -30,9 +30,9 @@ typedef enum
     ENABLE_SIMULATION_ADDR ,
     FREQUENCY_SIM_ADDR ,
     ENABLE_LOG_ADDR ,
-    ADDR_74 ,
-    ADDR_75 ,
-    ADDR_76 ,
+    CURRENT_ALARM_OCCURRENCE_ADDR ,
+    POWER_ALARM_OCCURRENCE_ADDR ,
+    ENERGY_ALARM_OCCURRENCE_ADDR ,
     ADDR_77 ,
     ADDR_78 ,
     ADDR_79 ,
@@ -228,6 +228,7 @@ enum
 typedef struct
 {
     bool SaveParameters;
+    bool SaveAlarmOccurrence;
     bool SaveThresholds;
     bool SaveEnergy;
     bool SaveCurrentSim;

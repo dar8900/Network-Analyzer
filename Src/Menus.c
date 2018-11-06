@@ -14,7 +14,7 @@
 extern bool HalfSecondTick;
 
 extern TIME_VAR GlobalTime;
-extern DATE_VAR GlobalDate;
+
 
 extern uint8_t DaysPerMonth[];
 extern bool SettingTimeDate;
@@ -527,9 +527,9 @@ bool ChangeTime()
 bool ChangeDate()
 {   
     uint8_t BoxPos = 0;
-    uint8_t Day = GlobalDate.day;
-    uint8_t Month = GlobalDate.month;
-    uint8_t Year = GlobalDate.year;
+    uint8_t Day = GlobalTime.day;
+    uint8_t Month = GlobalTime.month;
+    uint8_t Year = GlobalTime.year;
     bool ChangeDateParam = false, ExitChangeDate = false;   
     SettingTimeDate = true;
     while(!ExitChangeDate)
@@ -629,6 +629,7 @@ void WichReset(const char * ResetTitle, uint8_t ResetType)
             EepFlag.SaveEnergy = true;
             break;
           case RESET_MAX_MIN_TYPE:
+            MessageScreen("Reset in corso");
             GeneralMeasures.MaxCurrent = 0;
             GeneralMeasures.MaxPower = 0;
             GeneralMeasures.MinCurrent = 0;
@@ -805,5 +806,4 @@ void MainScreen()
             ClockTimer--;
         osDelay(WHILE_LOOP_DELAY);
     }
-    MainMenu();
 }
