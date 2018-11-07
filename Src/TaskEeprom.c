@@ -295,7 +295,7 @@ static void WriteFloat(uint16_t ValueAddr, float ValueToSave)
     TransferRamToMem(EepromSavedValue);    
 }
 
-static void ReadFloat(uint16_t ValueAddr , float *ValueToRead)
+static void ReadFloat(uint16_t ValueAddr , void *ValueToRead)
 {
     uint16_t Addr = 0;
     float Value = 0.0;
@@ -310,7 +310,7 @@ static void ReadFloat(uint16_t ValueAddr , float *ValueToRead)
     ReWriteStr(StrToFloat, CopyStr, 8);
     Value = strtof(CopyStr, NULL);
     Value /= TabReScale[FactorScale].ScaleFactor;
-    *ValueToRead = Value;
+    *(double*)ValueToRead = (double)Value;
 }
 
 static void WriteFloatValues()

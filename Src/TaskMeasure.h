@@ -30,9 +30,9 @@
 
 typedef struct
 {
-    float MeanCurrentRMS;
-    float Power;
-    float MeanEnergy;
+    double MeanCurrentRMS;
+    double Power;
+    double MeanEnergy;
     float MaxCurrent;
     float MinCurrent;
     float MaxPower;

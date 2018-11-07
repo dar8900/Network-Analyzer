@@ -54,23 +54,21 @@ void SystemClock_Config(void)
     
     /* SysTick_IRQn interrupt configuration */
     HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
-//    HAL_NVIC_EnableIRQ(SysTick_IRQn);
 }
 
 void HAL_IncTick(void)
 {
   uwTick += uwTickFreq;
+}
+
+static void GetSecondTick()
+{
   TickForSecond += uwTickFreq;
-  if(TickForSecond >= 1000 && TickForSecond < 2000)
-  {
-    TickForSecond = 2000;
-    SecondTick = true;  
-  }
-  else if(TickForSecond >= 3000)
+  if(TickForSecond >= 1000)
   {
     TickForSecond = 0;
-    SecondTick = false;     
-  }
+    SecondTick = true;  
+  }    
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -78,7 +76,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     /* USER CODE BEGIN Callback 0 */
     
     /* USER CODE END Callback 0 */
-    if (htim->Instance == TIM1) {
+    if (htim->Instance == TIM1)
+    {
         HAL_IncTick();
     }
     /* USER CODE BEGIN Callback 1 */
@@ -86,17 +85,3 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     /* USER CODE END Callback 1 */
 }
 
-
-void DelayUs(uint16_t MicroSec)
-{
-    uint32_t DelayPeriod = (HAL_RCC_GetHCLKFreq() / 1000000) * MicroSec;
-    while(DelayPeriod)
-        DelayPeriod--;
-}
-
-void DelayMs(uint16_t MilliSec)
-{
-    uint32_t DelayPeriod = (HAL_RCC_GetHCLKFreq() / 1000) * MilliSec;
-    while(DelayPeriod)
-        DelayPeriod--;
-}

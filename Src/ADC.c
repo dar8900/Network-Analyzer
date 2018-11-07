@@ -6,7 +6,7 @@ ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 
 bool ConversionEnd = false;
-uint32_t ADCReadedValue[NUM_SAMPLE]; 
+uint32_t ADCReadedValue[NUM_SAMPLE_CAMP]; 
 
 static uint32_t DMABuff[NUM_SAMPLE];
 
@@ -85,14 +85,14 @@ static void TransferToAdcBuff()
 }
 
 
-uint8_t AdcBuffIndex;
+uint16_t AdcBuffIndex;
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
     ADCReadedValue[AdcBuffIndex] = CalcArrayAvarage(DMABuff, NUM_SAMPLE);
     AdcBuffIndex++;
 //    memcpy(ADCReadedValue, DMABuff, sizeof(DMABuff));
-    if(AdcBuffIndex == NUM_SAMPLE)
+    if(AdcBuffIndex == NUM_SAMPLE_CAMP)
     {
         AdcBuffIndex = 0;
         StopADC_DMA_Conv();

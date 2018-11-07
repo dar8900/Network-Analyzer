@@ -27,9 +27,9 @@ typedef enum
 
 typedef struct
 {
-    float    *AlarmMeasure;
-    float    OverThreshold;
-    float    UnderThreshold;
+    double    *AlarmMeasure;
+    double    OverThreshold;
+    double    UnderThreshold;
          
 }ALARM_PARAMS;
 

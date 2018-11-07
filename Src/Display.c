@@ -89,16 +89,13 @@ static uint8_t u8x8_gpio_and_delay_STM32F103(u8x8_t *u8x8, uint8_t msg, uint8_t 
       case U8X8_MSG_GPIO_AND_DELAY_INIT:	// called once during init phase of u8g2/u8x8
         break;							// can be used to setup pins
       case U8X8_MSG_DELAY_NANO:			// delay arg_int * 1 nano second
-        DelayUs(1);
         break;    
       case U8X8_MSG_DELAY_100NANO:		// delay arg_int * 100 nano seconds
-        DelayUs(1);
         break;
       case U8X8_MSG_DELAY_10MICRO:		// delay arg_int * 10 micro seconds
-        DelayUs(arg_int * 10);
         break;
       case U8X8_MSG_DELAY_MILLI:			// delay arg_int * 1 milli second
-        DelayMs(arg_int);
+        HAL_Delay(arg_int);
         break;
       case U8X8_MSG_DELAY_I2C:				// arg_int is the I2C speed in 100KHz, e.g. 4 = 400 KHz
         break;							// arg_int=1: delay by 5us, arg_int = 4: delay by 1.25us
