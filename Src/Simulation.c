@@ -13,20 +13,21 @@ extern float OldSimCurrent;
 uint32_t ADCReadedValueSim[NUM_SAMPLE]; 
 float    RawCurrConv;
 bool Shift;
+uint8_t RawCorr = 134;
 
 void SimAdcWave()
 {
     uint8_t Index = 0;
     int16_t Value = 0;
     if(GeneralParams.EnableSimulation)
-        RawCurrConv = GeneralParams.SimulationCurrent * 120;
+        RawCurrConv = GeneralParams.SimulationCurrent * RawCorr;
     else
     {
         if(!Shift)
             Shift = true;
         else
             Shift = false;
-        RawCurrConv = GeneralMeasures.MeanCurrentRMS * 120;
+        RawCurrConv = GeneralMeasures.MeanCurrentRMS * RawCorr;
     }
     for(Index = 0; Index < NUM_SAMPLE; Index++)
     {

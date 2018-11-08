@@ -19,6 +19,7 @@ typedef enum
     ALARM_STATUS_ITEM,
     ALARM_SETUP_ITEM,
     PARAMETER_SEUP,
+    CHONOMETER_ITEM,
     TIME_SET,    
     RESET_ITEM,
     MAX_SETUP_ITEM
@@ -67,6 +68,7 @@ bool ParameterSetup(void);
 bool ChangeDateTimeMenu(void);
 bool ChangeTime(void);
 bool ChangeDate(void);
+bool Chronometer(void);
 bool ResetMenu(void);
 void WichReset(const char * ResetTitle, uint8_t ResetType);
 

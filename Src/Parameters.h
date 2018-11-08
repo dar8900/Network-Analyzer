@@ -16,6 +16,7 @@ typedef struct
     uint16_t ScreenSaverTimer;
     float    SimulationCurrent;
     uint8_t  Frequency;
+    uint32_t Cronometer;
 }PARAMETERS_S;
 
 typedef enum
@@ -57,6 +58,7 @@ typedef enum
     SCREENSAVER_TYPE,
     SCREENSAVER_TIMER,
     LED_CONFIGURATION,
+    POWER_ON_TIME,
     NUMBER_MEMORY_WRITES,
     MAX_PARAMETER_ITEM
 }PARAMETER_ITEMS;

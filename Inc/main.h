@@ -65,6 +65,8 @@
 #define SDA_Pin GPIO_PIN_7
 #define SDA_GPIO_Port GPIOB
 
+#define UINT32_MAX 4294967294
+
 /* ########################## Assert Selection ############################## */
 /**
   * @brief Uncomment the line below to expanse the "assert_param" macro in the 

@@ -56,7 +56,8 @@ void DrawTimeDateChangeLoop(uint8_t BoxPos, uint8_t TypeSetting,uint8_t BoxOneNu
 void RefreshItemList(const char *PageTitle, const char *ListItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxListItemNum, uint8_t MaxMenuLines);
 void DrawChangeValueLoop(uint8_t BoxPos , uint8_t BoxValues[], const char *Title);
 void DrawChangeAlarmThrsOrFloatLoop(uint8_t BoxPos , char *StrValue, const char *Title, char FactorChar);
-void ViewReadOnlyParam(uint32_t ValueTOView);
+void ViewReadOnlyParam(uint32_t ValueTOView, uint8_t ParamItem);
 void DrawChangeEnumLoop(const char *PageTitle, ENUM_VALUE_ITEM MenuItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxMenuItemNum, uint8_t MaxMenuLines);
 void ShowAlarmStatus(char *PageTitle, uint8_t AlarmItem);
+void DrawChronometer(void);
 #endif

@@ -23,10 +23,12 @@ extern char *AlarmMotivationStr[2];
 extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 
+extern uint32_t  PowerOnTime;
 
 
 extern TIME_VAR GlobalTime;
-
+extern TIME_VAR ActiveTime;
+extern CHRONO_VAR Crono;
 
 u8g2_t u8g;
 
@@ -447,16 +449,33 @@ void DrawTimeDateChangeLoop(uint8_t BoxPos, uint8_t TypeSetting,uint8_t BoxOneNu
     u8g2_SendBuffer(&u8g);   
 }
 
-void ViewReadOnlyParam(uint32_t ValueToView)
+void ViewReadOnlyParam(uint32_t ValueToView, uint8_t ParamItem)
 {
-    char ReadOnlyStr[12];
-    snprintf(ReadOnlyStr, 12, "%010d", ValueToView);
-    u8g2_ClearBuffer(&u8g);
-    DrawTopInfoBar();
-    u8g2_SetFont(&u8g, u8g2_font_7x13_tf);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(ReadOnlyStr), GENERAL_STR_Y_POS(32), ReadOnlyStr);
-    DrawBottomBarInfo(READ_ONLY_PARAM);
-    u8g2_SendBuffer(&u8g); 
+    char ReadOnlyStr[13];
+    switch(ParamItem)
+    {
+      case ADC_OFFSET:
+      case NUMBER_MEMORY_WRITES:       
+        snprintf(ReadOnlyStr, 12, "%010d", ValueToView);
+        u8g2_ClearBuffer(&u8g);
+        DrawTopInfoBar();
+        u8g2_SetFont(&u8g, u8g2_font_7x13_tf);
+        u8g2_DrawStr(&u8g, X_CENTER_POS(ReadOnlyStr), GENERAL_STR_Y_POS(32), ReadOnlyStr);
+        DrawBottomBarInfo(READ_ONLY_PARAM);
+        u8g2_SendBuffer(&u8g);
+        break;
+      case POWER_ON_TIME:
+        snprintf(ReadOnlyStr, 13, "%02dd%02dh%02dm%02ds", ActiveTime.day, ActiveTime.hours, ActiveTime.minutes, ActiveTime.seconds);
+        u8g2_ClearBuffer(&u8g);
+        DrawTopInfoBar();
+        u8g2_SetFont(&u8g, u8g2_font_7x13_tf);
+        u8g2_DrawStr(&u8g, X_CENTER_POS(ReadOnlyStr), GENERAL_STR_Y_POS(32), ReadOnlyStr);
+        DrawBottomBarInfo(READ_ONLY_PARAM);
+        u8g2_SendBuffer(&u8g);        
+        break;
+      default:
+        break;
+    }
 }
 
 
@@ -548,7 +567,21 @@ void ShowAlarmStatus(char *PageTitle, uint8_t AlarmItem)
     u8g2_SendBuffer(&u8g); 
 }
 
-
+void DrawChronometer()
+{  
+    char ChronoStrStr[16];
+    u8g2_ClearBuffer(&u8g);
+    DrawTopInfoBar();    
+    u8g2_SetFont(&u8g, u8g2_font_5x8_tf);   
+    snprintf(ChronoStrStr, 15, "%02d:%02d:%02d:%d:%d:%d", Crono.hours, Crono.minutes, Crono.seconds, Crono.dec, Crono.cent, Crono.millis);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(ChronoStrStr), GENERAL_STR_Y_POS(15), ChronoStrStr);
+    u8g2_SetFont(&u8g, u8g_font_4x6);
+    u8g2_DrawStr(&u8g, X_CENTER_POS("Ok per start/stop"), GENERAL_STR_Y_POS(25), "Ok per start/stop");
+    u8g2_DrawStr(&u8g, X_CENTER_POS("Back per tornare"), GENERAL_STR_Y_POS(33), "Back per tornare");
+    u8g2_DrawStr(&u8g, X_RIGHT_POS("Reset"), BOTTOM_INFO_BAR_Y_POS, "Reset");
+    DrawBottomBarInfo(READ_ONLY_PARAM);
+    u8g2_SendBuffer(&u8g); 
+}
 
 void DrawChangeEnumLoop(const char *PageTitle, ENUM_VALUE_ITEM EnumItem[], uint8_t ItemPos, uint8_t HighPosItem, uint8_t MaxMenuItemNum, uint8_t MaxMenuLines)
 {

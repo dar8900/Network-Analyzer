@@ -1,13 +1,20 @@
 #include "main.h"
 #include "SysTime.h"
+#include "TaskRTC.h"
+#include "Parameters.h"
 
 extern __IO uint32_t uwTick;
 extern HAL_TickFreqTypeDef uwTickFreq;
-extern bool SecondTick;
+extern bool SecondTickMeasure;
+extern bool SetChrono;
+extern bool ReSetChrono;
+extern CHRONO_VAR Crono;
+
+uint32_t  PowerOnTime;
 
 void SystemClock_Config(void)
 {
-    
+
     RCC_OscInitTypeDef RCC_OscInitStruct;
     RCC_ClkInitTypeDef RCC_ClkInitStruct;
     RCC_PeriphCLKInitTypeDef PeriphClkInit;
@@ -58,17 +65,69 @@ void SystemClock_Config(void)
 
 void HAL_IncTick(void)
 {
-  uwTick += uwTickFreq;
+    uwTick += uwTickFreq;
 }
 
 static void GetSecondTick()
 {
-  TickForSecond += uwTickFreq;
-  if(TickForSecond >= 1000)
-  {
-    TickForSecond = 0;
-    SecondTick = true;  
-  }    
+    TickForSecond += uwTickFreq;
+    PowerOnTime++;
+    if(SetChrono)
+    {
+        Crono.millis++;
+        if(Crono.millis == 9)
+        {
+            Crono.millis = 0;
+            Crono.cent++;
+        }
+        if(Crono.cent >= 9)
+        {
+            Crono.cent = 0;
+            Crono.dec++;
+        }
+        if(Crono.dec >= 9)
+        {
+            Crono.dec = 0;
+            Crono.seconds++;
+        }
+        if(Crono.seconds >= 59)
+        {
+            Crono.seconds = 0;
+            Crono.minutes++;
+        }
+        if(Crono.minutes >= 59)
+        {
+            Crono.minutes = 0;
+            Crono.hours++;
+        }
+        if(Crono.hours >= 23)
+        {
+            Crono.hours = 0;
+            Crono.minutes = 0;
+            Crono.seconds = 0;
+            Crono.dec = 0;
+            Crono.cent = 0;
+            Crono.millis = 0;
+        }
+    }
+    if(ReSetChrono)
+    {
+        SetChrono = false;
+        ReSetChrono = false;
+        Crono.hours = 0;
+        Crono.minutes = 0;
+        Crono.seconds = 0;
+        Crono.dec = 0;
+        Crono.cent = 0;
+        Crono.millis = 0;
+    }
+    if(PowerOnTime == UINT32_MAX)
+        PowerOnTime = 0; 
+    if(TickForSecond >= 1000)
+    {
+        SecondTickMeasure = true;  
+        TickForSecond = 0;   
+    }    
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -79,6 +138,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM1)
     {
         HAL_IncTick();
+        GetSecondTick();
     }
     /* USER CODE BEGIN Callback 1 */
     

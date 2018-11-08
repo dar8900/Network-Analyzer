@@ -8,12 +8,17 @@
 
 #ifdef ENABLE_RTC
 
+extern uint32_t PowerOnTime;
 
 TIME_VAR GlobalTime;
+TIME_VAR ActiveTime;
+CHRONO_VAR Crono;
 
-bool SecondTick = false;
+bool SecondTickMeasure = false;
 
 bool SettingTimeDate = false;
+bool SetChrono = false;
+bool ReSetChrono = false;
 
 uint8_t DaysPerMonth[] = 
 {
@@ -217,82 +222,82 @@ void ds1307_set_minutes(uint8_t minutes)
     WriteRtcI2C(DS1307_MINUTES, &SetBcd, 0, SINGLE_WRITE_REG);
 }
 
-/**
-******************************************************************************
-*	@brief	Get current hour mode (12 or 24)
-* @param	None
-* @retval	Current hour mode (DS1307_HOUR_12 or DS1307_HOUR_24)
-******************************************************************************
-*/
-uint8_t ds1307_get_hour_mode()
-{
-	uint8_t hours;
-	ReadRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_READ_REG);
-	// If hour mode bit is set, then current hour mode is 12, otherwise 24
-	return ((hours & (1 << DS1307_HOUR_MODE)) == (1 << DS1307_HOUR_MODE)) ?   DS1307_HOUR_12 : DS1307_HOUR_24;
-}
-
-/**
-******************************************************************************
-*	@brief	Get current am pm (AM or PM)
-* @param	None
-* @retval	Current am pm (DS1307_AM or DS1307_PM)
-******************************************************************************
-*/
-uint8_t ds1307_get_am_pm()
-{
-	uint8_t hours;
-	i2c_read_with_reg(DS1307_DEVICE_ADDRESS, DS1307_HOURS, &hours);
-	ReadRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_READ_REG);
-	// If AM PM bit is set, then current AM PM mode is PM, otherwise AM
-	return ((hours & (1 << DS1307_AM_PM)) == (1 << DS1307_AM_PM)) ?  DS1307_PM : DS1307_AM;
-}
-
-/**
-******************************************************************************
-*	@brief	Get hours when hour mode is 12 
-* @param	None
-* @retval	Current hour value in decimal format
-******************************************************************************
-*/
-uint8_t ds1307_get_hours_12()
-{
-	uint8_t hours;
-	ReadRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_READ_REG);
-	// Mask hour register value from bit 7 to bit 5 to get hours value
-	// in hour mode 12
-	return bcd2bin(hours & 0x1F);
-}
-
-/**
-******************************************************************************
-*	@brief	Set hours in hour mode 12
-* @param	Hours value
-* @param	AM or PM time
-* @retval	None
-******************************************************************************
-*/
-void ds1307_set_hours_12(uint8_t hours_12, uint8_t am_pm)
-{
-	uint8_t hours = 0;
-	if (am_pm == DS1307_AM)
-	{
-		// Hour mode is set, in order to use hour mode 12
-		// AM/PM bit is clear, in order to set AM time
-		hours = (1 << DS1307_HOUR_MODE) | 
-			bin2bcd(check_min_max(hours_12, 1, 12));
-	}
-	else if (am_pm == DS1307_PM)
-	{
-		// Hour mode is set, in order to use hour mode 12
-		// AM/PM bit is set, in order to set PM time
-		hours = (1 << DS1307_HOUR_MODE) | (1 << DS1307_AM_PM) | 
-			bin2bcd(check_min_max(hours_12, 1, 12));
-	}
-    
-    WriteRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_WRITE_REG);
-}
-
+///**
+//******************************************************************************
+//*	@brief	Get current hour mode (12 or 24)
+//* @param	None
+//* @retval	Current hour mode (DS1307_HOUR_12 or DS1307_HOUR_24)
+//******************************************************************************
+//*/
+//uint8_t ds1307_get_hour_mode()
+//{
+//	uint8_t hours;
+//	ReadRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_READ_REG);
+//	// If hour mode bit is set, then current hour mode is 12, otherwise 24
+//	return ((hours & (1 << DS1307_HOUR_MODE)) == (1 << DS1307_HOUR_MODE)) ?   DS1307_HOUR_12 : DS1307_HOUR_24;
+//}
+//
+///**
+//******************************************************************************
+//*	@brief	Get current am pm (AM or PM)
+//* @param	None
+//* @retval	Current am pm (DS1307_AM or DS1307_PM)
+//******************************************************************************
+//*/
+//uint8_t ds1307_get_am_pm()
+//{
+//	uint8_t hours;
+//	i2c_read_with_reg(DS1307_DEVICE_ADDRESS, DS1307_HOURS, &hours);
+//	ReadRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_READ_REG);
+//	// If AM PM bit is set, then current AM PM mode is PM, otherwise AM
+//	return ((hours & (1 << DS1307_AM_PM)) == (1 << DS1307_AM_PM)) ?  DS1307_PM : DS1307_AM;
+//}
+//
+///**
+//******************************************************************************
+//*	@brief	Get hours when hour mode is 12 
+//* @param	None
+//* @retval	Current hour value in decimal format
+//******************************************************************************
+//*/
+//uint8_t ds1307_get_hours_12()
+//{
+//	uint8_t hours;
+//	ReadRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_READ_REG);
+//	// Mask hour register value from bit 7 to bit 5 to get hours value
+//	// in hour mode 12
+//	return bcd2bin(hours & 0x1F);
+//}
+//
+///**
+//******************************************************************************
+//*	@brief	Set hours in hour mode 12
+//* @param	Hours value
+//* @param	AM or PM time
+//* @retval	None
+//******************************************************************************
+//*/
+//void ds1307_set_hours_12(uint8_t hours_12, uint8_t am_pm)
+//{
+//	uint8_t hours = 0;
+//	if (am_pm == DS1307_AM)
+//	{
+//		// Hour mode is set, in order to use hour mode 12
+//		// AM/PM bit is clear, in order to set AM time
+//		hours = (1 << DS1307_HOUR_MODE) | 
+//			bin2bcd(check_min_max(hours_12, 1, 12));
+//	}
+//	else if (am_pm == DS1307_PM)
+//	{
+//		// Hour mode is set, in order to use hour mode 12
+//		// AM/PM bit is set, in order to set PM time
+//		hours = (1 << DS1307_HOUR_MODE) | (1 << DS1307_AM_PM) | 
+//			bin2bcd(check_min_max(hours_12, 1, 12));
+//	}
+//    
+//    WriteRtcI2C(DS1307_HOURS, &hours, 0, SINGLE_WRITE_REG);
+//}
+//
 /**
 ******************************************************************************
 *	@brief	Get hours when hour mode is 24
@@ -321,33 +326,33 @@ void ds1307_set_hours_24(uint8_t hours_24)
     uint8_t SetBcd = bin2bcd(check_min_max(hours_24, 0, 59));
     WriteRtcI2C(DS1307_HOURS, &SetBcd, 0, SINGLE_WRITE_REG);
 }
-
-/**
-******************************************************************************
-*	@brief	Get current day of week value from the register
-* @param	None
-* @retval	Current day of week value in decimal format
-******************************************************************************
-*/
-uint8_t ds1307_get_day()
-{
-	uint8_t day;
-    ReadRtcI2C(DS1307_DAY, &day, 0, SINGLE_READ_REG);
-	return bcd2bin(day);
-}
-
-/**
-******************************************************************************
-*	@brief	Set day of week value to the register
-* @param	Day of week value to be set
-* @retval	None
-******************************************************************************
-*/
-void ds1307_set_day(uint8_t day)
-{
-    uint8_t SetBcd = bin2bcd(check_min_max(day, 0, 59));
-    WriteRtcI2C(DS1307_DAY, &SetBcd, 0, SINGLE_WRITE_REG);
-}
+//
+///**
+//******************************************************************************
+//*	@brief	Get current day of week value from the register
+//* @param	None
+//* @retval	Current day of week value in decimal format
+//******************************************************************************
+//*/
+//uint8_t ds1307_get_day()
+//{
+//	uint8_t day;
+//    ReadRtcI2C(DS1307_DAY, &day, 0, SINGLE_READ_REG);
+//	return bcd2bin(day);
+//}
+//
+///**
+//******************************************************************************
+//*	@brief	Set day of week value to the register
+//* @param	Day of week value to be set
+//* @retval	None
+//******************************************************************************
+//*/
+//void ds1307_set_day(uint8_t day)
+//{
+//    uint8_t SetBcd = bin2bcd(check_min_max(day, 0, 59));
+//    WriteRtcI2C(DS1307_DAY, &SetBcd, 0, SINGLE_WRITE_REG);
+//}
 
 /**
 ******************************************************************************
@@ -499,20 +504,37 @@ static bool IsRtcRunning()
     return true;
 }
 
+static void ConvertPowerOnTime()
+{
+    uint32_t PowerOnTimeSec = PowerOnTime / 1000;
+    ActiveTime.seconds = PowerOnTimeSec % 60;
+    ActiveTime.minutes = (PowerOnTimeSec / 60) % 60;
+    ActiveTime.hours   = (PowerOnTimeSec / 3600) % 24;
+    ActiveTime.day     = (PowerOnTimeSec / 86400);
+}
+
+static void ConvertChrono()
+{
+    Crono.millis = GeneralParams.Cronometer;
+    Crono.cent   = Crono.millis /10;
+    
+
+}
 /* TaskRTC function */
 void TaskRTC(void const * argument)
 {
+    TickForSecond = 0;
     if(!IsRtcRunning) 
     {
         ChangeTime();
         ChangeDate();
     }
-    TickForSecond = 0;
-    
+       
     /* Infinite loop */
     for(;;)
     {   
         GetTimeDate(&GlobalTime); 
+        ConvertPowerOnTime();
         osDelay(500);     
     }
     /* USER CODE END TaskRTC */

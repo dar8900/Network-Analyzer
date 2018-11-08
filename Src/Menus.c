@@ -14,7 +14,8 @@
 extern bool HalfSecondTick;
 
 extern TIME_VAR GlobalTime;
-
+extern bool SetChrono;
+extern bool ReSetChrono ;
 
 extern uint8_t DaysPerMonth[];
 extern bool SettingTimeDate;
@@ -38,6 +39,7 @@ const char *MainSetupMenuStr[MAX_SETUP_ITEM] =
     "Stato allarmi"      ,
     "Imposta allarmi"    ,
     "Setup generale"     ,
+    "Cronometro"         ,
     "Imposta orario"     ,
     "Reset"              ,
 };
@@ -50,6 +52,7 @@ MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] =
     { ShowAlarmStatusList },
     { AlarmSetup          },
     { ParameterSetup      },
+    { Chronometer         },
     { ChangeDateTimeMenu  },
     { ResetMenu           },
 }; 
@@ -366,7 +369,7 @@ bool ParameterSetup()
               case READ_ONLY_TYPE:
                 while(LastButtonPressed != BUTTON_LEFT)
                 {
-                    ViewReadOnlyParam(*(uint32_t*)ParametersMenu[ParamItem].ParamValue);
+                    ViewReadOnlyParam(*(uint32_t*)ParametersMenu[ParamItem].ParamValue, ParamItem);                       
                     osDelay(WHILE_LOOP_DELAY);
                 }
                 break;
@@ -708,6 +711,35 @@ bool ResetMenu()
     return true;
 }
 
+bool Chronometer()
+{
+    bool ExitChrono = false, ExitMainMenu = false;    
+    while(!ExitChrono)
+    {
+        CheckOperation();
+        DrawChronometer();
+        switch(LastButtonPressed)
+        {
+          case BUTTON_UP:
+          case BUTTON_DOWN:          
+            break;
+          case BUTTON_LEFT:
+            ExitChrono = true;
+            break;
+          case BUTTON_RIGHT:
+            ReSetChrono = true;
+            break;
+          case BUTTON_OK:
+            SetChrono = !SetChrono;
+            break;
+          default:
+            break;
+        }
+        LastButtonPressed = NO_PRESS;
+        osDelay(WHILE_LOOP_DELAY);
+    }
+    
+}
 
 
 void MainMenu()

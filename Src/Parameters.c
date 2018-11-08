@@ -13,6 +13,7 @@
 
 extern uint8_t LedConf;
 extern bool EnableSimulation;
+extern uint32_t  PowerOnTime;
 // Parametri 
 PARAMETERS_S GeneralParams;
 
@@ -59,6 +60,7 @@ const char *ParametersMenuStr[MAX_PARAMETER_ITEM] =
     "Tipo screensaver"       ,
     "Timer screensaver(s)"   ,
     "Configura i led "       ,
+    "Tempo in attività"      ,
     "Scritture in memoria"   ,
 };
 
@@ -84,6 +86,7 @@ const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] =
     { ENUM_VALUE_TYPE  ,  &GeneralParams.ScreenSaverType           ,   (void *)ScreenSaverEnum   , MAX_SCREENSAVER_TYPE  },
     { INT_VALUE_TYPE   ,  &GeneralParams.ScreenSaverTimer          ,   NULL                      , 0                     },
     { ENUM_VALUE_TYPE  ,  &LedConf                                 ,   (void *)LedConfiguration  , MAX_LED_COMBINATIONS  },
+    { READ_ONLY_TYPE   ,  &PowerOnTime                             ,   NULL                      , 0                     },
     { READ_ONLY_TYPE   ,  &EepromSavedValue[NUMBER_OF_WRITES_ADDR] ,   NULL                      , 0                     },
 }; 
 

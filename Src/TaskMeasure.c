@@ -12,27 +12,28 @@
 
 #ifdef ENABLE_MEASURE
 
-#define CURRENT_SAMPLE  20
+#define CURRENT_SAMPLE  10
 
 extern bool ConversionEnd;
-extern bool SecondTick;
+extern bool SecondTickMeasure;
 extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
 extern bool EnableSimulation;
 extern uint32_t ADCReadedValueSim[NUM_SAMPLE];
 
 static double CubeRawValue;
-static double CurrentRMS;
+static double CurrentRMS[CURRENT_SAMPLE];
 static float EnergyAcc;
+static float CurrentMeasureThr = 0.4;
 static uint32_t NumberOfEnergySampling; 
 
-static uint8_t SensorSensibility = 43;
+static uint8_t SensorSensibility = 46;
 static uint16_t NumberOfCurrentSampling;
 
 MEASURES GeneralMeasures;
 float OldSimCurrent = 0;
 uint8_t OldFrequency = 0;
 
-static void ClearFLArray(float Array[], uint8_t Size)
+static void ClearDBArray(double Array[], uint8_t Size)
 {
     for(uint8_t i = 0; i < Size; i++)
     {
@@ -52,6 +53,17 @@ uint32_t CalcArrayAvarage(uint32_t Array[], uint8_t Size)
     return Mean;   
 }
 
+double CalcArrayAvarageDb(double Array[], uint8_t Size)
+{
+    double Mean = 0;
+    for(uint8_t i = 0; i < Size; i++)
+    {
+        Mean += Array[i];
+    }
+    Mean /= Size;
+    return Mean;   
+}
+
 static float CalcCurrent(double QuadraticValue)
 {
     float SquareQuadratic;
@@ -59,11 +71,8 @@ static float CalcCurrent(double QuadraticValue)
     
     // Estraggo il valore quadratico facendolo diventare RMS e trasformandolo in mV 
     SquareQuadratic = (float)sqrt((double)QuadraticValue);
-    
-//    SquareQuadratic =  (TOVOLT(SquareQuadratic)) * 1000;
     SquareQuadratic *= 1000;
-
-    
+ 
     // Divido i mV ottenuti per la sensibilita del sensore per ottere gli A 
     if(!GeneralParams.EnableSimulation)
         SquareQuadratic /= SensorSensibility;
@@ -119,11 +128,9 @@ static void CheckMaxMinCurrentPower()
 static void SecondEvent()
 {
     static bool NotReEnter = false;
-    if(SecondTick)
+    if(SecondTickMeasure)
     {
-        //        if(!NotReEnter)
-        //        {
-        SecondTick = false;
+        SecondTickMeasure = false;
         
         if(NumberOfEnergySampling > 0)
             GeneralMeasures.MeanEnergy += ((EnergyAcc / NumberOfEnergySampling)/3600.0);
@@ -143,18 +150,10 @@ static void SecondEvent()
             OldFrequency = GeneralParams.Frequency;
         }
         
-        NumberOfCurrentSampling = 0; 
-        CurrentRMS = 0;
         
         NumberOfEnergySampling = 0;
         EnergyAcc = 0;
-        //        }
-        //        NotReEnter = true;
     }
-    //    else
-    //    {
-    //        NotReEnter = false;
-    //    }
 }
 
 
@@ -213,9 +212,15 @@ void TaskMeasure(void const * argument)
                     CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
                 }
             }
-            
-            GeneralMeasures.MeanCurrentRMS = CalcCurrent(CubeRawValue); 
-            if(GeneralMeasures.MeanCurrentRMS > 0.2)
+            CurrentRMS[NumberOfCurrentSampling] = CalcCurrent(CubeRawValue); 
+            NumberOfCurrentSampling++;
+            if(NumberOfCurrentSampling == CURRENT_SAMPLE)
+            {
+                NumberOfCurrentSampling = 0;                
+                GeneralMeasures.MeanCurrentRMS = CalcArrayAvarageDb(CurrentRMS, CURRENT_SAMPLE);      
+                ClearDBArray(CurrentRMS, CURRENT_SAMPLE);
+            }   
+            if(GeneralMeasures.MeanCurrentRMS > CurrentMeasureThr)
                 GeneralMeasures.Power = GeneralMeasures.MeanCurrentRMS * (double)GeneralParams.MeasureVoltage;
             else
             {
@@ -234,8 +239,8 @@ void TaskMeasure(void const * argument)
         {
             if(CleanAll)
             {
-                CurrentRMS = 0;
-                CheckAlarm();
+                ClearDBArray(CurrentRMS, CURRENT_SAMPLE);
+//                CheckAlarm();
                 GeneralMeasures.MeanCurrentRMS = 0.0;
                 GeneralMeasures.Power          = 0.0;
                 EnergyAcc                      = 0.0;

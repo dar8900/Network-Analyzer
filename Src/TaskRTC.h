@@ -44,6 +44,17 @@ typedef struct
     uint8_t year;
 }TIME_VAR;
 
+typedef struct
+{
+    uint8_t hours;
+    uint8_t minutes;
+    uint8_t seconds;
+    uint8_t dec;
+    uint8_t cent;
+    uint8_t millis;
+}CHRONO_VAR;
+
+
 //typedef struct
 //{
 //    uint8_t day;
