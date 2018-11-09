@@ -95,6 +95,6 @@ void ds1307_set_calendar_date(uint8_t day, uint8_t date, uint8_t month, uint8_t 
 void SetInitialGlobalTimeDate(void);
 void SetChangedTime(uint8_t Hour, uint8_t Minute);
 void SetChangedDate(uint8_t Day, uint8_t Month, uint8_t Year);
-
+void CalcCrono(void);
 void TaskRTC(void const * argument);
 #endif

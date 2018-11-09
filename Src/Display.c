@@ -18,6 +18,8 @@ extern const char Batteria3_4[];
 extern const char BatteriaPiena[];
 extern const char BatteriaInCarica[];
 
+extern const char CronoIcon[];
+
 extern char *AlarmList[MAX_ALARM_STR];
 extern char *AlarmMotivationStr[2];
 extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
@@ -29,6 +31,8 @@ extern uint32_t  PowerOnTime;
 extern TIME_VAR GlobalTime;
 extern TIME_VAR ActiveTime;
 extern CHRONO_VAR Crono;
+
+extern bool SetChrono;
 
 u8g2_t u8g;
 
@@ -347,8 +351,13 @@ void DrawTopInfoBar()
     {
         u8g2_DrawXBMP(&u8g, ALARM_ICON_SML_X_POS, 0, 12, 6, AlarmIconSmall);
     }
+    // Se sono in simulazione
     if(GeneralParams.EnableSimulation)
         u8g2_DrawStr(&u8g, SIMULATION_STR_POS, TOP_INFO_BAR_Y_POS, "Simul.");
+    
+    // Se il cronometro è attivo
+    if(SetChrono)
+        u8g2_DrawXBMP(&u8g, CRONO_ICON_X_POS, 0, 10, 6, CronoIcon);
     
     // Icona batteria (ancora da gestire)
     u8g2_DrawXBMP(&u8g, BATTERY_ICON_SML_X_POS, 0, 19, 6, BatteryIcons[BATTERIA_1_4]);
@@ -451,7 +460,7 @@ void DrawTimeDateChangeLoop(uint8_t BoxPos, uint8_t TypeSetting,uint8_t BoxOneNu
 
 void ViewReadOnlyParam(uint32_t ValueToView, uint8_t ParamItem)
 {
-    char ReadOnlyStr[13];
+    char ReadOnlyStr[16];
     switch(ParamItem)
     {
       case ADC_OFFSET:
@@ -465,7 +474,7 @@ void ViewReadOnlyParam(uint32_t ValueToView, uint8_t ParamItem)
         u8g2_SendBuffer(&u8g);
         break;
       case POWER_ON_TIME:
-        snprintf(ReadOnlyStr, 13, "%02dd%02dh%02dm%02ds", ActiveTime.day, ActiveTime.hours, ActiveTime.minutes, ActiveTime.seconds);
+        snprintf(ReadOnlyStr, 16, "%02dd %02dh %02dm %02ds", ActiveTime.day, ActiveTime.hours, ActiveTime.minutes, ActiveTime.seconds);
         u8g2_ClearBuffer(&u8g);
         DrawTopInfoBar();
         u8g2_SetFont(&u8g, u8g2_font_7x13_tf);
@@ -572,8 +581,8 @@ void DrawChronometer()
     char ChronoStrStr[16];
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();    
-    u8g2_SetFont(&u8g, u8g2_font_5x8_tf);   
-    snprintf(ChronoStrStr, 15, "%02d:%02d:%02d:%d:%d:%d", Crono.hours, Crono.minutes, Crono.seconds, Crono.dec, Crono.cent, Crono.millis);
+    u8g2_SetFont(&u8g, u8g2_font_6x10_tf);   
+    snprintf(ChronoStrStr, 13, "%02d:%02d:%02d.%d%d%d", Crono.hours, Crono.minutes, Crono.seconds, Crono.dec, Crono.cent, Crono.millis);
     u8g2_DrawStr(&u8g, X_CENTER_POS(ChronoStrStr), GENERAL_STR_Y_POS(15), ChronoStrStr);
     u8g2_SetFont(&u8g, u8g_font_4x6);
     u8g2_DrawStr(&u8g, X_CENTER_POS("Ok per start/stop"), GENERAL_STR_Y_POS(25), "Ok per start/stop");

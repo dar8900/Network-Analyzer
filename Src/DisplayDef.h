@@ -14,6 +14,8 @@
 
 #define SIMULATION_STR_POS       36
 
+#define CRONO_ICON_X_POS         62
+
 #define BATTERY_ICON_SML_X_POS   75
 
 #define POPUP_DELAY  1000

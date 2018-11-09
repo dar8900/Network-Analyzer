@@ -517,9 +517,63 @@ static void ConvertChrono()
 {
     Crono.millis = GeneralParams.Cronometer;
     Crono.cent   = Crono.millis /10;
-    
-
 }
+
+void CalcCrono()
+{
+    if(SetChrono)
+    {
+        Crono.millis++;
+        if(Crono.millis > 9)
+        {
+            Crono.millis = 0;
+            Crono.cent++;
+        }
+        if(Crono.cent > 9)
+        {
+            Crono.cent = 0;
+            Crono.dec++;
+        }
+        if(Crono.dec > 9)
+        {
+            Crono.dec = 0;
+            Crono.seconds++;
+        }
+        if(Crono.seconds > 59)
+        {
+            Crono.seconds = 0;
+            Crono.minutes++;
+        }
+        if(Crono.minutes > 59)
+        {
+            Crono.minutes = 0;
+            Crono.hours++;
+        }
+        if(Crono.hours > 23)
+        {
+            Crono.hours = 0;
+            Crono.minutes = 0;
+            Crono.seconds = 0;
+            Crono.dec = 0;
+            Crono.cent = 0;
+            Crono.millis = 0;
+        }
+    }
+    
+    if(ReSetChrono)
+    {
+        SetChrono = false;
+        ReSetChrono = false;
+        Crono.hours = 0;
+        Crono.minutes = 0;
+        Crono.seconds = 0;
+        Crono.dec = 0;
+        Crono.cent = 0;
+        Crono.millis = 0;
+    }
+    return;
+}
+
 /* TaskRTC function */
 void TaskRTC(void const * argument)
 {
@@ -529,7 +583,7 @@ void TaskRTC(void const * argument)
         ChangeTime();
         ChangeDate();
     }
-       
+    
     /* Infinite loop */
     for(;;)
     {   

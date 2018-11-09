@@ -68,59 +68,11 @@ void HAL_IncTick(void)
     uwTick += uwTickFreq;
 }
 
-static void GetSecondTick()
+static void GetMilliSecondTick()
 {
     TickForSecond += uwTickFreq;
     PowerOnTime++;
-    if(SetChrono)
-    {
-        Crono.millis++;
-        if(Crono.millis == 9)
-        {
-            Crono.millis = 0;
-            Crono.cent++;
-        }
-        if(Crono.cent >= 9)
-        {
-            Crono.cent = 0;
-            Crono.dec++;
-        }
-        if(Crono.dec >= 9)
-        {
-            Crono.dec = 0;
-            Crono.seconds++;
-        }
-        if(Crono.seconds >= 59)
-        {
-            Crono.seconds = 0;
-            Crono.minutes++;
-        }
-        if(Crono.minutes >= 59)
-        {
-            Crono.minutes = 0;
-            Crono.hours++;
-        }
-        if(Crono.hours >= 23)
-        {
-            Crono.hours = 0;
-            Crono.minutes = 0;
-            Crono.seconds = 0;
-            Crono.dec = 0;
-            Crono.cent = 0;
-            Crono.millis = 0;
-        }
-    }
-    if(ReSetChrono)
-    {
-        SetChrono = false;
-        ReSetChrono = false;
-        Crono.hours = 0;
-        Crono.minutes = 0;
-        Crono.seconds = 0;
-        Crono.dec = 0;
-        Crono.cent = 0;
-        Crono.millis = 0;
-    }
+    CalcCrono();
     if(PowerOnTime == UINT32_MAX)
         PowerOnTime = 0; 
     if(TickForSecond >= 1000)
@@ -132,16 +84,10 @@ static void GetSecondTick()
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-    /* USER CODE BEGIN Callback 0 */
-    
-    /* USER CODE END Callback 0 */
     if (htim->Instance == TIM1)
     {
         HAL_IncTick();
-        GetSecondTick();
+        GetMilliSecondTick();
     }
-    /* USER CODE BEGIN Callback 1 */
-    
-    /* USER CODE END Callback 1 */
 }
 
