@@ -236,7 +236,7 @@ bool ChooseYesNo(const char *TitleChoice)
             FirstListItem = ChoiceNum - (MAX_SETUP_MENU_LINES - 1);
         } 
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
     return Choice;
 }
@@ -291,7 +291,7 @@ uint16_t ChangeValue(uint16_t ParamValue, uint8_t ParamItem)
             break;
         }
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
     if(ChangedValue)
     {
@@ -382,7 +382,7 @@ float ChangeValueFl(float ParamValue, uint8_t ParamItem)
             break;
         }
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
     return ParamValue;
 }
@@ -477,7 +477,7 @@ void ChangeAlarmThrs(uint8_t AlarmItem)
                 break;
             }
             LastButtonPressed = NO_PRESS;
-            osDelay(WHILE_LOOP_DELAY);
+            WDogOsDelay(WHILE_LOOP_DELAY);
         }
         if(ExitFromAll)
             break;
@@ -535,7 +535,7 @@ int8_t ChangeEnumValue(uint8_t ParamItem)
         {
             FirstListItem = EnumItem - (MAX_SETUP_MENU_LINES - 1);
         }  
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
     if(ValueSetted)
         EnumValueRet = (int8_t)TmpValue[EnumItem].EnumValue;

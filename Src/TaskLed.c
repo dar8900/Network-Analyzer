@@ -151,15 +151,15 @@ static void GesAlarmEnergyLed()
     {
       case ALARM_RUNNING:
         TurnOnLed(AL_EN_LED);
-        osDelay(100);
+        WDogOsDelay(100);
         TurnOffLed(AL_EN_LED);
-        osDelay(100);
+        WDogOsDelay(100);
         break;
       case ENERGY_IMPULSE:
         TurnOnLed(AL_EN_LED);
-        osDelay(500);
+        WDogOsDelay(500);
         TurnOffLed(AL_EN_LED);
-        osDelay(500);
+        WDogOsDelay(500);
         break;
       case NO_CONF:
         TurnOffLed(AL_EN_LED);
@@ -185,7 +185,7 @@ void TaskLed(void const * argument)
     {
         GesRGBLed();
         GesAlarmEnergyLed();
-        osDelay(50);
+        WDogOsDelay(50);
     }
     /* USER CODE END TaskLed */
 }

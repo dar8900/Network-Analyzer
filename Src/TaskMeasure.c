@@ -19,6 +19,7 @@ extern bool SecondTickMeasure;
 extern uint32_t ADCReadedValue[NUM_SAMPLE]; 
 extern bool EnableSimulation;
 extern uint32_t ADCReadedValueSim[NUM_SAMPLE];
+extern uint32_t WDogDisplay;
 
 static double CubeRawValue;
 static double CurrentRMS[CURRENT_SAMPLE];
@@ -166,7 +167,12 @@ void TaskMeasure(void const * argument)
     uint8_t GrandRawMeanIndex = 0;
     
     for(;;)
-    {            
+    { 
+        if(WDogDisplay > 0)
+        {
+            WDogDisplay--;
+            ManageWDog();
+        }
         if(GeneralParams.EnableMeasure)
         {
             CleanAll = true;
@@ -250,7 +256,7 @@ void TaskMeasure(void const * argument)
                 CleanAll = false;
             }
         }
-        osDelay(15);
+        WDogOsDelay(15);
     }
 }
 

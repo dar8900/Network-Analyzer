@@ -17,6 +17,8 @@ extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 
 extern char Initial_Logo[];
 
+uint32_t WDogDisplay = TIMEOUT_WDOG;
+
 void WriteTimeDateOccurrenceAlarm(uint8_t AlarmIndex, char *Str1, char *Str2)
 {
     snprintf(Str1, 18, "%02d:%02d:%02d %02d/%02d/%02d", AlarmsControls[AlarmIndex].AlarmActivationTimeDate.hours, AlarmsControls[AlarmIndex].AlarmActivationTimeDate.minutes,
@@ -25,6 +27,27 @@ void WriteTimeDateOccurrenceAlarm(uint8_t AlarmIndex, char *Str1, char *Str2)
     snprintf(Str2, 3, "%d", AlarmsControls[AlarmIndex].NumbOccurrence);
 }
 
+void WDogOsDelay(uint32_t MSec)
+{
+    while(MSec >= WHILE_LOOP_DELAY)
+    {
+        WDogDisplay = TIMEOUT_WDOG;
+        osDelay(WHILE_LOOP_DELAY);
+        MSec -= WHILE_LOOP_DELAY;
+    }
+    if(MSec > 0)
+    {
+        WDogDisplay = TIMEOUT_WDOG;
+        osDelay(MSec);
+    }
+    return;
+}
+
+void ManageWDog()
+{
+    if(WDogDisplay == 0)
+        HAL_NVIC_SystemReset();        
+}
 
 void CheckOperation()
 {
@@ -46,7 +69,7 @@ void CheckOperation()
             WriteTimeDateOccurrenceAlarm(AlarmIndex, AlarmTimeDateStr, NumberOccurence);
             PopUp(AlarmList[AlarmIndex], AlarmMotivationStr[AlarmsControls[AlarmIndex].AlarmMotivation], AlarmTimeDateStr, NumberOccurence, " ");
             AlarmEnergyLed = ALARM_RUNNING;
-            osDelay(500);
+            WDogOsDelay(500);
         }
         if(LastButtonPressed == BUTTON_OK)
         {
@@ -70,9 +93,9 @@ void TaskOled(void const * argument)
 {
     OledInit();
     ClearScreen();
-    osDelay(500);
+    WDogOsDelay(500);
     DrawStartLogo(Initial_Logo);
-    osDelay(1000);
+    WDogOsDelay(1000);
     
     /* Infinite loop */
     for(;;)

@@ -210,7 +210,7 @@ bool DrawCurrentWave()
         }
         
         u8g2_SendBuffer(&u8g);
-        osDelay(500);
+        WDogOsDelay(500);
     }
     LastButtonPressed = NO_PRESS;
     return true;

@@ -107,7 +107,7 @@ void TaskKeyboard(void const * argument)
     for(;;)
     {
         CheckButtons();
-        osDelay(TASK_KEYBOARD_DELAY);
+        WDogOsDelay(TASK_KEYBOARD_DELAY);
     }
     /* USER CODE END TaskKeyboard */
 }

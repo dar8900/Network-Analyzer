@@ -299,7 +299,7 @@ void MessageScreen(char *Message)
         u8g2_DrawStr(&u8g, X_CENTER_POS(Message), 32, Message);
     }
     u8g2_SendBuffer(&u8g);
-    osDelay(POPUP_DELAY);
+    WDogOsDelay(POPUP_DELAY);
 }
 
 void PopUp(char *PopupTitle, char *Body1, char *Body2, char *Body3, char *Body4)

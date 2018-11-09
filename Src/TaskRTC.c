@@ -589,7 +589,7 @@ void TaskRTC(void const * argument)
     {   
         GetTimeDate(&GlobalTime); 
         ConvertPowerOnTime();
-        osDelay(500);     
+        WDogOsDelay(500);     
     }
     /* USER CODE END TaskRTC */
 }

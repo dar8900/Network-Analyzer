@@ -135,7 +135,7 @@ bool ShowMeasure()
             break;
         }
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY+20);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
     
     return true;
@@ -192,7 +192,7 @@ bool ChooseGraphics()
             EnterGraphic = false;
         }
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
     return true;
 }
@@ -240,13 +240,13 @@ bool ShowAlarmStatusList()
             FirstItem = AlarmListItem - (MAX_SETUP_MENU_LINES - 1);
         }    
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
         if(ChooseItemList)
         {
             while(LastButtonPressed != BUTTON_LEFT)
             {
                 ShowAlarmStatus(AlarmList[AlarmListItem], AlarmListItem);
-                osDelay(WHILE_LOOP_DELAY);
+                WDogOsDelay(WHILE_LOOP_DELAY);
             }
             LastButtonPressed = NO_PRESS;
             ChooseItemList = false;
@@ -305,7 +305,7 @@ bool AlarmSetup()
             ChooseAlarm = false;
         }
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
     return true;
 }
@@ -370,7 +370,7 @@ bool ParameterSetup()
                 while(LastButtonPressed != BUTTON_LEFT)
                 {
                     ViewReadOnlyParam(*(uint32_t*)ParametersMenu[ParamItem].ParamValue, ParamItem);                       
-                    osDelay(WHILE_LOOP_DELAY);
+                    WDogOsDelay(WHILE_LOOP_DELAY);
                 }
                 break;
               case ENUM_VALUE_TYPE:
@@ -388,7 +388,7 @@ bool ParameterSetup()
                 EepFlag.SaveCurrentSim = true;
         }
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
      
     return true;
@@ -443,7 +443,7 @@ bool ChangeDateTimeMenu()
             ChangeTimeParam = false;
         }
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }  
     return true;
 }
@@ -521,7 +521,7 @@ bool ChangeTime()
         {
             SetChangedTime(Hour, Minute);
         }
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }  
     SettingTimeDate = false;
     return true;
@@ -611,7 +611,7 @@ bool ChangeDate()
         {
             SetChangedDate(Day, Month, Year);
         }
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }  
     SettingTimeDate = false;
     return true;
@@ -646,7 +646,7 @@ void WichReset(const char * ResetTitle, uint8_t ResetType)
             MessageScreen("Reset in corso");
             EepFlag.EraseAll = true;
             while(EepFlag.EraseAll)
-                osDelay(100);
+                WDogOsDelay(100);
             HAL_NVIC_SystemReset();
             break;
           default:
@@ -705,7 +705,7 @@ bool ResetMenu()
             ChoosedReset = false;
         }
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
     
     return true;
@@ -736,7 +736,7 @@ bool Chronometer()
             break;
         }
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
     
 }
@@ -792,7 +792,7 @@ void MainMenu()
             EnterMenu = false;
         }
         LastButtonPressed = NO_PRESS;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
 }
 
@@ -836,6 +836,6 @@ void MainScreen()
         LastButtonPressed = NO_PRESS; 
         if(ClockTimer > 0)
             ClockTimer--;
-        osDelay(WHILE_LOOP_DELAY);
+        WDogOsDelay(WHILE_LOOP_DELAY);
     }
 }

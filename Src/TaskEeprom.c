@@ -464,7 +464,7 @@ void TaskEeprom(void const * argument)
                     NotResaveEnergy = false;
             }
         }
-        osDelay(1000);
+        WDogOsDelay(1000);
     }
     
 }
