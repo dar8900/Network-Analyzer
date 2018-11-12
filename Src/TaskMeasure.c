@@ -165,7 +165,7 @@ void TaskMeasure(void const * argument)
     float AdcRawDiff = 0;
     bool CleanAll = true;
     uint8_t GrandRawMeanIndex = 0;
-    
+    osDelay(1000);
     for(;;)
     { 
         if(WDogDisplay > 0)

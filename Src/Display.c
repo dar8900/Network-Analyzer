@@ -8,7 +8,7 @@
 #include "AlarmMachine.h"
 
 
-
+extern bool HalfSecondTick;
 extern const char AlarmIconSmall[];
 
 extern const char BatteriaVuota[];
@@ -336,6 +336,7 @@ void DrawMainScreenLoop()
 
 void DrawTopInfoBar()
 {
+    static bool Toggle = false;
     char Time[6];
     char Date[9];
     snprintf(Time, 6, "%02d:%02d", GlobalTime.hours, GlobalTime.minutes);
@@ -357,11 +358,20 @@ void DrawTopInfoBar()
     
     // Se il cronometro è attivo
     if(SetChrono)
-        u8g2_DrawXBMP(&u8g, CRONO_ICON_X_POS, 0, 10, 6, CronoIcon);
-    
+    {   
+        if(Toggle)
+        {
+            u8g2_DrawXBMP(&u8g, CRONO_ICON_X_POS, 0, 10, 6, CronoIcon);
+            Toggle = false;
+        }
+    }
     // Icona batteria (ancora da gestire)
     u8g2_DrawXBMP(&u8g, BATTERY_ICON_SML_X_POS, 0, 19, 6, BatteryIcons[BATTERIA_1_4]);
-    
+    if(HalfSecondTick)
+    {     
+        HalfSecondTick = false;
+        Toggle = true;
+    }
 }
 
 

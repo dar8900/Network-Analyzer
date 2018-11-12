@@ -15,6 +15,7 @@ TIME_VAR ActiveTime;
 CHRONO_VAR Crono;
 
 bool SecondTickMeasure = false;
+bool HalfSecondTick = false;
 
 bool SettingTimeDate = false;
 bool SetChrono = false;
@@ -513,11 +514,6 @@ static void ConvertPowerOnTime()
     ActiveTime.day     = (PowerOnTimeSec / 86400);
 }
 
-static void ConvertChrono()
-{
-    Crono.millis = GeneralParams.Cronometer;
-    Crono.cent   = Crono.millis /10;
-}
 
 void CalcCrono()
 {
