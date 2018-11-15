@@ -6,11 +6,11 @@
 extern __IO uint32_t uwTick;
 extern HAL_TickFreqTypeDef uwTickFreq;
 extern bool SecondTickMeasure;
-extern bool HalfSecondTick;
 extern bool SetChrono;
 extern bool ReSetChrono;
 extern CHRONO_VAR Crono;
 
+uint32_t TickForMSecond;
 uint32_t  PowerOnTime;
 
 void SystemClock_Config(void)
@@ -71,19 +71,15 @@ void HAL_IncTick(void)
 
 static void GetMilliSecondTick()
 {
-    TickForSecond += uwTickFreq;
+    TickForMSecond += uwTickFreq;
     PowerOnTime++;
     CalcCrono();
     if(PowerOnTime == UINT32_MAX)
         PowerOnTime = 0; 
-    if(TickForSecond >= 500)
-    {  
-        HalfSecondTick = true;
-    }
-    if(TickForSecond >= 1000)
+    if(TickForMSecond >= 1000)
     {
         SecondTickMeasure = true;  
-        TickForSecond = 0;   
+        TickForMSecond = 0;   
     }    
 }
 

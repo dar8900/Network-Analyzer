@@ -8,6 +8,7 @@
 
 #ifdef ENABLE_RTC
 
+extern uint32_t TickForMSecond;
 extern uint32_t PowerOnTime;
 
 TIME_VAR GlobalTime;
@@ -15,7 +16,6 @@ TIME_VAR ActiveTime;
 CHRONO_VAR Crono;
 
 bool SecondTickMeasure = false;
-bool HalfSecondTick = false;
 
 bool SettingTimeDate = false;
 bool SetChrono = false;
@@ -573,8 +573,8 @@ void CalcCrono()
 /* TaskRTC function */
 void TaskRTC(void const * argument)
 {
-    TickForSecond = 0;
-    if(!IsRtcRunning) 
+    TickForMSecond = 0;
+    if(!IsRtcRunning()) 
     {
         ChangeTime();
         ChangeDate();

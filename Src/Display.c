@@ -8,7 +8,7 @@
 #include "AlarmMachine.h"
 
 
-extern bool HalfSecondTick;
+
 extern const char AlarmIconSmall[];
 
 extern const char BatteriaVuota[];
@@ -362,16 +362,11 @@ void DrawTopInfoBar()
         if(Toggle)
         {
             u8g2_DrawXBMP(&u8g, CRONO_ICON_X_POS, 0, 10, 6, CronoIcon);
-            Toggle = false;
         }
     }
     // Icona batteria (ancora da gestire)
-    u8g2_DrawXBMP(&u8g, BATTERY_ICON_SML_X_POS, 0, 19, 6, BatteryIcons[BATTERIA_1_4]);
-    if(HalfSecondTick)
-    {     
-        HalfSecondTick = false;
-        Toggle = true;
-    }
+    u8g2_DrawXBMP(&u8g, BATTERY_ICON_SML_X_POS, 0, 19, 6, BatteryIcons[BATTERIA_1_4]);   
+    Toggle = !Toggle;
 }
 
 
