@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 #define MAX_SETUP_MENU_LINES    3
-#define WHILE_LOOP_DELAY    500
+#define WHILE_LOOP_DELAY    300
 
 typedef struct 
 {
