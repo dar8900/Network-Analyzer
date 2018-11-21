@@ -13,7 +13,6 @@ extern CHRONO_VAR Crono;
 
 uint32_t TickForMSecond;
 uint32_t  PowerOnTime;
-static uint8_t DMACounter;
 
 void SystemClock_Config(void)
 {
@@ -86,9 +85,6 @@ static void GetMilliSecondTick()
     if(GeneralParams.EnableMeasure)
     {
         ADCConvToDMA();
-        DMACounter++;
-        if(DMACounter == 20)
-            DMACounter = 0;
     }
 }
 

@@ -1,6 +1,7 @@
 #ifndef ADC_H
 #define ADC_H
 
+#define DMA_SAMPLE  20
 #define NUM_SAMPLE  126
 #define NUM_SAMPLE_CAMP  160
 

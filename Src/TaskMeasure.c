@@ -251,7 +251,7 @@ void TaskMeasure(void const * argument)
                 CleanAll = false;
             }
         }
-        WDogOsDelay(15);
+        WDogOsDelay(30);
     }
 }
 

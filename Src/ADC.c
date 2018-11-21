@@ -8,7 +8,7 @@ ADC_HandleTypeDef hadc2;
 bool ConversionEnd = false;
 uint32_t ADCReadedValue[NUM_SAMPLE_CAMP]; 
 
-static uint32_t DMAReadedValue;
+static uint32_t DMABuff[DMA_SAMPLE];
 
 /* ADC1 init function */
 void MX_ADC1_Init(void)
@@ -89,7 +89,7 @@ uint16_t AdcBuffIndex;
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
-    ADCReadedValue[AdcBuffIndex] = DMAReadedValue;
+    ADCReadedValue[AdcBuffIndex] = CalcArrayAvarage(DMABuff, DMA_SAMPLE);
     AdcBuffIndex++;
     if(AdcBuffIndex == NUM_SAMPLE_CAMP)
     {
@@ -102,7 +102,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 
 void ADCConvToDMA()
 {
-    HAL_ADC_Start_DMA(&hadc1, &DMAReadedValue, 1);
+    HAL_ADC_Start_DMA(&hadc1, DMABuff, DMA_SAMPLE);
 }
 void StopADC_DMA_Conv()
 {
