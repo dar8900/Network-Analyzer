@@ -422,7 +422,31 @@ static void CheckEepromAndTranfer()
 }
 //##########################################################################################################
 
+//##########################################################################################################
 
+//                                      LOG       
+
+//##########################################################################################################
+static void LogMeasure()
+{
+    static bool NotResaveEnergy = false;
+    if(GeneralParams.EnableLog)
+    {
+        if(GeneralParams.EnableMeasure)
+        {
+            if(!(GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalTime.year != 0 && !NotResaveEnergy)
+            {
+                NotResaveEnergy = true;
+                EepFlag.SaveEnergy = true;  
+                EepFlag.SaveMaxMinCurrent = true;
+                EepFlag.SaveMaxMinPower = true;
+                EepFlag.SaveAlarmOccurrence = true;
+            } 
+            else if((GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalTime.year != 0 && NotResaveEnergy)
+                NotResaveEnergy = false;
+        }
+    }
+}
 //##########################################################################################################
 
 //                                      TASK       
@@ -435,7 +459,6 @@ static void CheckEepromAndTranfer()
 /* TaskEeprom function */
 void TaskEeprom(void const * argument)
 {
-    bool NotResaveEnergy = false;
     TranferMemToRam(EepromSavedValue);
     CheckEepromAndTranfer();
 
@@ -447,23 +470,8 @@ void TaskEeprom(void const * argument)
         WriteParameters();
         WriteFloatValues();
         WriteAlarmOccurrence();
-        
-        if(GeneralParams.EnableLog)
-        {
-            if(GeneralParams.EnableMeasure)
-            {
-                if(!(GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalTime.year != 0 && !NotResaveEnergy)
-                {
-                    NotResaveEnergy = true;
-                    EepFlag.SaveEnergy = true;  
-                    EepFlag.SaveMaxMinCurrent = true;
-                    EepFlag.SaveMaxMinPower = true;
-                    EepFlag.SaveAlarmOccurrence = true;
-                } 
-                else if((GlobalTime.minutes % GeneralParams.LogMeasurePeriod) && GlobalTime.year != 0 && NotResaveEnergy)
-                    NotResaveEnergy = false;
-            }
-        }
+        LogMeasure();
+
         WDogOsDelay(1000);
     }
     

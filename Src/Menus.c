@@ -10,8 +10,7 @@
 #include "Parameters.h"
 #include "TaskMeasure.h"
 #include "AlarmMachine.h"
-
-extern bool HalfSecondTick;
+#include "StringsAnalyzer.h"
 
 extern TIME_VAR GlobalTime;
 extern bool SetChrono;
@@ -24,25 +23,9 @@ extern uint8_t LedConf;
 
 extern MEASURES GeneralMeasures;
 
-extern char *AlarmList[MAX_ALARM_STR];
 
 extern PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM];
-extern char *ParametersMenuStr[MAX_PARAMETER_ITEM];
-
 extern PARAMETER_ITEM AlarmThrMenu[MAX_ALARM_SETUP_ITEM];
-extern char *AlarmThrMenuStr[MAX_ALARM_SETUP_ITEM] ;
-
-const char *MainSetupMenuStr[MAX_SETUP_ITEM] = 
-{
-    "Grafici"            ,
-    "Misure"             ,
-    "Stato allarmi"      ,
-    "Imposta allarmi"    ,
-    "Setup generale"     ,
-    "Cronometro"         ,
-    "Imposta orario"     ,
-    "Reset"              ,
-};
 
 
 MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] = 
@@ -57,23 +40,10 @@ MENU_ITEM MainSetupMenu[MAX_SETUP_ITEM] =
     { ResetMenu           },
 }; 
 
-
-const char *TimeSettingStr[MAX_TIME_DATE_ITEM] = 
-{
-    "Cambia orario",
-    "Cambia data"  ,
-};
-
-
 MENU_ITEM TimeSetting[MAX_TIME_DATE_ITEM] = 
 {
     { ChangeTime},
     { ChangeDate},
-};
-
-const  char *GraphicsMenuStr[MAX_GRAPHIC_ITEM] = 
-{
-    "Forma d'onda I"     ,
 };
 
 MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] = 
@@ -81,14 +51,6 @@ MENU_ITEM GraphicsMenu[MAX_GRAPHIC_ITEM] =
     { DrawCurrentWave},
 };
  
-const char *ResetList[MAX_RESET_ITEM] = 
-{
-    "Reset energia",
-    "Reset max/min",
-    "Riavvia sistema",
-    "Reset a default",
-};
-
 enum
 {
     RESET_ENERGY_TYPE = 0,

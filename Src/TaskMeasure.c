@@ -13,6 +13,7 @@
 #ifdef ENABLE_MEASURE
 
 #define CURRENT_SAMPLE  10
+#define ALPHA   0.6666666
 
 extern bool ConversionEnd;
 extern bool SecondTickMeasure;
@@ -27,7 +28,7 @@ static float EnergyAcc;
 static float CurrentMeasureThr = 0.4;
 static uint32_t NumberOfEnergySampling; 
 
-static uint8_t SensorSensibility = 46;
+static uint8_t SensorSensibility = 100;
 static uint16_t NumberOfCurrentSampling;
 
 MEASURES GeneralMeasures;
@@ -179,13 +180,7 @@ void TaskMeasure(void const * argument)
             
             // Se non siamo in simulazione
             if(!GeneralParams.EnableSimulation)   
-            {
-                
-                while(!ConversionEnd)
-                {
-                    ADCConvToDMA();                        
-                }  
-                
+            {                
                 if(ConversionEnd)
                 {
                     ConversionEnd = false;
@@ -197,7 +192,7 @@ void TaskMeasure(void const * argument)
                     }
                     for(uint8_t ValueIndx = 0; ValueIndx < NUM_SAMPLE_CAMP; ValueIndx++)
                     {
-                        AdcRawDiff = (TOVOLT((float)ADCReadedValue[ValueIndx]) - TOVOLT((float)GeneralParams.ADCOffset));
+                        AdcRawDiff = ((TOVOLT((float)ADCReadedValue[ValueIndx]) * ALPHA) - (TOVOLT((float)GeneralParams.ADCOffset)) * ALPHA);
                         CubeRawValue += (double)(AdcRawDiff * AdcRawDiff);
                     }
                 }

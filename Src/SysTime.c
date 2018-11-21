@@ -1,4 +1,5 @@
 #include "main.h"
+#include "ADC.h"
 #include "SysTime.h"
 #include "TaskRTC.h"
 #include "Parameters.h"
@@ -12,6 +13,7 @@ extern CHRONO_VAR Crono;
 
 uint32_t TickForMSecond;
 uint32_t  PowerOnTime;
+static uint8_t DMACounter;
 
 void SystemClock_Config(void)
 {
@@ -81,6 +83,13 @@ static void GetMilliSecondTick()
         SecondTickMeasure = true;  
         TickForMSecond = 0;   
     }    
+    if(GeneralParams.EnableMeasure)
+    {
+        ADCConvToDMA();
+        DMACounter++;
+        if(DMACounter == 20)
+            DMACounter = 0;
+    }
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)

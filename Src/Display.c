@@ -6,7 +6,7 @@
 #include "TaskRTC.h"
 #include "Menus.h"
 #include "AlarmMachine.h"
-
+#include "StringsAnalyzer.h"
 
 
 extern const char AlarmIconSmall[];
@@ -20,8 +20,7 @@ extern const char BatteriaInCarica[];
 
 extern const char CronoIcon[];
 
-extern char *AlarmList[MAX_ALARM_STR];
-extern char *AlarmMotivationStr[2];
+
 extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 extern ALARM_CONTROLS AlarmsControls[MAX_ALARM_NUMBER];
 
@@ -73,18 +72,7 @@ typedef enum
     MAX_BOTTOM_BAR_ITEM    
 }BOTTOM_BAR_ITEMS;
 
-const char *BarItem[] = 
-{
-    "Menu",
-    "Su",
-    "Giu",
-    "Back",
-    "Ok",   
-    "Pos.",
-    "Page",
-    "Premere ok per confermare",
-    "Premere Left per uscire",
-};
+
 
 #ifdef USING_OLED
 
@@ -470,10 +458,10 @@ void ViewReadOnlyParam(uint32_t ValueToView, uint8_t ParamItem)
     {
       case ADC_OFFSET:
       case NUMBER_MEMORY_WRITES:       
-        snprintf(ReadOnlyStr, 12, "%010d", ValueToView);
+        snprintf(ReadOnlyStr, 12, "%d", ValueToView);
         u8g2_ClearBuffer(&u8g);
         DrawTopInfoBar();
-        u8g2_SetFont(&u8g, u8g2_font_7x13_tf);
+        u8g2_SetFont(&u8g, u8g2_font_8x13_tf);
         u8g2_DrawStr(&u8g, X_CENTER_POS(ReadOnlyStr), GENERAL_STR_Y_POS(32), ReadOnlyStr);
         DrawBottomBarInfo(READ_ONLY_PARAM);
         u8g2_SendBuffer(&u8g);
@@ -482,7 +470,7 @@ void ViewReadOnlyParam(uint32_t ValueToView, uint8_t ParamItem)
         snprintf(ReadOnlyStr, 16, "%02dd %02dh %02dm %02ds", ActiveTime.day, ActiveTime.hours, ActiveTime.minutes, ActiveTime.seconds);
         u8g2_ClearBuffer(&u8g);
         DrawTopInfoBar();
-        u8g2_SetFont(&u8g, u8g2_font_7x13_tf);
+        u8g2_SetFont(&u8g, u8g2_font_8x13_tf);
         u8g2_DrawStr(&u8g, X_CENTER_POS(ReadOnlyStr), GENERAL_STR_Y_POS(32), ReadOnlyStr);
         DrawBottomBarInfo(READ_ONLY_PARAM);
         u8g2_SendBuffer(&u8g);        
@@ -562,7 +550,7 @@ void DrawChangeAlarmThrsOrFloatLoop(uint8_t BoxPos , char *StrValue, const char 
     u8g2_SendBuffer(&u8g);   
 }
 
-void ShowAlarmStatus(char *PageTitle, uint8_t AlarmItem)
+void ShowAlarmStatus(const char *PageTitle, uint8_t AlarmItem)
 {
     char AlarmTimeDateStr[20], NumberOccurence[3];
     u8g2_ClearBuffer(&u8g);
@@ -586,12 +574,12 @@ void DrawChronometer()
     char ChronoStrStr[16];
     u8g2_ClearBuffer(&u8g);
     DrawTopInfoBar();    
-    u8g2_SetFont(&u8g, u8g2_font_6x10_tf);   
+    u8g2_SetFont(&u8g, u8g2_font_8x13_tf);   
     snprintf(ChronoStrStr, 13, "%02d:%02d:%02d.%d%d%d", Crono.hours, Crono.minutes, Crono.seconds, Crono.dec, Crono.cent, Crono.millis);
-    u8g2_DrawStr(&u8g, X_CENTER_POS(ChronoStrStr), GENERAL_STR_Y_POS(15), ChronoStrStr);
+    u8g2_DrawStr(&u8g, X_CENTER_POS(ChronoStrStr), GENERAL_STR_Y_POS(20), ChronoStrStr);
     u8g2_SetFont(&u8g, u8g_font_4x6);
-    u8g2_DrawStr(&u8g, X_CENTER_POS("Ok per start/stop"), GENERAL_STR_Y_POS(25), "Ok per start/stop");
-    u8g2_DrawStr(&u8g, X_CENTER_POS("Back per tornare"), GENERAL_STR_Y_POS(33), "Back per tornare");
+    u8g2_DrawStr(&u8g, X_CENTER_POS("Ok per start/stop"), GENERAL_STR_Y_POS(35), "Ok per start/stop");
+    u8g2_DrawStr(&u8g, X_CENTER_POS("Back per tornare"), GENERAL_STR_Y_POS(45), "Back per tornare");
     u8g2_DrawStr(&u8g, X_RIGHT_POS("Reset"), BOTTOM_INFO_BAR_Y_POS, "Reset");
     DrawBottomBarInfo(READ_ONLY_PARAM);
     u8g2_SendBuffer(&u8g); 

@@ -2,24 +2,12 @@
 #include "AlarmMachine.h"
 #include "TaskMeasure.h"
 #include "TaskRTC.h"
+#include "StringsAnalyzer.h"
 
 extern MEASURES GeneralMeasures;
 extern TIME_VAR GlobalTime;
 
-const char *AlarmMotivationStr[3] = 
-{
-    "Sovra-soglia",
-    "Sotto-soglia",
-    "Nessun allarme",
-};
 
-
-const char *AlarmList[MAX_ALARM_STR] = 
-{
-    "Allarme corrente",
-    "Allarme potenza",
-    "Allarme energia",
-};
 
 ALARM_PARAMS AlarmsParameters[MAX_ALARM_NUMBER] = 
 {

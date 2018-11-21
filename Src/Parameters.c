@@ -7,6 +7,7 @@
 #include "AlarmMachine.h"
 #include "TaskEeprom.h"
 #include "TaskLed.h"
+#include "StringsAnalyzer.h"
 #include <math.h>
 
 #define  FLOAT_FACTOR_UNIT_BOXPOS   8
@@ -45,31 +46,6 @@ const ENUM_VALUE_ITEM LedConfiguration[MAX_LED_COMBINATIONS] =
     {ALL_LED_OFF , "Tutti spenti"  },
 };
 
-
-const char *ParametersMenuStr[MAX_PARAMETER_ITEM] = 
-{
-    "Abilitare misura"       ,
-    "Abilitare simulaz."     ,
-    "Corrente sim.(A)"       ,
-    "Frequenza sim.(Hz)"     ,
-    "Tensione misura (V)"    ,
-    "Abilitare log"          ,
-    "Periodo log mis.(s)"    ,
-    "ADC Offset"             ,
-    "Usare screensaver"      ,
-    "Tipo screensaver"       ,
-    "Timer screensaver(s)"   ,
-    "Configura i led "       ,
-    "Tempo in attività"      ,
-    "Scritture in memoria"   ,
-};
-
-const char *AlarmThrMenuStr[MAX_ALARM_SETUP_ITEM] = 
-{
-    "Soglie corrente "  ,
-    "Soglie potenza  "  ,
-    "Soglia energia  "  ,
-};
 
 
 const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
