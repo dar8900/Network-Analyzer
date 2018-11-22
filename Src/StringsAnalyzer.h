@@ -4,11 +4,11 @@
 #undef   ITALIANO
 #define  INGLESE
 
-
+extern const char *ChoiceStr[];
 extern const char *BarItem[];
 extern const char *MainSetupMenuStr[];
 extern const char *TimeSettingStr[];
-extern const  char *GraphicsMenuStr[];
+extern const char *GraphicsMenuStr[];
 extern const char *ResetList[];
 extern const char *ParametersMenuStr[];
 extern const char *AlarmThrMenuStr[];

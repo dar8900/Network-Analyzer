@@ -6,6 +6,8 @@
 
 #ifdef ITALIANO
 
+const char *ChoiceStr[2] = {"Si", "No"};
+
 const char *BarItem[] = 
 {
     "Menu",
@@ -93,11 +95,13 @@ const char *AlarmList[MAX_ALARM_STR] =
 
 #ifdef INGLESE
 
+const char *ChoiceStr[2] = {"Yes", "No"};
+
 const char *BarItem[] = 
 {
     "Menu",
     "Up",
-    "Down",
+    "Low",
     "Back",
     "Ok",   
     "Pos.",

@@ -19,14 +19,13 @@ extern uint32_t  PowerOnTime;
 PARAMETERS_S GeneralParams;
 
 
-
 enum
 {
     COMPOSE = 0,
     DECOMPOSE
 };
 
-
+#ifdef ITALIANO
 const ENUM_VALUE_ITEM ScreenSaverEnum[MAX_SCREENSAVER_TYPE] = 
 {
     {ANALOG_DATE   , "Analogico/data"},
@@ -45,7 +44,27 @@ const ENUM_VALUE_ITEM LedConfiguration[MAX_LED_COMBINATIONS] =
     {GREEN_BLUE  , "Blu e verde"   },
     {ALL_LED_OFF , "Tutti spenti"  },
 };
+#endif
+#ifdef INGLESE
+const ENUM_VALUE_ITEM ScreenSaverEnum[MAX_SCREENSAVER_TYPE] = 
+{
+    {ANALOG_DATE   , "Analogic/date"},
+    {DIGITAL_DATE  , "Digital/date" },
+    {ANALOG_ONLY   , "Only analogic"},
+};
 
+const ENUM_VALUE_ITEM LedConfiguration[MAX_LED_COMBINATIONS] = 
+{
+    {RGB         , "RGB"         },
+    {RED         , "Red"         },
+    {GREEN       , "Green"       },
+    {BLUE        , "Blue"        },
+    {RED_GREEN   , "Red e green" },
+    {RED_BLUE    , "Red e blue"  },
+    {GREEN_BLUE  , "Blue e green"},
+    {ALL_LED_OFF , "All off"     },
+};
+#endif
 
 
 const PARAMETER_ITEM ParametersMenu[MAX_PARAMETER_ITEM] = 
@@ -167,7 +186,6 @@ static void FloatStr(float *Value, char StrArray[], uint8_t ArraySize, bool ToSt
 
 bool ChooseYesNo(const char *TitleChoice)
 {
-    const char *ChoiceStr[2] = {"Si", "No"};
     uint8_t ChoiceNum = 0, FirstListItem = 0;
     bool ExitChoice = false, Choice = false;
     while(!ExitChoice)
